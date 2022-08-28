@@ -1,11 +1,23 @@
-import './App.css';
+import { Box } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { RootNavigator } from './navigation/RootNavigator';
 
-function App() {
+const useStyles = makeStyles({
+  Root: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+
+export const App = () => {
+  const classes = useStyles();
+
   return (
-    <div className="App">
-      hello
-    </div>
+    <Box className={classes.Root} component="section">
+      <RootNavigator />
+    </Box>
   );
-}
-
-export default App;
+};
