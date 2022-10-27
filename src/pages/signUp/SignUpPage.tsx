@@ -1,110 +1,79 @@
-import { Box, Button, Container, Grid, Typography } from '@mui/material';
-import { useCallback } from 'react';
-import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form';
-import { PasswordInput, TextInput } from '../../components/shared';
-import { emailValidation, passwordValidation } from '../../validation/validation';
-
-interface IFormInputs {
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
+import { Box, Container, Typography } from '@mui/material';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { SubmitHandler } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { EmailCode, IEmailCodeForm, PopupAlert } from '../../components/shared';
+import { ISignUpForm, SignUp } from '../../components/signUp/SignUp';
+import { useAppDispatch, useErrorMessage } from '../../hooks';
+import { useCodeEmailMutation, useSignUpMutation } from '../../services';
+import { authSlice, userDataSlice } from '../../store/reducers';
 
 export const SignUpPage: React.FC = () => {
-  const { handleSubmit, control, resetField, getValues } = useForm<IFormInputs>({ mode: 'onBlur' });
-  const { errors, isValid } = useFormState({ control });
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { setAuth } = authSlice.actions;
+  const { setEmail } = userDataSlice.actions;
 
-  const onConfirm: SubmitHandler<IFormInputs> = useCallback(
-    ({ email, password, confirmPassword }) => {},
-    []
+  const [signUp, { isError: isSignUpError, data: signUpData, error: signUpError }] =
+    useSignUpMutation();
+
+  const [codeEmail, { isError: isCodeEmailError, data: codeEmailData, error: codeEmailError }] =
+    useCodeEmailMutation();
+
+  const signUpErrorMessage = useErrorMessage(signUpError);
+  const codeEmailErrorMessage = useErrorMessage(codeEmailError);
+
+  const [step, setStep] = useState(1);
+  const [userEmail, setUserEmail] = useState('');
+
+  const onConfirmSignUp: SubmitHandler<ISignUpForm> = useCallback(async ({ email, password }) => {
+    await signUp({ email, password });
+
+    setUserEmail(email);
+  }, []);
+
+  const onConfirmEmailCode: SubmitHandler<IEmailCodeForm> = useCallback(
+    async ({ code }) => {
+      await codeEmail({ code, email: userEmail });
+    },
+    [userEmail]
   );
 
-  const onClearEmail = useCallback(() => {
-    resetField('email');
-  }, [resetField]);
+  const stepRender = useMemo(() => {
+    switch (step) {
+      case 1:
+        return <SignUp onConfirm={onConfirmSignUp} />;
+      case 2:
+        return <EmailCode onConfirm={onConfirmEmailCode} />;
+    }
+  }, [step]);
+
+  useEffect(() => {
+    if (step === 1 && signUpData) {
+      dispatch(setEmail({ email: userEmail }));
+      setStep(2);
+    } else if (step === 2 && codeEmailData) {
+      dispatch(setAuth(signUpData!));
+      navigate('/');
+    }
+  }, [step, userEmail, signUpData, codeEmailData]);
 
   return (
-    <Container component="main" maxWidth="xs" sx={{ width: '100%', height: '100%' }}>
+    <Container component="main" maxWidth="xs" sx={{ width: '100%' }}>
+      {(isSignUpError || isCodeEmailError) && (
+        <PopupAlert
+          text={signUpErrorMessage || codeEmailErrorMessage}
+          severity={'error'}
+          variant={'filled'}
+        />
+      )}
+
       <Box sx={{ marginTop: 8 }}>
         <Typography component="h1" variant="h5" textAlign={'left'} width={'100%'}>
-          Sign up
+          {step === 1 ? 'Sign up' : 'Verification code'}
         </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit(onConfirm)} sx={{ mt: 3 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Controller
-                defaultValue=""
-                name="email"
-                control={control}
-                rules={emailValidation}
-                render={({ field }) => (
-                  <TextInput
-                    {...field}
-                    required
-                    fullWidth
-                    type={'email'}
-                    label="Email"
-                    autoComplete="email"
-                    error={!!errors.email}
-                    helperText={errors.email?.message}
-                    onClearValue={onClearEmail}
-                  />
-                )}
-              />
-            </Grid>
 
-            <Grid item xs={12}>
-              <Controller
-                defaultValue=""
-                name="password"
-                control={control}
-                rules={passwordValidation}
-                render={({ field }) => (
-                  <PasswordInput
-                    {...field}
-                    required
-                    fullWidth
-                    label={'Password'}
-                    error={!!errors.password}
-                    helperText={errors.password?.message}
-                  />
-                )}
-              />
-            </Grid>
-
-            <Grid item xs={12}>
-              <Controller
-                defaultValue=""
-                name="confirmPassword"
-                control={control}
-                rules={{
-                  required: true,
-                  validate: (value) => value === getValues('password') || 'Passwords do not match.',
-                }}
-                render={({ field }) => (
-                  <PasswordInput
-                    {...field}
-                    required
-                    fullWidth
-                    label={'Password'}
-                    error={!!errors.confirmPassword}
-                    helperText={errors.confirmPassword?.message}
-                  />
-                )}
-              />
-            </Grid>
-          </Grid>
-
-          <Button
-            sx={{ mt: 3, mb: 2, textTransform: 'none' }}
-            type="submit"
-            fullWidth
-            variant="contained"
-            disabled={!isValid}
-          >
-            Sign up
-          </Button>
-        </Box>
+        {stepRender}
       </Box>
     </Container>
   );
