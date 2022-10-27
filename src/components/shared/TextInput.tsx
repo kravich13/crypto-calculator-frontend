@@ -12,7 +12,6 @@ export const TextInput: FC<ITextInputProps & TextFieldProps> = React.forwardRef(
   return (
     <TextField
       ref={ref}
-      label="Password"
       type={'text'}
       {...textFieldProps}
       InputProps={{

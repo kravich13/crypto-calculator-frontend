@@ -1,8 +1,12 @@
 import { Box, Button, Container, Grid, Typography } from '@mui/material';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { PopupAlert, TextInput } from '../../components/shared';
 import { PasswordInput } from '../../components/shared/PasswordInput';
-import { TextInput } from '../../components/shared';
+import { useAppDispatch, useErrorMessage } from '../../hooks';
+import { useSignInMutation } from '../../services';
+import { authSlice } from '../../store/reducers';
 import { emailValidation, passwordValidation } from '../../validation/validation';
 
 interface IFormInputs {
@@ -11,17 +15,35 @@ interface IFormInputs {
 }
 
 export const LogInPage: React.FC = () => {
+  const navigate = useNavigate();
+  const { setAuth } = authSlice.actions;
+  const dispatch = useAppDispatch();
+
   const { handleSubmit, control, resetField } = useForm<IFormInputs>({ mode: 'onBlur' });
   const { errors, isValid } = useFormState({ control });
 
-  const onConfirm: SubmitHandler<IFormInputs> = useCallback(({ email }) => {}, []);
+  const [signIn, { isError, data, error }] = useSignInMutation();
+  const errorMessage = useErrorMessage(error);
+
+  const onConfirm: SubmitHandler<IFormInputs> = useCallback(async ({ email, password }) => {
+    await signIn({ email, password });
+  }, []);
 
   const onClearEmail = useCallback(() => {
     resetField('email');
   }, [resetField]);
 
+  useEffect(() => {
+    if (data) {
+      dispatch(setAuth(data));
+      navigate('/');
+    }
+  }, [data, navigate]);
+
   return (
     <Container component="main" maxWidth="xs">
+      {isError && <PopupAlert text={errorMessage} severity={'error'} variant={'filled'} />}
+
       <Box
         sx={{
           marginTop: 8,

@@ -1,4 +1,4 @@
-import { Container, Box } from '@mui/material';
+import { Box, Container } from '@mui/material';
 
 export const MainPage: React.FC = () => {
   return (
