@@ -1,9 +1,10 @@
-import { Box, Button, Grid, Typography } from '@mui/material';
-import { FC, useCallback } from 'react';
-import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form';
+import { Box, Button, Grid } from '@mui/material';
+import React, { useCallback } from 'react';
+import { SubmitHandler, useForm, useFormState } from 'react-hook-form';
 import { ILoginRequest } from '../../models/Auth';
 import { emailValidation, passwordValidation } from '../../validation/validation';
-import { PasswordInput, TextInput } from '../shared';
+import { PasswordController } from '../shared';
+import { TextController } from '../shared/TextController';
 
 interface ISignUpProps {
   onConfirm: SubmitHandler<ISignUpForm>;
@@ -13,7 +14,7 @@ export interface ISignUpForm extends ILoginRequest {
   confirmPassword: string;
 }
 
-export const SignUp: FC<ISignUpProps> = ({ onConfirm }) => {
+export const SignUp: React.FC<ISignUpProps> = ({ onConfirm }) => {
   const { handleSubmit, control, resetField, getValues } = useForm<ISignUpForm>({ mode: 'onBlur' });
   const { errors, isValid } = useFormState({ control });
 
@@ -25,65 +26,37 @@ export const SignUp: FC<ISignUpProps> = ({ onConfirm }) => {
     <Box component="form" noValidate onSubmit={handleSubmit(onConfirm)} sx={{ mt: 3 }}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Controller
-            defaultValue="corlack1997@gmail.com"
+          <TextController
+            inputType={'email'}
             name="email"
+            label="Email"
             control={control}
             rules={emailValidation}
-            render={({ field }) => (
-              <TextInput
-                {...field}
-                required
-                fullWidth
-                type={'email'}
-                label="Email"
-                autoComplete="email"
-                error={!!errors.email}
-                helperText={errors.email?.message}
-                onClearValue={onClear}
-              />
-            )}
+            error={errors.email}
+            autoComplete="email"
+            onClear={onClear}
           />
         </Grid>
 
         <Grid item xs={12}>
-          <Controller
-            defaultValue="bizeC78Qp#pX8@7"
+          <PasswordController
             name="password"
             control={control}
             rules={passwordValidation}
-            render={({ field }) => (
-              <PasswordInput
-                {...field}
-                required
-                fullWidth
-                label={'Password'}
-                error={!!errors.password}
-                helperText={errors.password?.message}
-              />
-            )}
+            error={errors.password}
           />
         </Grid>
 
         <Grid item xs={12}>
-          <Controller
-            defaultValue="bizeC78Qp#pX8@7"
+          <PasswordController
             name="confirmPassword"
             control={control}
             rules={{
               required: true,
-              validate: (value) => value === getValues('password') || 'Passwords do not match.',
+              validate: (value: string) =>
+                value === getValues('password') || 'Passwords do not match.',
             }}
-            render={({ field }) => (
-              <PasswordInput
-                {...field}
-                required
-                fullWidth
-                label={'Confirm password'}
-                error={!!errors.confirmPassword}
-                helperText={errors.confirmPassword?.message}
-              />
-            )}
+            error={errors.confirmPassword}
           />
         </Grid>
       </Grid>

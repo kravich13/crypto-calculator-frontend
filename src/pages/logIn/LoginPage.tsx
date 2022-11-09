@@ -1,7 +1,7 @@
 import { Box, Button, Container, Grid, Typography } from '@mui/material';
 import { useCallback, useEffect } from 'react';
 import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { PopupAlert, TextInput } from '../../components/shared';
 import { PasswordInput } from '../../components/shared/PasswordInput';
 import { useAppDispatch, useErrorMessage } from '../../hooks';
@@ -55,6 +55,7 @@ export const LogInPage: React.FC = () => {
         <Typography component="h1" variant="h5" textAlign={'left'} width={'100%'}>
           Log In
         </Typography>
+
         <Box component="form" noValidate sx={{ mt: 1 }} onSubmit={handleSubmit(onConfirm)}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -108,6 +109,10 @@ export const LogInPage: React.FC = () => {
           >
             Log in
           </Button>
+
+          <Link to={'/password-recovery'} style={{ textDecoration: 'none' }}>
+            Forgot password?
+          </Link>
         </Box>
       </Box>
     </Container>

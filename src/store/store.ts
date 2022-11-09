@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { authAPI, emailAPI } from '../services';
+import { authAPI } from '../services';
 import { authReducer, userDataReducer } from './reducers';
 
 const rootReducer = combineReducers({
@@ -7,13 +7,12 @@ const rootReducer = combineReducers({
   userDataReducer,
 
   [authAPI.reducerPath]: authAPI.reducer,
-  [emailAPI.reducerPath]: emailAPI.reducer,
 });
 
 export const setupStore = () =>
   configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(authAPI.middleware),
   });
 
 export type RootState = ReturnType<typeof rootReducer>;
