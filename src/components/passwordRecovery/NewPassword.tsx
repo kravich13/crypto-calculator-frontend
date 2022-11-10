@@ -1,43 +1,27 @@
 import { Box, Button, Grid } from '@mui/material';
-import React, { useCallback } from 'react';
+import React from 'react';
 import { SubmitHandler, useForm, useFormState } from 'react-hook-form';
-import { ILoginRequest } from '../../models/Auth';
-import { emailValidation, passwordValidation } from '../../validation/validation';
+import { passwordValidation } from '../../validation/validation';
 import { PasswordController } from '../shared';
-import { TextController } from '../shared/TextController';
 
-interface ISignUpProps {
-  onConfirm: SubmitHandler<ISignUpForm>;
+interface INewPasswordProps {
+  onConfirm: SubmitHandler<INewPasswordForm>;
 }
 
-export interface ISignUpForm extends ILoginRequest {
+export interface INewPasswordForm {
+  password: string;
   confirmPassword: string;
 }
 
-export const SignUp: React.FC<ISignUpProps> = ({ onConfirm }) => {
-  const { handleSubmit, control, resetField, getValues } = useForm<ISignUpForm>({ mode: 'onBlur' });
+export const NewPassword: React.FC<INewPasswordProps> = ({ onConfirm }) => {
+  const { handleSubmit, control, getValues } = useForm<INewPasswordForm>({
+    mode: 'onBlur',
+  });
   const { errors, isValid } = useFormState({ control });
-
-  const onClear = useCallback(() => {
-    resetField('email');
-  }, [resetField]);
 
   return (
     <Box component="form" noValidate onSubmit={handleSubmit(onConfirm)} sx={{ mt: 3 }}>
       <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <TextController
-            inputType={'email'}
-            name="email"
-            label="Email"
-            control={control}
-            rules={emailValidation}
-            error={errors.email}
-            autoComplete="email"
-            onClear={onClear}
-          />
-        </Grid>
-
         <Grid item xs={12}>
           <PasswordController
             name="password"
@@ -68,7 +52,7 @@ export const SignUp: React.FC<ISignUpProps> = ({ onConfirm }) => {
         variant="contained"
         disabled={!isValid}
       >
-        Sign up
+        Submit
       </Button>
     </Box>
   );

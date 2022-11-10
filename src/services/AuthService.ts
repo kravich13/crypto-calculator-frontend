@@ -1,5 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
-import { ILoginRequest, ILoginResponse } from '../models';
+import {
+  IEmailCodeRequest,
+  IEmailCodeResponse,
+  IEmailValidateRequest,
+  IHeadersRequest,
+  ILoginRequest,
+  ILoginResponse,
+  INewPasswordRequest,
+  IPasswordForgotRequest,
+} from '../models';
 
 export const authAPI = createApi({
   reducerPath: 'authAPI',
@@ -13,6 +22,15 @@ export const authAPI = createApi({
       }),
     }),
 
+    emailValidate: build.mutation<IEmailCodeResponse, IEmailValidateRequest & IHeadersRequest>({
+      query: ({ code, authorization }) => ({
+        url: '/email/validate',
+        method: 'POST',
+        headers: { authorization },
+        body: { code },
+      }),
+    }),
+
     signIn: build.mutation<ILoginResponse, ILoginRequest>({
       query: (data) => ({
         url: '/sign-in',
@@ -20,7 +38,38 @@ export const authAPI = createApi({
         body: data,
       }),
     }),
+
+    codeEmail: build.mutation<IEmailCodeResponse, IEmailCodeRequest>({
+      query: (data) => ({
+        url: '/email/code',
+        method: 'POST',
+        body: data,
+      }),
+    }),
+
+    forgotPassword: build.mutation<IEmailCodeResponse, IPasswordForgotRequest>({
+      query: (data) => ({
+        url: '/email/forgot',
+        method: 'POST',
+        body: data,
+      }),
+    }),
+
+    newPassword: build.mutation<ILoginResponse, INewPasswordRequest>({
+      query: (data) => ({
+        url: '/email/new-password',
+        method: 'POST',
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useSignInMutation, useSignUpMutation } = authAPI;
+export const {
+  useSignInMutation,
+  useSignUpMutation,
+  useCodeEmailMutation,
+  useForgotPasswordMutation,
+  useNewPasswordMutation,
+  useEmailValidateMutation,
+} = authAPI;
