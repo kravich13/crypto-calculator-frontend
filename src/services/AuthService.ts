@@ -41,7 +41,7 @@ export const authAPI = createApi({
 
     codeEmail: build.mutation<IEmailCodeResponse, IEmailCodeRequest>({
       query: (data) => ({
-        url: '/code',
+        url: '/email/code',
         method: 'POST',
         body: data,
       }),
@@ -49,7 +49,7 @@ export const authAPI = createApi({
 
     forgotPassword: build.mutation<IEmailCodeResponse, IPasswordForgotRequest>({
       query: (data) => ({
-        url: '/forgot',
+        url: '/email/forgot',
         method: 'POST',
         body: data,
       }),
@@ -57,7 +57,7 @@ export const authAPI = createApi({
 
     newPassword: build.mutation<ILoginResponse, INewPasswordRequest>({
       query: (data) => ({
-        url: '/new-password',
+        url: '/email/new-password',
         method: 'POST',
         body: data,
       }),

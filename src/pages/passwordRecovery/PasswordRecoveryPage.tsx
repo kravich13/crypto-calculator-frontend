@@ -1,44 +1,77 @@
-import { Box, Button, Container, Grid, Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form';
-import { Link } from 'react-router-dom';
-import { PopupAlert, TextInput } from '../../components/shared';
-import { useErrorMessage } from '../../hooks';
-import { useForgotPasswordMutation } from '../../services';
-import { emailValidation } from '../../validation/validation';
-
-interface IFormInputs {
-  email: string;
-}
-
-interface ISubmitButtonProps {
-  disabled: boolean;
-  title: string;
-}
+import { SubmitHandler } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { INewPasswordForm, NewPassword } from '../../components/passwordRecovery/NewPassword';
+import { SendEmail } from '../../components/passwordRecovery/SendEmail';
+import { EmailCode, PopupAlert } from '../../components/shared';
+import { useAppDispatch, useAppSelector, useErrorMessage } from '../../hooks';
+import { ISetCodeInput, ISetEmailInput } from '../../models';
+import {
+  useCodeEmailMutation,
+  useForgotPasswordMutation,
+  useNewPasswordMutation,
+} from '../../services';
+import { authSlice, userDataSlice } from '../../store/reducers';
 
 export const PasswordRecoveryPage: React.FC = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { code: codeUserData, email: emailUserData } = useAppSelector(
+    (state) => state.userDataReducer
+  );
+
+  const { setEmail, setCode, clearState: clearUserDataState } = userDataSlice.actions;
+  const { setAuth } = authSlice.actions;
+
   const [step, setStep] = useState(1);
 
-  const { handleSubmit, control, resetField } = useForm<IFormInputs>({ mode: 'onBlur' });
-  const { errors, isValid } = useFormState({ control });
+  const [forgotPassword, forgotPasswordData] = useForgotPasswordMutation();
+  const [codeEmail, codeEmailData] = useCodeEmailMutation();
+  const [newPassword, newPasswordData] = useNewPasswordMutation();
 
-  const [forgotPassword, { isError, data, error }] = useForgotPasswordMutation();
-  const errorMessage = useErrorMessage(error);
+  const forgotPasswordErrorMessage = useErrorMessage(forgotPasswordData.error);
+  const codeEmailErrorMessage = useErrorMessage(codeEmailData.error);
+  const newPasswordErrorMessage = useErrorMessage(newPasswordData.error);
 
-  const onClearEmail = useCallback(() => {
-    resetField('email');
-  }, [resetField]);
+  const isError = forgotPasswordData.isError || codeEmailData.isError || newPasswordData.isError;
+  const errorMessage =
+    forgotPasswordErrorMessage || codeEmailErrorMessage || newPasswordErrorMessage;
 
-  const onConfirm: SubmitHandler<IFormInputs> = useCallback(
-    async ({ email }) => {
-      if (step === 1) {
-        // await forgotPassword({ email });
-        setStep(2);
-      } else if (step === 2) {
-        setStep(3);
-      }
+  useEffect(() => {
+    if (forgotPasswordData.data && step === 1) {
+      setStep(2);
+    } else if (codeEmailData.data && step === 2) {
+      setStep(3);
+    } else if (newPasswordData.data && step === 3) {
+      const { accessToken, accessTokenExpiresIn, refreshToken, refreshTokenExpiresIn } =
+        newPasswordData.data;
+
+      navigate('/');
+      setStep(1);
+      dispatch(clearUserDataState());
+      dispatch(setAuth({ accessToken, refreshToken, accessTokenExpiresIn, refreshTokenExpiresIn }));
+    }
+  }, [forgotPasswordData.data, codeEmailData.data, newPasswordData.data]);
+
+  const onConfirmForgotPassword: SubmitHandler<ISetEmailInput> = useCallback(async ({ email }) => {
+    dispatch(setEmail({ email }));
+    await forgotPassword({ email });
+  }, []);
+
+  const onConfirmEmailCode: SubmitHandler<ISetCodeInput> = useCallback(
+    async ({ code }) => {
+      dispatch(setCode({ code }));
+      await codeEmail({ code, email: emailUserData });
     },
-    [step]
+    [emailUserData]
+  );
+
+  const onConfirmNewPassword: SubmitHandler<INewPasswordForm> = useCallback(
+    async ({ password }) => {
+      await newPassword({ email: emailUserData, code: codeUserData, password });
+    },
+    [emailUserData, codeEmailData]
   );
 
   const stepText = useMemo(() => {
@@ -46,42 +79,25 @@ export const PasswordRecoveryPage: React.FC = () => {
       case 1:
         return 'Enter the email address for which you forgot the password.';
       case 2:
-        return 'An email with a password recovery code has been sent to your email.';
+        return `A password recovery confirmation code has been sent to your email ${emailUserData}.`;
       case 3:
         return 'Create a new password.';
     }
-  }, [step]);
+  }, [step, emailUserData]);
 
-  const submitButton = useCallback(
-    ({ disabled, title }: ISubmitButtonProps) => (
-      <Button type="submit" variant="contained" sx={{ textTransform: 'none' }} disabled={disabled}>
-        {title}
-      </Button>
-    ),
-    []
-  );
-
-  const buttonsRender = useMemo(() => {
+  const stepRender = useMemo(() => {
     switch (step) {
       case 1:
-        return (
-          <>
-            {submitButton({ disabled: !isValid, title: 'Submit' })}
-
-            <Link to={'/login'} style={{ textDecoration: 'none' }}>
-              Cancel
-            </Link>
-          </>
-        );
+        return <SendEmail onConfirm={onConfirmForgotPassword} />;
       case 2:
-        return submitButton({ disabled: !isValid, title: 'Send code' });
+        return <EmailCode onConfirm={onConfirmEmailCode} />;
       case 3:
-        return submitButton({ disabled: !isValid, title: 'Submit' });
+        return <NewPassword onConfirm={onConfirmNewPassword} />;
     }
-  }, [step, isValid]);
+  }, [step]);
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" sx={{ width: '100%' }}>
       {isError && <PopupAlert text={errorMessage} severity={'error'} variant={'filled'} />}
 
       <Box
@@ -102,50 +118,7 @@ export const PasswordRecoveryPage: React.FC = () => {
           {stepText}
         </Typography>
 
-        <Box
-          component="form"
-          width={'100%'}
-          noValidate
-          sx={{ mt: 2 }}
-          onSubmit={handleSubmit(onConfirm)}
-        >
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Controller
-                defaultValue=""
-                name="email"
-                control={control}
-                rules={emailValidation}
-                render={({ field }) => (
-                  <TextInput
-                    {...field}
-                    required
-                    fullWidth
-                    type={'email'}
-                    label="Email Address"
-                    autoComplete="email"
-                    error={!!errors.email}
-                    helperText={errors.email?.message}
-                    onClearValue={onClearEmail}
-                  />
-                )}
-              />
-            </Grid>
-
-            <Grid
-              item
-              xs={12}
-              style={{
-                width: '100%',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-            >
-              {buttonsRender}
-            </Grid>
-          </Grid>
-        </Box>
+        {stepRender}
       </Box>
     </Container>
   );

@@ -14,16 +14,11 @@ export const SignUpPage: React.FC = () => {
   const { setAuth } = authSlice.actions;
   const { setEmail } = userDataSlice.actions;
 
-  const [signUp, { isError: isSignUpError, data: signUpData, error: signUpError }] =
-    useSignUpMutation();
+  const [signUp, signUpData] = useSignUpMutation();
+  const [emailValidate, emailValidateData] = useEmailValidateMutation();
 
-  const [
-    emailValidate,
-    { isError: isEmailValidateError, data: emailValidateData, error: emailValidateError },
-  ] = useEmailValidateMutation();
-
-  const signUpErrorMessage = useErrorMessage(signUpError);
-  const codeEmailErrorMessage = useErrorMessage(emailValidateError);
+  const signUpErrorMessage = useErrorMessage(signUpData.error);
+  const codeEmailErrorMessage = useErrorMessage(emailValidateData.error);
 
   const [step, setStep] = useState(1);
   const [userEmail, setUserEmail] = useState('');
@@ -36,9 +31,9 @@ export const SignUpPage: React.FC = () => {
 
   const onConfirmEmailCode: SubmitHandler<IEmailCodeForm> = useCallback(
     async ({ code }) => {
-      await emailValidate({ code, authorization: signUpData!.accessToken });
+      await emailValidate({ code, authorization: signUpData.data!.accessToken });
     },
-    [signUpData?.accessToken]
+    [signUpData.data?.accessToken]
   );
 
   const stepRender = useMemo(() => {
@@ -55,7 +50,7 @@ export const SignUpPage: React.FC = () => {
       dispatch(setEmail({ email: userEmail }));
       setStep(2);
     } else if (step === 2 && emailValidateData) {
-      dispatch(setAuth(signUpData!));
+      dispatch(setAuth(signUpData.data!));
       navigate('/');
       setStep(1);
     }
@@ -63,7 +58,7 @@ export const SignUpPage: React.FC = () => {
 
   return (
     <Container component="main" maxWidth="xs" sx={{ width: '100%' }}>
-      {(isSignUpError || isEmailValidateError) && (
+      {(signUpData.isError || emailValidateData.isError) && (
         <PopupAlert
           text={signUpErrorMessage || codeEmailErrorMessage}
           severity={'error'}
@@ -75,6 +70,18 @@ export const SignUpPage: React.FC = () => {
         <Typography component="h1" variant="h5" textAlign={'left'} width={'100%'}>
           {step === 1 ? 'Sign up' : 'Verification code'}
         </Typography>
+
+        {step === 2 && (
+          <Typography
+            component="p"
+            variant="subtitle1"
+            textAlign={'left'}
+            width={'100%'}
+            marginTop={1}
+          >
+            An email with a verification code has been sent to {userEmail}
+          </Typography>
+        )}
 
         {stepRender}
       </Box>

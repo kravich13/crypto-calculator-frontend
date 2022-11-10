@@ -1,8 +1,6 @@
-import { Box, Button, Grid, Typography } from '@mui/material';
+import { Box, Button, Grid } from '@mui/material';
 import { FC, useCallback } from 'react';
 import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { userDataSlice } from '../../store/reducers';
 import { emailCodeValidation } from '../../validation/validation';
 import { TextInput } from './TextInput';
 
@@ -15,8 +13,6 @@ export interface IEmailCodeForm {
 }
 
 export const EmailCode: FC<IEmailCodeProps> = ({ onConfirm }) => {
-  const userEmail = useAppSelector((state) => state.userDataReducer.email);
-
   const { handleSubmit, control, resetField } = useForm<IEmailCodeForm>({
     mode: 'onBlur',
   });
@@ -27,46 +23,45 @@ export const EmailCode: FC<IEmailCodeProps> = ({ onConfirm }) => {
   }, [resetField]);
 
   return (
-    <>
-      <Typography component="p" variant="subtitle1" textAlign={'left'} width={'100%'} marginTop={1}>
-        An email with a verification code has been sent to {userEmail}
-      </Typography>
-
-      <Box component="form" noValidate onSubmit={handleSubmit(onConfirm)} sx={{ mt: 3 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Controller
-              defaultValue=""
-              name="code"
-              control={control}
-              rules={emailCodeValidation}
-              render={({ field }) => (
-                <TextInput
-                  {...field}
-                  required
-                  fullWidth
-                  type={'number'}
-                  label="Email code"
-                  autoComplete="Code"
-                  error={!!errors.code}
-                  helperText={errors.code?.message}
-                  onClearValue={onClear}
-                />
-              )}
-            />
-          </Grid>
+    <Box
+      component="form"
+      noValidate
+      onSubmit={handleSubmit(onConfirm)}
+      sx={{ mt: 3, width: '100%' }}
+    >
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Controller
+            defaultValue=""
+            name="code"
+            control={control}
+            rules={emailCodeValidation}
+            render={({ field }) => (
+              <TextInput
+                {...field}
+                required
+                fullWidth
+                type={'number'}
+                label="Email code"
+                autoComplete="Code"
+                error={!!errors.code}
+                helperText={errors.code?.message}
+                onClearValue={onClear}
+              />
+            )}
+          />
         </Grid>
+      </Grid>
 
-        <Button
-          sx={{ mt: 3, mb: 2, textTransform: 'none' }}
-          type="submit"
-          fullWidth
-          variant="contained"
-          disabled={!isValid}
-        >
-          Send code
-        </Button>
-      </Box>
-    </>
+      <Button
+        sx={{ mt: 3, mb: 2, textTransform: 'none' }}
+        type="submit"
+        fullWidth
+        variant="contained"
+        disabled={!isValid}
+      >
+        Send code
+      </Button>
+    </Box>
   );
 };
