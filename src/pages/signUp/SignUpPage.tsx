@@ -46,15 +46,15 @@ export const SignUpPage: React.FC = () => {
   }, [step]);
 
   useEffect(() => {
-    if (step === 1 && signUpData) {
+    if (step === 1 && signUpData.data) {
       dispatch(setEmail({ email: userEmail }));
       setStep(2);
-    } else if (step === 2 && emailValidateData) {
+    } else if (step === 2 && emailValidateData.data) {
       dispatch(setAuth(signUpData.data!));
       navigate('/');
       setStep(1);
     }
-  }, [step, userEmail, signUpData, emailValidateData]);
+  }, [step, userEmail, signUpData.data, emailValidateData.data]);
 
   return (
     <Container component="main" maxWidth="xs" sx={{ width: '100%' }}>
