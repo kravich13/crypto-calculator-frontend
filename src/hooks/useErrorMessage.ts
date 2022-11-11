@@ -9,7 +9,6 @@ export const useErrorMessage = (errorData?: FetchBaseQueryError | SerializedErro
 
     if (errorData) {
       const { data, status, originalStatus } = errorData as any;
-      console.log(data);
 
       if ((status === 200 || originalStatus === 200) && (data as IDataErrors)?.errors) {
         const [errorData] = (data as IDataErrors).errors;

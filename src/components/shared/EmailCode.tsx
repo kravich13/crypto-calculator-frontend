@@ -1,18 +1,19 @@
 import { Box, Button, Grid } from '@mui/material';
-import { FC, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form';
 import { emailCodeValidation } from '../../validation/validation';
 import { TextInput } from './TextInput';
 
 interface IEmailCodeProps {
   onConfirm: SubmitHandler<IEmailCodeForm>;
+  buttonTitle: string;
 }
 
 export interface IEmailCodeForm {
   code: string;
 }
 
-export const EmailCode: FC<IEmailCodeProps> = ({ onConfirm }) => {
+export const EmailCode: React.FC<IEmailCodeProps> = React.memo(({ buttonTitle, onConfirm }) => {
   const { handleSubmit, control, resetField } = useForm<IEmailCodeForm>({
     mode: 'onBlur',
   });
@@ -60,8 +61,8 @@ export const EmailCode: FC<IEmailCodeProps> = ({ onConfirm }) => {
         variant="contained"
         disabled={!isValid}
       >
-        Send code
+        {buttonTitle}
       </Button>
     </Box>
   );
-};
+});

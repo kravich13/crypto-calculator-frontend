@@ -18,11 +18,17 @@ const initialState: IAuthState = {
 };
 
 export const authSlice = createSlice({
-  name: 'auth',
+  name: 'authorization',
   initialState,
   reducers: {
+    clearState(state, { payload, type }) {
+      return { ...initialState };
+    },
     setAuth(state, { payload, type }: PayloadAction<ILoginResponse>) {
-      state = { ...payload, isAuth: true };
+      return {
+        isAuth: true,
+        ...payload,
+      };
     },
   },
 });

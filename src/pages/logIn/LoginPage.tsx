@@ -41,17 +41,14 @@ export const LogInPage: React.FC = () => {
   }, [data, navigate]);
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container
+      component="main"
+      maxWidth="xl"
+      sx={{ width: '100%', height: '100%', padding: 3, display: 'flex', alignItems: 'center' }}
+    >
       {isError && <PopupAlert text={errorMessage} severity={'error'} variant={'filled'} />}
 
-      <Box
-        sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
+      <Container component="div" maxWidth="xs" sx={{ marginTop: 8 }}>
         <Typography component="h1" variant="h5" textAlign={'left'} width={'100%'}>
           Log In
         </Typography>
@@ -114,7 +111,7 @@ export const LogInPage: React.FC = () => {
             Forgot password?
           </Link>
         </Box>
-      </Box>
+      </Container>
     </Container>
   );
 };
