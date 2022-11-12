@@ -19,7 +19,11 @@ const initialState: ICalculatorSlice = {
 export const calculatorSlice = createSlice({
   name: 'calculator',
   initialState,
-  reducers: {},
+  reducers: {
+    clearState(state, { payload, type }) {
+      return { ...initialState };
+    },
+  },
 });
 
 export const calculatorReducer = calculatorSlice.reducer;
