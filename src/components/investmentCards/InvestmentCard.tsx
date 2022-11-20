@@ -1,5 +1,5 @@
 import { DeleteForever as DeleteForeverIcon } from '@mui/icons-material';
-import { Box, Card, IconButton, Typography } from '@mui/material';
+import { Box, Card, IconButton, Typography, useMediaQuery } from '@mui/material';
 import React from 'react';
 
 interface IInvestmentCardProps {
@@ -8,11 +8,20 @@ interface IInvestmentCardProps {
 }
 
 export const InvestmentCard: React.FC<IInvestmentCardProps> = ({ onChangeCard, onDeleteCard }) => {
+  const isMin450Width = useMediaQuery('(max-width:450px)');
+
   return (
     <Card
       variant="elevation"
       raised
-      style={{ marginBottom: 30, display: 'flex', padding: '20px', cursor: 'pointer' }}
+      style={{
+        display: 'flex',
+        flexDirection: isMin450Width ? 'column' : 'row',
+        alignItems: isMin450Width ? 'center' : 'normal',
+        padding: 20,
+        marginBottom: 30,
+        cursor: 'pointer',
+      }}
       title="Go to change card"
       onClick={onChangeCard}
     >
@@ -20,10 +29,12 @@ export const InvestmentCard: React.FC<IInvestmentCardProps> = ({ onChangeCard, o
         style={{
           flex: 1,
           display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
+          flexDirection: isMin450Width ? 'row' : 'column',
+          justifyContent: isMin450Width ? 'space-around' : 'space-between',
           alignItems: 'start',
+          width: '100%',
         }}
+        mb={isMin450Width ? 1 : 0}
       >
         <Typography>+1300 %</Typography>
         <Typography>13 coins</Typography>
