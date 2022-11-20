@@ -6,6 +6,7 @@ import {
   StepLabel,
   Stepper,
   Typography,
+  useMediaQuery,
 } from '@mui/material';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
@@ -16,7 +17,9 @@ import { useAppDispatch, useAppSelector, useErrorMessage } from '../../hooks';
 import { useEmailValidateMutation, useSignUpMutation } from '../../services';
 import { authSlice, userDataSlice } from '../../store/reducers';
 
-export const SignUpPage: React.FC = () => {
+const SignUpPage: React.FC = () => {
+  const isMin500Width = useMediaQuery('(max-width:400px)');
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { setAuth } = authSlice.actions;
@@ -81,11 +84,11 @@ export const SignUpPage: React.FC = () => {
       sx={{
         width: '100%',
         height: '100%',
-        padding: 3,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+        padding: 3,
       }}
     >
       <Backdrop
@@ -111,8 +114,8 @@ export const SignUpPage: React.FC = () => {
         />
       )}
 
-      <Container component="div" maxWidth="sm">
-        <Stepper activeStep={step}>
+      <Container component="div" maxWidth={isMin500Width ? 'xs' : 'sm'}>
+        <Stepper activeStep={step} orientation={isMin500Width ? 'vertical' : 'horizontal'}>
           <Step>
             <StepLabel>
               <Typography component="p" variant="h6">
@@ -130,7 +133,7 @@ export const SignUpPage: React.FC = () => {
         </Stepper>
       </Container>
 
-      <Container component="div" maxWidth="xs" sx={{ marginTop: 8 }}>
+      <Container component="div" maxWidth="xs" sx={{ marginTop: 1 }}>
         <Typography
           component="p"
           variant="subtitle1"
@@ -148,3 +151,5 @@ export const SignUpPage: React.FC = () => {
     </Container>
   );
 };
+
+export default SignUpPage;

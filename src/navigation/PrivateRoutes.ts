@@ -1,10 +1,10 @@
+import React from 'react';
 import { v4 as uuid } from 'uuid';
-import { InvestmentCardsPage } from '../pages/investmentCards/InvestmentCardsPage';
 
 export const privateRoutes = [
   {
     path: '/investment-cards',
-    component: InvestmentCardsPage,
+    component: React.lazy(async () => await import('../pages/investmentCards/InvestmentCardsPage')),
     title: 'Calculator | Investment cards list',
     id: uuid(),
   },

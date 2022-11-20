@@ -6,6 +6,7 @@ import {
   StepLabel,
   Stepper,
   Typography,
+  useMediaQuery,
 } from '@mui/material';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
@@ -22,7 +23,9 @@ import {
 } from '../../services';
 import { authSlice, userDataSlice } from '../../store/reducers';
 
-export const PasswordRecoveryPage: React.FC = () => {
+const PasswordRecoveryPage: React.FC = () => {
+  const isMin800Width = useMediaQuery('(max-width:800px)');
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { code: codeUserData, email: emailUserData } = useAppSelector(
@@ -113,11 +116,11 @@ export const PasswordRecoveryPage: React.FC = () => {
       sx={{
         width: '100%',
         height: '100%',
-        padding: 3,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+        padding: 3,
       }}
     >
       <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={isLoading}>
@@ -126,8 +129,8 @@ export const PasswordRecoveryPage: React.FC = () => {
 
       {isError && <PopupAlert text={errorMessage} severity={'error'} variant={'filled'} />}
 
-      <Container component="div" maxWidth="md">
-        <Stepper activeStep={step}>
+      <Container component="div" maxWidth={isMin800Width ? 'xs' : 'md'}>
+        <Stepper activeStep={step} orientation={isMin800Width ? 'vertical' : 'horizontal'}>
           <Step>
             <StepLabel>
               <Typography component="p" variant="h6">
@@ -162,3 +165,5 @@ export const PasswordRecoveryPage: React.FC = () => {
     </Container>
   );
 };
+
+export default PasswordRecoveryPage;

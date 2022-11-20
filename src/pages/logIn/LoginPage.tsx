@@ -14,7 +14,7 @@ interface IFormInputs {
   password: string;
 }
 
-export const LogInPage: React.FC = () => {
+const LogInPage: React.FC = () => {
   const navigate = useNavigate();
   const { setAuth } = authSlice.actions;
   const dispatch = useAppDispatch();
@@ -44,11 +44,11 @@ export const LogInPage: React.FC = () => {
     <Container
       component="main"
       maxWidth="xl"
-      sx={{ width: '100%', height: '100%', padding: 3, display: 'flex', alignItems: 'center' }}
+      sx={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', padding: 3 }}
     >
       {isError && <PopupAlert text={errorMessage} severity={'error'} variant={'filled'} />}
 
-      <Container component="div" maxWidth="xs" sx={{ marginTop: 8 }}>
+      <Container maxWidth="xs">
         <Typography component="h1" variant="h5" textAlign={'left'} width={'100%'}>
           Log In
         </Typography>
@@ -115,3 +115,5 @@ export const LogInPage: React.FC = () => {
     </Container>
   );
 };
+
+export default LogInPage;
