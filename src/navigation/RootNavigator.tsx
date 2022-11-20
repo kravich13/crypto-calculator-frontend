@@ -4,7 +4,6 @@ import React, { Suspense, useCallback } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Header } from '../components/header/Header';
 import { useAppSelector } from '../hooks';
-// import { NotFoundPage } from '../pages/notFound/NotFoundPage';
 import { PageTitle } from './PageTitle';
 import { privateRoutes } from './PrivateRoutes';
 import { publicRoutes } from './PublicRoutes';
