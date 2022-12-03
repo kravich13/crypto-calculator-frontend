@@ -13,6 +13,9 @@ export const useErrorMessage = (errorData?: FetchBaseQueryError | SerializedErro
       if ((status === 200 || originalStatus === 200) && (data as IDataErrors)?.errors) {
         const [errorData] = (data as IDataErrors).errors;
         message = errorData.message;
+      } else if (status === 400 || status === 401) {
+        const [errorData] = (data as IDataErrors).errors;
+        message = errorData.message;
       } else {
         message = 'Error sending data, please try again later.';
       }

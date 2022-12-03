@@ -1,12 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ILoginResponse } from '../../models/Auth';
 
-interface IAuthState {
-  isAuth: boolean;
+export interface ITokensData {
   accessToken: string;
   refreshToken: string;
   accessTokenExpiresIn: number;
   refreshTokenExpiresIn: number;
+}
+
+interface IAuthState extends ITokensData {
+  isAuth: boolean;
 }
 
 const initialState: IAuthState = {
@@ -21,10 +24,14 @@ export const authSlice = createSlice({
   name: 'authorization',
   initialState,
   reducers: {
-    clearState(state, { payload, type }) {
+    clearState() {
+      localStorage.removeItem('tokensData');
+
       return { ...initialState };
     },
     setAuth(state, { payload, type }: PayloadAction<ILoginResponse>) {
+      localStorage.setItem('tokensData', JSON.stringify(payload));
+
       return {
         isAuth: true,
         ...payload,

@@ -15,7 +15,7 @@ export const userDataSlice = createSlice({
   name: 'userData',
   initialState,
   reducers: {
-    clearState(state) {
+    clearState() {
       return { ...initialState };
     },
     setEmail(state, { payload, type }: PayloadAction<ISetEmailInput>) {

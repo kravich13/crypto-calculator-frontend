@@ -5,6 +5,11 @@ export const emailValidation = {
   validate: (value: string) => validator.isEmail(value) || 'The email is incorrect.',
 };
 
+export const logInPasswordValidation = {
+  required: true,
+  validate: (value: string) => !validator.isEmpty(value) || 'Cannot be empty.',
+};
+
 export const passwordValidation = {
   required: true,
   validate: (value: string) =>

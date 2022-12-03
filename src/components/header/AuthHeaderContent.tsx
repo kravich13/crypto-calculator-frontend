@@ -1,17 +1,12 @@
 import { Avatar, Box, Fade, IconButton, Menu, MenuItem } from '@mui/material';
 import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { authSlice, calculatorSlice, userDataSlice } from '../../store/reducers';
+import { useAppSelector, useAuthContext } from '../../hooks';
 
 export const AuthHeaderContent: React.FC = () => {
   const navigate = useNavigate();
   const emailUser = useAppSelector((state) => state.userDataReducer.email);
-  const dispatch = useAppDispatch();
-
-  const clearUserDataState = userDataSlice.actions.clearState;
-  const clearAuthState = authSlice.actions.clearState;
-  const clearCalculatorState = calculatorSlice.actions.clearState;
+  const { logout } = useAuthContext();
 
   const avatarTitle = emailUser.at(0)?.toUpperCase();
 
@@ -28,11 +23,9 @@ export const AuthHeaderContent: React.FC = () => {
 
   const onLogout = useCallback(() => {
     setAnchorEl(null);
-    dispatch(clearUserDataState);
-    dispatch(clearAuthState);
-    dispatch(clearCalculatorState);
     navigate('/');
-  }, []);
+    logout();
+  }, [navigate]);
 
   return (
     <Box>

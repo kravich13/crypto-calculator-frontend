@@ -13,19 +13,19 @@ import type { SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { EmailCode, IEmailCodeForm, PopupAlert } from '../../components/shared';
 import { INeedActivateAccount, ISignUpForm, SignUp } from '../../components/signUp/SignUp';
-import { useAppDispatch, useAppSelector, useErrorMessage } from '../../hooks';
+import { useAppDispatch, useAppSelector, useAuthContext, useErrorMessage } from '../../hooks';
 import { useEmailValidateMutation, useSignUpMutation } from '../../services';
-import { authSlice, userDataSlice } from '../../store/reducers';
+import { userDataSlice } from '../../store/reducers';
 
 const SignUpPage: React.FC = () => {
   const isMin500Width = useMediaQuery('(max-width:400px)');
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { setAuth } = authSlice.actions;
   const { setEmail } = userDataSlice.actions;
 
   const { email: emailUserData } = useAppSelector((state) => state.userDataReducer);
+  const { login } = useAuthContext();
 
   const [signUp, signUpData] = useSignUpMutation();
   const [emailValidate, emailValidateData] = useEmailValidateMutation();
@@ -66,16 +66,16 @@ const SignUpPage: React.FC = () => {
     const hasSignUpData = step === 0 && signUpData.data;
 
     if (hasSignUpData && activateAccount === false) {
-      dispatch(setAuth(signUpData.data!));
+      login(signUpData.data!);
       navigate('/');
     } else if (hasSignUpData && activateAccount) {
       setStep(1);
     } else if (step === 1 && emailValidateData.data) {
-      dispatch(setAuth(signUpData.data!));
-      navigate('/');
+      login(signUpData.data!);
       setStep(0);
+      navigate('/');
     }
-  }, [step, activateAccount, signUpData.data, emailValidateData.data]);
+  }, [step, activateAccount, signUpData.data, emailValidateData.data, navigate]);
 
   return (
     <Container

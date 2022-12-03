@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import { AuthProvider } from './context';
 import { RootNavigator } from './navigation/RootNavigator';
 
 const useStyles = makeStyles({
@@ -17,7 +18,9 @@ export const App = () => {
 
   return (
     <Box className={classes.Root} component="section">
-      <RootNavigator />
+      <AuthProvider>
+        <RootNavigator />
+      </AuthProvider>
     </Box>
   );
 };
