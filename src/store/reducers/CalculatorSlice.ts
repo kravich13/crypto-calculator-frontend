@@ -20,7 +20,7 @@ export const calculatorSlice = createSlice({
   name: 'calculator',
   initialState,
   reducers: {
-    clearState(state, { payload, type }) {
+    clearState() {
       return { ...initialState };
     },
   },

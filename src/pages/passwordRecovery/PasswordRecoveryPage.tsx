@@ -14,26 +14,27 @@ import { useNavigate } from 'react-router-dom';
 import { INewPasswordForm, NewPassword } from '../../components/passwordRecovery/NewPassword';
 import { SendEmail } from '../../components/passwordRecovery/SendEmail';
 import { EmailCode, PopupAlert } from '../../components/shared';
-import { useAppDispatch, useAppSelector, useErrorMessage } from '../../hooks';
+import { useAppDispatch, useAppSelector, useAuthContext, useErrorMessage } from '../../hooks';
 import { ISetCodeInput, ISetEmailInput } from '../../models';
 import {
   useCodeEmailMutation,
   useForgotPasswordMutation,
   useNewPasswordMutation,
 } from '../../services';
-import { authSlice, userDataSlice } from '../../store/reducers';
+import { userDataSlice } from '../../store/reducers';
 
 const PasswordRecoveryPage: React.FC = () => {
   const isMin800Width = useMediaQuery('(max-width:800px)');
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
   const { code: codeUserData, email: emailUserData } = useAppSelector(
     (state) => state.userDataReducer
   );
+  const { login } = useAuthContext();
 
-  const { setEmail, setCode, clearState: clearUserDataState } = userDataSlice.actions;
-  const { setAuth } = authSlice.actions;
+  const { setEmail, setCode, clearState } = userDataSlice.actions;
 
   const [step, setStep] = useState(0);
 
@@ -57,15 +58,12 @@ const PasswordRecoveryPage: React.FC = () => {
     } else if (codeEmailData.data && step === 1) {
       setStep(2);
     } else if (newPasswordData.data && step === 2) {
-      const { accessToken, accessTokenExpiresIn, refreshToken, refreshTokenExpiresIn } =
-        newPasswordData.data;
-
-      navigate('/');
+      login(newPasswordData.data);
       setStep(0);
-      dispatch(clearUserDataState());
-      dispatch(setAuth({ accessToken, refreshToken, accessTokenExpiresIn, refreshTokenExpiresIn }));
+      dispatch(clearState());
+      navigate('/');
     }
-  }, [forgotPasswordData.data, codeEmailData.data, newPasswordData.data]);
+  }, [forgotPasswordData.data, codeEmailData.data, newPasswordData.data, navigate]);
 
   const onConfirmForgotPassword: SubmitHandler<ISetEmailInput> = useCallback(async ({ email }) => {
     dispatch(setEmail({ email }));

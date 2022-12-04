@@ -4,10 +4,9 @@ import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-for
 import { Link, useNavigate } from 'react-router-dom';
 import { PopupAlert, TextInput } from '../../components/shared';
 import { PasswordInput } from '../../components/shared/PasswordInput';
-import { useAppDispatch, useErrorMessage } from '../../hooks';
+import { useAuthContext, useErrorMessage } from '../../hooks';
 import { useSignInMutation } from '../../services';
-import { authSlice } from '../../store/reducers';
-import { emailValidation, passwordValidation } from '../../validation/validation';
+import { emailValidation, logInPasswordValidation } from '../../validation/validation';
 
 interface IFormInputs {
   email: string;
@@ -15,9 +14,8 @@ interface IFormInputs {
 }
 
 const LogInPage: React.FC = () => {
+  const { login } = useAuthContext();
   const navigate = useNavigate();
-  const { setAuth } = authSlice.actions;
-  const dispatch = useAppDispatch();
 
   const { handleSubmit, control, resetField } = useForm<IFormInputs>({ mode: 'onBlur' });
   const { errors, isValid } = useFormState({ control });
@@ -25,8 +23,8 @@ const LogInPage: React.FC = () => {
   const [signIn, { isError, data, error }] = useSignInMutation();
   const errorMessage = useErrorMessage(error);
 
-  const onConfirm: SubmitHandler<IFormInputs> = useCallback(async ({ email, password }) => {
-    await signIn({ email, password });
+  const onConfirm: SubmitHandler<IFormInputs> = useCallback(({ email, password }) => {
+    signIn({ email, password });
   }, []);
 
   const onClearEmail = useCallback(() => {
@@ -35,7 +33,7 @@ const LogInPage: React.FC = () => {
 
   useEffect(() => {
     if (data) {
-      dispatch(setAuth(data));
+      login(data);
       navigate('/');
     }
   }, [data, navigate]);
@@ -82,7 +80,7 @@ const LogInPage: React.FC = () => {
                 defaultValue=""
                 name="password"
                 control={control}
-                rules={passwordValidation}
+                rules={logInPasswordValidation}
                 render={({ field }) => (
                   <PasswordInput
                     {...field}
