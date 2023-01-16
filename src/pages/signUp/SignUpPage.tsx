@@ -10,17 +10,23 @@ import {
 } from '@mui/material';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { EmailCode, IEmailCodeForm, PopupAlert } from '../../components/shared';
 import { INeedActivateAccount, ISignUpForm, SignUp } from '../../components/signUp/SignUp';
-import { useAppDispatch, useAppSelector, useAuthContext, useErrorMessage } from '../../hooks';
+import {
+  useAppDispatch,
+  useAppSelector,
+  useAuthContext,
+  useErrorMessage,
+  useTypedNavigate,
+} from '../../hooks';
+import { RoutesTypes } from '../../navigation';
 import { useEmailValidateMutation, useSignUpMutation } from '../../services';
 import { userDataSlice } from '../../store/reducers';
 
 const SignUpPage: React.FC = () => {
   const isMin500Width = useMediaQuery('(max-width:400px)');
 
-  const navigate = useNavigate();
+  const navigate = useTypedNavigate();
   const dispatch = useAppDispatch();
   const { setEmail } = userDataSlice.actions;
 
@@ -67,13 +73,13 @@ const SignUpPage: React.FC = () => {
 
     if (hasSignUpData && activateAccount === false) {
       login(signUpData.data!);
-      navigate('/');
+      navigate(RoutesTypes.MAIN);
     } else if (hasSignUpData && activateAccount) {
       setStep(1);
     } else if (step === 1 && emailValidateData.data) {
       login(signUpData.data!);
       setStep(0);
-      navigate('/');
+      navigate(RoutesTypes.MAIN);
     }
   }, [step, activateAccount, signUpData.data, emailValidateData.data, navigate]);
 

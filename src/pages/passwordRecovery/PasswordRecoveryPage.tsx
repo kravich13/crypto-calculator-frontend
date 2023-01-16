@@ -10,12 +10,18 @@ import {
 } from '@mui/material';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { INewPasswordForm, NewPassword } from '../../components/passwordRecovery/NewPassword';
 import { SendEmail } from '../../components/passwordRecovery/SendEmail';
 import { EmailCode, PopupAlert } from '../../components/shared';
-import { useAppDispatch, useAppSelector, useAuthContext, useErrorMessage } from '../../hooks';
+import {
+  useAppDispatch,
+  useAppSelector,
+  useAuthContext,
+  useErrorMessage,
+  useTypedNavigate,
+} from '../../hooks';
 import { ISetCodeInput, ISetEmailInput } from '../../models';
+import { RoutesTypes } from '../../navigation';
 import {
   useCodeEmailMutation,
   useForgotPasswordMutation,
@@ -26,7 +32,7 @@ import { userDataSlice } from '../../store/reducers';
 const PasswordRecoveryPage: React.FC = () => {
   const isMin800Width = useMediaQuery('(max-width:800px)');
 
-  const navigate = useNavigate();
+  const navigate = useTypedNavigate();
   const dispatch = useAppDispatch();
 
   const { code: codeUserData, email: emailUserData } = useAppSelector(
@@ -61,7 +67,7 @@ const PasswordRecoveryPage: React.FC = () => {
       login(newPasswordData.data);
       setStep(0);
       dispatch(clearState());
-      navigate('/');
+      navigate(RoutesTypes.MAIN);
     }
   }, [forgotPasswordData.data, codeEmailData.data, newPasswordData.data, navigate]);
 

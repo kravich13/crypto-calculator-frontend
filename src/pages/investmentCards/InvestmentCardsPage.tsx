@@ -1,18 +1,19 @@
 import { Add as AddIcon } from '@mui/icons-material';
 import { Box, Button, Container, Typography } from '@mui/material';
 import React, { useCallback, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { InvestmentCard } from '../../components/investmentCards/InvestmentCard';
+import { useTypedNavigate } from '../../hooks';
+import { RoutesTypes } from '../../navigation';
 
 const InvestmentCardsPage: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate = useTypedNavigate();
 
   const [fakeState, setFakeState] = useState<any>([1, 2]);
 
   const createCard = useCallback(() => {}, []);
 
   const changeCard = useCallback(() => {
-    navigate('/investment-calculator');
+    navigate(RoutesTypes.INVESTMENT_CARD);
   }, []);
 
   const deleteCard = useCallback(() => {}, []);

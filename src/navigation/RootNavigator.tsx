@@ -5,8 +5,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Header } from '../components/header/Header';
 import { useAppSelector } from '../hooks';
 import { PageTitle } from './PageTitle';
-import { privateRoutes } from './PrivateRoutes';
-import { publicRoutes } from './PublicRoutes';
+import { privateRoutes, publicRoutes } from './routes';
+import { RoutesTypes } from './types';
 
 interface IRouterRenderInput {
   id: string;
@@ -15,6 +15,7 @@ interface IRouterRenderInput {
   title: string;
 }
 
+const MainPage = React.lazy(async () => await import('../pages/main/MainPage'));
 const NotFoundPage = React.lazy(async () => await import('../pages/notFound/NotFoundPage'));
 
 export const RootNavigator: React.FC = () => {
@@ -39,7 +40,7 @@ export const RootNavigator: React.FC = () => {
               open={true}
             >
               <Typography variant="h6" fontWeight={600} mr={2}>
-                Page is loading
+                Page is loading...
               </Typography>
               <CircularProgress color="inherit" />
             </Backdrop>
@@ -49,6 +50,10 @@ export const RootNavigator: React.FC = () => {
         <Routes>
           {isAuth ? privateRoutes.map(routerRender) : publicRoutes.map(routerRender)}
 
+          <Route
+            path={RoutesTypes.MAIN}
+            element={<PageTitle Component={MainPage} title="Calculator | Main" />}
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>

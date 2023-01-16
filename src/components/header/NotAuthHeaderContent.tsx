@@ -1,33 +1,21 @@
 import { Button, Container, useMediaQuery } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 import React, { useCallback, useMemo } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-
-const useStyles = makeStyles({
-  container: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  notMobileContainer: {
-    justifyContent: 'flex-end',
-  },
-  mobileContainer: {
-    justifyContent: 'center',
-  },
-});
+import { useLocation } from 'react-router-dom';
+import { useTypedNavigate } from '../../hooks';
+import { RoutesTypes } from '../../navigation';
 
 export const NotAuthHeaderContent: React.FC = () => {
   const isMin500Width = useMediaQuery('(max-width:500px)');
 
-  const navigate = useNavigate();
+  const navigate = useTypedNavigate();
   const { pathname } = useLocation();
 
   const goToLogIn = useCallback(() => {
-    navigate('/login');
+    navigate(RoutesTypes.LOGIN);
   }, [navigate]);
 
   const goToSignUp = useCallback(() => {
-    navigate('/sign-up');
+    navigate(RoutesTypes.SIGN_UP);
   }, [navigate]);
 
   const { isLoginOrRecoveryPage, isSignUpPage, isNotAuthPage } = useMemo(() => {

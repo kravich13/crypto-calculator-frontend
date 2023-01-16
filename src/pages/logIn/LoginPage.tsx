@@ -1,10 +1,11 @@
 import { Box, Button, Container, Grid, Typography } from '@mui/material';
 import { useCallback, useEffect } from 'react';
 import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { PopupAlert, TextInput } from '../../components/shared';
 import { PasswordInput } from '../../components/shared/PasswordInput';
-import { useAuthContext, useErrorMessage } from '../../hooks';
+import { useAuthContext, useErrorMessage, useTypedNavigate } from '../../hooks';
+import { RoutesTypes } from '../../navigation';
 import { useSignInMutation } from '../../services';
 import { emailValidation, logInPasswordValidation } from '../../validation/validation';
 
@@ -15,7 +16,7 @@ interface IFormInputs {
 
 const LogInPage: React.FC = () => {
   const { login } = useAuthContext();
-  const navigate = useNavigate();
+  const navigate = useTypedNavigate();
 
   const { handleSubmit, control, resetField } = useForm<IFormInputs>({ mode: 'onBlur' });
   const { errors, isValid } = useFormState({ control });
@@ -34,7 +35,7 @@ const LogInPage: React.FC = () => {
   useEffect(() => {
     if (data) {
       login(data);
-      navigate('/');
+      navigate(RoutesTypes.MAIN);
     }
   }, [data, navigate]);
 
