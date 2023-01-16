@@ -2,8 +2,9 @@ import { AppBar, Toolbar, Typography, useMediaQuery } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { Container } from '@mui/system';
 import React, { useCallback } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../hooks';
+import { useLocation } from 'react-router-dom';
+import { useAppSelector, useTypedNavigate } from '../../hooks';
+import { RoutesTypes } from '../../navigation';
 import { AuthHeaderContent } from './AuthHeaderContent';
 import { NotAuthHeaderContent } from './NotAuthHeaderContent';
 
@@ -28,13 +29,13 @@ export const Header: React.FC = () => {
   const tollbarClasses = [classes.header, isMin500Width && classes.mobileHeader];
   const logoClasses = [isMin500Width && classes.mobileLogoContainer];
 
-  const navigate = useNavigate();
+  const navigate = useTypedNavigate();
   const { pathname } = useLocation();
   const isAuth = useAppSelector((state) => state.authReducer.isAuth);
 
   const goToMain = useCallback(() => {
     if (pathname !== '/') {
-      navigate('/');
+      navigate(RoutesTypes.MAIN);
     }
   }, [navigate, pathname]);
 

@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useTypedNavigate } from '../../hooks';
+import { RoutesTypes } from '../../navigation';
 
 const NotFoundPage: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate = useTypedNavigate();
 
   useEffect(() => {
-    navigate('/');
+    navigate(RoutesTypes.MAIN);
   }, [navigate]);
 
   return null;

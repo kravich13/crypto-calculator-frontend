@@ -1,10 +1,10 @@
 import { Avatar, Box, Fade, IconButton, Menu, MenuItem } from '@mui/material';
 import React, { useCallback, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAppSelector, useAuthContext } from '../../hooks';
+import { useAppSelector, useAuthContext, useTypedNavigate } from '../../hooks';
+import { RoutesTypes } from '../../navigation';
 
 export const AuthHeaderContent: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate = useTypedNavigate();
   const emailUser = useAppSelector((state) => state.userDataReducer.email);
   const { logout } = useAuthContext();
 
@@ -23,7 +23,7 @@ export const AuthHeaderContent: React.FC = () => {
 
   const onLogout = useCallback(() => {
     setAnchorEl(null);
-    navigate('/');
+    navigate(RoutesTypes.MAIN);
     logout();
   }, [navigate]);
 

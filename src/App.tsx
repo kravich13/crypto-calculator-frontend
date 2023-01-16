@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { AuthProvider } from './context';
-import { RootNavigator } from './navigation/RootNavigator';
+import { RootNavigator } from './navigation';
 
 const useStyles = makeStyles({
   Root: {
