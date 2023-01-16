@@ -7,10 +7,10 @@ interface TextControllerProps {
   name: string;
   label: string;
   control: Control<any, any>;
-  rules: any;
-  error: FieldError | undefined;
+  rules?: any;
+  error?: FieldError;
   autoComplete?: string;
-  onClear: () => void;
+  onClear?: () => void;
 }
 
 export const TextController: React.FC<TextControllerProps> = ({

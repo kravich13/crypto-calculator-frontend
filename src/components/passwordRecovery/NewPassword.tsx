@@ -1,8 +1,8 @@
 import { Box, Button, Grid } from '@mui/material';
 import React from 'react';
 import { SubmitHandler, useForm, useFormState } from 'react-hook-form';
-import { passwordValidation } from '../../validation/validation';
-import { PasswordController } from '../shared';
+import { passwordValidation } from '../../validation';
+import { PasswordController } from '../shared/controllers';
 
 interface INewPasswordProps {
   onConfirm: SubmitHandler<INewPasswordForm>;

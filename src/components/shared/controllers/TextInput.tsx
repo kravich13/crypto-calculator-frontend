@@ -3,7 +3,7 @@ import { IconButton, InputAdornment, TextField, TextFieldProps } from '@mui/mate
 import React, { FC } from 'react';
 
 interface ITextInputProps {
-  onClearValue: () => void;
+  onClearValue?: () => void;
 }
 
 export const TextInput: FC<ITextInputProps & TextFieldProps> = React.forwardRef((props, ref) => {
@@ -12,17 +12,17 @@ export const TextInput: FC<ITextInputProps & TextFieldProps> = React.forwardRef(
   return (
     <TextField
       ref={ref}
-      type={'text'}
-      {...textFieldProps}
+      type="text"
       InputProps={{
-        endAdornment: (
+        endAdornment: Boolean(onClearValue) && (
           <InputAdornment position="end">
-            <IconButton onClick={props.onClearValue} edge="end">
+            <IconButton onClick={onClearValue} edge="end">
               {!!props.value && <Close />}
             </IconButton>
           </InputAdornment>
         ),
       }}
+      {...textFieldProps}
     />
   );
 });

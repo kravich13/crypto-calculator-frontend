@@ -2,9 +2,8 @@ import { Box, Button, Grid } from '@mui/material';
 import React, { useCallback, useState } from 'react';
 import { SubmitHandler, useForm, useFormState } from 'react-hook-form';
 import { ILoginRequest } from '../../models/Auth';
-import { emailValidation, passwordValidation } from '../../validation/validation';
-import { PasswordController } from '../shared';
-import { TextController } from '../shared/TextController';
+import { emailValidation, passwordValidation } from '../../validation';
+import { PasswordController, TextController } from '../shared/controllers';
 
 interface ISignUpProps {
   onConfirm: SubmitHandler<ISignUpForm & INeedActivateAccount>;

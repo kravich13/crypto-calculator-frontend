@@ -23,3 +23,8 @@ export const emailCodeValidation = {
     (validator.isNumeric(value) && Number(value) >= 100000 && Number(value) <= 999999) ||
     'Number range from 100000 to 999999.',
 };
+
+export const mounthlyValidation = {
+  required: true,
+  validate: (value: number) => validator.isInt(String(value)),
+};
