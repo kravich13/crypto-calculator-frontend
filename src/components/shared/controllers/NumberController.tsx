@@ -1,7 +1,6 @@
-import { InputAdornment } from '@mui/material';
+import { InputAdornment, TextField } from '@mui/material';
 import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
-import { TextInput } from './TextInput';
 
 interface NumberControllerProps {
   name: string;
@@ -9,16 +8,18 @@ interface NumberControllerProps {
   control: Control<any, any>;
   rules?: any;
   error?: FieldError;
-  autoComplete?: string;
+  min?: number;
+  max?: number;
 }
 
 export const NumberController: React.FC<NumberControllerProps> = ({
   control,
   label,
   name,
-  autoComplete,
-  error,
   rules,
+  error,
+  min,
+  max,
 }) => {
   return (
     <Controller
@@ -27,20 +28,17 @@ export const NumberController: React.FC<NumberControllerProps> = ({
       control={control}
       rules={rules}
       render={({ field }) => (
-        <TextInput
+        <TextField
           {...field}
           type="number"
           required
           fullWidth
           label={label}
-          autoComplete={autoComplete}
           error={!!error}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          InputProps={{
-            startAdornment: <InputAdornment position="start">$</InputAdornment>,
-          }}
+          helperText={error?.message}
+          InputLabelProps={{ shrink: true }}
+          InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment> }}
+          inputProps={{ min, max }}
         />
       )}
     />

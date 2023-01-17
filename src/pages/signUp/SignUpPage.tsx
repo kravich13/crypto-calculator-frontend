@@ -11,7 +11,7 @@ import {
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { EmailCode, IEmailCodeForm, PopupAlert } from '../../components/shared';
-import { INeedActivateAccount, ISignUpForm, SignUp } from '../../components/signUp/SignUp';
+import { INeedActivateAccount, ISignUpForm, SignUp } from '../../components/signUp';
 import {
   useAppDispatch,
   useAppSelector,

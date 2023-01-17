@@ -1,4 +1,6 @@
 import validator from 'validator';
+import { DateTime } from 'luxon';
+import { MIN_INVEST_DATE } from '../constants';
 
 export const emailValidation = {
   required: true,
@@ -26,5 +28,25 @@ export const emailCodeValidation = {
 
 export const mounthlyValidation = {
   required: true,
-  validate: (value: number) => validator.isInt(String(value)),
+  validate: (value: string) => {
+    const isValidNumber = validator.isInt(value) && Number(value) >= 1 && Number(value) <= 1000000;
+    return isValidNumber || 'Value must be an integer and be between 1 and 1000000.';
+  },
+};
+
+export const startDateValidation = {
+  required: true,
+  validate: (value: string) => {
+    const inputDate = DateTime.fromFormat(value, 'y-LL-dd');
+    const minDate = DateTime.fromFormat(MIN_INVEST_DATE, 'y-LL-dd');
+
+    const isValidDate =
+      inputDate.toMillis() >= minDate.toMillis() &&
+      inputDate.toMillis() <= DateTime.now().toMillis();
+
+    return (
+      isValidDate ||
+      `Date must be between 01/01/2023 and today (${DateTime.now().toFormat('LL/d/y')}).`
+    );
+  },
 };

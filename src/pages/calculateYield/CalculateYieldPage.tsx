@@ -1,12 +1,12 @@
 import { Container, Step, StepLabel, Stepper, Typography, useMediaQuery } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import React, { useMemo, useState } from 'react';
-import { PeriodAndAmount } from '../../components/calculateYield';
+import React, { useCallback, useMemo, useState } from 'react';
+import { SubmitHandler } from 'react-hook-form';
+import { IPeriodAndAmountForm, PeriodAndAmount } from '../../components/calculateYield';
 
 const useStyles = makeStyles({
-  subtitle: {
-    textAlign: 'left',
-    width: '100%',
+  title: {
+    textAlign: 'center',
   },
 });
 
@@ -16,11 +16,17 @@ interface IStepRender {
 
 const CalculateYieldPage: React.FC = () => {
   const isMin500Width = useMediaQuery('(max-width:400px)');
+  const styles = useStyles();
   const [step, setStep] = useState(0);
+
+  const onConfirmStep0: SubmitHandler<IPeriodAndAmountForm> = useCallback(
+    async ({ monthlyInvestment, startDate, endDate }) => {},
+    []
+  );
 
   const stepRender: IStepRender = useMemo(
     () => ({
-      0: <PeriodAndAmount />,
+      0: <PeriodAndAmount onConfirm={onConfirmStep0} />,
     }),
     [step]
   );
@@ -40,6 +46,10 @@ const CalculateYieldPage: React.FC = () => {
       }}
     >
       <Container component="div" maxWidth={isMin500Width ? 'xs' : 'sm'}>
+        <Typography component="h1" variant="h5" marginBottom={6} className={styles.title}>
+          Calculation of profitability from monthly investments in cryptocurrency
+        </Typography>
+
         <Stepper activeStep={step} orientation={isMin500Width ? 'vertical' : 'horizontal'}>
           <Step>
             <StepLabel>
@@ -57,14 +67,14 @@ const CalculateYieldPage: React.FC = () => {
             </StepLabel>
           </Step>
         </Stepper>
+      </Container>
 
-        <Container component="div" maxWidth="xs" sx={{ marginTop: 1 }}>
-          <Typography component="p" variant="subtitle1" marginTop={3}>
-            Select start date, end date and monthly investment
-          </Typography>
+      <Container component="div" maxWidth="xs" sx={{ marginTop: 1 }}>
+        <Typography component="p" variant="subtitle1" marginTop={3}>
+          {step === 0 ? 'Specify the monthly amount for investment, start and end date' : ''}
+        </Typography>
 
-          {stepRender[step]}
-        </Container>
+        {stepRender[step]}
       </Container>
     </Container>
   );

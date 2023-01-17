@@ -1,48 +1,58 @@
 import { Box, Button, Grid } from '@mui/material';
-import React, { useCallback } from 'react';
-import { useForm, useFormState } from 'react-hook-form';
-import { mounthlyValidation } from '../../validation';
+import { DateTime } from 'luxon';
+import React, { useCallback, useMemo } from 'react';
+import { SubmitHandler, useForm, useFormState } from 'react-hook-form';
+import { MIN_INVEST_DATE } from '../../constants';
+import { mounthlyValidation, startDateValidation } from '../../validation';
 import { DateControlller, NumberController } from '../shared/controllers';
 
-interface IPeriodAndAmountForm {
+export interface IPeriodAndAmountForm {
   startDate: string;
   endDate: string;
   monthlyInvestment: number;
 }
 
-export const PeriodAndAmount: React.FC = React.memo(() => {
-  const { handleSubmit, control } = useForm<IPeriodAndAmountForm>({ mode: 'onBlur' });
+interface IPeriodAndAmountProps {
+  onConfirm: SubmitHandler<IPeriodAndAmountForm>;
+}
+
+export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(({ onConfirm }) => {
+  const { control, formState, watch, getFieldState, handleSubmit } = useForm<IPeriodAndAmountForm>({
+    mode: 'onBlur',
+  });
   const { errors, isValid } = useFormState({ control });
 
-  const onClickNext = useCallback(() => {}, []);
+  const startState = getFieldState('startDate', formState);
+  const startValue = watch('startDate');
+  const startDateIsValid = Boolean(!startState.invalid && startState.isTouched);
+
+  const todayDate = useMemo(() => DateTime.now().toFormat('y-LL-dd'), []);
+
+  const endDateValidate = useCallback(
+    (value: string) => {
+      const inputDate = DateTime.fromFormat(value, 'y-LL-dd');
+      const minDate = DateTime.fromFormat(startValue, 'y-LL-dd');
+
+      const isValidDate = inputDate.toMillis() >= minDate.toMillis();
+
+      return isValidDate || 'End date must be greater than or equal to start date.';
+    },
+    [startValue]
+  );
+
+  const onClickNext = useCallback(() => {
+    handleSubmit((data) => {
+      onConfirm(data);
+    })();
+  }, [handleSubmit, onConfirm]);
 
   const onSubmit = useCallback((event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    handleSubmit((data) => {})();
   }, []);
 
   return (
     <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 3 }}>
       <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <DateControlller
-            name="startDate"
-            label="Start date"
-            control={control}
-            error={errors.startDate}
-          />
-        </Grid>
-
-        <Grid item xs={12}>
-          <DateControlller
-            name="endDate"
-            label="End date"
-            control={control}
-            error={errors.endDate}
-          />
-        </Grid>
-
         <Grid item xs={12}>
           <NumberController
             name="monthlyInvestment"
@@ -50,6 +60,33 @@ export const PeriodAndAmount: React.FC = React.memo(() => {
             control={control}
             error={errors.monthlyInvestment}
             rules={mounthlyValidation}
+            min={1}
+            max={1000000}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <DateControlller
+            name="startDate"
+            label="Start date (mm/dd/yyyy)"
+            control={control}
+            error={errors.startDate}
+            rules={startDateValidation}
+            minDate={MIN_INVEST_DATE}
+            maxDate={todayDate}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <DateControlller
+            name="endDate"
+            label="End date (mm/dd/yyyy)"
+            control={control}
+            error={errors.endDate}
+            rules={{ required: true, validate: endDateValidate }}
+            minDate={startValue || MIN_INVEST_DATE}
+            maxDate={todayDate}
+            disabled={!startDateIsValid}
           />
         </Grid>
       </Grid>
