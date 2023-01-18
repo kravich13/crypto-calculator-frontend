@@ -2,7 +2,7 @@ import { Container, Step, StepLabel, Stepper, Typography, useMediaQuery } from '
 import { makeStyles } from '@mui/styles';
 import React, { useCallback, useMemo, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
-import { IPeriodAndAmountForm, PeriodAndAmount } from '../../components/calculateYield';
+import { CoinList, IPeriodAndAmountForm, PeriodAndAmount } from '../../components/calculateYield';
 
 const useStyles = makeStyles({
   title: {
@@ -17,7 +17,7 @@ interface IStepRender {
 const CalculateYieldPage: React.FC = () => {
   const isMin500Width = useMediaQuery('(max-width:400px)');
   const styles = useStyles();
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(1);
 
   const onConfirmStep0: SubmitHandler<IPeriodAndAmountForm> = useCallback(
     async ({ monthlyInvestment, startDate, endDate }) => {},
@@ -27,6 +27,7 @@ const CalculateYieldPage: React.FC = () => {
   const stepRender: IStepRender = useMemo(
     () => ({
       0: <PeriodAndAmount onConfirm={onConfirmStep0} />,
+      1: <CoinList />,
     }),
     [step]
   );
