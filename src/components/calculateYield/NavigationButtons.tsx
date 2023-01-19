@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
 
-const useStyles = makeStyles({
+export const useNavButtonsStyles = makeStyles({
   container: {
     padding: '0 11px',
     marginTop: 10,
@@ -23,21 +23,22 @@ const useStyles = makeStyles({
     borderRadius: 4,
     fontWeight: 600,
   },
-  text: {
-    paddingLeft: 5,
-  },
+  firstButton: { marginRight: 5 },
+  text: { paddingLeft: 5 },
 });
 
-export const NavigationButtons: React.FC = () => {
-  const styles = useStyles();
+export const NavigationButtons: React.FC = React.memo(() => {
+  const styles = useNavButtonsStyles();
+
+  const buttonsProps = { fontSize: 'small', color: '#1565c0' };
 
   return (
     <Box component="div" className={styles.container}>
       <Box component="div" className={styles.containerNavigate}>
-        <Box fontSize="small" color="blue" className={styles.button}>
+        <Box {...buttonsProps} className={[styles.button, styles.firstButton].join(' ')}>
           ↑
         </Box>
-        <Box fontSize="small" color="blue" className={styles.button}>
+        <Box {...buttonsProps} className={styles.button}>
           ↓
         </Box>
         <Typography fontSize="small" color="GrayText" className={styles.text}>
@@ -46,7 +47,7 @@ export const NavigationButtons: React.FC = () => {
       </Box>
 
       <Box component="div" className={styles.containerNavigate}>
-        <Box fontSize="small" color="blue" className={styles.button}>
+        <Box {...buttonsProps} className={styles.button}>
           ESC
         </Box>
         <Typography fontSize="small" color="GrayText" className={styles.text}>
@@ -55,7 +56,7 @@ export const NavigationButtons: React.FC = () => {
       </Box>
 
       <Box component="div" className={styles.containerNavigate}>
-        <Box fontSize="small" color="blue" className={styles.button}>
+        <Box {...buttonsProps} className={styles.button}>
           ↵
         </Box>
         <Typography fontSize="small" color="GrayText" className={styles.text}>
@@ -64,4 +65,4 @@ export const NavigationButtons: React.FC = () => {
       </Box>
     </Box>
   );
-};
+});
