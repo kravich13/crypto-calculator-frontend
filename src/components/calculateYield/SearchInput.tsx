@@ -1,7 +1,9 @@
 import { SearchOutlined } from '@mui/icons-material';
 import { Box, InputAdornment } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useAppDispatch } from '../../hooks';
+import { calculatorSlice } from '../../store/reducers';
 import { TextInput } from '../shared/controllers';
 import { IMockData } from './CoinList';
 import { NavigationButtons } from './NavigationButtons';
@@ -15,8 +17,11 @@ const useStyles = makeStyles({
   searchContainer: {
     position: 'absolute',
     background: 'white',
-    border: '1px solid black',
     padding: '8px',
+    borderLeft: '2px solid #1876d1',
+    borderBottom: '2px solid #1876d1',
+    borderRight: '2px solid #1876d1',
+    borderRadius: 4,
   },
 });
 
@@ -26,16 +31,24 @@ interface ISearchInput {
 }
 
 export const SearchInput: React.FC<ISearchInput> = ({ searchData, label }) => {
+  const { addCoinToInvestment } = calculatorSlice.actions;
+  const dispatch = useAppDispatch();
+
   const $container = useRef<HTMLDivElement>();
   const $searchInput = useRef<HTMLInputElement>();
 
   const styles = useStyles();
   const [searchValue, setSearchValue] = useState('');
   const [showElements, setShowElements] = useState(false);
-  const [selectedId, setSelectedId] = useState(searchData[0].id);
+  const [selectedId, setSelectedId] = useState<string>();
+
+  useEffect(() => {
+    setSelectedId(searchData[0]?.id);
+  }, [searchData]);
 
   const onClickSelectedItem = useCallback((id: string) => {
     setSelectedId(id);
+    dispatch(addCoinToInvestment(id));
   }, []);
 
   const onChangeSearch = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,34 +64,33 @@ export const SearchInput: React.FC<ISearchInput> = ({ searchData, label }) => {
   }, []);
 
   const onBlurSearch = useCallback(() => {
-    console.log('tut');
     setShowElements(false);
     onClearSearch();
   }, []);
 
   const onKeyDownSearch = useCallback(
     (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (searchData.length === 0) {
-        return;
+      if (searchData.length > 0) {
+        if (event.code === 'ArrowUp') {
+          event.preventDefault();
+
+          setSelectedId((prevId) => {
+            const currentIndex = searchData.findIndex(({ id }) => id === prevId);
+            return searchData[currentIndex === 0 ? searchData.length - 1 : currentIndex - 1].id;
+          });
+        } else if (event.code === 'ArrowDown') {
+          event.preventDefault();
+
+          setSelectedId((prevId) => {
+            const currentIndex = searchData.findIndex(({ id }) => id === prevId);
+            return searchData[currentIndex === searchData.length - 1 ? 0 : currentIndex + 1].id;
+          });
+        }
       }
 
-      if (event.code === 'ArrowUp') {
-        event.preventDefault();
-
-        setSelectedId((prevId) => {
-          const currentIndex = searchData.findIndex(({ id }) => id === prevId);
-          return searchData[currentIndex === 0 ? searchData.length - 1 : currentIndex - 1].id;
-        });
-      } else if (event.code === 'ArrowDown') {
-        event.preventDefault();
-
-        setSelectedId((prevId) => {
-          const currentIndex = searchData.findIndex(({ id }) => id === prevId);
-          return searchData[currentIndex === searchData.length - 1 ? 0 : currentIndex + 1].id;
-        });
-      } else if (event.code === 'Escape') {
+      if (event.code === 'Escape') {
         $searchInput.current?.blur();
-      } else if (event.code === 'Enter') {
+      } else if (event.code === 'Enter' && selectedId) {
         onClickSelectedItem(selectedId);
         $searchInput.current?.blur();
       }
@@ -87,14 +99,16 @@ export const SearchInput: React.FC<ISearchInput> = ({ searchData, label }) => {
   );
 
   const renderItem = useCallback(
-    (item: IMockData) => (
-      <SearchRenderItem
-        key={item.id}
-        item={item}
-        isSelected={item.id === selectedId}
-        onClickSelectedItem={onClickSelectedItem}
-      />
-    ),
+    (item: IMockData) => {
+      return (
+        <SearchRenderItem
+          key={item.id}
+          item={item}
+          isSelected={item.id === selectedId}
+          onClickSelectedItem={onClickSelectedItem}
+        />
+      );
+    },
     [selectedId]
   );
 

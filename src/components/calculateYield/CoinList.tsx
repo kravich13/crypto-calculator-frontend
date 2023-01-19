@@ -1,7 +1,8 @@
 import { Box, Button, Grid } from '@mui/material';
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useForm, useFormState } from 'react-hook-form';
 import { v4 as uuid } from 'uuid';
+import { useAppSelector } from '../../hooks';
 import { SearchInput } from './SearchInput';
 
 interface IConinListForm {
@@ -24,24 +25,31 @@ const mockData = [
 ];
 
 export const CoinList: React.FC = React.memo(() => {
+  const addedCoinsId = useAppSelector((state) => state.calculatorReducer.addedCoinsId);
+
   const { control, handleSubmit } = useForm<IConinListForm>({ mode: 'onBlur' });
   const { errors, isValid } = useFormState({ control });
 
+  const searchData = useMemo(
+    () => mockData.filter(({ id }) => !addedCoinsId.includes(id)),
+    [addedCoinsId, mockData]
+  );
+
   const onSubmit = useCallback((event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
-  }, []);
-
-  const onClickSelectedItem = useCallback((id: string) => {
-    console.log(id);
   }, []);
 
   return (
     <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 3 }}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <SearchInput searchData={mockData} label="Search by name or ticker" />
+          <SearchInput searchData={searchData} label="Search by name or ticker" />
         </Grid>
       </Grid>
+
+      {addedCoinsId.map((value) => (
+        <Box key={value}>{value}</Box>
+      ))}
 
       <Box style={{ display: 'flex', justifyContent: 'space-between' }}>
         <Button

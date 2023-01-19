@@ -1,17 +1,19 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface ICalculatorSlice {
   investmentCards: any[];
+  addedCoinsId: string[];
   profitPercentage: string;
-  monthlyAmount: number;
+  mounthlyInvestment: number;
   startDate?: string;
   endDate?: string;
 }
 
 const initialState: ICalculatorSlice = {
   investmentCards: [],
+  addedCoinsId: [],
   profitPercentage: '',
-  monthlyAmount: 0,
+  mounthlyInvestment: 0,
   startDate: undefined,
   endDate: undefined,
 };
@@ -22,6 +24,9 @@ export const calculatorSlice = createSlice({
   reducers: {
     clearState() {
       return { ...initialState };
+    },
+    addCoinToInvestment(state, { payload }: PayloadAction<string>) {
+      state.addedCoinsId.push(payload);
     },
   },
 });
