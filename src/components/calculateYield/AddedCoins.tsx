@@ -7,16 +7,7 @@ import { calculatorSlice } from '../../store/reducers';
 import { TextInput } from '../shared/controllers';
 import { IMockData } from './CoinList';
 
-const DELETE_BUTTON_SIZE = 28;
-const MR_INPUT = 10;
-
 const useStyles = makeStyles({
-  renderItemContainer: {
-    '& .delete-added-coin': { display: 'none' },
-    '&:hover .delete-added-coin': { display: 'flex' },
-    '& .percent-coin-input': { marginRight: DELETE_BUTTON_SIZE + MR_INPUT },
-    '&:hover .percent-coin-input': { marginRight: MR_INPUT },
-  },
   formContainer: {
     display: 'flex',
     alignItems: 'center',
@@ -30,14 +21,11 @@ const useStyles = makeStyles({
   },
   flexContainer: { display: 'flex' },
   nameText: { paddingRight: 5 },
-  input: {
-    width: 60,
-    marginRight: 14,
-  },
+  input: { width: 80 },
   deleteButton: {
     alignSelf: 'center',
-    width: DELETE_BUTTON_SIZE,
-    height: DELETE_BUTTON_SIZE,
+    width: 28,
+    height: 28,
   },
 });
 
@@ -54,7 +42,7 @@ export const AddedCoins: React.FC<IAddedCoinsProps> = React.memo(
 
     const renderItem = useCallback(
       ({ id, name, ticker }: IMockData) => (
-        <Box key={id} className={styles.renderItemContainer}>
+        <Box key={id}>
           <Box className={styles.formContainer}>
             <Box className={styles.flexContainer}>
               <Typography className={styles.nameText}>{name}</Typography>
@@ -67,6 +55,7 @@ export const AddedCoins: React.FC<IAddedCoinsProps> = React.memo(
                 size="small"
                 className={['percent-coin-input', styles.input].join(' ')}
                 InputProps={{ startAdornment: <InputAdornment position="start">%</InputAdornment> }}
+                sx={{ mr: 2 }}
               />
 
               <IconButton
@@ -101,6 +90,7 @@ export const AddedCoins: React.FC<IAddedCoinsProps> = React.memo(
             variant="outlined"
             style={{ textTransform: 'none' }}
             onClick={distributeEqually}
+            disabled={addedCoins.length === 0}
           >
             Distribute equally
           </Button>

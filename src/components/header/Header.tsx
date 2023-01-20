@@ -40,14 +40,9 @@ export const Header: React.FC = () => {
   }, [navigate, pathname]);
 
   return (
-    <AppBar position="relative">
+    <AppBar position="sticky">
       <Toolbar className={tollbarClasses.join(' ')}>
-        <Container
-          component="div"
-          maxWidth="xl"
-          sx={{ flexGrow: 1 }}
-          className={logoClasses.join(' ')}
-        >
+        <Container component="div" maxWidth="xl" className={logoClasses.join(' ')}>
           <Typography
             component={'span'}
             variant={'h5'}

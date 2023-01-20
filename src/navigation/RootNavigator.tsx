@@ -1,5 +1,4 @@
 import { Backdrop, Box, CircularProgress, Typography } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 import { Container } from '@mui/system';
 import React, { Suspense, useCallback } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -19,19 +18,8 @@ interface IRouterRenderInput {
 const MainPage = React.lazy(async () => await import('../pages/main/MainPage'));
 const NotFoundPage = React.lazy(async () => await import('../pages/notFound/NotFoundPage'));
 
-const useStyles = makeStyles({
-  Root: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
-
 export const RootNavigator: React.FC = () => {
   const isAuth = useAppSelector((state) => state.authReducer.isAuth);
-  const classes = useStyles();
 
   const routerRender = useCallback(
     ({ id, path, component, title }: IRouterRenderInput) => (
@@ -42,7 +30,7 @@ export const RootNavigator: React.FC = () => {
 
   return (
     <Router>
-      <Box className={classes.Root} component="section">
+      <Box component="section">
         <Header />
 
         <Suspense

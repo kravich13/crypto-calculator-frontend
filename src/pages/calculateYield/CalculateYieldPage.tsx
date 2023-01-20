@@ -3,6 +3,7 @@ import { makeStyles } from '@mui/styles';
 import React, { useCallback, useMemo, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { CoinList, IPeriodAndAmountForm, PeriodAndAmount } from '../../components/calculateYield';
+import { globalPageStyles } from '../../styles';
 
 const useStyles = makeStyles({
   title: {
@@ -33,18 +34,7 @@ const CalculateYieldPage: React.FC = () => {
   );
 
   return (
-    <Container
-      component="main"
-      maxWidth="xl"
-      sx={{
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        // padding: 3,
-      }}
-    >
+    <Container component="main" maxWidth="xl" sx={globalPageStyles}>
       <Container component="div" maxWidth={isMin500Width ? 'xs' : 'sm'}>
         <Typography component="h1" variant="h5" marginBottom={6} className={styles.title}>
           Calculation of profitability from monthly investments in cryptocurrency
@@ -68,7 +58,6 @@ const CalculateYieldPage: React.FC = () => {
           </Step>
         </Stepper>
       </Container>
-
       <Container component="div" maxWidth="xs" sx={{ marginTop: 1 }}>
         <Typography component="p" variant="subtitle1" marginTop={3}>
           {step === 0 ? 'Specify the monthly amount for investment, start and end date' : ''}
