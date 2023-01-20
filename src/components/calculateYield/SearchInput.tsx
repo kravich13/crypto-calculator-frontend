@@ -40,15 +40,15 @@ export const SearchInput: React.FC<ISearchInput> = ({ searchData, label }) => {
   const styles = useStyles();
   const [searchValue, setSearchValue] = useState('');
   const [showElements, setShowElements] = useState(false);
-  const [selectedId, setSelectedId] = useState<string>();
+  const [selectedItem, setSelectedItem] = useState<IMockData>();
 
   useEffect(() => {
-    setSelectedId(searchData[0]?.id);
+    setSelectedItem(searchData[0]);
   }, [searchData]);
 
-  const onClickSelectedItem = useCallback((id: string) => {
-    setSelectedId(id);
-    dispatch(addCoinToInvestment(id));
+  const onClickSelectedItem = useCallback((item: IMockData) => {
+    setSelectedItem(item);
+    dispatch(addCoinToInvestment(item));
   }, []);
 
   const onChangeSearch = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,28 +74,28 @@ export const SearchInput: React.FC<ISearchInput> = ({ searchData, label }) => {
         if (event.code === 'ArrowUp') {
           event.preventDefault();
 
-          setSelectedId((prevId) => {
-            const currentIndex = searchData.findIndex(({ id }) => id === prevId);
-            return searchData[currentIndex === 0 ? searchData.length - 1 : currentIndex - 1].id;
+          setSelectedItem((prev) => {
+            const currentIndex = searchData.findIndex(({ id }) => id === prev?.id);
+            return searchData[currentIndex === 0 ? searchData.length - 1 : currentIndex - 1];
           });
         } else if (event.code === 'ArrowDown') {
           event.preventDefault();
 
-          setSelectedId((prevId) => {
-            const currentIndex = searchData.findIndex(({ id }) => id === prevId);
-            return searchData[currentIndex === searchData.length - 1 ? 0 : currentIndex + 1].id;
+          setSelectedItem((prev) => {
+            const currentIndex = searchData.findIndex(({ id }) => id === prev?.id);
+            return searchData[currentIndex === searchData.length - 1 ? 0 : currentIndex + 1];
           });
         }
       }
 
       if (event.code === 'Escape') {
         $searchInput.current?.blur();
-      } else if (event.code === 'Enter' && selectedId) {
-        onClickSelectedItem(selectedId);
+      } else if (event.code === 'Enter' && selectedItem) {
+        onClickSelectedItem(selectedItem);
         $searchInput.current?.blur();
       }
     },
-    [searchData, selectedId]
+    [searchData, selectedItem]
   );
 
   const renderItem = useCallback(
@@ -104,12 +104,12 @@ export const SearchInput: React.FC<ISearchInput> = ({ searchData, label }) => {
         <SearchRenderItem
           key={item.id}
           item={item}
-          isSelected={item.id === selectedId}
+          isSelected={item.id === selectedItem?.id}
           onClickSelectedItem={onClickSelectedItem}
         />
       );
     },
-    [selectedId]
+    [selectedItem]
   );
 
   return (

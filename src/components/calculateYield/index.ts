@@ -1,3 +1,4 @@
+export * from './AddedCoins';
 export * from './CoinList';
 export * from './NavigationButtons';
 export * from './PeriodAndAmount';

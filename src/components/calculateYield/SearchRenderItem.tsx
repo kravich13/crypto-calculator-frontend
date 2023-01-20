@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { IMockData } from './CoinList';
 import { useNavButtonsStyles } from './NavigationButtons';
 
@@ -32,7 +32,7 @@ const useStyles = makeStyles({
 interface ISearchRenderItemProps {
   item: IMockData;
   isSelected: boolean;
-  onClickSelectedItem: (id: string) => void;
+  onClickSelectedItem: (item: IMockData) => void;
 }
 
 export const SearchRenderItem: React.FC<ISearchRenderItemProps> = React.memo(
@@ -47,7 +47,7 @@ export const SearchRenderItem: React.FC<ISearchRenderItemProps> = React.memo(
         component="div"
         key={id}
         className={containerClasses.join(' ')}
-        onMouseDown={() => onClickSelectedItem(id)}
+        onMouseDown={() => onClickSelectedItem({ id, name, ticker })}
       >
         <Box component="div" className={styles.cryptoContainer}>
           <Typography className={styles.cryptoName}>{name}</Typography>

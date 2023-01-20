@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IMockData } from '../../components/calculateYield';
 
 interface ICalculatorSlice {
   investmentCards: any[];
-  addedCoinsId: string[];
+  addedCoins: IMockData[];
   profitPercentage: string;
   mounthlyInvestment: number;
   startDate?: string;
@@ -11,7 +12,7 @@ interface ICalculatorSlice {
 
 const initialState: ICalculatorSlice = {
   investmentCards: [],
-  addedCoinsId: [],
+  addedCoins: [],
   profitPercentage: '',
   mounthlyInvestment: 0,
   startDate: undefined,
@@ -25,8 +26,11 @@ export const calculatorSlice = createSlice({
     clearState() {
       return { ...initialState };
     },
-    addCoinToInvestment(state, { payload }: PayloadAction<string>) {
-      state.addedCoinsId.push(payload);
+    addCoinToInvestment(state, { payload }: PayloadAction<IMockData>) {
+      state.addedCoins.push(payload);
+    },
+    removeCoinToInvestment(state, { payload }: PayloadAction<string>) {
+      state.addedCoins.filter(({ id }) => id !== payload);
     },
   },
 });

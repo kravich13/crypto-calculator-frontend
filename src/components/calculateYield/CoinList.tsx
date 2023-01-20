@@ -3,6 +3,7 @@ import React, { useCallback, useMemo } from 'react';
 import { useForm, useFormState } from 'react-hook-form';
 import { v4 as uuid } from 'uuid';
 import { useAppSelector } from '../../hooks';
+import { AddedCoins } from './AddedCoins';
 import { SearchInput } from './SearchInput';
 
 interface IConinListForm {
@@ -25,14 +26,14 @@ const mockData = [
 ];
 
 export const CoinList: React.FC = React.memo(() => {
-  const addedCoinsId = useAppSelector((state) => state.calculatorReducer.addedCoinsId);
+  const addedCoins = useAppSelector((state) => state.calculatorReducer.addedCoins);
 
   const { control, handleSubmit } = useForm<IConinListForm>({ mode: 'onBlur' });
   const { errors, isValid } = useFormState({ control });
 
   const searchData = useMemo(
-    () => mockData.filter(({ id }) => !addedCoinsId.includes(id)),
-    [addedCoinsId, mockData]
+    () => mockData.filter(({ id }) => !addedCoins.find((addedCoin) => addedCoin.id === id)),
+    [addedCoins, mockData]
   );
 
   const onSubmit = useCallback((event: React.ChangeEvent<HTMLFormElement>) => {
@@ -47,9 +48,7 @@ export const CoinList: React.FC = React.memo(() => {
         </Grid>
       </Grid>
 
-      {addedCoinsId.map((value) => (
-        <Box key={value}>{value}</Box>
-      ))}
+      <AddedCoins addedCoins={addedCoins} />
 
       <Box style={{ display: 'flex', justifyContent: 'space-between' }}>
         <Button
