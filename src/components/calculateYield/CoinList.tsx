@@ -7,13 +7,17 @@ import { AddedCoins } from './AddedCoins';
 import { SearchInput } from './SearchInput';
 
 interface IConinListForm {
-  selectedCoin: string;
+  [key: string]: number;
 }
 
 export interface IMockData {
   id: string;
   name: string;
   ticker: string;
+}
+
+export interface IAddedCoins extends IMockData {
+  percent: number;
 }
 
 const mockData = [
@@ -36,19 +40,19 @@ export const CoinList: React.FC = React.memo(() => {
     [addedCoins, mockData]
   );
 
+  const distributeEqually = useCallback(() => {}, []);
+
   const onSubmit = useCallback((event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
   }, []);
 
   return (
     <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 3 }}>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <SearchInput searchData={searchData} label="Search by name or ticker" />
-        </Grid>
-      </Grid>
+      <SearchInput searchData={searchData} label="Search by name or ticker" />
 
-      <AddedCoins addedCoins={addedCoins} />
+      <Box mt={3}>
+        <AddedCoins addedCoins={addedCoins} distributeEqually={distributeEqually} />
+      </Box>
 
       <Box style={{ display: 'flex', justifyContent: 'space-between' }}>
         <Button

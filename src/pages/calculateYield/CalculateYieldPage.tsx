@@ -42,8 +42,7 @@ const CalculateYieldPage: React.FC = () => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
-        padding: 3,
+        // padding: 3,
       }}
     >
       <Container component="div" maxWidth={isMin500Width ? 'xs' : 'sm'}>
