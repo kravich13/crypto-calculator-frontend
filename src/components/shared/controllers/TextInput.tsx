@@ -6,26 +6,26 @@ interface ITextInputProps {
   onClearValue?: () => void;
 }
 
-export const TextInput: FC<ITextInputProps & TextFieldProps> = React.forwardRef(
-  (props, inputRef) => {
-    const { onClearValue, InputProps, ...textFieldProps } = props;
+export type TextInputProps = TextFieldProps & ITextInputProps;
 
-    return (
-      <TextField
-        inputRef={inputRef}
-        type="text"
-        InputProps={{
-          ...InputProps,
-          endAdornment: Boolean(onClearValue) && (
-            <InputAdornment position="end">
-              <IconButton onClick={onClearValue} edge="end">
-                {!!props.value && <Close />}
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-        {...textFieldProps}
-      />
-    );
-  }
-);
+export const TextInput: FC<TextInputProps> = React.forwardRef((props, inputRef) => {
+  const { type, onClearValue, InputProps, ...textFieldProps } = props;
+
+  return (
+    <TextField
+      inputRef={inputRef}
+      type={type || 'text'}
+      InputProps={{
+        ...InputProps,
+        endAdornment: Boolean(onClearValue) && (
+          <InputAdornment position="end">
+            <IconButton onClick={onClearValue} edge="end">
+              {!!props.value && <Close />}
+            </IconButton>
+          </InputAdornment>
+        ),
+      }}
+      {...textFieldProps}
+    />
+  );
+});

@@ -2,10 +2,8 @@ import { SearchOutlined } from '@mui/icons-material';
 import { Box, InputAdornment } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useAppDispatch } from '../../hooks';
-import { calculatorSlice } from '../../store/reducers';
-import { TextInput } from '../shared/controllers';
-import { IMockData } from './CoinList';
+import { TextInput } from '../../shared/controllers';
+import { IAddedCoin, IMockData } from './CoinList';
 import { NavigationButtons } from './NavigationButtons';
 import { SearchRenderItem } from './SearchRenderItem';
 
@@ -28,12 +26,10 @@ const useStyles = makeStyles({
 interface ISearchInput {
   searchData: IMockData[];
   label: string;
+  prependSelectedCoin: (coin: IAddedCoin) => void;
 }
 
-export const SearchInput: React.FC<ISearchInput> = ({ searchData, label }) => {
-  const { addCoinToInvestment } = calculatorSlice.actions;
-  const dispatch = useAppDispatch();
-
+export const SearchInput: React.FC<ISearchInput> = ({ searchData, label, prependSelectedCoin }) => {
   const $container = useRef<HTMLDivElement>();
   const $searchInput = useRef<HTMLInputElement>();
 
@@ -46,10 +42,15 @@ export const SearchInput: React.FC<ISearchInput> = ({ searchData, label }) => {
     setSelectedItem(searchData[0]);
   }, [searchData]);
 
-  const onClickSelectedItem = useCallback((item: IMockData) => {
-    setSelectedItem(item);
-    dispatch(addCoinToInvestment(item));
-  }, []);
+  const onClickSelectedItem = useCallback(
+    (item: IMockData) => {
+      const { id, ...itemData } = item;
+
+      setSelectedItem(item);
+      prependSelectedCoin({ ...itemData, percent: 0, primaryId: id });
+    },
+    [prependSelectedCoin]
+  );
 
   const onChangeSearch = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
@@ -99,16 +100,14 @@ export const SearchInput: React.FC<ISearchInput> = ({ searchData, label }) => {
   );
 
   const renderItem = useCallback(
-    (item: IMockData) => {
-      return (
-        <SearchRenderItem
-          key={item.id}
-          item={item}
-          isSelected={item.id === selectedItem?.id}
-          onClickSelectedItem={onClickSelectedItem}
-        />
-      );
-    },
+    (item: IMockData) => (
+      <SearchRenderItem
+        key={item.id}
+        item={item}
+        isSelected={item.id === selectedItem?.id}
+        onClickSelectedItem={onClickSelectedItem}
+      />
+    ),
     [selectedItem]
   );
 

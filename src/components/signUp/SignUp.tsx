@@ -48,14 +48,15 @@ export const SignUp: React.FC<ISignUpProps> = React.memo(({ onConfirm }) => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <TextController
-            inputType={'email'}
-            name="email"
-            label="Email"
-            control={control}
-            rules={emailValidation}
-            error={errors.email}
-            autoComplete="email"
-            onClear={onClear}
+            controllerProps={{ control, name: 'email', rules: emailValidation }}
+            inputProps={{
+              label: 'Email',
+              error: Boolean(errors.email),
+              helperText: errors.email?.message,
+              autoComplete: 'email',
+              fullWidth: true,
+              onClearValue: onClear,
+            }}
           />
         </Grid>
 

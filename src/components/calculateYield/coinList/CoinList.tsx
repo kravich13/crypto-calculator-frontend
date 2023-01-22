@@ -1,23 +1,26 @@
-import { Box, Button, Grid } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import React, { useCallback, useMemo } from 'react';
-import { useForm, useFormState } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { v4 as uuid } from 'uuid';
-import { useAppSelector } from '../../hooks';
 import { AddedCoins } from './AddedCoins';
 import { SearchInput } from './SearchInput';
 
-interface IConinListForm {
-  [key: string]: number;
-}
-
-export interface IMockData {
-  id: string;
+export interface IMainMockData {
   name: string;
   ticker: string;
 }
 
-export interface IAddedCoins extends IMockData {
+export interface IMockData extends IMainMockData {
+  id: string;
+}
+
+export interface IAddedCoin extends IMainMockData {
   percent: number;
+  primaryId: string;
+}
+
+export interface IFormState {
+  addedCoins: IAddedCoin[];
 }
 
 const mockData = [
@@ -30,28 +33,33 @@ const mockData = [
 ];
 
 export const CoinList: React.FC = React.memo(() => {
-  const addedCoins = useAppSelector((state) => state.calculatorReducer.addedCoins);
-
-  const { control, handleSubmit } = useForm<IConinListForm>({ mode: 'onBlur' });
-  const { errors, isValid } = useFormState({ control });
+  const { control, handleSubmit } = useForm<IFormState>({ mode: 'onBlur' });
+  const { fields: addedCoins, prepend, remove } = useFieldArray({ control, name: 'addedCoins' });
 
   const searchData = useMemo(
-    () => mockData.filter(({ id }) => !addedCoins.find((addedCoin) => addedCoin.id === id)),
-    [addedCoins, mockData]
+    () => mockData.filter(({ id }) => !addedCoins.find(({ primaryId }) => primaryId === id)),
+    [addedCoins]
   );
 
   const distributeEqually = useCallback(() => {}, []);
 
-  const onSubmit = useCallback((event: React.ChangeEvent<HTMLFormElement>) => {
-    event.preventDefault();
-  }, []);
+  const onSubmit = useCallback((data: IFormState) => {}, []);
 
   return (
-    <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 3 }}>
-      <SearchInput searchData={searchData} label="Search by name or ticker" />
+    <Box>
+      <SearchInput
+        searchData={searchData}
+        label="Search by name or ticker"
+        prependSelectedCoin={prepend}
+      />
 
-      <Box mt={3}>
-        <AddedCoins addedCoins={addedCoins} distributeEqually={distributeEqually} />
+      <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} mt={3}>
+        <AddedCoins
+          addedCoins={addedCoins}
+          control={control}
+          removeAddedCoin={remove}
+          distributeEqually={distributeEqually}
+        />
       </Box>
 
       <Box style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -67,7 +75,6 @@ export const CoinList: React.FC = React.memo(() => {
           sx={{ mt: 3, mb: 2, textTransform: 'none', width: '120px' }}
           type="submit"
           variant="contained"
-          disabled={!isValid}
         >
           Calculate
         </Button>

@@ -2,9 +2,9 @@ import { Box, Button, Grid } from '@mui/material';
 import { DateTime } from 'luxon';
 import React, { useCallback, useMemo } from 'react';
 import { SubmitHandler, useForm, useFormState } from 'react-hook-form';
-import { MIN_INVEST_DATE } from '../../constants';
-import { mounthlyValidation, startDateValidation } from '../../validation';
-import { DateControlller, NumberController } from '../shared/controllers';
+import { MIN_INVEST_DATE } from '../../../constants';
+import { mounthlyValidation, startDateValidation } from '../../../validation';
+import { DateControlller, NumberController } from '../../shared/controllers';
 
 export interface IPeriodAndAmountForm {
   startDate: string;

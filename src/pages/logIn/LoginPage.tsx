@@ -56,14 +56,16 @@ const LogInPage: React.FC = () => {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextController
-                inputType={'email'}
-                name="email"
-                label="Email"
-                control={control}
-                rules={emailValidation}
-                error={errors.email}
-                autoComplete="email"
-                onClear={onClearEmail}
+                controllerProps={{ control, name: 'email', rules: emailValidation }}
+                inputProps={{
+                  type: 'email',
+                  label: 'Email',
+                  error: Boolean(errors.email),
+                  helperText: errors.email?.message,
+                  autoComplete: 'email',
+                  fullWidth: true,
+                  onClearValue: onClearEmail,
+                }}
               />
             </Grid>
 
