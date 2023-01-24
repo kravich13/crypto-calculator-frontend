@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from '@mui/material';
 import React, { useCallback, useMemo } from 'react';
-import { useFieldArray, useForm, useFormState } from 'react-hook-form';
+import { SubmitHandler, useFieldArray, useForm, useFormState } from 'react-hook-form';
 import { v4 as uuid } from 'uuid';
 import { addedCoinsValidation } from '../../../validation';
 import { AddedCoins } from './AddedCoins';
@@ -20,7 +20,7 @@ export interface IAddedCoin extends IMainMockData {
   primaryId: string;
 }
 
-export interface IFormState {
+export interface ICoinListForm {
   addedCoins: IAddedCoin[];
 }
 
@@ -35,10 +35,11 @@ const mockData = [
 
 interface ICoinListProps {
   onBack: () => void;
+  onConfirm: SubmitHandler<ICoinListForm>;
 }
 
-export const CoinList: React.FC<ICoinListProps> = React.memo(({ onBack }) => {
-  const { control, handleSubmit, setValue } = useForm<IFormState>({ mode: 'onBlur' });
+export const CoinList: React.FC<ICoinListProps> = React.memo(({ onBack, onConfirm }) => {
+  const { control, handleSubmit, setValue } = useForm<ICoinListForm>({ mode: 'onBlur' });
 
   const {
     fields: addedCoins,
@@ -74,7 +75,15 @@ export const CoinList: React.FC<ICoinListProps> = React.memo(({ onBack }) => {
     }
   }, [addedCoins.length, setValue]);
 
-  const onSubmit = useCallback((data: IFormState) => {}, []);
+  const onCalculate = useCallback(() => {
+    handleSubmit((data) => {
+      onConfirm(data);
+    })();
+  }, [handleSubmit, onConfirm]);
+
+  const onSubmit = useCallback((event: React.ChangeEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  }, []);
 
   return (
     <Box>
@@ -84,7 +93,7 @@ export const CoinList: React.FC<ICoinListProps> = React.memo(({ onBack }) => {
         prependSelectedCoin={prepend}
       />
 
-      <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} mt={3}>
+      <Box component="form" noValidate onSubmit={onSubmit} mt={3}>
         <AddedCoins
           addedCoins={addedCoins}
           control={control}
@@ -119,6 +128,7 @@ export const CoinList: React.FC<ICoinListProps> = React.memo(({ onBack }) => {
           type="submit"
           variant="contained"
           disabled={!isValid}
+          onClick={onCalculate}
         >
           Calculate
         </Button>

@@ -2,7 +2,12 @@ import { Container, Step, StepLabel, Stepper, Typography, useMediaQuery } from '
 import { makeStyles } from '@mui/styles';
 import React, { useCallback, useMemo, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
-import { CoinList, IPeriodAndAmountForm, PeriodAndAmount } from '../../components/calculateYield';
+import {
+  CoinList,
+  ICoinListForm,
+  IPeriodAndAmountForm,
+  PeriodAndAmount,
+} from '../../components/calculateYield';
 import { globalPageStyles } from '../../styles';
 
 const useStyles = makeStyles({
@@ -25,6 +30,8 @@ const CalculateYieldPage: React.FC = () => {
     []
   );
 
+  const onConfirmStep1: SubmitHandler<ICoinListForm> = useCallback(({ addedCoins }) => {}, []);
+
   const onBack = useCallback(() => {
     setStep(0);
   }, []);
@@ -32,7 +39,7 @@ const CalculateYieldPage: React.FC = () => {
   const stepRender: IStepRender = useMemo(
     () => ({
       0: <PeriodAndAmount onConfirm={onConfirmStep0} />,
-      1: <CoinList onBack={onBack} />,
+      1: <CoinList onBack={onBack} onConfirm={onConfirmStep1} />,
     }),
     []
   );

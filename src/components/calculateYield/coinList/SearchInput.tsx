@@ -4,7 +4,7 @@ import { makeStyles } from '@mui/styles';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { UseFieldArrayPrepend } from 'react-hook-form';
 import { TextInput } from '../../shared/controllers';
-import { IFormState, IMockData } from './CoinList';
+import { ICoinListForm, IMockData } from './CoinList';
 import { NavigationButtons } from './NavigationButtons';
 import { SearchRenderItem } from './SearchRenderItem';
 
@@ -27,7 +27,7 @@ const useStyles = makeStyles({
 interface ISearchInput {
   searchData: IMockData[];
   label: string;
-  prependSelectedCoin: UseFieldArrayPrepend<IFormState>;
+  prependSelectedCoin: UseFieldArrayPrepend<ICoinListForm>;
 }
 
 export const SearchInput: React.FC<ISearchInput> = ({ searchData, label, prependSelectedCoin }) => {

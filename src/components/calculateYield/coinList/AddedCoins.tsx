@@ -11,7 +11,7 @@ import {
 import { makeStyles } from '@mui/styles';
 import React, { useCallback } from 'react';
 import { Control, Controller } from 'react-hook-form';
-import { IAddedCoin, IFormState } from './CoinList';
+import { IAddedCoin, ICoinListForm } from './CoinList';
 
 const useStyles = makeStyles({
   formContainer: {
@@ -41,7 +41,7 @@ const useStyles = makeStyles({
 
 interface IAddedCoinsProps {
   addedCoins: IAddedCoin[];
-  control: Control<IFormState, any>;
+  control: Control<ICoinListForm, any>;
   getIndexError: (index: number) => boolean;
   removeAddedCoin: (index: number) => void;
   distributeEqually: () => void;
