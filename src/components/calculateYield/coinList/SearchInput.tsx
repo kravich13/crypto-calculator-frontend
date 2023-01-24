@@ -2,8 +2,9 @@ import { SearchOutlined } from '@mui/icons-material';
 import { Box, InputAdornment } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { UseFieldArrayPrepend } from 'react-hook-form';
 import { TextInput } from '../../shared/controllers';
-import { IAddedCoin, IMockData } from './CoinList';
+import { IFormState, IMockData } from './CoinList';
 import { NavigationButtons } from './NavigationButtons';
 import { SearchRenderItem } from './SearchRenderItem';
 
@@ -26,7 +27,7 @@ const useStyles = makeStyles({
 interface ISearchInput {
   searchData: IMockData[];
   label: string;
-  prependSelectedCoin: (coin: IAddedCoin) => void;
+  prependSelectedCoin: UseFieldArrayPrepend<IFormState>;
 }
 
 export const SearchInput: React.FC<ISearchInput> = ({ searchData, label, prependSelectedCoin }) => {
@@ -47,7 +48,7 @@ export const SearchInput: React.FC<ISearchInput> = ({ searchData, label, prepend
       const { id, ...itemData } = item;
 
       setSelectedItem(item);
-      prependSelectedCoin({ ...itemData, percent: 0, primaryId: id });
+      prependSelectedCoin({ ...itemData, percent: '', primaryId: id });
     },
     [prependSelectedCoin]
   );

@@ -1,5 +1,6 @@
-import validator from 'validator';
 import { DateTime } from 'luxon';
+import validator from 'validator';
+import { IAddedCoin } from '../components/calculateYield';
 import { MIN_INVEST_DATE } from '../constants';
 
 export const emailValidation = {
@@ -48,5 +49,15 @@ export const startDateValidation = {
       isValidDate ||
       `Date must be between 01/01/2023 and today (${DateTime.now().toFormat('LL/d/y')}).`
     );
+  },
+};
+
+export const addedCoinsValidation = {
+  required: true,
+  minLength: 1,
+  maxLength: 10,
+  validate: (addedCoins: IAddedCoin[]) => {
+    const totalPercent = addedCoins.reduce((acc, { percent }) => acc + Number(percent) || 0, 0);
+    return !Boolean(totalPercent >= 100.1 || totalPercent <= 99.9);
   },
 };

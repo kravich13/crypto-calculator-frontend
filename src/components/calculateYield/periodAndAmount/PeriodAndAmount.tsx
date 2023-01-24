@@ -55,13 +55,14 @@ export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(({ on
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <NumberController
-            name="monthlyInvestment"
-            label="Monthly investment"
-            control={control}
-            error={errors.monthlyInvestment}
-            rules={mounthlyValidation}
-            min={1}
-            max={1000000}
+            componentProps={{ min: 1, max: 1000000, startAdornmentSymbol: '$' }}
+            controllerProps={{ control, name: 'monthlyInvestment', rules: mounthlyValidation }}
+            inputProps={{
+              label: 'Monthly investment',
+              error: Boolean(errors.monthlyInvestment),
+              helperText: errors.monthlyInvestment?.message,
+              fullWidth: true,
+            }}
           />
         </Grid>
 

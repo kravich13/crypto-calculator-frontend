@@ -1,9 +1,16 @@
-import { Clear } from '@mui/icons-material';
-import { Box, Button, Divider, IconButton, InputAdornment, Typography } from '@mui/material';
+import { Delete } from '@mui/icons-material';
+import {
+  Box,
+  Button,
+  Divider,
+  IconButton,
+  InputAdornment,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, { useCallback } from 'react';
-import { Control } from 'react-hook-form';
-import { TextController, TextInput } from '../../shared/controllers';
+import { Control, Controller } from 'react-hook-form';
 import { IAddedCoin, IFormState } from './CoinList';
 
 const useStyles = makeStyles({
@@ -16,92 +23,111 @@ const useStyles = makeStyles({
   title: { textAlign: 'center' },
   boxButton: {
     textAlign: 'center',
-    margin: '10px 0',
+    margin: '20px 0',
   },
   flexContainer: { display: 'flex' },
   nameText: { paddingRight: 5 },
-  input: { width: 80 },
+  input: { width: 100 },
   deleteButton: {
     alignSelf: 'center',
     width: 28,
     height: 28,
+
+    '&:hover': {
+      color: 'red',
+    },
   },
 });
 
 interface IAddedCoinsProps {
   addedCoins: IAddedCoin[];
-  control: Control<IFormState>;
+  control: Control<IFormState, any>;
+  getIndexError: (index: number) => boolean;
   removeAddedCoin: (index: number) => void;
   distributeEqually: () => void;
 }
 
-export const AddedCoins: React.FC<IAddedCoinsProps> = React.memo(
-  ({ addedCoins, control, removeAddedCoin, distributeEqually }) => {
-    const styles = useStyles();
+export const AddedCoins: React.FC<IAddedCoinsProps> = ({
+  addedCoins,
+  control,
+  getIndexError,
+  removeAddedCoin,
+  distributeEqually,
+}) => {
+  const styles = useStyles();
 
-    const renderItem = useCallback(
-      ({ primaryId, name, ticker }: IAddedCoin, index: number) => (
-        <Box key={primaryId}>
-          <Box className={styles.formContainer}>
-            <Box className={styles.flexContainer}>
-              <Typography className={styles.nameText}>{name}</Typography>
-              <Typography color="GrayText">{ticker}</Typography>
-            </Box>
-
-            <Box className={styles.flexContainer}>
-              <TextController
-                controllerProps={{ control, name: `addedCoins.${index}.firstName` }}
-                inputProps={{
-                  variant: 'standard',
-                  size: 'small',
-                  className: ['percent-coin-input', styles.input].join(' '),
-                  InputProps: {
-                    startAdornment: <InputAdornment position="start">%</InputAdornment>,
-                  },
-                  sx: { mr: 2 },
-                }}
-              />
-
-              <IconButton
-                onClick={() => removeAddedCoin(index)}
-                className={['delete-added-coin', styles.deleteButton].join(' ')}
-                title="Delete coin"
-              >
-                <Clear color="error" fontSize="inherit" />
-              </IconButton>
-            </Box>
+  const renderItem = useCallback(
+    ({ primaryId, name, ticker, percent }: IAddedCoin, index: number) => (
+      <Box key={primaryId}>
+        <Box className={styles.formContainer}>
+          <Box className={styles.flexContainer}>
+            <Typography className={styles.nameText}>{name}</Typography>
+            <Typography color="GrayText">{ticker}</Typography>
           </Box>
 
-          <Divider />
+          <Box className={styles.flexContainer}>
+            <Controller
+              name={`addedCoins.${index}.percent`}
+              defaultValue={percent}
+              rules={{ required: true, min: 5, max: 100 }}
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  autoComplete="off"
+                  type="number"
+                  error={getIndexError(index)}
+                  variant="standard"
+                  size="small"
+                  InputProps={{
+                    startAdornment: <InputAdornment position="start">%</InputAdornment>,
+                  }}
+                  inputProps={{ min: 5, max: 100 }}
+                  className={styles.input}
+                  sx={{ mr: 2 }}
+                />
+              )}
+            />
+
+            <IconButton
+              onClick={() => removeAddedCoin(index)}
+              className={['delete-added-coin', styles.deleteButton].join(' ')}
+              title="Remove coin"
+            >
+              <Delete fontSize="inherit" />
+            </IconButton>
+          </Box>
         </Box>
-      ),
-      []
-    );
 
-    return (
-      <>
-        <Typography variant="h6" className={styles.title} style={{ marginBottom: 10 }}>
-          Your added coins for investment
-        </Typography>
+        <Divider />
+      </Box>
+    ),
+    [control, getIndexError, removeAddedCoin]
+  );
 
-        <Typography>
-          Specify the investment percentage for each selected coin (at least 5 percent per coin)
-        </Typography>
+  return (
+    <>
+      <Typography variant="h6" className={styles.title} style={{ marginBottom: 10 }}>
+        Your added coins for investment
+      </Typography>
 
-        <Box className={styles.boxButton}>
-          <Button
-            type="submit"
-            variant="outlined"
-            style={{ textTransform: 'none' }}
-            onClick={distributeEqually}
-            disabled={addedCoins.length === 0}
-          >
-            Distribute equally
-          </Button>
-        </Box>
+      <Typography>
+        Specify the investment percentage for each selected coin (at least 5 percent per coin)
+      </Typography>
 
-        {addedCoins.map(renderItem)}
-      </>
-    );
-  }
-);
+      <Box className={styles.boxButton}>
+        <Button
+          type="submit"
+          variant="outlined"
+          style={{ textTransform: 'none' }}
+          onClick={distributeEqually}
+          disabled={addedCoins.length === 0}
+        >
+          Distribute equally
+        </Button>
+      </Box>
+
+      {addedCoins.map(renderItem)}
+    </>
+  );
+};

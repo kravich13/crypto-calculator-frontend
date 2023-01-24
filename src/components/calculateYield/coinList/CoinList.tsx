@@ -1,7 +1,8 @@
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import React, { useCallback, useMemo } from 'react';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { useFieldArray, useForm, useFormState } from 'react-hook-form';
 import { v4 as uuid } from 'uuid';
+import { addedCoinsValidation } from '../../../validation';
 import { AddedCoins } from './AddedCoins';
 import { SearchInput } from './SearchInput';
 
@@ -15,7 +16,7 @@ export interface IMockData extends IMainMockData {
 }
 
 export interface IAddedCoin extends IMainMockData {
-  percent: number;
+  percent: string;
   primaryId: string;
 }
 
@@ -32,16 +33,46 @@ const mockData = [
   { id: uuid(), name: 'Ethereum Classic', ticker: 'ETC' },
 ];
 
-export const CoinList: React.FC = React.memo(() => {
-  const { control, handleSubmit } = useForm<IFormState>({ mode: 'onBlur' });
-  const { fields: addedCoins, prepend, remove } = useFieldArray({ control, name: 'addedCoins' });
+interface ICoinListProps {
+  onBack: () => void;
+}
+
+export const CoinList: React.FC<ICoinListProps> = React.memo(({ onBack }) => {
+  const { control, handleSubmit, setValue } = useForm<IFormState>({ mode: 'onBlur' });
+
+  const {
+    fields: addedCoins,
+    prepend,
+    remove,
+  } = useFieldArray({ control, name: 'addedCoins', rules: addedCoinsValidation });
+
+  const { errors, isValid } = useFormState({ control, name: 'addedCoins' });
+
+  const errorTitle = useMemo(() => {
+    if (addedCoins.length === 0) {
+      return 'Coins not selected';
+    } else if (!isValid) {
+      return 'The total percentage must be 100';
+    }
+  }, [addedCoins.length, isValid]);
 
   const searchData = useMemo(
     () => mockData.filter(({ id }) => !addedCoins.find(({ primaryId }) => primaryId === id)),
     [addedCoins]
   );
 
-  const distributeEqually = useCallback(() => {}, []);
+  const getIndexError = useCallback(
+    (index: number) => Boolean(errors.addedCoins?.length && errors.addedCoins[index]?.percent),
+    [errors.addedCoins]
+  );
+
+  const distributeEqually = useCallback(() => {
+    const equalPercent = (100 / addedCoins.length).toFixed(2);
+
+    for (let i = 0; i < addedCoins.length; i++) {
+      setValue(`addedCoins.${i}.percent`, equalPercent, { shouldValidate: true });
+    }
+  }, [addedCoins.length, setValue]);
 
   const onSubmit = useCallback((data: IFormState) => {}, []);
 
@@ -57,24 +88,37 @@ export const CoinList: React.FC = React.memo(() => {
         <AddedCoins
           addedCoins={addedCoins}
           control={control}
+          getIndexError={getIndexError}
           removeAddedCoin={remove}
           distributeEqually={distributeEqually}
         />
       </Box>
 
+      <Typography
+        sx={{ mt: 2, mb: 2 }}
+        textAlign="center"
+        variant="subtitle1"
+        color="red"
+        fontStyle="oblique"
+      >
+        {errorTitle}
+      </Typography>
+
       <Box style={{ display: 'flex', justifyContent: 'space-between' }}>
         <Button
-          sx={{ mt: 3, mb: 2, textTransform: 'none', width: '120px' }}
+          sx={{ textTransform: 'none', width: '120px' }}
           type="submit"
           variant="contained"
+          onClick={onBack}
         >
           Back
         </Button>
 
         <Button
-          sx={{ mt: 3, mb: 2, textTransform: 'none', width: '120px' }}
+          sx={{ textTransform: 'none', width: '120px' }}
           type="submit"
           variant="contained"
+          disabled={!isValid}
         >
           Calculate
         </Button>

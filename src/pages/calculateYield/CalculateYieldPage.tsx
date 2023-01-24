@@ -25,12 +25,16 @@ const CalculateYieldPage: React.FC = () => {
     []
   );
 
+  const onBack = useCallback(() => {
+    setStep(0);
+  }, []);
+
   const stepRender: IStepRender = useMemo(
     () => ({
       0: <PeriodAndAmount onConfirm={onConfirmStep0} />,
-      1: <CoinList />,
+      1: <CoinList onBack={onBack} />,
     }),
-    [step]
+    []
   );
 
   return (

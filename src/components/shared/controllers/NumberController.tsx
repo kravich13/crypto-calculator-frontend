@@ -1,29 +1,26 @@
-import { InputAdornment, TextField } from '@mui/material';
-import React from 'react';
-import { Control, Controller, FieldError } from 'react-hook-form';
+import { InputAdornment, TextField, TextFieldProps } from '@mui/material';
+import { Controller, FieldValues } from 'react-hook-form';
 
-interface NumberControllerProps {
-  name: string;
-  label: string;
-  control: Control<any, any>;
-  rules?: any;
-  error?: FieldError;
-  min?: number;
-  max?: number;
-}
+type NumberControllerProps<T> = {
+  controllerProps: T;
+  inputProps: TextFieldProps;
+  componentProps: {
+    min?: number;
+    max?: number;
+    startAdornmentSymbol?: string;
+  };
+};
 
-export const NumberController: React.FC<NumberControllerProps> = ({
-  control,
-  label,
-  name,
-  rules,
-  error,
-  min,
-  max,
-}) => {
+export const NumberController = <T extends FieldValues>({
+  controllerProps: { control, name, rules, defaultValue },
+  componentProps,
+  inputProps,
+}: NumberControllerProps<T>) => {
+  const { InputLabelProps, InputProps, type, ...otherInputProps } = inputProps;
+
   return (
     <Controller
-      defaultValue=""
+      defaultValue={defaultValue}
       name={name}
       control={control}
       rules={rules}
@@ -31,14 +28,16 @@ export const NumberController: React.FC<NumberControllerProps> = ({
         <TextField
           {...field}
           type="number"
-          required
-          fullWidth
-          label={label}
-          error={!!error}
-          helperText={error?.message}
           InputLabelProps={{ shrink: true }}
-          InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment> }}
-          inputProps={{ min, max }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                {componentProps?.startAdornmentSymbol}
+              </InputAdornment>
+            ),
+          }}
+          inputProps={{ min: componentProps?.min, max: componentProps?.max }}
+          {...otherInputProps}
         />
       )}
     />
