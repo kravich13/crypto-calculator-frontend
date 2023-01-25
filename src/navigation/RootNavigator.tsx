@@ -1,7 +1,9 @@
 import { Backdrop, Box, CircularProgress, Typography } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { Container } from '@mui/system';
 import React, { Suspense, useCallback } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Footer } from '../components/footer/Footer';
 import { Header } from '../components/header/Header';
 import { useAppSelector } from '../hooks';
 import { PageTitle } from './PageTitle';
@@ -18,7 +20,17 @@ interface IRouterRenderInput {
 const MainPage = React.lazy(async () => await import('../pages/main/MainPage'));
 const NotFoundPage = React.lazy(async () => await import('../pages/notFound/NotFoundPage'));
 
+const useStyles = makeStyles({
+  Root: {
+    minHeight: '100vh',
+    overflow: 'hidden',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+});
+
 export const RootNavigator: React.FC = () => {
+  const styles = useStyles();
   const isAuth = useAppSelector((state) => state.authReducer.isAuth);
 
   const routerRender = useCallback(
@@ -30,7 +42,7 @@ export const RootNavigator: React.FC = () => {
 
   return (
     <Router>
-      <Box component="section">
+      <Box component="section" className={styles.Root}>
         <Header />
 
         <Suspense
@@ -58,6 +70,8 @@ export const RootNavigator: React.FC = () => {
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>
+
+        <Footer />
       </Box>
     </Router>
   );
