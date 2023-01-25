@@ -1,15 +1,15 @@
-import { Box, Button, Grid } from '@mui/material';
+import { Box, Button, Grid, InputAdornment, TextField } from '@mui/material';
 import { DateTime } from 'luxon';
 import React, { useCallback, useMemo } from 'react';
-import { SubmitHandler, useForm, useFormState } from 'react-hook-form';
+import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form';
 import { MIN_INVEST_DATE } from '../../../constants';
 import { mounthlyValidation, startDateValidation } from '../../../validation';
-import { DateControlller, NumberController } from '../../shared/controllers';
+import { DateControlller } from '../../shared/controllers';
 
 export interface IPeriodAndAmountForm {
   startDate: string;
   endDate: string;
-  monthlyInvestment: number;
+  monthlyInvestment: string;
 }
 
 interface IPeriodAndAmountProps {
@@ -54,15 +54,26 @@ export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(({ on
     <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 3 }}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <NumberController
-            componentProps={{ min: 1, max: 1000000, startAdornmentSymbol: '$' }}
-            controllerProps={{ control, name: 'monthlyInvestment', rules: mounthlyValidation }}
-            inputProps={{
-              label: 'Monthly investment',
-              error: Boolean(errors.monthlyInvestment),
-              helperText: errors.monthlyInvestment?.message,
-              fullWidth: true,
-            }}
+          <Controller
+            defaultValue=""
+            name="monthlyInvestment"
+            control={control}
+            rules={mounthlyValidation}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                fullWidth
+                type="number"
+                label="Monthly investment"
+                error={Boolean(errors.monthlyInvestment)}
+                helperText={errors.monthlyInvestment?.message}
+                InputLabelProps={{ shrink: true }}
+                InputProps={{
+                  startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                }}
+                inputProps={{ min: 20, max: 1000000 }}
+              />
+            )}
           />
         </Grid>
 

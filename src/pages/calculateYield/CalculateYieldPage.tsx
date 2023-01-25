@@ -21,7 +21,8 @@ interface IStepRender {
 }
 
 const CalculateYieldPage: React.FC = () => {
-  const isMin500Width = useMediaQuery('(max-width:400px)');
+  const isMin520Width = useMediaQuery('(max-width:520px)');
+
   const styles = useStyles();
   const [step, setStep] = useState(1);
 
@@ -46,12 +47,12 @@ const CalculateYieldPage: React.FC = () => {
 
   return (
     <Container component="main" maxWidth="xl" sx={globalPageStyles}>
-      <Container component="div" maxWidth={isMin500Width ? 'xs' : 'sm'}>
-        <Typography component="h1" variant="h5" marginBottom={6} className={styles.title}>
+      <Container component="div" maxWidth={isMin520Width ? 'xs' : 'sm'}>
+        <Typography component="h1" variant="h5" marginBottom={3} className={styles.title}>
           Calculation of profitability from monthly investments in cryptocurrency
         </Typography>
 
-        <Stepper activeStep={step} orientation={isMin500Width ? 'vertical' : 'horizontal'}>
+        <Stepper activeStep={step} orientation={isMin520Width ? 'vertical' : 'horizontal'}>
           <Step>
             <StepLabel>
               <Typography component="p" variant="h6">

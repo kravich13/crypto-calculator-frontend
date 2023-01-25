@@ -1,5 +1,5 @@
 import { SearchOutlined } from '@mui/icons-material';
-import { Box, InputAdornment } from '@mui/material';
+import { Box, InputAdornment, useMediaQuery } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { UseFieldArrayPrepend } from 'react-hook-form';
@@ -31,6 +31,8 @@ interface ISearchInput {
 }
 
 export const SearchInput: React.FC<ISearchInput> = ({ searchData, label, prependSelectedCoin }) => {
+  const isMin990Width = useMediaQuery('(min-width:990px)');
+
   const $container = useRef<HTMLDivElement>();
   const $searchInput = useRef<HTMLInputElement>();
 
@@ -139,7 +141,7 @@ export const SearchInput: React.FC<ISearchInput> = ({ searchData, label, prepend
         <Box className={styles.searchContainer} style={{ width: $container.current!.clientWidth }}>
           {searchData.map(renderItem)}
 
-          <NavigationButtons />
+          {isMin990Width && <NavigationButtons />}
         </Box>
       )}
     </Box>

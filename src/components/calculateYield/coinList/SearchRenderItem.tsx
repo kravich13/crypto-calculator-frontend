@@ -1,6 +1,6 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useMediaQuery } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import React, { useCallback } from 'react';
+import React from 'react';
 import { IMockData } from './CoinList';
 import { useNavButtonsStyles } from './NavigationButtons';
 
@@ -37,10 +37,16 @@ interface ISearchRenderItemProps {
 
 export const SearchRenderItem: React.FC<ISearchRenderItemProps> = React.memo(
   ({ item: { id, name, ticker }, isSelected, onClickSelectedItem }) => {
+    const isMin990Width = useMediaQuery('(min-width:990px)');
+    const isMax400Width = useMediaQuery('(max-width:400px)');
+
     const navButtonsStyles = useNavButtonsStyles();
     const styles = useStyles();
 
     const containerClasses = [styles.hoverItem, styles.item, isSelected && styles.selectedItem];
+
+    const characters = isMax400Width ? 20 : 28;
+    const nameTitle = name.length >= characters ? `${name.substring(0, characters)}...` : name;
 
     return (
       <Box
@@ -50,11 +56,13 @@ export const SearchRenderItem: React.FC<ISearchRenderItemProps> = React.memo(
         onMouseDown={() => onClickSelectedItem({ id, name, ticker })}
       >
         <Box component="div" className={styles.cryptoContainer}>
-          <Typography className={styles.cryptoName}>{name}</Typography>
+          <Typography className={styles.cryptoName} title={name}>
+            {nameTitle}
+          </Typography>
           <Typography color="GrayText">{ticker}</Typography>
         </Box>
 
-        {isSelected && (
+        {isSelected && isMin990Width && (
           <Box component="div" className={styles.selectContainer}>
             <Typography fontSize="small" color="GrayText" className={styles.selectText}>
               Select

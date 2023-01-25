@@ -30,10 +30,10 @@ export const emailCodeValidation = {
 export const mounthlyValidation = {
   required: true,
   validate: (value: string) => {
-    const isValidNumber = validator.isInt(value) && Number(value) >= 1 && Number(value) <= 1000000;
-    return isValidNumber || 'Value must be an integer and be between 1 and 1000000.';
+    const isValidNumber = validator.isInt(value) && Number(value) >= 20 && Number(value) <= 1000000;
+    return isValidNumber || 'Value must be an integer and be between 20 and 1000000.';
   },
-};
+} as any;
 
 export const startDateValidation = {
   required: true,
