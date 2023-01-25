@@ -2,8 +2,8 @@ import { Box, Button, Grid } from '@mui/material';
 import React, { useCallback } from 'react';
 import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { emailValidation } from '../../validation/validation';
-import { TextInput } from '../shared';
+import { emailValidation } from '../../validation';
+import { TextInput } from '../shared/controllers';
 
 interface ISendEmailProps {
   onConfirm: SubmitHandler<ISendEmailForm>;

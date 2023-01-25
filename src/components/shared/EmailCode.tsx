@@ -1,8 +1,8 @@
 import { Box, Button, Grid } from '@mui/material';
 import React, { useCallback } from 'react';
 import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form';
-import { emailCodeValidation } from '../../validation/validation';
-import { TextInput } from './TextInput';
+import { emailCodeValidation } from '../../validation';
+import { TextInput } from './controllers/TextInput';
 
 interface IEmailCodeProps {
   onConfirm: SubmitHandler<IEmailCodeForm>;

@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 interface ICalculatorSlice {
   investmentCards: any[];
   profitPercentage: string;
-  monthlyAmount: number;
+  mounthlyInvestment: number;
   startDate?: string;
   endDate?: string;
 }
@@ -11,7 +11,7 @@ interface ICalculatorSlice {
 const initialState: ICalculatorSlice = {
   investmentCards: [],
   profitPercentage: '',
-  monthlyAmount: 0,
+  mounthlyInvestment: 0,
   startDate: undefined,
   endDate: undefined,
 };

@@ -11,4 +11,12 @@ export const privateRoutes = [
     title: 'Calculator | Investment cards list',
     id: uuid(),
   },
+  {
+    path: RoutesTypes.CALCULATE_YIELD,
+    component: React.lazy(
+      async () => await import('../../pages/calculateYield/CalculateYieldPage')
+    ),
+    title: 'Calculator | Calculate monthly yield',
+    id: uuid(),
+  },
 ];

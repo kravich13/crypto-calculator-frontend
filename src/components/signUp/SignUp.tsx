@@ -2,9 +2,8 @@ import { Box, Button, Grid } from '@mui/material';
 import React, { useCallback, useState } from 'react';
 import { SubmitHandler, useForm, useFormState } from 'react-hook-form';
 import { ILoginRequest } from '../../models/Auth';
-import { emailValidation, passwordValidation } from '../../validation/validation';
-import { PasswordController } from '../shared';
-import { TextController } from '../shared/TextController';
+import { emailValidation, passwordValidation } from '../../validation';
+import { PasswordController, TextController } from '../shared/controllers';
 
 interface ISignUpProps {
   onConfirm: SubmitHandler<ISignUpForm & INeedActivateAccount>;
@@ -49,14 +48,15 @@ export const SignUp: React.FC<ISignUpProps> = React.memo(({ onConfirm }) => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <TextController
-            inputType={'email'}
-            name="email"
-            label="Email"
-            control={control}
-            rules={emailValidation}
-            error={errors.email}
-            autoComplete="email"
-            onClear={onClear}
+            controllerProps={{ control, name: 'email', rules: emailValidation }}
+            inputProps={{
+              label: 'Email',
+              error: Boolean(errors.email),
+              helperText: errors.email?.message,
+              autoComplete: 'email',
+              fullWidth: true,
+              onClearValue: onClear,
+            }}
           />
         </Grid>
 

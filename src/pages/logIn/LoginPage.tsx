@@ -1,13 +1,13 @@
 import { Box, Button, Container, Grid, Typography } from '@mui/material';
 import { useCallback, useEffect } from 'react';
-import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form';
+import { SubmitHandler, useForm, useFormState } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { PopupAlert, TextInput } from '../../components/shared';
-import { PasswordInput } from '../../components/shared/PasswordInput';
+import { PopupAlert } from '../../components/shared';
+import { PasswordController, TextController } from '../../components/shared/controllers';
 import { useAuthContext, useErrorMessage, useTypedNavigate } from '../../hooks';
 import { RoutesTypes } from '../../navigation';
 import { useSignInMutation } from '../../services';
-import { emailValidation, logInPasswordValidation } from '../../validation/validation';
+import { emailValidation, logInPasswordValidation } from '../../validation';
 
 interface IFormInputs {
   email: string;
@@ -55,43 +55,26 @@ const LogInPage: React.FC = () => {
         <Box component="form" noValidate sx={{ mt: 1 }} onSubmit={handleSubmit(onConfirm)}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Controller
-                defaultValue=""
-                name="email"
-                control={control}
-                rules={emailValidation}
-                render={({ field }) => (
-                  <TextInput
-                    {...field}
-                    required
-                    fullWidth
-                    type={'email'}
-                    label="Email Address"
-                    autoComplete="email"
-                    error={!!errors.email}
-                    helperText={errors.email?.message}
-                    onClearValue={onClearEmail}
-                  />
-                )}
+              <TextController
+                controllerProps={{ control, name: 'email', rules: emailValidation }}
+                inputProps={{
+                  type: 'email',
+                  label: 'Email',
+                  error: Boolean(errors.email),
+                  helperText: errors.email?.message,
+                  autoComplete: 'email',
+                  fullWidth: true,
+                  onClearValue: onClearEmail,
+                }}
               />
             </Grid>
 
             <Grid item xs={12}>
-              <Controller
-                defaultValue=""
+              <PasswordController
                 name="password"
                 control={control}
                 rules={logInPasswordValidation}
-                render={({ field }) => (
-                  <PasswordInput
-                    {...field}
-                    required
-                    fullWidth
-                    label={'Password'}
-                    error={!!errors.password}
-                    helperText={errors.password?.message}
-                  />
-                )}
+                error={errors.password}
               />
             </Grid>
           </Grid>

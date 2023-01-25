@@ -1,27 +1,29 @@
-import React, { HTMLInputTypeAttribute } from 'react';
+import { Input, TextField } from '@mui/material';
+import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
-import { TextInput } from './TextInput';
 
-interface TextControllerProps {
-  inputType: HTMLInputTypeAttribute;
+interface DateControllerProps {
   name: string;
   label: string;
   control: Control<any, any>;
-  rules: any;
-  error: FieldError | undefined;
+  rules?: any;
+  error?: FieldError;
   autoComplete?: string;
-  onClear: () => void;
+  minDate?: string;
+  maxDate?: string;
+  disabled?: boolean;
 }
 
-export const TextController: React.FC<TextControllerProps> = ({
-  inputType,
+export const DateControlller: React.FC<DateControllerProps> = ({
   name,
   label,
   control,
   rules,
   error,
   autoComplete,
-  onClear,
+  minDate,
+  maxDate,
+  disabled,
 }) => {
   return (
     <Controller
@@ -30,16 +32,18 @@ export const TextController: React.FC<TextControllerProps> = ({
       control={control}
       rules={rules}
       render={({ field }) => (
-        <TextInput
+        <TextField
+          disabled={disabled}
           {...field}
-          type={inputType}
-          required
+          type="date"
           fullWidth
+          required
           label={label}
           autoComplete={autoComplete}
           error={!!error}
           helperText={error?.message}
-          onClearValue={onClear}
+          InputLabelProps={{ shrink: true }}
+          inputProps={{ min: minDate, max: maxDate }}
         />
       )}
     />

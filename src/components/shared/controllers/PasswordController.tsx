@@ -6,7 +6,7 @@ interface IPasswordControllerProps {
   name: 'password' | 'confirmPassword';
   control: Control<any, any>;
   rules: any;
-  error: FieldError | undefined;
+  error?: FieldError;
 }
 
 export const PasswordController: React.FC<IPasswordControllerProps> = ({

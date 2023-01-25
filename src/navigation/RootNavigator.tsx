@@ -1,4 +1,4 @@
-import { Backdrop, CircularProgress, Typography } from '@mui/material';
+import { Backdrop, Box, CircularProgress, Typography } from '@mui/material';
 import { Container } from '@mui/system';
 import React, { Suspense, useCallback } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -30,33 +30,35 @@ export const RootNavigator: React.FC = () => {
 
   return (
     <Router>
-      <Header />
+      <Box component="section">
+        <Header />
 
-      <Suspense
-        fallback={
-          <Container sx={{ height: '100%', width: '100%' }}>
-            <Backdrop
-              sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-              open={true}
-            >
-              <Typography variant="h6" fontWeight={600} mr={2}>
-                Page is loading...
-              </Typography>
-              <CircularProgress color="inherit" />
-            </Backdrop>
-          </Container>
-        }
-      >
-        <Routes>
-          {isAuth ? privateRoutes.map(routerRender) : publicRoutes.map(routerRender)}
+        <Suspense
+          fallback={
+            <Container sx={{ height: '100%', width: '100%' }}>
+              <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={true}
+              >
+                <Typography variant="h6" fontWeight={600} mr={2}>
+                  Page is loading...
+                </Typography>
+                <CircularProgress color="inherit" />
+              </Backdrop>
+            </Container>
+          }
+        >
+          <Routes>
+            {isAuth ? privateRoutes.map(routerRender) : publicRoutes.map(routerRender)}
 
-          <Route
-            path={RoutesTypes.MAIN}
-            element={<PageTitle Component={MainPage} title="Calculator | Main" />}
-          />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </Suspense>
+            <Route
+              path={RoutesTypes.MAIN}
+              element={<PageTitle Component={MainPage} title="Calculator | Main" />}
+            />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </Suspense>
+      </Box>
     </Router>
   );
 };
