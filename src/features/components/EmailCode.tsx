@@ -1,5 +1,5 @@
 import { emailCodeValidation } from '@cc/entities/Authorization';
-import { TextInput } from '@cc/shared';
+import { TextInput } from '@cc/shared/ui';
 import { Box, Button, Grid } from '@mui/material';
 import React, { useCallback } from 'react';
 import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form';

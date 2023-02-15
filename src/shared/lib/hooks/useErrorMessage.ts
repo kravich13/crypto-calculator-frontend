@@ -1,4 +1,4 @@
-import { IDataErrors } from '@cc/shared/types/responseErrors';
+import { IDataErrors } from '@cc/shared/types';
 import type { SerializedError } from '@reduxjs/toolkit';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useMemo } from 'react';

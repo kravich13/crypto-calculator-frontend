@@ -1,4 +1,4 @@
-import { RoutesTypes } from '@cc/shared';
+import { RoutesTypes } from '@cc/shared/types';
 import { Button, Container, useMediaQuery } from '@mui/material';
 import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';

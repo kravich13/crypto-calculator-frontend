@@ -1,4 +1,4 @@
-import { TextInput } from '@cc/shared';
+import { TextInput } from '@cc/shared/ui';
 import { SearchOutlined } from '@mui/icons-material';
 import { Box, InputAdornment, useMediaQuery } from '@mui/material';
 import { makeStyles } from '@mui/styles';

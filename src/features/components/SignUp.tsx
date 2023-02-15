@@ -1,5 +1,6 @@
 import { emailValidation, passwordValidation } from '@cc/entities/Authorization';
-import { ILoginRequest, PasswordInput, TextInput } from '@cc/shared';
+import { ILoginRequest } from '@cc/shared/types';
+import { PasswordInput, TextInput } from '@cc/shared/ui';
 import { Box, Button, Grid } from '@mui/material';
 import React, { useCallback, useState } from 'react';
 import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form';
