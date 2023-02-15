@@ -1,46 +1,59 @@
-# Getting Started with Create React App
+# Crypto Financial Calculator
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
+- [Crypto Financial Calculator](#crypto-financial-calculator)
+  - [Разработка](#разработка)
+  - [Цель проекта](#цель-проекта)
+  - [Функционал](#функционал)
+    - [Для неактивированного аккаунта](#для-неактивированного-аккаунта)
+    - [Для активированного аккаунта](#для-активированного-аккаунта)
+  - [Связаться с автором](#связаться-с-автором)
 
-## Available Scripts
+## Разработка
 
-In the project directory, you can run:
+- Дизайн
+- [Список API](https://docs.google.com/spreadsheets/d/1vTmBQFo2wFX0oCJeqGHTAz3dn5wm5x6eL-0KkI70c0g/edit?usp=sharing)
+- [Схема БД](https://app.diagrams.net/#G19kMrgxEYkeauxzE8dHEgK43wXWtvwvOJ)
+- Коллекция в Постмане
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Цель проекта
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Приложение работает с историческими данными по изменению курсов криптовалют и позволяет оценить, насколько прибыльными были бы ваши инвестиции в криптовалюты, если бы вы сделали их в прошлом.
 
-### `npm test`
+Выбрав входные параметры, вы узнаете:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- доходность в `$` и `%` по отдельным монетам
+- чистую прибыль в `$` и `%`
+- суммарный капитал
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Функционал
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Для неактивированного аккаунта
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Доступные входные параметры:
 
-### `npm run eject`
+- Начальная дата инвестирования.
+- Конечная дата инвестирования или текущая дата.
+- Инвестированная сумма в месяц.
+- Умный поиск по существующим монетам и добавление их в список (до 10-и штук).
+- Распределение инвестированной суммы в `%` на каждую выбранную монету (10% btc, eth 20% и т.д. до 100%).
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Для активированного аккаунта
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Появится возможность:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- Выбрать до 30-и монет.
+- Выбрать фильтр для монет в поиске по падению/росту цены и фильтр монет только из топ-50, 100 (привязка к начальной дате инвестирования).
+- Сохранять выбранные параметры и их результат в карточки.
+- Редактировать карточки.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+---
 
-## Learn More
+## Связаться с автором
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [Email](vladislav.onatskyi@gmail.com)
+- [Telegram](https://t.me/Kravich13)
+- [Linkedin](https://www.linkedin.com/in/vladislav-onatskyi-564447211)
