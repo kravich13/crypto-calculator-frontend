@@ -1,5 +1,5 @@
 import { passwordValidation } from '@cc/entities/Authorization';
-import { PasswordInput } from '@cc/shared';
+import { PasswordInput } from '@cc/shared/ui';
 import { Box, Button, Grid } from '@mui/material';
 import React from 'react';
 import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form';

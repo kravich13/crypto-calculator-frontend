@@ -1,6 +1,11 @@
-import { AuthContext } from '@cc/shared/lib/context';
-import { useAppDispatch } from '@cc/shared/lib/hooks';
-import { authSlice, calculatorSlice, ITokensData, userDataSlice } from '@cc/shared/lib/store';
+import {
+  AuthContext,
+  authSlice,
+  calculatorSlice,
+  ITokensData,
+  useAppDispatch,
+  userDataSlice,
+} from '@cc/shared/lib';
 import { useCallback, useEffect } from 'react';
 
 interface IAuthProviderProps {

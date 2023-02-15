@@ -1,4 +1,4 @@
-import { ISetCodeInput, ISetEmailInput } from '@cc/shared/types/userData';
+import { ISetCodeInput, ISetEmailInput } from '@cc/shared/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface IUserDataState {

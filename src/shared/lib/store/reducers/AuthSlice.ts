@@ -1,4 +1,4 @@
-import { ILoginResponse } from '@cc/shared/types/auth';
+import { ILoginResponse } from '@cc/shared/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface ITokensData {

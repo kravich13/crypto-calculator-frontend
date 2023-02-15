@@ -1,18 +1,18 @@
 import { EmailCode, INewPasswordForm, NewPassword, SendEmail } from '@cc/features';
 import {
-  ISetCodeInput,
-  ISetEmailInput,
-  PopupAlert,
-  RoutesTypes,
+  useCodeEmailMutation,
+  useForgotPasswordMutation,
+  useNewPasswordMutation,
+} from '@cc/shared/api';
+import {
   useAppDispatch,
   useAppSelector,
   useAuthContext,
-  useCodeEmailMutation,
   useErrorMessage,
-  useForgotPasswordMutation,
-  useNewPasswordMutation,
   userDataSlice,
-} from '@cc/shared';
+} from '@cc/shared/lib';
+import { ISetCodeInput, ISetEmailInput, RoutesTypes } from '@cc/shared/types';
+import { PopupAlert } from '@cc/shared/ui';
 import {
   Backdrop,
   CircularProgress,

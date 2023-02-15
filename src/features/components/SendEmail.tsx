@@ -1,5 +1,6 @@
 import { emailValidation } from '@cc/entities/Authorization';
-import { RoutesTypes, TextInput } from '@cc/shared';
+import { RoutesTypes } from '@cc/shared/types';
+import { TextInput } from '@cc/shared/ui';
 import { Box, Button, Grid } from '@mui/material';
 import Link from 'next/link';
 import React, { useCallback } from 'react';

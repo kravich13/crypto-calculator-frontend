@@ -1,10 +1,7 @@
-import {
-  emailValidation,
-  logInPasswordValidation,
-} from '@cc/entities/Authorization/lib/validation';
-import { useSignInMutation } from '@cc/shared/api/AuthService';
-import { useAuthContext, useErrorMessage } from '@cc/shared/lib/hooks';
-import { RoutesTypes } from '@cc/shared/types/routes';
+import { emailValidation, logInPasswordValidation } from '@cc/entities/Authorization';
+import { useSignInMutation } from '@cc/shared/api';
+import { useAuthContext, useErrorMessage } from '@cc/shared/lib';
+import { RoutesTypes } from '@cc/shared/types';
 import { PasswordInput, PopupAlert, TextInput } from '@cc/shared/ui';
 import { Box, Button, Container, Grid, Typography } from '@mui/material';
 import Link from 'next/link';

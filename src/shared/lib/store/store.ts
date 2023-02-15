@@ -1,4 +1,4 @@
-import { authAPI } from '@cc/shared/api/AuthService';
+import { authAPI } from '@cc/shared/api';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { authReducer, calculatorReducer, userDataReducer } from './reducers';
 

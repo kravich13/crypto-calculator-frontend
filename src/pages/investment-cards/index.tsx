@@ -1,4 +1,5 @@
-import { RoutesTypes, useAuthPage } from '@cc/shared';
+import { useAuthPage } from '@cc/shared/lib';
+import { RoutesTypes } from '@cc/shared/types';
 import { InvestmentCardsList } from '@cc/widgets';
 import Head from 'next/head';
 
