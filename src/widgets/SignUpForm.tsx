@@ -19,7 +19,7 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 
@@ -81,7 +81,7 @@ export const SignUpForm = () => {
       setStep(0);
       router.push(RoutesTypes.MAIN);
     }
-  }, [step, activateAccount, signUpData.data, emailValidateData.data, router]);
+  }, [step, activateAccount, signUpData.data, emailValidateData.data]);
 
   return (
     <>

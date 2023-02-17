@@ -1,12 +1,13 @@
 import { RoutesTypes } from '@cc/shared/types';
 import { Button, Container, useMediaQuery } from '@mui/material';
-import { useRouter } from 'next/router';
+import { usePathname, useRouter } from 'next/navigation';
 import React, { useCallback, useMemo } from 'react';
 
 export const NotAuthHeaderContent: React.FC = () => {
   const isMin500Width = useMediaQuery('(max-width:500px)');
 
-  const { pathname, ...router } = useRouter();
+  const router = useRouter();
+  const pathname = usePathname();
 
   const goToLogIn = useCallback(() => {
     router.push(RoutesTypes.LOGIN);
@@ -17,8 +18,9 @@ export const NotAuthHeaderContent: React.FC = () => {
   }, [router]);
 
   const { isLoginOrRecoveryPage, isSignUpPage, isNotAuthPage } = useMemo(() => {
-    const isLoginOrRecoveryPage = pathname === '/login' || pathname === '/password-recovery';
-    const isSignUpPage = pathname === '/sign-up';
+    const isLoginOrRecoveryPage =
+      pathname === RoutesTypes.LOGIN || pathname === RoutesTypes.PASSWORD_RECOVERY;
+    const isSignUpPage = pathname === RoutesTypes.SIGN_UP;
 
     return {
       isLoginOrRecoveryPage: isLoginOrRecoveryPage,

@@ -1,7 +1,7 @@
 import { useAppSelector, useAuthContext } from '@cc/shared/lib';
 import { RoutesTypes } from '@cc/shared/types';
 import { Avatar, Box, Fade, IconButton, Menu, MenuItem } from '@mui/material';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import React, { useCallback, useState } from 'react';
 
 export const AuthHeaderContent: React.FC = () => {
@@ -26,7 +26,7 @@ export const AuthHeaderContent: React.FC = () => {
     setAnchorEl(null);
     router.push(RoutesTypes.MAIN);
     logout();
-  }, [router]);
+  }, []);
 
   return (
     <Box>
