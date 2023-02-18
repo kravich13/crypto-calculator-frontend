@@ -16,4 +16,6 @@ export const useNotAuthPage = ({ redirectTo }: IUseNotAuthPageProps) => {
       router.push(redirectTo);
     }
   }, [isAuth, redirectTo]);
+
+  return { showContent: isAuth === false };
 };

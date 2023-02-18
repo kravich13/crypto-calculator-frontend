@@ -9,11 +9,11 @@ export interface ITokensData {
 }
 
 interface IAuthState extends ITokensData {
-  isAuth: boolean;
+  isAuth?: boolean;
 }
 
 const initialState: IAuthState = {
-  isAuth: false,
+  isAuth: undefined,
   accessToken: '',
   refreshToken: '',
   accessTokenExpiresIn: -1,
@@ -28,6 +28,9 @@ export const authSlice = createSlice({
       localStorage.removeItem('tokensData');
 
       return { ...initialState };
+    },
+    setNotAuth(state) {
+      state.isAuth = false;
     },
     setAuth(state, { payload }: PayloadAction<ILoginResponse>) {
       localStorage.setItem('tokensData', JSON.stringify(payload));

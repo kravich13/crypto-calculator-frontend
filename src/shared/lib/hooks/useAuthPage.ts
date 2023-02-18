@@ -12,8 +12,10 @@ export const useAuthPage = ({ redirectTo }: IUseAuthPageProps) => {
   const isAuth = useAppSelector((state) => state.authReducer.isAuth);
 
   useLayoutEffect(() => {
-    if (!isAuth) {
+    if (isAuth === false) {
       router.push(redirectTo);
     }
   }, [isAuth, redirectTo]);
+
+  return { showContent: isAuth === true };
 };

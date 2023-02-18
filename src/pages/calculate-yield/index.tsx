@@ -4,7 +4,7 @@ import { CalculateYieldForm } from '@cc/widgets';
 import Head from 'next/head';
 
 export default function CalculateYield() {
-  useAuthPage({ redirectTo: RoutesTypes.MAIN });
+  const { showContent } = useAuthPage({ redirectTo: RoutesTypes.MAIN });
 
   return (
     <>
@@ -15,7 +15,7 @@ export default function CalculateYield() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <CalculateYieldForm />
+      {showContent && <CalculateYieldForm />}
     </>
   );
 }

@@ -6,14 +6,14 @@ import {
   useAppDispatch,
   userDataSlice,
 } from '@cc/shared/lib';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useLayoutEffect } from 'react';
 
 interface IAuthProviderProps {
   children: React.ReactNode;
 }
 
 export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
-  const { setAuth, clearState } = authSlice.actions;
+  const { setAuth, setNotAuth, clearState } = authSlice.actions;
   const dispatch = useAppDispatch();
 
   const login = useCallback((tokensData: ITokensData) => {
@@ -26,15 +26,18 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
     dispatch(calculatorSlice.actions.clearState());
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     try {
       const areTokensData = localStorage.getItem('tokensData');
       const tokensData = areTokensData ? (JSON.parse(areTokensData) as ITokensData) : null;
 
       if (tokensData && tokensData.refreshTokenExpiresIn > Date.now()) {
         login(tokensData);
+      } else {
+        dispatch(setNotAuth());
       }
     } catch (err) {
+      dispatch(setNotAuth());
       console.warn('Parsing tokensData error.');
     }
   }, []);

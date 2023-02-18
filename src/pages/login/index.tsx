@@ -4,7 +4,7 @@ import { LoginForm } from '@cc/widgets';
 import Head from 'next/head';
 
 export default function Login() {
-  useNotAuthPage({ redirectTo: RoutesTypes.MAIN });
+  const { showContent } = useNotAuthPage({ redirectTo: RoutesTypes.MAIN });
 
   return (
     <>
@@ -15,7 +15,7 @@ export default function Login() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <LoginForm />
+      {showContent && <LoginForm />}
     </>
   );
 }
