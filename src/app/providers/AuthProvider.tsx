@@ -6,7 +6,7 @@ import {
   useAppDispatch,
   userDataSlice,
 } from '@cc/shared/lib';
-import { useCallback, useLayoutEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 interface IAuthProviderProps {
   children: React.ReactNode;
@@ -26,7 +26,7 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
     dispatch(calculatorSlice.actions.clearState());
   }, []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     try {
       const areTokensData = localStorage.getItem('tokensData');
       const tokensData = areTokensData ? (JSON.parse(areTokensData) as ITokensData) : null;
