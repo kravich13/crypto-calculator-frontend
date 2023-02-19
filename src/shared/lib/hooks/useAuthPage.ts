@@ -1,6 +1,6 @@
 import { RoutesTypes } from '@cc/shared/types';
 import { useRouter } from 'next/navigation';
-import { useLayoutEffect } from 'react';
+import { useEffect } from 'react';
 import { useAppSelector } from './redux';
 
 interface IUseAuthPageProps {
@@ -11,7 +11,7 @@ export const useAuthPage = ({ redirectTo }: IUseAuthPageProps) => {
   const router = useRouter();
   const isAuth = useAppSelector((state) => state.authReducer.isAuth);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (isAuth === false) {
       router.push(redirectTo);
     }
