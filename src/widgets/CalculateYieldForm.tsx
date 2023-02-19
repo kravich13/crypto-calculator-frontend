@@ -1,13 +1,8 @@
 import { ISelectedInvestCoinsForm } from '@cc/entities/Calculate';
 import { IPeriodAndAmountForm, PeriodAndAmount, SelectedInvestCoins } from '@cc/features';
 import { Container, Step, StepLabel, Stepper, Typography, useMediaQuery } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 import { useCallback, useMemo, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
-
-const useStyles = makeStyles({
-  title: { textAlign: 'center' },
-});
 
 interface IStepRender {
   [key: number]: JSX.Element;
@@ -16,7 +11,6 @@ interface IStepRender {
 export const CalculateYieldForm = () => {
   const isMin520Width = useMediaQuery('(max-width:520px)');
 
-  const styles = useStyles();
   const [step, setStep] = useState(0);
 
   const onConfirmStep0: SubmitHandler<IPeriodAndAmountForm> = useCallback(
@@ -44,7 +38,7 @@ export const CalculateYieldForm = () => {
   return (
     <>
       <Container component="div" maxWidth={isMin520Width ? 'xs' : 'sm'}>
-        <Typography component="h1" variant="h5" marginBottom={3} className={styles.title}>
+        <Typography component="h1" variant="h5" marginBottom={3} textAlign="center">
           Calculation of profitability from monthly investments in cryptocurrency
         </Typography>
 

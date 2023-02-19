@@ -1,27 +1,10 @@
 import { InvestmentPercent } from '@cc/entities/Calculate';
 import { Box, Typography } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 import { useMemo } from 'react';
 
-const useStyles = makeStyles(
-  {
-    finalDataBox: {
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    percent: {
-      marginLeft: '8px',
-      padding: '0 6px',
-      borderRadius: '8px',
-    },
-  },
-  { name: 'MuiExamle_ComponentGeneralStatistics' }
-);
+import styles from '../styles/GeneralInvestmentStatistics.module.css';
 
 export const GeneralInvestmentStatistics = () => {
-  const styles = useStyles();
-
   const percent = 1300;
   const profit = 120000;
 

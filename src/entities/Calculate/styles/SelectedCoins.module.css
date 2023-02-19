@@ -1,0 +1,30 @@
+.formContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 8px 0;
+}
+.title {
+  text-align: center;
+}
+.boxButton {
+  text-align: center;
+  margin: 20px 0;
+}
+.flexContainer {
+  display: flex;
+}
+.nameText {
+  padding-right: 5px;
+}
+.input {
+  width: 100px;
+}
+.deleteButton {
+  align-self: center;
+  width: 28px;
+  height: 28px;
+}
+.deleteButton:hover {
+  color: red;
+}
