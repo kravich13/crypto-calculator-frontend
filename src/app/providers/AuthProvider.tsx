@@ -13,7 +13,7 @@ interface IAuthProviderProps {
 }
 
 export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
-  const { setAuth, clearState } = authSlice.actions;
+  const { setAuth, setNotAuth, clearState } = authSlice.actions;
   const dispatch = useAppDispatch();
 
   const login = useCallback((tokensData: ITokensData) => {
@@ -33,8 +33,11 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
 
       if (tokensData && tokensData.refreshTokenExpiresIn > Date.now()) {
         login(tokensData);
+      } else {
+        dispatch(setNotAuth());
       }
     } catch (err) {
+      dispatch(setNotAuth());
       console.warn('Parsing tokensData error.');
     }
   }, []);

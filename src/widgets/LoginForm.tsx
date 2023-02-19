@@ -5,7 +5,7 @@ import { RoutesTypes } from '@cc/shared/types';
 import { PasswordInput, PopupAlert, TextInput } from '@cc/shared/ui';
 import { Box, Button, Container, Grid, Typography } from '@mui/material';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useCallback, useEffect } from 'react';
 import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form';
 
@@ -34,8 +34,8 @@ export const LoginForm = () => {
 
   useEffect(() => {
     if (data) {
+      router.push(RoutesTypes.MAIN);
       login(data);
-      router.push(RoutesTypes.LOGIN);
     }
   }, [data]);
 

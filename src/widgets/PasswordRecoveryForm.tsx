@@ -23,7 +23,7 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 
@@ -68,7 +68,7 @@ export const PasswordRecoveryForm = () => {
       dispatch(clearState());
       router.push(RoutesTypes.MAIN);
     }
-  }, [forgotPasswordData.data, codeEmailData.data, newPasswordData.data, router]);
+  }, [forgotPasswordData.data, codeEmailData.data, newPasswordData.data]);
 
   const onConfirmForgotPassword: SubmitHandler<ISetEmailInput> = useCallback(async ({ email }) => {
     dispatch(setEmail({ email }));

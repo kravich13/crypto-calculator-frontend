@@ -12,7 +12,7 @@ import {
 
 export const authAPI = createApi({
   reducerPath: 'authAPI',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5001/auth' }),
+  baseQuery: fetchBaseQuery({ baseUrl: '/auth' }),
   endpoints: (build) => ({
     signUp: build.mutation<ILoginResponse, ILoginRequest>({
       query: (data) => ({

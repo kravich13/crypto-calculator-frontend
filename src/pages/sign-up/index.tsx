@@ -1,7 +1,11 @@
+import { useNotAuthPage } from '@cc/shared/lib';
+import { RoutesTypes } from '@cc/shared/types';
 import { SignUpForm } from '@cc/widgets';
 import Head from 'next/head';
 
 export default function SignUp() {
+  const { showContent } = useNotAuthPage({ redirectTo: RoutesTypes.MAIN });
+
   return (
     <>
       <Head>
@@ -11,7 +15,7 @@ export default function SignUp() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <SignUpForm />
+      {showContent && <SignUpForm />}
     </>
   );
 }
