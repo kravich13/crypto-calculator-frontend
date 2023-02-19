@@ -8,36 +8,11 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 import React, { useCallback } from 'react';
 import { Control, Controller } from 'react-hook-form';
+
+import styles from '../styles/SelectedCoins.module.css';
 import { ISelectedInvestCoin, ISelectedInvestCoinsForm } from '../types';
-
-const useStyles = makeStyles({
-  formContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    margin: '8px 0',
-  },
-  title: { textAlign: 'center' },
-  boxButton: {
-    textAlign: 'center',
-    margin: '20px 0',
-  },
-  flexContainer: { display: 'flex' },
-  nameText: { paddingRight: 5 },
-  input: { width: 100 },
-  deleteButton: {
-    alignSelf: 'center',
-    width: 28,
-    height: 28,
-
-    '&:hover': {
-      color: 'red',
-    },
-  },
-});
 
 interface ISelectedCoinsProps {
   addedCoins: ISelectedInvestCoin[];
@@ -54,8 +29,6 @@ export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
   removeAddedCoin,
   distributeEqually,
 }) => {
-  const styles = useStyles();
-
   const renderItem = useCallback(
     ({ primaryId, name, ticker, percent }: ISelectedInvestCoin, index: number) => (
       <Box key={primaryId}>

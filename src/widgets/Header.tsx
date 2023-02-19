@@ -2,35 +2,18 @@ import { AuthHeaderContent, NotAuthHeaderContent } from '@cc/entities/Header';
 import { useAppSelector } from '@cc/shared/lib';
 import { RoutesTypes } from '@cc/shared/types';
 import { AppBar, Container, Toolbar, Typography, useMediaQuery } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useCallback } from 'react';
 
-const useStyles = makeStyles(
-  {
-    header: {
-      paddingTop: 10,
-      paddingBottom: 10,
-    },
-    mobileHeader: {
-      flex: 1,
-      flexDirection: 'column',
-    },
-    mobileLogoContainer: {
-      textAlign: 'center',
-    },
-  },
-  { name: 'MuiExamle_ComponentHeader' }
-);
+import styles from './styles/Header.module.css';
 
 export const Header: React.FC = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const classes = useStyles();
   const isMin500Width = useMediaQuery('(max-width:500px)');
 
-  const tollbarClasses = [classes.header, isMin500Width && classes.mobileHeader];
-  const logoClasses = [isMin500Width && classes.mobileLogoContainer];
+  const tollbarClasses = [styles.header, isMin500Width && styles.mobileHeader];
+  const logoClasses = [isMin500Width && styles.mobileLogoContainer];
 
   const isAuth = useAppSelector((state) => state.authReducer.isAuth);
 

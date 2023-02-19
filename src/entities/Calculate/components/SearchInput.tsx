@@ -1,28 +1,13 @@
 import { TextInput } from '@cc/shared/ui';
 import { SearchOutlined } from '@mui/icons-material';
 import { Box, InputAdornment, useMediaQuery } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { UseFieldArrayPrepend } from 'react-hook-form';
 import { IMockData, ISelectedInvestCoinsForm } from '../types';
 import { SearchNavigationButtons } from './SearchNavigationButtons';
 import { SearchRenderItem } from './SearchRenderItem';
 
-const useStyles = makeStyles({
-  container: {
-    position: 'relative',
-    zIndex: 1,
-  },
-  searchContainer: {
-    position: 'absolute',
-    background: 'white',
-    padding: '8px',
-    borderLeft: '2px solid #1876d1',
-    borderBottom: '2px solid #1876d1',
-    borderRight: '2px solid #1876d1',
-    borderRadius: 4,
-  },
-});
+import styles from '../styles/SearchInput.module.css';
 
 interface ISearchInput {
   searchData: IMockData[];
@@ -36,7 +21,6 @@ export const SearchInput: React.FC<ISearchInput> = ({ searchData, label, prepend
   const $container = useRef<HTMLDivElement>();
   const $searchInput = useRef<HTMLInputElement>();
 
-  const styles = useStyles();
   const [searchValue, setSearchValue] = useState('');
   const [showElements, setShowElements] = useState(false);
   const [selectedItem, setSelectedItem] = useState<IMockData>();

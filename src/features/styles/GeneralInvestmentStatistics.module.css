@@ -1,0 +1,10 @@
+.finalDataBox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.percent {
+  margin-left: 8px;
+  padding: 0 6px;
+  border-radius: 8px;
+}

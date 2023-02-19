@@ -1,0 +1,26 @@
+.item {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.cryptoContainer {
+  display: flex;
+}
+.selectedItem {
+  background: #bbdefb;
+}
+.hoverItem:hover {
+  background: #bbdefb;
+}
+.cryptoName {
+  padding-right: 5px;
+}
+.selectcontainer {
+  display: flex;
+  align-items: center;
+}
+.selectText {
+  padding-right: 5px;
+}
