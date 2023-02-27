@@ -52,8 +52,8 @@ export const SearchInput: React.FC<ISearchInput> = ({ searchData, label, prepend
   }, []);
 
   const onBlurSearch = useCallback(() => {
-    setShowElements(false);
-    onClearSearch();
+    // setShowElements(false);
+    // onClearSearch();
   }, []);
 
   const onKeyDownSearch = useCallback(

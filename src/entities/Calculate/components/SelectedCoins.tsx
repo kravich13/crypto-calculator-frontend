@@ -1,3 +1,4 @@
+import { useAppSelector } from '@cc/shared/lib';
 import { Delete } from '@mui/icons-material';
 import {
   Box,
@@ -10,7 +11,6 @@ import {
 } from '@mui/material';
 import React, { useCallback } from 'react';
 import { Control, Controller } from 'react-hook-form';
-
 import styles from '../styles/SelectedCoins.module.css';
 import { ISelectedInvestCoin, ISelectedInvestCoinsForm } from '../types';
 
@@ -29,6 +29,12 @@ export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
   removeAddedCoin,
   distributeEqually,
 }) => {
+  const maxNumberOfCoinsToInvest = useAppSelector(
+    (state) => state.baseCalculatorReducer.maxNumberOfCoinsToInvest
+  );
+
+  const minPercentForInvest = 100 / maxNumberOfCoinsToInvest;
+
   const renderItem = useCallback(
     ({ primaryId, name, ticker, percent }: ISelectedInvestCoin, index: number) => (
       <Box key={primaryId}>
@@ -84,8 +90,14 @@ export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
         Your added coins for investment
       </Typography>
 
+      <Typography className={styles.selectedMaxCoins}>
+        Сan select a maximum of {maxNumberOfCoinsToInvest} coins.
+      </Typography>
+
       <Typography>
-        Specify the investment percentage for each selected coin (at least 5 percent per coin)
+        Specify the investment percentage for each selected coin (at least
+        {` ${minPercentForInvest} `}
+        percent per coin)
       </Typography>
 
       <Box className={styles.boxButton}>

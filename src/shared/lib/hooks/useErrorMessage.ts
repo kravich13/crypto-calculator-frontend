@@ -2,8 +2,11 @@ import { IResponseError } from '@cc/shared/types';
 import type { SerializedError } from '@reduxjs/toolkit';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useMemo } from 'react';
+import { useAuthContext } from './context';
 
 export const useErrorMessage = (errorData?: FetchBaseQueryError | SerializedError) => {
+  const { logout } = useAuthContext();
+
   const errorMessage = useMemo(() => {
     let message = '';
 
@@ -15,7 +18,14 @@ export const useErrorMessage = (errorData?: FetchBaseQueryError | SerializedErro
         message = errorData.message;
       } else if (status === 400 || status === 401) {
         const [errorData] = (data as IResponseError).errors;
-        message = errorData.message;
+
+        if (errorData.message.includes('Invalid access token.')) {
+          message = 'Authorization timed out.';
+
+          logout();
+        } else {
+          message = errorData.message;
+        }
       } else {
         message = 'Error sending data, please try again later.';
       }

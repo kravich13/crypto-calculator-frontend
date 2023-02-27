@@ -4,6 +4,6 @@ export interface IResponseError {
   }[];
 }
 
-export interface IResponseStatus {
+export interface ISuccessResponseStatus {
   status: string;
 }

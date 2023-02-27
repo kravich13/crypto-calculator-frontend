@@ -1,5 +1,4 @@
-import { authAPI } from '@cc/shared/api';
-import { calculatorAPI } from '@cc/shared/api/CalculatorService';
+import { authAPI, calculatorAPI } from '@cc/shared/api';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { authReducer, baseCalculatorReducer, userDataReducer } from './reducers';
 

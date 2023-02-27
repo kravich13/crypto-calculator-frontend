@@ -1,8 +1,12 @@
-import { ISelectedInvestCoinsForm } from '@cc/entities/Calculate';
-import { IPeriodAndAmountForm, PeriodAndAmount, SelectedInvestCoins } from '@cc/features';
-import { baseCalculatorSlice, useAppDispatch } from '@cc/shared/lib';
+import { INPUT_FORMAT_DATE, ISelectedInvestCoinsForm } from '@cc/entities/Calculate';
+import { PeriodAndAmount, SelectedInvestCoins } from '@cc/features';
+import { usePeriodAndAmountMutation } from '@cc/shared/api';
+import { baseCalculatorSlice, useAppDispatch, useErrorMessage } from '@cc/shared/lib';
+import { IPeriodAndAmountForm } from '@cc/shared/types';
+import { PopupAlert } from '@cc/shared/ui';
 import { Container, Step, StepLabel, Stepper, Typography, useMediaQuery } from '@mui/material';
-import { useCallback, useMemo, useState } from 'react';
+import { DateTime } from 'luxon';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 
 interface IStepRender {
@@ -11,16 +15,23 @@ interface IStepRender {
 
 export const CalculateYieldForm = () => {
   const isMin520Width = useMediaQuery('(max-width:520px)');
-  const { setPeriodAndAmount } = baseCalculatorSlice.actions;
+  const { setPeriodAndAmount, setMaxNumberOfCoinsToInvest } = baseCalculatorSlice.actions;
 
   const dispatch = useAppDispatch();
+  const [periodAndAmountRequest, periodAndAmontResponse] = usePeriodAndAmountMutation();
+  const errorMessage = useErrorMessage(periodAndAmontResponse.error);
 
   const [step, setStep] = useState(0);
 
-  const onConfirmStep0: SubmitHandler<IPeriodAndAmountForm> = useCallback(
-    async ({ monthlyInvestment, startDate, endDate }) => {},
-    []
-  );
+  const onConfirmStep0: SubmitHandler<IPeriodAndAmountForm> = useCallback(async (data) => {
+    dispatch(setPeriodAndAmount(data));
+
+    const startDate = DateTime.fromFormat(data.startDate, INPUT_FORMAT_DATE).toMillis();
+    const endDate = DateTime.fromFormat(data.endDate, INPUT_FORMAT_DATE).toMillis();
+    const monthlyInvestment = Number(data.monthlyInvestment);
+
+    await periodAndAmountRequest({ startDate, endDate, monthlyInvestment });
+  }, []);
 
   const onConfirmStep1: SubmitHandler<ISelectedInvestCoinsForm> = useCallback(
     ({ addedCoins }) => {},
@@ -39,8 +50,21 @@ export const CalculateYieldForm = () => {
     []
   );
 
+  useEffect(() => {
+    const periodData = periodAndAmontResponse.data;
+
+    if (step === 0 && periodData) {
+      dispatch(setMaxNumberOfCoinsToInvest(periodData.maxNumberOfCoinsToInvest));
+      setStep(1);
+    }
+  }, [step, periodAndAmontResponse.data]);
+
   return (
     <>
+      {periodAndAmontResponse.isError && (
+        <PopupAlert text={errorMessage} severity="error" variant="filled" />
+      )}
+
       <Container component="div" maxWidth={isMin520Width ? 'xs' : 'sm'}>
         <Typography component="h1" variant="h5" marginBottom={3} textAlign="center">
           Calculation of profitability from monthly investments in cryptocurrency

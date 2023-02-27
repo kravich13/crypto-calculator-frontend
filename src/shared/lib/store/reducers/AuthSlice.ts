@@ -1,18 +1,7 @@
-import { ILoginResponse } from '@cc/shared/types';
+import { IAuthInitialState, ILoginResponse, ITokensData } from '@cc/shared/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export interface ITokensData {
-  accessToken: string;
-  refreshToken: string;
-  accessTokenExpiresIn: number;
-  refreshTokenExpiresIn: number;
-}
-
-interface IAuthState extends ITokensData {
-  isAuth?: boolean;
-}
-
-const initialState: IAuthState = {
+const initialState: IAuthInitialState = {
   isAuth: undefined,
   accessToken: '',
   refreshToken: '',
