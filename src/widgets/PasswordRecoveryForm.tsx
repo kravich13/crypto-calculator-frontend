@@ -4,6 +4,7 @@ import {
   useForgotPasswordMutation,
   useNewPasswordMutation,
 } from '@cc/shared/api';
+import { RoutesTypes } from '@cc/shared/enums';
 import {
   useAppDispatch,
   useAppSelector,
@@ -11,7 +12,7 @@ import {
   useErrorMessage,
   userDataSlice,
 } from '@cc/shared/lib';
-import { ISetCodeInput, ISetEmailInput, RoutesTypes } from '@cc/shared/types';
+import { ISetCodeInput, ISetEmailInput } from '@cc/shared/types';
 import { PopupAlert } from '@cc/shared/ui';
 import {
   Backdrop,

@@ -8,7 +8,7 @@ import {
   IEmailCodeRequest,
   IPasswordForgotRequest,
   INewPasswordRequest,
-} from '../types/auth';
+} from '../types/api/auth.api';
 
 export const authAPI = createApi({
   reducerPath: 'authAPI',

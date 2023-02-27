@@ -1,4 +1,4 @@
-import { RoutesTypes } from '@cc/shared/types';
+import { RoutesTypes } from '@cc/shared/enums';
 import { Button, Container, useMediaQuery } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useCallback, useMemo } from 'react';

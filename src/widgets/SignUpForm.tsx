@@ -1,5 +1,6 @@
 import { EmailCode, IEmailCodeForm, INeedActivateAccount, ISignUpForm, SignUp } from '@cc/features';
 import { useEmailValidateMutation, useSignUpMutation } from '@cc/shared/api';
+import { RoutesTypes } from '@cc/shared/enums';
 import {
   useAppDispatch,
   useAppSelector,
@@ -7,7 +8,6 @@ import {
   useErrorMessage,
   userDataSlice,
 } from '@cc/shared/lib';
-import { RoutesTypes } from '@cc/shared/types';
 import { PopupAlert } from '@cc/shared/ui';
 import {
   Backdrop,

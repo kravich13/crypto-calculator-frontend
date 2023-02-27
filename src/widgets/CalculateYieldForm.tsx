@@ -1,5 +1,6 @@
 import { ISelectedInvestCoinsForm } from '@cc/entities/Calculate';
 import { IPeriodAndAmountForm, PeriodAndAmount, SelectedInvestCoins } from '@cc/features';
+import { baseCalculatorSlice, useAppDispatch } from '@cc/shared/lib';
 import { Container, Step, StepLabel, Stepper, Typography, useMediaQuery } from '@mui/material';
 import { useCallback, useMemo, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
@@ -10,6 +11,9 @@ interface IStepRender {
 
 export const CalculateYieldForm = () => {
   const isMin520Width = useMediaQuery('(max-width:520px)');
+  const { setPeriodAndAmount } = baseCalculatorSlice.actions;
+
+  const dispatch = useAppDispatch();
 
   const [step, setStep] = useState(0);
 

@@ -1,6 +1,6 @@
 import { DetailedInvestmentStatistics, GeneralInvestmentStatistics } from '@cc/features';
+import { RoutesTypes } from '@cc/shared/enums';
 import { useAuthPage } from '@cc/shared/lib';
-import { RoutesTypes } from '@cc/shared/types';
 import { Box, Container } from '@mui/material';
 import Head from 'next/head';
 

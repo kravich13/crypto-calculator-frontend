@@ -1,3 +1,3 @@
 export * from './AuthSlice';
-export * from './CalculatorSlice';
+export * from './BaseCalculatorSlice';
 export * from './UserDataSlice';

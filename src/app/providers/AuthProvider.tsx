@@ -1,7 +1,7 @@
 import {
   AuthContext,
   authSlice,
-  calculatorSlice,
+  baseCalculatorSlice,
   ITokensData,
   useAppDispatch,
   userDataSlice,
@@ -23,7 +23,7 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
   const logout = useCallback(() => {
     dispatch(clearState());
     dispatch(userDataSlice.actions.clearState());
-    dispatch(calculatorSlice.actions.clearState());
+    dispatch(baseCalculatorSlice.actions.clearState());
   }, []);
 
   useEffect(() => {

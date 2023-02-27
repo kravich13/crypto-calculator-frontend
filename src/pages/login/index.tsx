@@ -1,5 +1,5 @@
+import { RoutesTypes } from '@cc/shared/enums';
 import { useNotAuthPage } from '@cc/shared/lib';
-import { RoutesTypes } from '@cc/shared/types';
 import { LoginForm } from '@cc/widgets';
 import Head from 'next/head';
 
