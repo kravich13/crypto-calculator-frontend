@@ -5,17 +5,11 @@
   border-radius: 8px;
   cursor: pointer;
 }
-.cryptoContainer {
-  display: flex;
-}
 .selectedItem {
   background: #bbdefb;
 }
 .hoverItem:hover {
   background: #bbdefb;
-}
-.cryptoName {
-  padding-right: 5px;
 }
 .selectContainer {
   display: flex;

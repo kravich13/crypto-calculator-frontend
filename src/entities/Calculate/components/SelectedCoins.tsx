@@ -1,4 +1,3 @@
-import { useAppSelector } from '@cc/shared/lib';
 import { Delete } from '@mui/icons-material';
 import {
   Box,
@@ -13,8 +12,10 @@ import React, { useCallback } from 'react';
 import { Control, Controller } from 'react-hook-form';
 import styles from '../styles/SelectedCoins.module.css';
 import { ISelectedInvestCoin, ISelectedInvestCoinsForm } from '../types';
+import { MainCoinInfoContainer } from './MainCoinInfoContainer';
 
 interface ISelectedCoinsProps {
+  maxNumberOfCoinsToInvest: number;
   addedCoins: ISelectedInvestCoin[];
   control: Control<ISelectedInvestCoinsForm, any>;
   getIndexError: (index: number) => boolean;
@@ -23,32 +24,27 @@ interface ISelectedCoinsProps {
 }
 
 export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
+  maxNumberOfCoinsToInvest,
   addedCoins,
   control,
   getIndexError,
   removeAddedCoin,
   distributeEqually,
 }) => {
-  const maxNumberOfCoinsToInvest = useAppSelector(
-    (state) => state.baseCalculatorReducer.maxNumberOfCoinsToInvest
-  );
-
-  const minPercentForInvest = 100 / maxNumberOfCoinsToInvest;
+  const minPercentForInvest = (100 / addedCoins.length).toFixed(2);
+  const minPercentTitle = 100 / maxNumberOfCoinsToInvest;
 
   const renderItem = useCallback(
-    ({ primaryId, name, ticker, percent }: ISelectedInvestCoin, index: number) => (
-      <Box key={primaryId}>
+    ({ coinId, name, symbol, image, percent }: ISelectedInvestCoin, index: number) => (
+      <Box key={coinId}>
         <Box className={styles.formContainer}>
-          <Box className={styles.flexContainer}>
-            <Typography className={styles.nameText}>{name}</Typography>
-            <Typography color="GrayText">{ticker}</Typography>
-          </Box>
+          <MainCoinInfoContainer image={image} name={name} symbol={symbol} />
 
           <Box className={styles.flexContainer}>
             <Controller
               name={`addedCoins.${index}.percent`}
               defaultValue={percent}
-              rules={{ required: true, min: 5, max: 100 }}
+              rules={{ required: true, min: minPercentForInvest, max: 100 }}
               control={control}
               render={({ field }) => (
                 <TextField
@@ -61,7 +57,7 @@ export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
                   InputProps={{
                     startAdornment: <InputAdornment position="start">%</InputAdornment>,
                   }}
-                  inputProps={{ min: 5, max: 100 }}
+                  inputProps={{ min: minPercentForInvest, max: 100 }}
                   className={styles.input}
                   sx={{ mr: 2 }}
                 />
@@ -81,7 +77,7 @@ export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
         <Divider />
       </Box>
     ),
-    [control, getIndexError, removeAddedCoin]
+    [control, minPercentForInvest, getIndexError, removeAddedCoin]
   );
 
   return (
@@ -91,12 +87,14 @@ export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
       </Typography>
 
       <Typography className={styles.selectedMaxCoins}>
-        Сan select a maximum of {maxNumberOfCoinsToInvest} coins.
+        Сan select a maximum of {maxNumberOfCoinsToInvest} coins
       </Typography>
+
+      <Typography className={styles.selectedCoins}>Selected coins: {addedCoins.length}</Typography>
 
       <Typography>
         Specify the investment percentage for each selected coin (at least
-        {` ${minPercentForInvest} `}
+        {` ${minPercentTitle} `}
         percent per coin)
       </Typography>
 

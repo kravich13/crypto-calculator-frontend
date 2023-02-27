@@ -10,17 +10,17 @@ export interface IPeriodAndAmountResponse {
   maxNumberOfCoinsToInvest: number;
 }
 
-export type CoinSearchRequest = {
+export interface ICoinSearchRequest {
   searchText: string;
   limit: number;
-}[];
+}
 
 export type CoinSearchResponse = IMainCoinInfo[];
 
-export interface ICalculateProfitRequest {
+export type CalculateProfitRequest = {
   coinId: string;
   share: number;
-}
+}[];
 
 export interface ICalculateProfitResponse {
   coins: (ICoinProfitData & IMainCoinInfo)[];

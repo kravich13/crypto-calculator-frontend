@@ -1,15 +1,7 @@
-export interface IMainMockData {
-  name: string;
-  ticker: string;
-}
+import { IMainCoinInfo } from '@cc/shared/types';
 
-export interface IMockData extends IMainMockData {
-  id: string;
-}
-
-export interface ISelectedInvestCoin extends IMainMockData {
+export interface ISelectedInvestCoin extends IMainCoinInfo {
   percent: string;
-  primaryId: string;
 }
 
 export interface ISelectedInvestCoinsForm {

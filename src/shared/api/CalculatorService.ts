@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 import {
-  CoinSearchRequest,
-  ICalculateProfitRequest,
+  ICoinSearchRequest,
+  CalculateProfitRequest,
   ICalculateProfitResponse,
   CoinSearchResponse,
   IPeriodAndAmountRequest,
@@ -30,14 +30,14 @@ export const calculatorAPI = createApi({
         body: data,
       }),
     }),
-    coinSearch: build.mutation<CoinSearchResponse, CoinSearchRequest>({
+    coinSearch: build.mutation<CoinSearchResponse, ICoinSearchRequest>({
       query: (data) => ({
         url: '/coin-search',
         method: 'POST',
         body: data,
       }),
     }),
-    calculateProfit: build.mutation<ICalculateProfitResponse, ICalculateProfitRequest>({
+    calculateProfit: build.mutation<ICalculateProfitResponse, CalculateProfitRequest>({
       query: (data) => ({
         url: '/calculate-profit',
         method: 'POST',

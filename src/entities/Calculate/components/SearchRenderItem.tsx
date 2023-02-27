@@ -1,18 +1,18 @@
+import { IMainCoinInfo } from '@cc/shared/types';
 import { Box, Typography, useMediaQuery } from '@mui/material';
 import React from 'react';
-import { IMockData } from '../types';
-
 import navigationButtonStyles from '../styles/SearchNavigationButtons.module.css';
 import styles from '../styles/SearchRenderItem.module.css';
+import { MainCoinInfoContainer } from './MainCoinInfoContainer';
 
 interface ISearchRenderItemProps {
-  item: IMockData;
+  item: IMainCoinInfo;
   isSelected: boolean;
-  onClickSelectedItem: (item: IMockData) => void;
+  onClickSelectedItem: (item: IMainCoinInfo) => void;
 }
 
 export const SearchRenderItem: React.FC<ISearchRenderItemProps> = React.memo(
-  ({ item: { id, name, ticker }, isSelected, onClickSelectedItem }) => {
+  ({ item: { coinId, name, symbol, image }, isSelected, onClickSelectedItem }) => {
     const isMin990Width = useMediaQuery('(min-width:990px)');
     const isMax400Width = useMediaQuery('(max-width:400px)');
 
@@ -24,16 +24,11 @@ export const SearchRenderItem: React.FC<ISearchRenderItemProps> = React.memo(
     return (
       <Box
         component="div"
-        key={id}
+        key={coinId}
         className={containerClasses.join(' ')}
-        onMouseDown={() => onClickSelectedItem({ id, name, ticker })}
+        onMouseDown={() => onClickSelectedItem({ coinId, name, image, symbol })}
       >
-        <Box component="div" className={styles.cryptoContainer}>
-          <Typography className={styles.cryptoName} title={name}>
-            {nameTitle}
-          </Typography>
-          <Typography color="GrayText">{ticker}</Typography>
-        </Box>
+        <MainCoinInfoContainer image={image} name={nameTitle} symbol={symbol} />
 
         {isSelected && isMin990Width && (
           <Box component="div" className={styles.selectContainer}>

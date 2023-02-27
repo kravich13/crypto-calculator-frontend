@@ -4,19 +4,11 @@ import {
   SearchInput,
   SelectedCoins,
 } from '@cc/entities/Calculate';
+import { useCoinSearchMutation } from '@cc/shared/api';
+import { useAppSelector } from '@cc/shared/lib';
 import { Box, Button, Typography } from '@mui/material';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { SubmitHandler, useFieldArray, useForm, useFormState } from 'react-hook-form';
-import { v4 as uuid } from 'uuid';
-
-const mockData = [
-  { id: uuid(), name: 'Bitcoin', ticker: 'BTC' },
-  { id: uuid(), name: 'Litecoin', ticker: 'LTC' },
-  { id: uuid(), name: 'Ethereum', ticker: 'ETH' },
-  { id: uuid(), name: 'Eos', ticker: 'EOS' },
-  { id: uuid(), name: 'Tether', ticker: 'USDT' },
-  { id: uuid(), name: 'Ethereum Classic', ticker: 'ETC' },
-];
 
 interface ISelectedInvestCoinsProps {
   onBack: () => void;
@@ -25,6 +17,12 @@ interface ISelectedInvestCoinsProps {
 
 export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.memo(
   ({ onBack, onConfirm }) => {
+    const [coinSearchRequest, { data: searchCoins }] = useCoinSearchMutation();
+
+    const maxNumberOfCoinsToInvest = useAppSelector(
+      (state) => state.baseCalculatorReducer.maxNumberOfCoinsToInvest
+    );
+
     const { control, handleSubmit, setValue } = useForm<ISelectedInvestCoinsForm>({
       mode: 'onBlur',
     });
@@ -37,6 +35,8 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
 
     const { errors, isValid } = useFormState({ control, name: 'addedCoins' });
 
+    const canAddCoin = addedCoins.length < maxNumberOfCoinsToInvest;
+
     const errorTitle = useMemo(() => {
       if (addedCoins.length === 0) {
         return 'Coins not selected';
@@ -46,8 +46,13 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
     }, [addedCoins.length, isValid]);
 
     const searchData = useMemo(
-      () => mockData.filter(({ id }) => !addedCoins.find(({ primaryId }) => primaryId === id)),
-      [addedCoins]
+      () =>
+        searchCoins?.length
+          ? searchCoins.filter(
+              ({ coinId }) => !addedCoins.find(({ coinId: addedCoinId }) => addedCoinId === coinId)
+            )
+          : [],
+      [addedCoins, searchCoins]
     );
 
     const getIndexError = useCallback(
@@ -73,16 +78,24 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
       event.preventDefault();
     }, []);
 
+    useEffect(() => {
+      (async () => {
+        await coinSearchRequest({ limit: 6, searchText: '' });
+      })();
+    }, []);
+
     return (
       <Box>
         <SearchInput
           searchData={searchData}
-          label="Search by name or ticker"
+          label="Search by name"
+          canAddCoin={canAddCoin}
           prependSelectedCoin={prepend}
         />
 
         <Box component="form" noValidate onSubmit={onSubmit} mt={3}>
           <SelectedCoins
+            maxNumberOfCoinsToInvest={maxNumberOfCoinsToInvest}
             addedCoins={addedCoins}
             control={control}
             getIndexError={getIndexError}
@@ -115,8 +128,8 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
             sx={{ textTransform: 'none', width: '120px' }}
             type="submit"
             variant="contained"
-            disabled={!isValid}
             onClick={onCalculate}
+            disabled={!isValid || addedCoins.length > maxNumberOfCoinsToInvest}
           >
             Calculate
           </Button>

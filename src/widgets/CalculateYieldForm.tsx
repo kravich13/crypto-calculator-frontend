@@ -21,7 +21,7 @@ export const CalculateYieldForm = () => {
   const [periodAndAmountRequest, periodAndAmontResponse] = usePeriodAndAmountMutation();
   const errorMessage = useErrorMessage(periodAndAmontResponse.error);
 
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(1);
 
   const onConfirmStep0: SubmitHandler<IPeriodAndAmountForm> = useCallback(async (data) => {
     dispatch(setPeriodAndAmount(data));
