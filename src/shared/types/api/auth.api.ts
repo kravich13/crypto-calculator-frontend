@@ -10,10 +10,6 @@ export interface ILoginRequest {
   password: string;
 }
 
-export interface IEmailCodeResponse {
-  status: string;
-}
-
 export interface IEmailCodeRequest extends IEmailValidateRequest {
   email: string;
 }
@@ -28,8 +24,4 @@ export interface IPasswordForgotRequest {
 
 export interface INewPasswordRequest extends IEmailCodeRequest {
   password: string;
-}
-
-export interface IHeadersRequest {
-  authorization: string;
 }

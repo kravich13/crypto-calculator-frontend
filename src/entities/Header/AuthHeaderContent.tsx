@@ -1,5 +1,5 @@
+import { RoutesTypes } from '@cc/shared/enums';
 import { useAppSelector, useAuthContext } from '@cc/shared/lib';
-import { RoutesTypes } from '@cc/shared/types';
 import { Avatar, Box, Fade, IconButton, Menu, MenuItem } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import React, { useCallback, useState } from 'react';

@@ -7,15 +7,19 @@
 .title {
   text-align: center;
 }
+.selectedMaxCoins {
+  text-align: center;
+  color: #5d5d5d;
+  margin-bottom: 4px;
+}
+.selectedCoins {
+  text-align: center;
+  color: #5d5d5d;
+  margin-bottom: 24px;
+}
 .boxButton {
   text-align: center;
   margin: 20px 0;
-}
-.flexContainer {
-  display: flex;
-}
-.nameText {
-  padding-right: 5px;
 }
 .input {
   width: 100px;

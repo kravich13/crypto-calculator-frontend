@@ -1,6 +1,6 @@
 import { AuthHeaderContent, NotAuthHeaderContent } from '@cc/entities/Header';
+import { RoutesTypes } from '@cc/shared/enums';
 import { useAppSelector } from '@cc/shared/lib';
-import { RoutesTypes } from '@cc/shared/types';
 import { AppBar, Container, Toolbar, Typography, useMediaQuery } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useCallback } from 'react';

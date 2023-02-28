@@ -4,27 +4,30 @@ import {
   SearchInput,
   SelectedCoins,
 } from '@cc/entities/Calculate';
+import { useLazyCoinSearchQuery } from '@cc/shared/api';
+import { useAppSelector } from '@cc/shared/lib';
 import { Box, Button, Typography } from '@mui/material';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { SubmitHandler, useFieldArray, useForm, useFormState } from 'react-hook-form';
-import { v4 as uuid } from 'uuid';
-
-const mockData = [
-  { id: uuid(), name: 'Bitcoin', ticker: 'BTC' },
-  { id: uuid(), name: 'Litecoin', ticker: 'LTC' },
-  { id: uuid(), name: 'Ethereum', ticker: 'ETH' },
-  { id: uuid(), name: 'Eos', ticker: 'EOS' },
-  { id: uuid(), name: 'Tether', ticker: 'USDT' },
-  { id: uuid(), name: 'Ethereum Classic', ticker: 'ETC' },
-];
+import styles from '../styles/SelectedInvestCoins.module.css';
 
 interface ISelectedInvestCoinsProps {
   onBack: () => void;
   onConfirm: SubmitHandler<ISelectedInvestCoinsForm>;
 }
 
+const LIMIT_FOR_SEARCH_REQUEST = 6;
+
 export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.memo(
   ({ onBack, onConfirm }) => {
+    const startDate = useAppSelector((state) => state.baseCalculatorReducer.startDate);
+
+    const [coinSearchRequest, { data: searchCoins }] = useLazyCoinSearchQuery();
+
+    const maxNumberOfCoinsToInvest = useAppSelector(
+      (state) => state.baseCalculatorReducer.maxNumberOfCoinsToInvest
+    );
+
     const { control, handleSubmit, setValue } = useForm<ISelectedInvestCoinsForm>({
       mode: 'onBlur',
     });
@@ -37,6 +40,8 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
 
     const { errors, isValid } = useFormState({ control, name: 'addedCoins' });
 
+    const canAddCoin = addedCoins.length < maxNumberOfCoinsToInvest;
+
     const errorTitle = useMemo(() => {
       if (addedCoins.length === 0) {
         return 'Coins not selected';
@@ -46,9 +51,22 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
     }, [addedCoins.length, isValid]);
 
     const searchData = useMemo(
-      () => mockData.filter(({ id }) => !addedCoins.find(({ primaryId }) => primaryId === id)),
-      [addedCoins]
+      () =>
+        searchCoins?.length
+          ? searchCoins.filter(
+              ({ coinId }) => !addedCoins.find(({ coinId: addedCoinId }) => addedCoinId === coinId)
+            )
+          : [],
+      [addedCoins, searchCoins]
     );
+
+    const makeSearchRequest = useCallback((searchText: string) => {
+      coinSearchRequest({ limit: LIMIT_FOR_SEARCH_REQUEST, searchText });
+    }, []);
+
+    useEffect(() => {
+      coinSearchRequest({ limit: LIMIT_FOR_SEARCH_REQUEST, searchText: '' });
+    }, []);
 
     const getIndexError = useCallback(
       (index: number) => Boolean(errors.addedCoins?.length && errors.addedCoins[index]?.percent),
@@ -75,14 +93,21 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
 
     return (
       <Box>
+        <Typography className={styles.coinsUntilDate}>
+          Coins until {startDate} are available for search.
+        </Typography>
+
         <SearchInput
           searchData={searchData}
-          label="Search by name or ticker"
+          label="Search by name"
+          canAddCoin={canAddCoin}
           prependSelectedCoin={prepend}
+          makeSearchRequest={makeSearchRequest}
         />
 
         <Box component="form" noValidate onSubmit={onSubmit} mt={3}>
           <SelectedCoins
+            maxNumberOfCoinsToInvest={maxNumberOfCoinsToInvest}
             addedCoins={addedCoins}
             control={control}
             getIndexError={getIndexError}
@@ -115,8 +140,8 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
             sx={{ textTransform: 'none', width: '120px' }}
             type="submit"
             variant="contained"
-            disabled={!isValid}
             onClick={onCalculate}
+            disabled={!isValid || canAddCoin}
           >
             Calculate
           </Button>

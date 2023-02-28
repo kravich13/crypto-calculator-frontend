@@ -1,4 +1,4 @@
-import { RoutesTypes } from '@cc/shared/types';
+import { RoutesTypes } from '@cc/shared/enums';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useAppSelector } from './redux';

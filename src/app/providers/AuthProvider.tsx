@@ -1,11 +1,12 @@
 import {
   AuthContext,
   authSlice,
-  calculatorSlice,
-  ITokensData,
+  baseCalculatorSlice,
+  profitSlice,
   useAppDispatch,
   userDataSlice,
 } from '@cc/shared/lib';
+import { ITokensData } from '@cc/shared/types';
 import { useCallback, useEffect } from 'react';
 
 interface IAuthProviderProps {
@@ -13,7 +14,7 @@ interface IAuthProviderProps {
 }
 
 export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
-  const { setAuth, setNotAuth, clearState } = authSlice.actions;
+  const { setAuth, setNotAuth } = authSlice.actions;
   const dispatch = useAppDispatch();
 
   const login = useCallback((tokensData: ITokensData) => {
@@ -21,9 +22,10 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
   }, []);
 
   const logout = useCallback(() => {
-    dispatch(clearState());
+    dispatch(authSlice.actions.clearState());
     dispatch(userDataSlice.actions.clearState());
-    dispatch(calculatorSlice.actions.clearState());
+    dispatch(baseCalculatorSlice.actions.clearState());
+    dispatch(profitSlice.actions.clearState());
   }, []);
 
   useEffect(() => {

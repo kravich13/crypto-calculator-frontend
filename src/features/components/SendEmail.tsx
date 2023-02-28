@@ -1,5 +1,5 @@
 import { emailValidation } from '@cc/entities/Authorization';
-import { RoutesTypes } from '@cc/shared/types';
+import { RoutesTypes } from '@cc/shared/enums';
 import { TextInput } from '@cc/shared/ui';
 import { Box, Button, Grid } from '@mui/material';
 import Link from 'next/link';

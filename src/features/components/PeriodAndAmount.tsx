@@ -4,16 +4,11 @@ import {
   mounthlyValidation,
   startDateValidation,
 } from '@cc/entities/Calculate';
+import { IPeriodAndAmountForm } from '@cc/shared/types';
 import { Box, Button, Grid, InputAdornment, TextField } from '@mui/material';
 import { DateTime } from 'luxon';
 import React, { useCallback, useMemo } from 'react';
 import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form';
-
-export interface IPeriodAndAmountForm {
-  startDate: string;
-  endDate: string;
-  monthlyInvestment: string;
-}
 
 interface IPeriodAndAmountProps {
   onConfirm: SubmitHandler<IPeriodAndAmountForm>;

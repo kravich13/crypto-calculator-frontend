@@ -1,14 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 import {
-  ILoginResponse,
-  ILoginRequest,
-  IEmailCodeResponse,
+  IEmailCodeRequest,
   IEmailValidateRequest,
   IHeadersRequest,
-  IEmailCodeRequest,
-  IPasswordForgotRequest,
+  ILoginRequest,
+  ILoginResponse,
   INewPasswordRequest,
-} from '../types/auth';
+  IPasswordForgotRequest,
+  ISuccessResponseStatus,
+} from '../types';
 
 export const authAPI = createApi({
   reducerPath: 'authAPI',
@@ -22,7 +22,7 @@ export const authAPI = createApi({
       }),
     }),
 
-    emailValidate: build.mutation<IEmailCodeResponse, IEmailValidateRequest & IHeadersRequest>({
+    emailValidate: build.mutation<ISuccessResponseStatus, IEmailValidateRequest & IHeadersRequest>({
       query: ({ code, authorization }) => ({
         url: '/email/validate',
         method: 'POST',
@@ -39,7 +39,7 @@ export const authAPI = createApi({
       }),
     }),
 
-    codeEmail: build.mutation<IEmailCodeResponse, IEmailCodeRequest>({
+    codeEmail: build.mutation<ISuccessResponseStatus, IEmailCodeRequest>({
       query: (data) => ({
         url: '/email/code',
         method: 'POST',
@@ -47,7 +47,7 @@ export const authAPI = createApi({
       }),
     }),
 
-    forgotPassword: build.mutation<IEmailCodeResponse, IPasswordForgotRequest>({
+    forgotPassword: build.mutation<ISuccessResponseStatus, IPasswordForgotRequest>({
       query: (data) => ({
         url: '/email/forgot',
         method: 'POST',
