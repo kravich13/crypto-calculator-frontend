@@ -30,7 +30,7 @@ export const calculatorAPI = createApi({
         body: data,
       }),
     }),
-    coinSearch: build.mutation<CoinSearchResponse, ICoinSearchRequest>({
+    coinSearch: build.query<CoinSearchResponse, ICoinSearchRequest>({
       query: (data) => ({
         url: '/coin-search',
         method: 'POST',
@@ -47,5 +47,5 @@ export const calculatorAPI = createApi({
   }),
 });
 
-export const { usePeriodAndAmountMutation, useCoinSearchMutation, useCalculateProfitMutation } =
+export const { usePeriodAndAmountMutation, useLazyCoinSearchQuery, useCalculateProfitMutation } =
   calculatorAPI;

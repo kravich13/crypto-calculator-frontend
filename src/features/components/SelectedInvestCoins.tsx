@@ -4,7 +4,7 @@ import {
   SearchInput,
   SelectedCoins,
 } from '@cc/entities/Calculate';
-import { useCoinSearchMutation } from '@cc/shared/api';
+import { useLazyCoinSearchQuery } from '@cc/shared/api';
 import { useAppSelector } from '@cc/shared/lib';
 import { Box, Button, Typography } from '@mui/material';
 import React, { useCallback, useEffect, useMemo } from 'react';
@@ -15,9 +15,11 @@ interface ISelectedInvestCoinsProps {
   onConfirm: SubmitHandler<ISelectedInvestCoinsForm>;
 }
 
+const LIMIT_FOR_SEARCH_REQUEST = 6;
+
 export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.memo(
   ({ onBack, onConfirm }) => {
-    const [coinSearchRequest, { data: searchCoins }] = useCoinSearchMutation();
+    const [coinSearchRequest, { data: searchCoins }] = useLazyCoinSearchQuery();
 
     const maxNumberOfCoinsToInvest = useAppSelector(
       (state) => state.baseCalculatorReducer.maxNumberOfCoinsToInvest
@@ -55,6 +57,14 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
       [addedCoins, searchCoins]
     );
 
+    const makeSearchRequest = useCallback((searchText: string) => {
+      coinSearchRequest({ limit: LIMIT_FOR_SEARCH_REQUEST, searchText });
+    }, []);
+
+    useEffect(() => {
+      coinSearchRequest({ limit: LIMIT_FOR_SEARCH_REQUEST, searchText: '' });
+    }, []);
+
     const getIndexError = useCallback(
       (index: number) => Boolean(errors.addedCoins?.length && errors.addedCoins[index]?.percent),
       [errors.addedCoins]
@@ -78,12 +88,6 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
       event.preventDefault();
     }, []);
 
-    useEffect(() => {
-      (async () => {
-        await coinSearchRequest({ limit: 6, searchText: '' });
-      })();
-    }, []);
-
     return (
       <Box>
         <SearchInput
@@ -91,6 +95,7 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
           label="Search by name"
           canAddCoin={canAddCoin}
           prependSelectedCoin={prepend}
+          makeSearchRequest={makeSearchRequest}
         />
 
         <Box component="form" noValidate onSubmit={onSubmit} mt={3}>
@@ -129,7 +134,7 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
             type="submit"
             variant="contained"
             onClick={onCalculate}
-            disabled={!isValid || addedCoins.length > maxNumberOfCoinsToInvest}
+            disabled={!isValid || canAddCoin}
           >
             Calculate
           </Button>

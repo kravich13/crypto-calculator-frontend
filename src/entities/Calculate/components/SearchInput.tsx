@@ -2,27 +2,28 @@ import { IMainCoinInfo } from '@cc/shared/types';
 import { TextInput } from '@cc/shared/ui';
 import { SearchOutlined } from '@mui/icons-material';
 import { Box, InputAdornment, useMediaQuery } from '@mui/material';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import debounce from 'lodash.debounce';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { UseFieldArrayPrepend } from 'react-hook-form';
 import styles from '../styles/SearchInput.module.css';
 import { ISelectedInvestCoinsForm } from '../types';
 import { SearchNavigationButtons } from './SearchNavigationButtons';
 import { SearchRenderItem } from './SearchRenderItem';
 
-interface ISearchInput {
+interface ISearchInputProps {
   searchData: IMainCoinInfo[];
   label: string;
   canAddCoin: boolean;
   prependSelectedCoin: UseFieldArrayPrepend<ISelectedInvestCoinsForm>;
+  makeSearchRequest: (searchText: string) => void;
 }
 
-export const SearchInput: React.FC<ISearchInput> = React.memo(
-  ({ searchData, label, canAddCoin, prependSelectedCoin }) => {
+export const SearchInput: React.FC<ISearchInputProps> = React.memo(
+  ({ searchData, label, canAddCoin, prependSelectedCoin, makeSearchRequest }) => {
     const isMin990Width = useMediaQuery('(min-width:990px)');
 
     const $container = useRef<HTMLDivElement>();
     const $searchInput = useRef<HTMLInputElement>();
-
     const [searchValue, setSearchValue] = useState('');
     const [showElements, setShowElements] = useState(false);
     const [selectedItem, setSelectedItem] = useState<IMainCoinInfo>();
@@ -36,6 +37,18 @@ export const SearchInput: React.FC<ISearchInput> = React.memo(
         setShowElements(false);
       }
     }, [canAddCoin]);
+
+    useEffect(() => {
+      return () => {
+        debounceFetch.cancel();
+      };
+    });
+
+    const debounceFetch = useMemo(() => debounce(makeSearchRequest, 300), []);
+
+    useEffect(() => {
+      debounceFetch(searchValue);
+    }, [searchValue]);
 
     const onClickSelectedItem = useCallback(
       (item: IMainCoinInfo) => {
@@ -128,13 +141,12 @@ export const SearchInput: React.FC<ISearchInput> = React.memo(
           }}
         />
 
-        {showElements && (
+        {showElements && Boolean(searchData.length) && (
           <Box
             className={styles.searchContainer}
             style={{ width: $container.current!.clientWidth }}
           >
             {searchData.map(renderItem)}
-
             {isMin990Width && <SearchNavigationButtons />}
           </Box>
         )}
