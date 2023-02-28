@@ -17,7 +17,7 @@ export default function InvestmentStatistics() {
       </Head>
 
       {showContent && (
-        <Container maxWidth="sm">
+        <Container maxWidth="md">
           <Box mb={3}>
             <GeneralInvestmentStatistics />
           </Box>

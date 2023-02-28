@@ -10,10 +10,12 @@ interface IInvestmentPercentProps {
 }
 
 export const InvestmentPercent: React.FC<IInvestmentPercentProps> = ({ percent, textStyles }) => {
+  const growth = Math.abs(percent);
+
   return (
     <Typography className={styles.percent} style={textStyles}>
       {percent >= 0 ? <ArrowDropUp /> : <ArrowDropDown />}
-      {percent}%
+      {growth}%
     </Typography>
   );
 };

@@ -1,4 +1,4 @@
-import { ICoinProfitData, IMainCoinInfo } from '../calculator';
+import { CalculateCoinProfitData, IMainCoinInfo } from '../calculator';
 
 export interface IPeriodAndAmountRequest {
   monthlyInvestment: number;
@@ -23,7 +23,7 @@ export type CalculateProfitRequest = {
 }[];
 
 export interface ICalculateProfitResponse {
-  coins: (ICoinProfitData & IMainCoinInfo)[];
+  coins: CalculateCoinProfitData[];
   totalCapital: number;
   totalGrowth: number;
   totalInvested: number;
