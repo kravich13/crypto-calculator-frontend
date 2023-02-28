@@ -2,6 +2,7 @@ import {
   AuthContext,
   authSlice,
   baseCalculatorSlice,
+  profitSlice,
   useAppDispatch,
   userDataSlice,
 } from '@cc/shared/lib';
@@ -24,6 +25,7 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
     dispatch(authSlice.actions.clearState());
     dispatch(userDataSlice.actions.clearState());
     dispatch(baseCalculatorSlice.actions.clearState());
+    dispatch(profitSlice.actions.clearState());
   }, []);
 
   useEffect(() => {

@@ -9,6 +9,7 @@ import { useAppSelector } from '@cc/shared/lib';
 import { Box, Button, Typography } from '@mui/material';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { SubmitHandler, useFieldArray, useForm, useFormState } from 'react-hook-form';
+import styles from '../styles/SelectedInvestCoins.module.css';
 
 interface ISelectedInvestCoinsProps {
   onBack: () => void;
@@ -19,6 +20,8 @@ const LIMIT_FOR_SEARCH_REQUEST = 6;
 
 export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.memo(
   ({ onBack, onConfirm }) => {
+    const startDate = useAppSelector((state) => state.baseCalculatorReducer.startDate);
+
     const [coinSearchRequest, { data: searchCoins }] = useLazyCoinSearchQuery();
 
     const maxNumberOfCoinsToInvest = useAppSelector(
@@ -90,6 +93,10 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
 
     return (
       <Box>
+        <Typography className={styles.coinsUntilDate}>
+          Coins until {startDate} are available for search.
+        </Typography>
+
         <SearchInput
           searchData={searchData}
           label="Search by name"

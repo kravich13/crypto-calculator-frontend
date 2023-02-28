@@ -1,11 +1,12 @@
 import { authAPI, calculatorAPI } from '@cc/shared/api';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { authReducer, baseCalculatorReducer, userDataReducer } from './reducers';
+import { authReducer, baseCalculatorReducer, profitReducer, userDataReducer } from './reducers';
 
 const rootReducer = combineReducers({
   authReducer,
   userDataReducer,
   baseCalculatorReducer,
+  profitReducer,
 
   [authAPI.reducerPath]: authAPI.reducer,
   [calculatorAPI.reducerPath]: calculatorAPI.reducer,

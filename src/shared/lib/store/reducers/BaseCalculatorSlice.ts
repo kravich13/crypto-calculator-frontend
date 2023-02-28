@@ -1,8 +1,7 @@
-import { IPeriodAndAmountForm, ISelectedCoinShare } from '@cc/shared/types';
+import { IPeriodAndAmountForm } from '@cc/shared/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface IBaseCalculatorSlice extends IPeriodAndAmountForm {
-  selectedCoinsShare: ISelectedCoinShare[];
   maxNumberOfCoinsToInvest: number;
 }
 
@@ -11,7 +10,6 @@ const initialState: IBaseCalculatorSlice = {
   monthlyInvestment: '',
   startDate: '',
   endDate: '',
-  selectedCoinsShare: [],
 };
 
 export const baseCalculatorSlice = createSlice({

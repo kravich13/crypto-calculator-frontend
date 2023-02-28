@@ -1,11 +1,13 @@
 import { INPUT_FORMAT_DATE, ISelectedInvestCoinsForm } from '@cc/entities/Calculate';
 import { PeriodAndAmount, SelectedInvestCoins } from '@cc/features';
-import { usePeriodAndAmountMutation } from '@cc/shared/api';
-import { baseCalculatorSlice, useAppDispatch, useErrorMessage } from '@cc/shared/lib';
-import { IPeriodAndAmountForm } from '@cc/shared/types';
+import { useCalculateProfitMutation, usePeriodAndAmountMutation } from '@cc/shared/api';
+import { RoutesTypes } from '@cc/shared/enums';
+import { baseCalculatorSlice, profitSlice, useAppDispatch, useErrorMessage } from '@cc/shared/lib';
+import { CalculateProfitRequest, IPeriodAndAmountForm } from '@cc/shared/types';
 import { PopupAlert } from '@cc/shared/ui';
 import { Container, Step, StepLabel, Stepper, Typography, useMediaQuery } from '@mui/material';
 import { DateTime } from 'luxon';
+import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 
@@ -15,11 +17,16 @@ interface IStepRender {
 
 export const CalculateYieldForm = () => {
   const isMin520Width = useMediaQuery('(max-width:520px)');
+  const router = useRouter();
   const { setPeriodAndAmount, setMaxNumberOfCoinsToInvest } = baseCalculatorSlice.actions;
+  const { setBaseProfit } = profitSlice.actions;
 
   const dispatch = useAppDispatch();
   const [periodAndAmountRequest, periodAndAmontResponse] = usePeriodAndAmountMutation();
-  const errorMessage = useErrorMessage(periodAndAmontResponse.error);
+  const [calculateProfitRequest, calculateProfitResponse] = useCalculateProfitMutation();
+
+  const periodAndAmountError = useErrorMessage(periodAndAmontResponse.error);
+  const calculateProfitError = useErrorMessage(calculateProfitResponse.error);
 
   const [step, setStep] = useState(1);
 
@@ -34,7 +41,14 @@ export const CalculateYieldForm = () => {
   }, []);
 
   const onConfirmStep1: SubmitHandler<ISelectedInvestCoinsForm> = useCallback(
-    ({ addedCoins }) => {},
+    async ({ addedCoins }) => {
+      const calculateProfitBody: CalculateProfitRequest = addedCoins.map(({ coinId, percent }) => ({
+        coinId,
+        share: Number(percent),
+      }));
+
+      await calculateProfitRequest(calculateProfitBody);
+    },
     []
   );
 
@@ -52,17 +66,25 @@ export const CalculateYieldForm = () => {
 
   useEffect(() => {
     const periodData = periodAndAmontResponse.data;
+    const profitData = calculateProfitResponse.data;
 
     if (step === 0 && periodData) {
       dispatch(setMaxNumberOfCoinsToInvest(periodData.maxNumberOfCoinsToInvest));
       setStep(1);
+    } else if (step === 1 && profitData) {
+      dispatch(setBaseProfit(profitData));
+      router.push(RoutesTypes.LOGIN);
     }
-  }, [step, periodAndAmontResponse.data]);
+  }, [step, periodAndAmontResponse.data, calculateProfitResponse.data]);
 
   return (
     <>
       {periodAndAmontResponse.isError && (
-        <PopupAlert text={errorMessage} severity="error" variant="filled" />
+        <PopupAlert
+          text={periodAndAmountError || calculateProfitError}
+          severity="error"
+          variant="filled"
+        />
       )}
 
       <Container component="div" maxWidth={isMin520Width ? 'xs' : 'sm'}>
