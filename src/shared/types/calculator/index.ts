@@ -13,3 +13,5 @@ export interface ICoinProfitData {
   growth: number;
   purchasedCoins: number;
 }
+
+export type CalculateCoinProfitData = ICoinProfitData & IMainCoinInfo;

@@ -4,10 +4,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 type ProfitSlice = ICalculateProfitResponse;
 
 const initialState: ProfitSlice = {
+  totalInvested: 0,
   investmentPeriod: 0,
   totalCapital: 0,
   totalGrowth: 0,
-  totalInvested: 0,
   coins: [],
 };
 
