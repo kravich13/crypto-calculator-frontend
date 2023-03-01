@@ -141,7 +141,7 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
             type="submit"
             variant="contained"
             onClick={onCalculate}
-            disabled={!isValid || canAddCoin}
+            disabled={!isValid || addedCoins.length > maxNumberOfCoinsToInvest}
           >
             Calculate
           </Button>

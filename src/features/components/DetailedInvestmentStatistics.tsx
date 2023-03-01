@@ -100,7 +100,7 @@ export const DetailedInvestmentStatistics = () => {
                 <Typography fontWeight="600">Name</Typography>
               </TableCell>
 
-              <TableCell>
+              <TableCell align="right">
                 <Typography fontWeight="600">Share</Typography>
               </TableCell>
 

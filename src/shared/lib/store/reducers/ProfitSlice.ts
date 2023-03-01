@@ -1,7 +1,7 @@
 import { ICalculateProfitResponse } from '@cc/shared/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type ProfitSlice = ICalculateProfitResponse;
+type ProfitSlice = ICalculateProfitResponse & { hasData?: boolean };
 
 const initialState: ProfitSlice = {
   totalInvested: 0,
@@ -19,11 +19,12 @@ export const profitSlice = createSlice({
       return { ...initialState };
     },
     setBaseProfit(state, { payload }: PayloadAction<ICalculateProfitResponse>) {
-      state.coins = payload.coins;
+      state.totalInvested = payload.totalInvested;
       state.investmentPeriod = payload.investmentPeriod;
       state.totalCapital = payload.totalCapital;
       state.totalGrowth = payload.totalGrowth;
       state.coins = payload.coins;
+      state.hasData = true;
     },
   },
 });

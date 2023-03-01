@@ -6,11 +6,17 @@ import { InvestmentPercent } from './InvestmentPercent';
 
 interface IBestWorstInvestmentProps {
   isMaxCoin: boolean;
-  coin: { image: string; profit: number; growth: number };
+  coin: {
+    image: string;
+    profit: number;
+    growth: number;
+    name: string;
+    symbol: string;
+  };
 }
 
 export const BestWorstItem: React.FC<IBestWorstInvestmentProps> = ({
-  coin: { image, growth, profit },
+  coin: { image, growth, profit, name, symbol },
   isMaxCoin,
 }) => {
   const profitNumber = profit >= 0 ? profit : Math.abs(profit);
@@ -23,7 +29,15 @@ export const BestWorstItem: React.FC<IBestWorstInvestmentProps> = ({
 
   return (
     <Box className={styles.container}>
-      <Image loader={() => image} alt="Image" src={image} height={24} width={24} unoptimized />
+      <Image
+        loader={() => image}
+        alt="Image"
+        src={image}
+        height={24}
+        width={24}
+        unoptimized
+        title={`${name} (${symbol})`}
+      />
 
       <Box sx={{ ml: 1 }}>
         <Typography color="GrayText">{isMaxCoin ? 'Best' : 'Worst'}</Typography>

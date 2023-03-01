@@ -28,7 +28,7 @@ export const CalculateYieldForm = () => {
   const periodAndAmountError = useErrorMessage(periodAndAmontResponse.error);
   const calculateProfitError = useErrorMessage(calculateProfitResponse.error);
 
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
 
   const onConfirmStep0: SubmitHandler<IPeriodAndAmountForm> = useCallback(async (data) => {
     dispatch(setPeriodAndAmount(data));
@@ -73,7 +73,7 @@ export const CalculateYieldForm = () => {
       setStep(1);
     } else if (step === 1 && profitData) {
       dispatch(setBaseProfit(profitData));
-      router.push(RoutesTypes.LOGIN);
+      router.push(RoutesTypes.INVESTMENT_STATISTICS);
     }
   }, [step, periodAndAmontResponse.data, calculateProfitResponse.data]);
 
