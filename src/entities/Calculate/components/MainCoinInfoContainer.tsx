@@ -1,3 +1,4 @@
+import sharedStyles from '@cc/shared/styles/Index.module.css';
 import { Box, Typography } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
@@ -26,6 +27,7 @@ export const MainCoinInfoContainer: React.FC<IMainCoinInfoContainerProps> = ({
       width={imageWidth}
       height={imageHeight}
       unoptimized
+      className={sharedStyles.coinIcon}
     />
 
     <Typography className={styles.nameText}>{name}</Typography>

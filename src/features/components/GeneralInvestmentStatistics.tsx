@@ -85,7 +85,7 @@ export const GeneralInvestmentStatistics = () => {
       </Box>
 
       <Box mb={2}>
-        <Typography component="p" variant="h6">
+        <Typography component="p" variant="h6" mb={1}>
           Best/worst investment
         </Typography>
 

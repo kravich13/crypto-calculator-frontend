@@ -1,3 +1,4 @@
+import sharedStyles from '@cc/shared/styles/Index.module.css';
 import { Box, Typography } from '@mui/material';
 import Image from 'next/image';
 import React, { useMemo } from 'react';
@@ -23,7 +24,7 @@ export const BestWorstItem: React.FC<IBestWorstInvestmentProps> = ({
   const profitTitle = `${profit >= 0 ? '+' : '-'} $${profitNumber}`;
 
   const profitTextStyle = useMemo(
-    () => ({ color: growth >= 0 ? '#16C784' : '#EA3943', fontSize: 16 }),
+    () => ({ color: growth >= 0 ? '#16C784' : '#EA3943', fontSize: 16, fontWeight: 600 }),
     [growth]
   );
 
@@ -36,11 +37,14 @@ export const BestWorstItem: React.FC<IBestWorstInvestmentProps> = ({
         height={24}
         width={24}
         unoptimized
-        title={`${name} (${symbol})`}
+        title={`${name} (${symbol.toUpperCase()})`}
+        className={sharedStyles.coinIcon}
       />
 
-      <Box sx={{ ml: 1 }}>
-        <Typography color="GrayText">{isMaxCoin ? 'Best' : 'Worst'}</Typography>
+      <Box sx={{ ml: 1 }} className={styles.titlesContainer}>
+        <Typography color="GrayText" fontWeight="500">
+          {isMaxCoin ? 'Best' : 'Worst'}
+        </Typography>
 
         <Box className={styles.container}>
           <InvestmentPercent percent={growth} textStyles={profitTextStyle} />

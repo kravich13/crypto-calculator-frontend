@@ -1,7 +1,6 @@
 import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
 import { Typography } from '@mui/material';
 import React from 'react';
-
 import styles from '../styles/InvestmentPercent.module.css';
 
 interface IInvestmentPercentProps {
@@ -9,13 +8,15 @@ interface IInvestmentPercentProps {
   textStyles?: React.CSSProperties;
 }
 
-export const InvestmentPercent: React.FC<IInvestmentPercentProps> = ({ percent, textStyles }) => {
-  const growth = Math.abs(percent);
+export const InvestmentPercent: React.FC<IInvestmentPercentProps> = React.memo(
+  ({ percent, textStyles }) => {
+    const growth = Math.abs(percent);
 
-  return (
-    <Typography className={styles.percent} style={textStyles}>
-      {percent >= 0 ? <ArrowDropUp /> : <ArrowDropDown />}
-      {growth}%
-    </Typography>
-  );
-};
+    return (
+      <Typography className={styles.percent} style={textStyles}>
+        {percent >= 0 ? <ArrowDropUp /> : <ArrowDropDown />}
+        {growth}%
+      </Typography>
+    );
+  }
+);

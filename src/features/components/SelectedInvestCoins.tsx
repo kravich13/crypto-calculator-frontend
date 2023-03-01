@@ -6,12 +6,16 @@ import {
 } from '@cc/entities/Calculate';
 import { useLazyCoinSearchQuery } from '@cc/shared/api';
 import { useAppSelector } from '@cc/shared/lib';
+import CalculateIcon from '@mui/icons-material/Calculate';
+import WestIcon from '@mui/icons-material/West';
+import { LoadingButton } from '@mui/lab';
 import { Box, Button, Typography } from '@mui/material';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { SubmitHandler, useFieldArray, useForm, useFormState } from 'react-hook-form';
 import styles from '../styles/SelectedInvestCoins.module.css';
 
 interface ISelectedInvestCoinsProps {
+  isLoading: boolean;
   onBack: () => void;
   onConfirm: SubmitHandler<ISelectedInvestCoinsForm>;
 }
@@ -19,7 +23,7 @@ interface ISelectedInvestCoinsProps {
 const LIMIT_FOR_SEARCH_REQUEST = 6;
 
 export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.memo(
-  ({ onBack, onConfirm }) => {
+  ({ isLoading, onBack, onConfirm }) => {
     const startDate = useAppSelector((state) => state.baseCalculatorReducer.startDate);
 
     const [coinSearchRequest, { data: searchCoins }] = useLazyCoinSearchQuery();
@@ -98,6 +102,7 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
         </Typography>
 
         <SearchInput
+          isLoading={isLoading}
           searchData={searchData}
           label="Search by name"
           canAddCoin={canAddCoin}
@@ -107,6 +112,7 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
 
         <Box component="form" noValidate onSubmit={onSubmit} mt={3}>
           <SelectedCoins
+            isLoading={isLoading}
             maxNumberOfCoinsToInvest={maxNumberOfCoinsToInvest}
             addedCoins={addedCoins}
             control={control}
@@ -132,19 +138,24 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
             type="submit"
             variant="contained"
             onClick={onBack}
+            startIcon={<WestIcon />}
+            title="dsds"
           >
             Back
           </Button>
 
-          <Button
+          <LoadingButton
             sx={{ textTransform: 'none', width: '120px' }}
             type="submit"
             variant="contained"
             onClick={onCalculate}
             disabled={!isValid || addedCoins.length > maxNumberOfCoinsToInvest}
+            loading={isLoading}
+            loadingPosition="end"
+            endIcon={<CalculateIcon />}
           >
             Calculate
-          </Button>
+          </LoadingButton>
         </Box>
       </Box>
     );
