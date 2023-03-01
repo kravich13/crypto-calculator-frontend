@@ -74,7 +74,7 @@ export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(
                   InputProps={{
                     startAdornment: <InputAdornment position="start">$</InputAdornment>,
                   }}
-                  inputProps={{ min: 50, max: 1000000 }}
+                  inputProps={{ min: 20, max: 1000000 }}
                   disabled={isLoading}
                 />
               )}

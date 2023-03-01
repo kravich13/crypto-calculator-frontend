@@ -22,7 +22,7 @@ export const useErrorMessage = (errorData?: FetchBaseQueryError | SerializedErro
         if (errorData.message.includes('Invalid access token.')) {
           message = 'Authorization timed out.';
 
-          logout();
+          logout(true);
         } else {
           message = errorData.message;
         }

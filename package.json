@@ -38,6 +38,7 @@
   "devDependencies": {
     "@types/lodash.debounce": "^4.0.7",
     "@types/luxon": "^3.2.0",
-    "@types/validator": "^13.7.12"
+    "@types/validator": "^13.7.12",
+    "typescript-plugin-css-modules": "^4.2.2"
   }
 }

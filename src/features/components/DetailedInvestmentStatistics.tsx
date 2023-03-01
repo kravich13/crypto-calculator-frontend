@@ -12,7 +12,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 
 export const DetailedInvestmentStatistics = () => {
   const coins = useAppSelector(({ profitReducer: { coins } }) => coins);

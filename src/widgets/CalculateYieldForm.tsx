@@ -31,7 +31,7 @@ export const CalculateYieldForm = () => {
   const isPeriodAndAmountLoading = periodAndAmountResponse.isLoading;
   const isCalculateProfitLoading = calculateProfitResponse.isLoading;
 
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
 
   const onConfirmStep0: SubmitHandler<IPeriodAndAmountForm> = useCallback(async (data) => {
     dispatch(setPeriodAndAmount(data));
@@ -80,9 +80,11 @@ export const CalculateYieldForm = () => {
     if (step === 0 && periodData) {
       dispatch(setMaxNumberOfCoinsToInvest(periodData.maxNumberOfCoinsToInvest));
       setStep(1);
+      periodAndAmountResponse.reset();
     } else if (step === 1 && profitData) {
       dispatch(setBaseProfit(profitData));
       router.push(RoutesTypes.INVESTMENT_STATISTICS);
+      calculateProfitResponse.reset();
     }
   }, [step, periodAndAmountResponse.data, calculateProfitResponse.data]);
 

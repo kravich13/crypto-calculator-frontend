@@ -2,7 +2,6 @@ import { BestWorstInvestment, InvestmentPercent } from '@cc/entities/Calculate';
 import { useAppSelector } from '@cc/shared/lib';
 import { Box, Typography } from '@mui/material';
 import { useMemo } from 'react';
-
 import styles from '../styles/GeneralInvestmentStatistics.module.css';
 
 export const GeneralInvestmentStatistics = () => {
