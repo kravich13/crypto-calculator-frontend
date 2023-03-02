@@ -29,18 +29,30 @@ export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(
     const startValue = watch('startDate');
     const startDateIsValid = Boolean(!startState.invalid && startState.isTouched);
 
-    const todayDate = useMemo(() => DateTime.now().toFormat(INPUT_FORMAT_DATE), []);
+    const todayDate = useMemo(() => DateTime.now(), []);
+    const todayString = todayDate.toFormat(INPUT_FORMAT_DATE);
 
     const endDateValidate = useCallback(
       (value: string) => {
         const inputDate = DateTime.fromFormat(value, INPUT_FORMAT_DATE);
         const minDate = DateTime.fromFormat(startValue, INPUT_FORMAT_DATE);
 
-        const isValidDate = inputDate.toMillis() >= minDate.toMillis();
+        const equalOrGreaterToday = inputDate.toMillis() >= minDate.toMillis();
+        const equalOrLessToday = inputDate.toMillis() <= todayDate.toMillis();
 
-        return isValidDate || 'End date must be greater than or equal to start date.';
+        const isValidDate = equalOrGreaterToday && equalOrLessToday;
+
+        let validateText = '';
+
+        if (!equalOrGreaterToday) {
+          validateText = 'End date must be greater than or equal to start date.';
+        } else if (!equalOrLessToday) {
+          validateText = 'End date must be less than or equal to today date.';
+        }
+
+        return isValidDate || validateText;
       },
-      [startValue]
+      [startValue, todayDate]
     );
 
     const onClickNext = useCallback(() => {
@@ -96,7 +108,7 @@ export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(
                   error={Boolean(errors.startDate)}
                   helperText={errors?.startDate?.message}
                   InputLabelProps={{ shrink: true }}
-                  inputProps={{ min: MIN_INVEST_DATE, max: todayDate }}
+                  inputProps={{ min: MIN_INVEST_DATE, max: todayString }}
                   disabled={isLoading}
                 />
               )}
@@ -118,7 +130,7 @@ export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(
                   error={Boolean(errors.endDate)}
                   helperText={errors?.endDate?.message}
                   InputLabelProps={{ shrink: true }}
-                  inputProps={{ min: startValue || MIN_INVEST_DATE, max: todayDate }}
+                  inputProps={{ min: startValue || MIN_INVEST_DATE, max: todayString }}
                   disabled={!startDateIsValid || isLoading}
                 />
               )}
