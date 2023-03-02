@@ -1,6 +1,6 @@
 import { CalculateCoinProfitData } from '@cc/shared/types';
 import { Box } from '@mui/material';
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { BestWorstItem } from './BestWorstItem';
 import styles from '../styles/BestWorstInvestment.module.css';
 
@@ -20,19 +20,24 @@ export const BestWorstInvestment: React.FC<IBestWorstInvestmentProps> = ({ coins
   const maxProfit = Number((maxCoin.capital - maxCoin.invested).toFixed(2));
   const minProfit = Number((minCoin.capital - minCoin.invested).toFixed(2));
 
+  const getBestWorstCoin = useCallback(
+    ({ image, growth, name, symbol }: CalculateCoinProfitData, profit: number) => ({
+      image,
+      growth,
+      name,
+      symbol,
+      profit,
+    }),
+    []
+  );
+
   return (
     <Box className={styles.container}>
       <Box sx={{ mr: 4 }}>
-        <BestWorstItem
-          coin={{ growth: maxCoin.growth, image: maxCoin.image, profit: maxProfit }}
-          isMaxCoin={true}
-        />
+        <BestWorstItem coin={getBestWorstCoin(maxCoin, maxProfit)} isMaxCoin={true} />
       </Box>
 
-      <BestWorstItem
-        coin={{ growth: minCoin.growth, image: minCoin.image, profit: minProfit }}
-        isMaxCoin={false}
-      />
+      <BestWorstItem coin={getBestWorstCoin(minCoin, minProfit)} isMaxCoin={false} />
     </Box>
   );
 };

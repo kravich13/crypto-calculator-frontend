@@ -11,6 +11,7 @@ import { SearchNavigationButtons } from './SearchNavigationButtons';
 import { SearchRenderItem } from './SearchRenderItem';
 
 interface ISearchInputProps {
+  isLoading: boolean;
   searchData: IMainCoinInfo[];
   label: string;
   canAddCoin: boolean;
@@ -19,7 +20,7 @@ interface ISearchInputProps {
 }
 
 export const SearchInput: React.FC<ISearchInputProps> = React.memo(
-  ({ searchData, label, canAddCoin, prependSelectedCoin, makeSearchRequest }) => {
+  ({ isLoading, searchData, label, canAddCoin, prependSelectedCoin, makeSearchRequest }) => {
     const isMin990Width = useMediaQuery('(min-width:990px)');
 
     const $container = useRef<HTMLDivElement>();
@@ -131,7 +132,7 @@ export const SearchInput: React.FC<ISearchInputProps> = React.memo(
           onFocus={onFocusSearch}
           onKeyDown={onKeyDownSearch}
           onClearValue={onClearSearch}
-          disabled={!canAddCoin}
+          disabled={!canAddCoin || isLoading}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">

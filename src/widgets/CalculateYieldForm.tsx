@@ -22,19 +22,22 @@ export const CalculateYieldForm = () => {
   const { setBaseProfit } = profitSlice.actions;
 
   const dispatch = useAppDispatch();
-  const [periodAndAmountRequest, periodAndAmontResponse] = usePeriodAndAmountMutation();
+  const [periodAndAmountRequest, periodAndAmountResponse] = usePeriodAndAmountMutation();
   const [calculateProfitRequest, calculateProfitResponse] = useCalculateProfitMutation();
 
-  const periodAndAmountError = useErrorMessage(periodAndAmontResponse.error);
+  const periodAndAmountError = useErrorMessage(periodAndAmountResponse.error);
   const calculateProfitError = useErrorMessage(calculateProfitResponse.error);
 
-  const [step, setStep] = useState(1);
+  const isPeriodAndAmountLoading = periodAndAmountResponse.isLoading;
+  const isCalculateProfitLoading = calculateProfitResponse.isLoading;
+
+  const [step, setStep] = useState(0);
 
   const onConfirmStep0: SubmitHandler<IPeriodAndAmountForm> = useCallback(async (data) => {
     dispatch(setPeriodAndAmount(data));
 
-    const startDate = DateTime.fromFormat(data.startDate, INPUT_FORMAT_DATE).toMillis();
-    const endDate = DateTime.fromFormat(data.endDate, INPUT_FORMAT_DATE).toMillis();
+    const startDate = DateTime.fromFormat(data.startDate, INPUT_FORMAT_DATE).toUTC().toMillis();
+    const endDate = DateTime.fromFormat(data.endDate, INPUT_FORMAT_DATE).toUTC().toMillis();
     const monthlyInvestment = Number(data.monthlyInvestment);
 
     await periodAndAmountRequest({ startDate, endDate, monthlyInvestment });
@@ -58,28 +61,36 @@ export const CalculateYieldForm = () => {
 
   const stepRender: IStepRender = useMemo(
     () => ({
-      0: <PeriodAndAmount onConfirm={onConfirmStep0} />,
-      1: <SelectedInvestCoins onBack={onBack} onConfirm={onConfirmStep1} />,
+      0: <PeriodAndAmount isLoading={isPeriodAndAmountLoading} onConfirm={onConfirmStep0} />,
+      1: (
+        <SelectedInvestCoins
+          isLoading={isCalculateProfitLoading}
+          onBack={onBack}
+          onConfirm={onConfirmStep1}
+        />
+      ),
     }),
-    []
+    [isPeriodAndAmountLoading, isCalculateProfitLoading]
   );
 
   useEffect(() => {
-    const periodData = periodAndAmontResponse.data;
+    const periodData = periodAndAmountResponse.data;
     const profitData = calculateProfitResponse.data;
 
     if (step === 0 && periodData) {
       dispatch(setMaxNumberOfCoinsToInvest(periodData.maxNumberOfCoinsToInvest));
       setStep(1);
+      periodAndAmountResponse.reset();
     } else if (step === 1 && profitData) {
       dispatch(setBaseProfit(profitData));
-      router.push(RoutesTypes.LOGIN);
+      router.push(RoutesTypes.INVESTMENT_STATISTICS);
+      calculateProfitResponse.reset();
     }
-  }, [step, periodAndAmontResponse.data, calculateProfitResponse.data]);
+  }, [step, periodAndAmountResponse.data, calculateProfitResponse.data]);
 
   return (
     <>
-      {periodAndAmontResponse.isError && (
+      {periodAndAmountResponse.isError && (
         <PopupAlert
           text={periodAndAmountError || calculateProfitError}
           severity="error"

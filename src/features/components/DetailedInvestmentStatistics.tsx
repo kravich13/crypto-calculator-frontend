@@ -12,7 +12,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 
 export const DetailedInvestmentStatistics = () => {
   const coins = useAppSelector(({ profitReducer: { coins } }) => coins);
@@ -24,6 +24,7 @@ export const DetailedInvestmentStatistics = () => {
       image,
       symbol,
       share,
+      startingPrice,
       lastPrice,
       capital,
       purchasedCoins,
@@ -52,6 +53,10 @@ export const DetailedInvestmentStatistics = () => {
             </TableCell>
 
             <TableCell align="right">
+              <Typography>${startingPrice}</Typography>
+            </TableCell>
+
+            <TableCell align="right">
               <Typography>${lastPrice}</Typography>
             </TableCell>
 
@@ -59,7 +64,7 @@ export const DetailedInvestmentStatistics = () => {
               <Box>
                 <Typography>${capital}</Typography>
 
-                <Typography color="GrayText" variant="body2">
+                <Typography color="GrayText" variant="body2" fontWeight="500">
                   {purchasedCoins} {symbol.toUpperCase()}
                 </Typography>
               </Box>
@@ -75,6 +80,7 @@ export const DetailedInvestmentStatistics = () => {
                     color: growth >= 0 ? '#16C784' : '#EA3943',
                     fontSize: 14,
                     justifyContent: 'end',
+                    fontWeight: 600,
                   }}
                 />
               </Box>
@@ -93,15 +99,19 @@ export const DetailedInvestmentStatistics = () => {
       </Typography>
 
       <TableContainer component={Paper}>
-        <Table stickyHeader>
+        <Table stickyHeader sx={{ minWidth: 750 }}>
           <TableHead>
             <TableRow>
               <TableCell>
                 <Typography fontWeight="600">Name</Typography>
               </TableCell>
 
-              <TableCell>
+              <TableCell align="right">
                 <Typography fontWeight="600">Share</Typography>
+              </TableCell>
+
+              <TableCell align="right">
+                <Typography fontWeight="600">Starting price</Typography>
               </TableCell>
 
               <TableCell align="right">

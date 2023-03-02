@@ -1,11 +1,9 @@
 import { RoutesTypes } from '@cc/shared/enums';
 import { useAppSelector, useAuthContext } from '@cc/shared/lib';
 import { Avatar, Box, Fade, IconButton, Menu, MenuItem } from '@mui/material';
-import { useRouter } from 'next/navigation';
 import React, { useCallback, useState } from 'react';
 
 export const AuthHeaderContent: React.FC = () => {
-  const router = useRouter();
   const emailUser = useAppSelector((state) => state.userDataReducer.email);
   const { logout } = useAuthContext();
 
@@ -24,8 +22,7 @@ export const AuthHeaderContent: React.FC = () => {
 
   const onLogout = useCallback(() => {
     setAnchorEl(null);
-    router.push(RoutesTypes.MAIN);
-    logout();
+    logout({ redirectTo: RoutesTypes.MAIN });
   }, []);
 
   return (

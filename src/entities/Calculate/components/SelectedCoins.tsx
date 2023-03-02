@@ -15,6 +15,7 @@ import { ISelectedInvestCoin, ISelectedInvestCoinsForm } from '../types';
 import { MainCoinInfoContainer } from './MainCoinInfoContainer';
 
 interface ISelectedCoinsProps {
+  isLoading: boolean;
   maxNumberOfCoinsToInvest: number;
   addedCoins: ISelectedInvestCoin[];
   control: Control<ISelectedInvestCoinsForm, any>;
@@ -24,6 +25,7 @@ interface ISelectedCoinsProps {
 }
 
 export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
+  isLoading,
   maxNumberOfCoinsToInvest,
   addedCoins,
   control,
@@ -60,11 +62,13 @@ export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
                   inputProps={{ min: minPercentForInvest, max: 100 }}
                   className={styles.input}
                   sx={{ mr: 2 }}
+                  disabled={isLoading}
                 />
               )}
             />
 
             <IconButton
+              disabled={isLoading}
               onClick={() => removeAddedCoin(index)}
               className={['delete-added-coin', styles.deleteButton].join(' ')}
               title="Remove coin"
@@ -77,7 +81,7 @@ export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
         <Divider />
       </Box>
     ),
-    [control, minPercentForInvest, getIndexError, removeAddedCoin]
+    [control, isLoading, minPercentForInvest, getIndexError, removeAddedCoin]
   );
 
   return (
@@ -104,7 +108,7 @@ export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
           variant="outlined"
           style={{ textTransform: 'none' }}
           onClick={distributeEqually}
-          disabled={addedCoins.length === 0}
+          disabled={addedCoins.length === 0 || isLoading}
         >
           Distribute equally
         </Button>

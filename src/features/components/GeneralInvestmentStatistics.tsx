@@ -2,7 +2,6 @@ import { BestWorstInvestment, InvestmentPercent } from '@cc/entities/Calculate';
 import { useAppSelector } from '@cc/shared/lib';
 import { Box, Typography } from '@mui/material';
 import { useMemo } from 'react';
-
 import styles from '../styles/GeneralInvestmentStatistics.module.css';
 
 export const GeneralInvestmentStatistics = () => {
@@ -85,7 +84,7 @@ export const GeneralInvestmentStatistics = () => {
       </Box>
 
       <Box mb={2}>
-        <Typography component="p" variant="h6">
+        <Typography component="p" variant="h6" mb={1}>
           Best/worst investment
         </Typography>
 

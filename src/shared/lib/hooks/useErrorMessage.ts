@@ -1,3 +1,4 @@
+import { RoutesTypes } from '@cc/shared/enums';
 import { IResponseError } from '@cc/shared/types';
 import type { SerializedError } from '@reduxjs/toolkit';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
@@ -22,7 +23,7 @@ export const useErrorMessage = (errorData?: FetchBaseQueryError | SerializedErro
         if (errorData.message.includes('Invalid access token.')) {
           message = 'Authorization timed out.';
 
-          logout();
+          logout({ notifyUser: true, redirectTo: RoutesTypes.MAIN });
         } else {
           message = errorData.message;
         }

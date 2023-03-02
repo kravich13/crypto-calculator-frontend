@@ -7,6 +7,7 @@ export interface IMainCoinInfo {
 
 export interface ICoinProfitData {
   share: number;
+  startingPrice: number;
   lastPrice: number;
   invested: number;
   capital: number;
