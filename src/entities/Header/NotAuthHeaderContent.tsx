@@ -1,9 +1,15 @@
 import { RoutesTypes } from '@cc/shared/enums';
-import { Button, Container, useMediaQuery } from '@mui/material';
+import { Button, Container, Skeleton, useMediaQuery } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useCallback, useMemo } from 'react';
 
-export const NotAuthHeaderContent: React.FC = () => {
+interface INotAuthHeaderContentProps {
+  isLoadingContent: boolean;
+}
+
+export const NotAuthHeaderContent: React.FC<INotAuthHeaderContentProps> = ({
+  isLoadingContent,
+}) => {
   const isMin500Width = useMediaQuery('(max-width:500px)');
 
   const router = useRouter();
@@ -42,25 +48,42 @@ export const NotAuthHeaderContent: React.FC = () => {
       ]}
     >
       {(isSignUpPage || isNotAuthPage) && (
-        <Button
-          sx={[{ textTransform: 'none' }, !isNotAuthPage && { width: '120px' }]}
-          color="inherit"
-          onClick={goToLogIn}
-          variant={isSignUpPage ? 'outlined' : 'text'}
-        >
-          Log In
-        </Button>
+        <>
+          {isLoadingContent ? (
+            <Skeleton
+              variant="text"
+              width={120}
+              height={40}
+              sx={[isNotAuthPage && { marginRight: 2 }]}
+            />
+          ) : (
+            <Button
+              sx={[{ textTransform: 'none' }, !isNotAuthPage && { width: '120px' }]}
+              color="inherit"
+              onClick={goToLogIn}
+              variant={isSignUpPage ? 'outlined' : 'text'}
+            >
+              Log In
+            </Button>
+          )}
+        </>
       )}
 
       {(isLoginOrRecoveryPage || isNotAuthPage) && (
-        <Button
-          sx={[{ textTransform: 'none', width: '120px' }, !isNotAuthPage && { width: '120px' }]}
-          color={isLoginOrRecoveryPage ? 'primary' : 'inherit'}
-          onClick={goToSignUp}
-          variant={isLoginOrRecoveryPage ? 'contained' : 'text'}
-        >
-          Sign Up
-        </Button>
+        <>
+          {isLoadingContent ? (
+            <Skeleton variant="text" width={120} height={40} />
+          ) : (
+            <Button
+              sx={[{ textTransform: 'none', width: '120px' }, !isNotAuthPage && { width: '120px' }]}
+              color={isLoginOrRecoveryPage ? 'primary' : 'inherit'}
+              onClick={goToSignUp}
+              variant={isLoginOrRecoveryPage ? 'contained' : 'text'}
+            >
+              Sign Up
+            </Button>
+          )}
+        </>
       )}
     </Container>
   );

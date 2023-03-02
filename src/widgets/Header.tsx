@@ -4,7 +4,6 @@ import { useAppSelector } from '@cc/shared/lib';
 import { AppBar, Container, Toolbar, Typography, useMediaQuery } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useCallback } from 'react';
-
 import styles from './styles/Header.module.css';
 
 export const Header: React.FC = () => {
@@ -32,7 +31,11 @@ export const Header: React.FC = () => {
           </Typography>
         </Container>
 
-        {isAuth ? <AuthHeaderContent /> : <NotAuthHeaderContent />}
+        {isAuth ? (
+          <AuthHeaderContent />
+        ) : (
+          <NotAuthHeaderContent isLoadingContent={Boolean(isAuth === undefined)} />
+        )}
       </Toolbar>
     </AppBar>
   );

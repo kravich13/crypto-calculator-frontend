@@ -16,7 +16,7 @@ export const authSlice = createSlice({
     clearState() {
       localStorage.removeItem('tokensData');
 
-      return { ...initialState };
+      return { ...initialState, isAuth: false };
     },
     setNotAuth(state) {
       state.isAuth = false;

@@ -1,5 +1,6 @@
 import { emailValidation } from '@cc/entities/Authorization';
 import { RoutesTypes } from '@cc/shared/enums';
+import { useAppSelector } from '@cc/shared/lib';
 import { TextInput } from '@cc/shared/ui';
 import { Box, Button, Grid } from '@mui/material';
 import Link from 'next/link';
@@ -15,6 +16,8 @@ interface ISendEmailForm {
 }
 
 export const SendEmail: React.FC<ISendEmailProps> = ({ onConfirm }) => {
+  const isAuth = useAppSelector(({ authReducer }) => authReducer.isAuth);
+
   const { handleSubmit, control, resetField } = useForm<ISendEmailForm>({ mode: 'onBlur' });
   const { errors, isValid } = useFormState({ control });
 
@@ -66,7 +69,10 @@ export const SendEmail: React.FC<ISendEmailProps> = ({ onConfirm }) => {
             Submit
           </Button>
 
-          <Link href={RoutesTypes.LOGIN} style={{ textDecoration: 'none' }}>
+          <Link
+            href={isAuth ? RoutesTypes.LOGIN : RoutesTypes.MAIN}
+            style={{ textDecoration: 'none' }}
+          >
             Cancel
           </Link>
         </Grid>

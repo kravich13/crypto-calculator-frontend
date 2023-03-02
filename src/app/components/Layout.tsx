@@ -1,15 +1,6 @@
 import { Footer, Header, ModalLogout } from '@cc/widgets';
-import { Box, Container, SxProps } from '@mui/material';
+import { Box } from '@mui/material';
 import NextNProgress from 'nextjs-progressbar';
-
-const pageStyles = {
-  width: '100%',
-  height: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  paddingTop: 3,
-  paddingBottom: 3,
-} as SxProps;
 
 interface IlayoutProps {
   children: React.ReactNode;
@@ -31,9 +22,7 @@ export const Layout: React.FC<IlayoutProps> = ({ children }) => {
 
       <Header />
 
-      <Container component="main" maxWidth="xl" sx={pageStyles}>
-        {children}
-      </Container>
+      {children}
 
       <Footer />
     </Box>

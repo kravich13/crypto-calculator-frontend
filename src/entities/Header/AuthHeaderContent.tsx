@@ -1,11 +1,13 @@
 import { RoutesTypes } from '@cc/shared/enums';
 import { useAppSelector, useAuthContext } from '@cc/shared/lib';
-import { Avatar, Box, Fade, IconButton, Menu, MenuItem } from '@mui/material';
+import { Avatar, Box, Fade, IconButton, Menu, MenuItem, Typography } from '@mui/material';
+import { useRouter } from 'next/navigation';
 import React, { useCallback, useState } from 'react';
 
 export const AuthHeaderContent: React.FC = () => {
   const emailUser = useAppSelector((state) => state.userDataReducer.email);
   const { logout } = useAuthContext();
+  const router = useRouter();
 
   const avatarTitle = emailUser.at(0)?.toUpperCase();
 
@@ -21,8 +23,13 @@ export const AuthHeaderContent: React.FC = () => {
   }, []);
 
   const onLogout = useCallback(() => {
-    setAnchorEl(null);
+    handleClose();
     logout({ redirectTo: RoutesTypes.MAIN });
+  }, []);
+
+  const onRecoveryPassword = useCallback(() => {
+    handleClose();
+    router.push(RoutesTypes.PASSWORD_RECOVERY);
   }, []);
 
   return (
@@ -32,7 +39,13 @@ export const AuthHeaderContent: React.FC = () => {
       </IconButton>
 
       <Menu open={isOpen} anchorEl={anchorEl} TransitionComponent={Fade} onClose={handleClose}>
-        <MenuItem onClick={onLogout}>Logout</MenuItem>
+        <MenuItem onClick={onRecoveryPassword}>Recovery password</MenuItem>
+
+        <MenuItem onClick={onLogout}>
+          <Typography color="red" fontWeight="600">
+            Logout
+          </Typography>
+        </MenuItem>
       </Menu>
     </Box>
   );
