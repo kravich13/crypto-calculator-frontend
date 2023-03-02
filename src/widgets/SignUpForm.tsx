@@ -36,6 +36,8 @@ export const SignUpForm = () => {
   const [signUp, signUpData] = useSignUpMutation();
   const [emailValidate, emailValidateData] = useEmailValidateMutation();
 
+  const isLoading = signUpData.isLoading || emailValidateData.isLoading;
+
   const signUpErrorMessage = useErrorMessage(signUpData.error);
   const codeEmailErrorMessage = useErrorMessage(emailValidateData.error);
 
@@ -62,11 +64,18 @@ export const SignUpForm = () => {
   const stepRender = useMemo(() => {
     switch (step) {
       case 0:
-        return <SignUp onConfirm={onConfirmSignUp} />;
+        return <SignUp onConfirm={onConfirmSignUp} isLoading={isLoading} />;
       case 1:
-        return <EmailCode buttonTitle="Activate account" onConfirm={onConfirmEmailCode} />;
+        return (
+          <EmailCode
+            buttonTitle="Activate account"
+            onConfirm={onConfirmEmailCode}
+            isLoading={isLoading}
+            isLastStep={true}
+          />
+        );
     }
-  }, [step]);
+  }, [step, isLoading]);
 
   useEffect(() => {
     const hasSignUpData = step === 0 && signUpData.data;

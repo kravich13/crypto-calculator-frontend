@@ -28,8 +28,7 @@ export const CalculateYieldForm = () => {
   const periodAndAmountError = useErrorMessage(periodAndAmountResponse.error);
   const calculateProfitError = useErrorMessage(calculateProfitResponse.error);
 
-  const isPeriodAndAmountLoading = periodAndAmountResponse.isLoading;
-  const isCalculateProfitLoading = calculateProfitResponse.isLoading;
+  const isLoading = periodAndAmountResponse.isLoading || calculateProfitResponse.isLoading;
 
   const [step, setStep] = useState(0);
 
@@ -61,16 +60,10 @@ export const CalculateYieldForm = () => {
 
   const stepRender: IStepRender = useMemo(
     () => ({
-      0: <PeriodAndAmount isLoading={isPeriodAndAmountLoading} onConfirm={onConfirmStep0} />,
-      1: (
-        <SelectedInvestCoins
-          isLoading={isCalculateProfitLoading}
-          onBack={onBack}
-          onConfirm={onConfirmStep1}
-        />
-      ),
+      0: <PeriodAndAmount isLoading={isLoading} onConfirm={onConfirmStep0} />,
+      1: <SelectedInvestCoins isLoading={isLoading} onBack={onBack} onConfirm={onConfirmStep1} />,
     }),
-    [isPeriodAndAmountLoading, isCalculateProfitLoading]
+    [isLoading]
   );
 
   useEffect(() => {

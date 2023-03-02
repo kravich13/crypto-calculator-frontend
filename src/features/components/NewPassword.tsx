@@ -1,10 +1,13 @@
 import { passwordValidation } from '@cc/entities/Authorization';
 import { PasswordInput } from '@cc/shared/ui';
-import { Box, Button, Grid } from '@mui/material';
+import LoginIcon from '@mui/icons-material/Login';
+import { LoadingButton } from '@mui/lab';
+import { Box, Grid } from '@mui/material';
 import React from 'react';
 import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form';
 
 interface INewPasswordProps {
+  isLoading: boolean;
   onConfirm: SubmitHandler<INewPasswordForm>;
 }
 
@@ -13,7 +16,7 @@ export interface INewPasswordForm {
   confirmPassword: string;
 }
 
-export const NewPassword: React.FC<INewPasswordProps> = ({ onConfirm }) => {
+export const NewPassword: React.FC<INewPasswordProps> = ({ isLoading, onConfirm }) => {
   const { handleSubmit, control, getValues } = useForm<INewPasswordForm>({
     mode: 'onBlur',
   });
@@ -35,6 +38,7 @@ export const NewPassword: React.FC<INewPasswordProps> = ({ onConfirm }) => {
                 {...field}
                 error={Boolean(errors.password)}
                 helperText={errors.password?.message}
+                disabled={isLoading}
               />
             )}
           />
@@ -57,21 +61,25 @@ export const NewPassword: React.FC<INewPasswordProps> = ({ onConfirm }) => {
                 {...field}
                 error={Boolean(errors.confirmPassword)}
                 helperText={errors.confirmPassword?.message}
+                disabled={isLoading}
               />
             )}
           />
         </Grid>
       </Grid>
 
-      <Button
+      <LoadingButton
         sx={{ mt: 3, mb: 2, textTransform: 'none' }}
         type="submit"
         fullWidth
         variant="contained"
-        disabled={!isValid}
+        disabled={!isValid || isLoading}
+        loading={isLoading}
+        loadingPosition="end"
+        endIcon={<LoginIcon />}
       >
         Submit
-      </Button>
+      </LoadingButton>
     </Box>
   );
 };

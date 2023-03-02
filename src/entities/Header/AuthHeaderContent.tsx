@@ -1,5 +1,6 @@
 import { RoutesTypes } from '@cc/shared/enums';
 import { useAppSelector, useAuthContext } from '@cc/shared/lib';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { Avatar, Box, Fade, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import React, { useCallback, useState } from 'react';
@@ -42,6 +43,8 @@ export const AuthHeaderContent: React.FC = () => {
         <MenuItem onClick={onRecoveryPassword}>Recovery password</MenuItem>
 
         <MenuItem onClick={onLogout}>
+          <LogoutIcon style={{ color: 'red', marginRight: 4 }} />
+
           <Typography color="red" fontWeight="600">
             Logout
           </Typography>

@@ -14,23 +14,12 @@ import {
 } from '@cc/shared/lib';
 import { ISetCodeInput, ISetEmailInput } from '@cc/shared/types';
 import { PopupAlert } from '@cc/shared/ui';
-import {
-  Backdrop,
-  CircularProgress,
-  Container,
-  Step,
-  StepLabel,
-  Stepper,
-  Typography,
-  useMediaQuery,
-} from '@mui/material';
+import { Container, Step, StepLabel, Stepper, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 
 export const PasswordRecoveryForm = () => {
-  const isMin800Width = useMediaQuery('(max-width:800px)');
-
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -105,24 +94,22 @@ export const PasswordRecoveryForm = () => {
   const stepRender = useMemo(() => {
     switch (step) {
       case 0:
-        return <SendEmail onConfirm={onConfirmForgotPassword} />;
+        return <SendEmail isLoading={isLoading} onConfirm={onConfirmForgotPassword} />;
       case 1:
-        return <EmailCode buttonTitle="Send code" onConfirm={onConfirmEmailCode} />;
+        return (
+          <EmailCode buttonTitle="Send code" isLoading={isLoading} onConfirm={onConfirmEmailCode} />
+        );
       case 2:
-        return <NewPassword onConfirm={onConfirmNewPassword} />;
+        return <NewPassword isLoading={isLoading} onConfirm={onConfirmNewPassword} />;
     }
-  }, [step]);
+  }, [step, isLoading]);
 
   return (
     <>
-      <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={isLoading}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
-
       {isError && <PopupAlert text={errorMessage} severity="error" variant="filled" />}
 
-      <Container component="div" maxWidth={isMin800Width ? 'xs' : 'md'}>
-        <Stepper activeStep={step} orientation={isMin800Width ? 'vertical' : 'horizontal'}>
+      <Container component="div" maxWidth={'xs'}>
+        <Stepper activeStep={step} orientation={'vertical'}>
           <Step>
             <StepLabel>
               <Typography component="p" variant="h6">

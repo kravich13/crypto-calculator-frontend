@@ -55,18 +55,8 @@ export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(
       [startValue, todayDate]
     );
 
-    const onClickNext = useCallback(() => {
-      handleSubmit((data) => {
-        onConfirm(data);
-      })();
-    }, [handleSubmit, onConfirm]);
-
-    const onSubmit = useCallback((event: React.ChangeEvent<HTMLFormElement>) => {
-      event.preventDefault();
-    }, []);
-
     return (
-      <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 3 }}>
+      <Box component="form" noValidate onSubmit={handleSubmit(onConfirm)} sx={{ mt: 3 }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Controller
@@ -145,7 +135,6 @@ export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(
             fullWidth
             variant="contained"
             disabled={!isValid}
-            onClick={onClickNext}
             loading={isLoading}
             loadingPosition="end"
             endIcon={<ArrowForwardIcon />}
