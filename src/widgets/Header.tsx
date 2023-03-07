@@ -1,6 +1,6 @@
 import { AuthHeaderContent, NotAuthHeaderContent } from '@cc/entities/Header';
 import { RoutesTypes } from '@cc/shared/enums';
-import { useAppSelector } from '@cc/shared/lib';
+import { authSlice, useAppDispatch, useAppSelector } from '@cc/shared/lib';
 import { AppBar, Container, Toolbar, Typography, useMediaQuery } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useCallback } from 'react';
@@ -11,15 +11,27 @@ export const Header: React.FC = () => {
   const pathname = usePathname();
   const isMin500Width = useMediaQuery('(max-width:500px)');
 
+  const { setAuth, setNotAuth } = authSlice.actions;
+  const dispatch = useAppDispatch();
+
   const tollbarClasses = [styles.header, isMin500Width && styles.mobileHeader];
   const logoClasses = [isMin500Width && styles.mobileLogoContainer];
 
   const isAuth = useAppSelector((state) => state.authReducer.isAuth);
 
   const goToMain = useCallback(() => {
-    if (pathname !== RoutesTypes.MAIN) {
-      router.push(RoutesTypes.MAIN);
-    }
+    // if (pathname !== RoutesTypes.MAIN) {
+    //   router.push(RoutesTypes.MAIN);
+
+    // }
+    dispatch(
+      setAuth({
+        accessToken: '',
+        accessTokenExpiresIn: 0,
+        refreshToken: '',
+        refreshTokenExpiresIn: 0,
+      })
+    );
   }, [pathname]);
 
   return (
@@ -31,11 +43,13 @@ export const Header: React.FC = () => {
           </Typography>
         </Container>
 
-        {isAuth ? (
+        <NotAuthHeaderContent isLoadingContent={Boolean(isAuth === undefined)} />
+
+        {/* {isAuth ? (
           <AuthHeaderContent />
         ) : (
           <NotAuthHeaderContent isLoadingContent={Boolean(isAuth === undefined)} />
-        )}
+        )} */}
       </Toolbar>
     </AppBar>
   );

@@ -94,13 +94,6 @@ export const SignUpForm = () => {
 
   return (
     <>
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={signUpData.isLoading || emailValidateData.isLoading}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
-
       {(signUpData.isError || emailValidateData.isError) && (
         <PopupAlert
           text={signUpErrorMessage || codeEmailErrorMessage}

@@ -17,14 +17,14 @@ interface IFormInputs {
 }
 
 export const LoginForm = () => {
-  const { login } = useAuthContext();
+  // const { login } = useAuthContext();
   const router = useRouter();
 
   const { handleSubmit, control, resetField } = useForm<IFormInputs>({ mode: 'onBlur' });
   const { errors, isValid } = useFormState({ control });
 
   const [signIn, { isError, data, error, isLoading }] = useSignInMutation();
-  const errorMessage = useErrorMessage(error);
+  // const errorMessage = useErrorMessage(error);
 
   const onConfirm: SubmitHandler<IFormInputs> = useCallback(({ email, password }) => {
     signIn({ email, password });
@@ -37,13 +37,13 @@ export const LoginForm = () => {
   useEffect(() => {
     if (data) {
       router.push(RoutesTypes.MAIN);
-      login(data);
+      // login(data);
     }
   }, [data]);
 
   return (
     <>
-      {isError && <PopupAlert text={errorMessage} severity="error" variant="filled" />}
+      {/* {isError && <PopupAlert text={errorMessage} severity="error" variant="filled" />} */}
 
       <Container maxWidth="xs">
         <Typography component="h1" variant="h5" textAlign="left" width="100%" mb={3}>

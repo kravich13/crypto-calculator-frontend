@@ -77,7 +77,7 @@ export const SendEmail: React.FC<ISendEmailProps> = ({ isLoading, onConfirm }) =
           </LoadingButton>
 
           <Link
-            href={isAuth ? RoutesTypes.LOGIN : RoutesTypes.MAIN}
+            href={isAuth ? RoutesTypes.MAIN : RoutesTypes.LOGIN}
             style={{ textDecoration: 'none' }}
           >
             Cancel

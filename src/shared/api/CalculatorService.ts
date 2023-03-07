@@ -1,9 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
+import { HYDRATE } from 'next-redux-wrapper';
 import {
-  ICoinSearchRequest,
   CalculateProfitRequest,
-  ICalculateProfitResponse,
   CoinSearchResponse,
+  ICalculateProfitResponse,
+  ICoinSearchRequest,
   IPeriodAndAmountRequest,
   IPeriodAndAmountResponse,
 } from '../types';
@@ -21,6 +22,11 @@ export const calculatorAPI = createApi({
       }
     },
   }),
+  extractRehydrationInfo(action, { reducerPath }) {
+    if (action.type === HYDRATE) {
+      return action.payload[reducerPath];
+    }
+  },
 
   endpoints: (build) => ({
     periodAndAmount: build.mutation<IPeriodAndAmountResponse, IPeriodAndAmountRequest>({

@@ -1,8 +1,8 @@
-import { IAuthInitialState, ILoginResponse, ITokensData } from '@cc/shared/types';
+import { IAuthInitialState, ILoginResponse } from '@cc/shared/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: IAuthInitialState = {
-  isAuth: undefined,
+  isAuth: false,
   accessToken: '',
   refreshToken: '',
   accessTokenExpiresIn: -1,
@@ -23,6 +23,8 @@ export const authSlice = createSlice({
     },
     setAuth(state, { payload }: PayloadAction<ILoginResponse>) {
       localStorage.setItem('tokensData', JSON.stringify(payload));
+
+      console.log('tut');
 
       return {
         isAuth: true,
