@@ -6,7 +6,7 @@ import {
   useAppSelector,
   useAuthContext,
   useErrorMessage,
-  userDataSlice
+  userDataSlice,
 } from '@cc/shared/lib';
 import globalStyles from '@cc/shared/styles/Index.module.css';
 import { PopupAlert } from '@cc/shared/ui';

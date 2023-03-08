@@ -3,7 +3,6 @@ import { Box, Container, Typography, useMediaQuery } from '@mui/material';
 import Link from 'next/link';
 import React, { useCallback, useMemo } from 'react';
 import { v4 as uuid } from 'uuid';
-
 import styles from './styles/Footer.module.css';
 
 interface ILinkData {

@@ -1,6 +1,6 @@
 import { AuthHeaderContent, NotAuthHeaderContent } from '@cc/entities/Header';
 import { RoutesTypes } from '@cc/shared/enums';
-import { authSlice, useAppDispatch, useAppSelector } from '@cc/shared/lib';
+import { useAppSelector } from '@cc/shared/lib';
 import { AppBar, Container, Toolbar, Typography, useMediaQuery } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useCallback } from 'react';
@@ -11,9 +11,6 @@ export const Header: React.FC = () => {
   const pathname = usePathname();
   const isMin500Width = useMediaQuery('(max-width:500px)');
 
-  const { setAuth } = authSlice.actions;
-  const dispatch = useAppDispatch();
-
   const tollbarClasses = [styles.header, isMin500Width && styles.mobileHeader];
   const logoClasses = [isMin500Width && styles.mobileLogoContainer];
 
@@ -23,15 +20,6 @@ export const Header: React.FC = () => {
     if (pathname !== RoutesTypes.MAIN) {
       router.push(RoutesTypes.MAIN);
     }
-
-    dispatch(
-      setAuth({
-        accessToken: '',
-        accessTokenExpiresIn: 0,
-        refreshToken: '',
-        refreshTokenExpiresIn: 0,
-      })
-    );
   }, [pathname]);
 
   return (

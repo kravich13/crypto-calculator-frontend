@@ -24,8 +24,6 @@ export const authSlice = createSlice({
     setAuth(state, { payload }: PayloadAction<ILoginResponse>) {
       localStorage.setItem('tokensData', JSON.stringify(payload));
 
-      console.log('tut');
-
       return {
         isAuth: true,
         ...payload,
