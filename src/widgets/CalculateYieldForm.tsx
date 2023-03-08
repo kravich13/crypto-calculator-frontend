@@ -31,7 +31,7 @@ export const CalculateYieldForm = () => {
 
   const isLoading = periodAndAmountResponse.isLoading || calculateProfitResponse.isLoading;
 
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
 
   const onConfirmStep0: SubmitHandler<IPeriodAndAmountForm> = useCallback(async (data) => {
     dispatch(setPeriodAndAmount(data));

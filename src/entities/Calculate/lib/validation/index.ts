@@ -17,13 +17,15 @@ export const startDateValidation = {
     const inputDate = DateTime.fromFormat(value, INPUT_FORMAT_DATE);
     const minDate = DateTime.fromFormat(MIN_INVEST_DATE, INPUT_FORMAT_DATE);
 
+    const yesterdayDate = DateTime.now().minus({ day: 1 });
+
     const isValidDate =
       inputDate.toMillis() >= minDate.toMillis() &&
-      inputDate.toMillis() <= DateTime.now().toMillis();
+      inputDate.toMillis() <= yesterdayDate.toMillis();
 
     return (
       isValidDate ||
-      `Date must be between 01/01/2023 and today (${DateTime.now().toFormat('LL/dd/y')}).`
+      `Date must be between 01/01/2023 and yesterday (${yesterdayDate.toFormat('LL/dd/y')}).`
     );
   },
 };

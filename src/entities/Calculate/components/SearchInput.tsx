@@ -55,6 +55,7 @@ export const SearchInput: React.FC<ISearchInputProps> = React.memo(
       (item: IMainCoinInfo) => {
         setSelectedItem(item);
         prependSelectedCoin({ ...item, percent: '' });
+        setSearchValue('');
       },
       [prependSelectedCoin]
     );

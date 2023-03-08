@@ -8,22 +8,14 @@ const pageStyles = {
 } as { [key: string]: number | string };
 
 interface IPagelayoutProps {
-  fullContent?: boolean;
   centerContent?: boolean;
+  fullContent?: boolean;
   children: React.ReactNode;
 }
 
-export const PageLayout: React.FC<IPagelayoutProps> = ({
-  centerContent = false,
-  fullContent = false,
-  children,
-}) => {
+export const PageLayout: React.FC<IPagelayoutProps> = ({ centerContent, children }) => {
   if (centerContent) {
     pageStyles.marginTop = 'auto';
-  }
-
-  if (!fullContent) {
-    (pageStyles.paddingTop = 3), (pageStyles.paddingBottom = 3);
   }
 
   return (

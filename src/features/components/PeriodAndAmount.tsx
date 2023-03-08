@@ -30,6 +30,7 @@ export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(
     const startDateIsValid = Boolean(!startState.invalid && startState.isTouched);
 
     const todayDate = useMemo(() => DateTime.now(), []);
+    const yesterdayString = todayDate.minus({ day: 1 }).toFormat(INPUT_FORMAT_DATE);
     const todayString = todayDate.toFormat(INPUT_FORMAT_DATE);
 
     const endDateValidate = useCallback(
@@ -98,7 +99,7 @@ export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(
                   error={Boolean(errors.startDate)}
                   helperText={errors?.startDate?.message}
                   InputLabelProps={{ shrink: true }}
-                  inputProps={{ min: MIN_INVEST_DATE, max: todayString }}
+                  inputProps={{ min: MIN_INVEST_DATE, max: yesterdayString }}
                   disabled={isLoading}
                 />
               )}

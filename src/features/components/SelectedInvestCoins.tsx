@@ -85,6 +85,16 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
       }
     }, [addedCoins.length, setValue]);
 
+    const onCalculate = useCallback(() => {
+      handleSubmit((data) => {
+        onConfirm(data);
+      })();
+    }, [handleSubmit, onConfirm]);
+
+    const onSubmit = useCallback((event: React.ChangeEvent<HTMLFormElement>) => {
+      event.preventDefault();
+    }, []);
+
     return (
       <Box>
         <Typography className={styles.coinsUntilDate}>
@@ -100,7 +110,7 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
           makeSearchRequest={makeSearchRequest}
         />
 
-        <Box component="form" noValidate onSubmit={handleSubmit(onConfirm)} mt={3}>
+        <Box component="form" noValidate onSubmit={onSubmit} mt={3}>
           <SelectedCoins
             isLoading={isLoading}
             maxNumberOfCoinsToInvest={maxNumberOfCoinsToInvest}
@@ -127,9 +137,9 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
             sx={{ textTransform: 'none', width: '120px' }}
             type="submit"
             variant="contained"
-            onClick={onBack}
             startIcon={<WestIcon />}
             title="dsds"
+            onClick={onBack}
           >
             Back
           </Button>
@@ -142,6 +152,7 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
             loading={isLoading}
             loadingPosition="end"
             endIcon={<CalculateIcon />}
+            onClick={onCalculate}
           >
             Calculate
           </LoadingButton>
