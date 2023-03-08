@@ -3,7 +3,7 @@ import { useNotAuthPage } from '@cc/shared/lib';
 import Head from 'next/head';
 
 export default function Home() {
-  // useNotAuthPage({ redirectTo: RoutesTypes.CALCULATE_YIELD });
+  useNotAuthPage({ redirectTo: RoutesTypes.CALCULATE_YIELD });
 
   return (
     <>

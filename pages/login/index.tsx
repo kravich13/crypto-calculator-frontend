@@ -1,43 +1,7 @@
 import { PageLayout } from '@cc/app/components';
-import { RoutesTypes } from '@cc/shared/enums';
-import { authSlice, useAppSelector, wrapper } from '@cc/shared/lib';
 import { LoginForm } from '@cc/widgets';
-import { CollectionsBookmarkRounded } from '@mui/icons-material';
 import { NextPage } from 'next';
 import Head from 'next/head';
-
-export const getServerSideProps = wrapper.getServerSideProps(
-  ({ getState }) =>
-    async ({ req, locale }) => {
-      const isAuth = getState().authReducer.isAuth;
-
-      // const isAuth = useAppSelector(({ authReducer }) => authReducer.isAuth);
-
-      // console.log(store.getState().authReducer);
-
-      // dispatch(
-      //   setAuth({
-      //     accessToken: '',
-      //     accessTokenExpiresIn: 0,
-      //     refreshToken: '',
-      //     refreshTokenExpiresIn: 0,
-      //   })
-      // );
-
-      if (isAuth) {
-        return {
-          redirect: {
-            destination: RoutesTypes.MAIN,
-            permanent: false,
-          },
-        };
-      }
-
-      return {
-        props: {},
-      };
-    }
-);
 
 const Login: NextPage = () => {
   return (

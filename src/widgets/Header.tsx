@@ -11,7 +11,7 @@ export const Header: React.FC = () => {
   const pathname = usePathname();
   const isMin500Width = useMediaQuery('(max-width:500px)');
 
-  const { setAuth, setNotAuth } = authSlice.actions;
+  const { setAuth } = authSlice.actions;
   const dispatch = useAppDispatch();
 
   const tollbarClasses = [styles.header, isMin500Width && styles.mobileHeader];
@@ -20,10 +20,10 @@ export const Header: React.FC = () => {
   const isAuth = useAppSelector((state) => state.authReducer.isAuth);
 
   const goToMain = useCallback(() => {
-    // if (pathname !== RoutesTypes.MAIN) {
-    //   router.push(RoutesTypes.MAIN);
+    if (pathname !== RoutesTypes.MAIN) {
+      router.push(RoutesTypes.MAIN);
+    }
 
-    // }
     dispatch(
       setAuth({
         accessToken: '',
@@ -43,13 +43,11 @@ export const Header: React.FC = () => {
           </Typography>
         </Container>
 
-        <NotAuthHeaderContent isLoadingContent={Boolean(isAuth === undefined)} />
-
-        {/* {isAuth ? (
+        {isAuth ? (
           <AuthHeaderContent />
         ) : (
           <NotAuthHeaderContent isLoadingContent={Boolean(isAuth === undefined)} />
-        )} */}
+        )}
       </Toolbar>
     </AppBar>
   );

@@ -117,7 +117,7 @@ export const SignUp: React.FC<ISignUpProps> = React.memo(({ isLoading, onConfirm
 
       <Box style={{ display: 'flex', justifyContent: 'space-between' }}>
         <LoadingButton
-          sx={{ mt: 3, mb: 2, textTransform: 'none', width: '140px' }}
+          sx={{ mt: 3, textTransform: 'none', width: '140px' }}
           type="submit"
           variant="contained"
           disabled={!isValid || isLoading}
@@ -129,7 +129,7 @@ export const SignUp: React.FC<ISignUpProps> = React.memo(({ isLoading, onConfirm
         </LoadingButton>
 
         <LoadingButton
-          sx={{ mt: 3, mb: 2, textTransform: 'none', width: '140px' }}
+          sx={{ mt: 3, textTransform: 'none', width: '140px' }}
           type="submit"
           variant="contained"
           onClick={onClickNext}

@@ -69,7 +69,7 @@ export const NewPassword: React.FC<INewPasswordProps> = ({ isLoading, onConfirm 
       </Grid>
 
       <LoadingButton
-        sx={{ mt: 3, mb: 2, textTransform: 'none' }}
+        sx={{ mt: 3, textTransform: 'none' }}
         type="submit"
         fullWidth
         variant="contained"

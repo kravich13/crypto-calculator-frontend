@@ -2,3 +2,18 @@
   border-radius: 50%;
   background: rgb(240, 240, 240);
 }
+
+.opacityContainer {
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 20px rgb(45, 45, 45);
+  border-radius: 8px;
+}
+
+.contentPageContainer {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  background: rgba(255, 255, 255, 0.9);
+  border-right: 1px solid rgb(183, 183, 183);
+  border-left: 1px solid rgb(183, 183, 183);
+}

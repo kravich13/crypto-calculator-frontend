@@ -5,7 +5,7 @@ import { InvestmentCardsList } from '@cc/widgets';
 import Head from 'next/head';
 
 export default function InvestmentCards() {
-  const { showContent } = useAuthPage({ redirectTo: RoutesTypes.MAIN });
+  useAuthPage({ redirectTo: RoutesTypes.MAIN });
   useRedirectCondition({ redirectTo: RoutesTypes.MAIN });
 
   return (
@@ -17,7 +17,7 @@ export default function InvestmentCards() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {showContent && <InvestmentCardsList />}
+      <InvestmentCardsList />
     </PageLayout>
   );
 }

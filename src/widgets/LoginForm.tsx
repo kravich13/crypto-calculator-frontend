@@ -2,6 +2,7 @@ import { emailValidation, logInPasswordValidation } from '@cc/entities/Authoriza
 import { useSignInMutation } from '@cc/shared/api';
 import { RoutesTypes } from '@cc/shared/enums';
 import { useAuthContext, useErrorMessage } from '@cc/shared/lib';
+import globalStyles from '@cc/shared/styles/Index.module.css';
 import { PasswordInput, PopupAlert, TextInput } from '@cc/shared/ui';
 import LoginIcon from '@mui/icons-material/Login';
 import { LoadingButton } from '@mui/lab';
@@ -17,14 +18,14 @@ interface IFormInputs {
 }
 
 export const LoginForm = () => {
-  // const { login } = useAuthContext();
+  const { login } = useAuthContext();
   const router = useRouter();
 
   const { handleSubmit, control, resetField } = useForm<IFormInputs>({ mode: 'onBlur' });
   const { errors, isValid } = useFormState({ control });
 
   const [signIn, { isError, data, error, isLoading }] = useSignInMutation();
-  // const errorMessage = useErrorMessage(error);
+  const errorMessage = useErrorMessage(error);
 
   const onConfirm: SubmitHandler<IFormInputs> = useCallback(({ email, password }) => {
     signIn({ email, password });
@@ -37,15 +38,15 @@ export const LoginForm = () => {
   useEffect(() => {
     if (data) {
       router.push(RoutesTypes.MAIN);
-      // login(data);
+      login(data);
     }
   }, [data]);
 
   return (
     <>
-      {/* {isError && <PopupAlert text={errorMessage} severity="error" variant="filled" />} */}
+      {isError && <PopupAlert text={errorMessage} severity="error" variant="filled" />}
 
-      <Container maxWidth="xs">
+      <Container maxWidth="xs" className={globalStyles.opacityContainer}>
         <Typography component="h1" variant="h5" textAlign="left" width="100%" mb={3}>
           Log In
         </Typography>
@@ -98,7 +99,7 @@ export const LoginForm = () => {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2, textTransform: 'none' }}
+            sx={{ mt: 3, mb: 3, textTransform: 'none' }}
             disabled={!isValid || isLoading}
             loading={isLoading}
             loadingPosition="end"

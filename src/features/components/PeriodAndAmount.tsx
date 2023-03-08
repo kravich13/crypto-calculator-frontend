@@ -130,7 +130,7 @@ export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(
 
         <Box style={{ display: 'flex', justifyContent: 'space-between' }}>
           <LoadingButton
-            sx={{ mt: 3, mb: 2, textTransform: 'none' }}
+            sx={{ mt: 3, textTransform: 'none' }}
             type="submit"
             fullWidth
             variant="contained"

@@ -5,7 +5,7 @@ import { SignUpForm } from '@cc/widgets';
 import Head from 'next/head';
 
 export default function SignUp() {
-  // const { showContent } = useNotAuthPage({ redirectTo: RoutesTypes.MAIN });
+  useNotAuthPage({ redirectTo: RoutesTypes.MAIN });
 
   return (
     <PageLayout centerContent>

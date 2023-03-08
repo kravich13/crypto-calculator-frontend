@@ -60,7 +60,7 @@ export const EmailCode: React.FC<IEmailCodeProps> = React.memo(
         </Grid>
 
         <LoadingButton
-          sx={{ mt: 3, mb: 2, textTransform: 'none' }}
+          sx={{ mt: 3, textTransform: 'none' }}
           type="submit"
           fullWidth
           variant="contained"

@@ -12,9 +12,10 @@ import {
   useErrorMessage,
   userDataSlice,
 } from '@cc/shared/lib';
+import globalStyles from '@cc/shared/styles/Index.module.css';
 import { ISetCodeInput, ISetEmailInput } from '@cc/shared/types';
 import { PopupAlert } from '@cc/shared/ui';
-import { Container, Step, StepLabel, Stepper, Typography } from '@mui/material';
+import { Box, Container, Step, StepLabel, Stepper, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
@@ -105,42 +106,40 @@ export const PasswordRecoveryForm = () => {
   }, [step, isLoading]);
 
   return (
-    <>
+    <Container component="div" maxWidth="xs" className={globalStyles.opacityContainer}>
       {isError && <PopupAlert text={errorMessage} severity="error" variant="filled" />}
 
-      <Container component="div" maxWidth={'xs'}>
-        <Stepper activeStep={step} orientation={'vertical'}>
-          <Step>
-            <StepLabel>
-              <Typography component="p" variant="h6">
-                Specify email
-              </Typography>
-            </StepLabel>
-          </Step>
-          <Step>
-            <StepLabel>
-              <Typography component="p" variant="h6">
-                Confirm recovery code
-              </Typography>
-            </StepLabel>
-          </Step>
-          <Step>
-            <StepLabel>
-              <Typography component="p" variant="h6">
-                Create a new password
-              </Typography>
-            </StepLabel>
-          </Step>
-        </Stepper>
-      </Container>
+      <Stepper activeStep={step} orientation="vertical">
+        <Step>
+          <StepLabel>
+            <Typography component="p" variant="h6">
+              Specify email
+            </Typography>
+          </StepLabel>
+        </Step>
+        <Step>
+          <StepLabel>
+            <Typography component="p" variant="h6">
+              Confirm recovery code
+            </Typography>
+          </StepLabel>
+        </Step>
+        <Step>
+          <StepLabel>
+            <Typography component="p" variant="h6">
+              Create a new password
+            </Typography>
+          </StepLabel>
+        </Step>
+      </Stepper>
 
-      <Container component="div" maxWidth="xs" sx={{ marginTop: 8 }}>
+      <Box sx={{ mt: 4 }}>
         <Typography component="p" textAlign="left" width="100%">
           {stepText}
         </Typography>
 
         {stepRender}
-      </Container>
-    </>
+      </Box>
+    </Container>
   );
 };
