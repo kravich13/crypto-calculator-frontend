@@ -1,13 +1,13 @@
 # Crypto Financial Calculator
 
 - [Crypto Financial Calculator](#crypto-financial-calculator)
-  - [Разработка](#разработка)
+  - [Розробка](#розробка)
   - [Мета проекту](#мета-проекту)
   - [Функціонал](#функціонал)
   - [Дорожня карта](#дорожня-карта)
   - [Команда](#команда)
 
-## Разработка
+## Розробка
 
 - [Список API](https://docs.google.com/spreadsheets/d/1vTmBQFo2wFX0oCJeqGHTAz3dn5wm5x6eL-0KkI70c0g/edit?usp=sharing)
 
