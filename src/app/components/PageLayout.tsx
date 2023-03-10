@@ -1,11 +1,5 @@
 import { Box } from '@mui/material';
-
-const pageStyles = {
-  width: '100%',
-  height: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-} as { [key: string]: number | string };
+import styles from '../styles/PageLayout.module.css';
 
 interface IPagelayoutProps {
   centerContent?: boolean;
@@ -13,13 +7,15 @@ interface IPagelayoutProps {
   children: React.ReactNode;
 }
 
-export const PageLayout: React.FC<IPagelayoutProps> = ({ centerContent, children }) => {
+export const PageLayout: React.FC<IPagelayoutProps> = ({ centerContent = false, children }) => {
+  const classes = [styles.container];
+
   if (centerContent) {
-    pageStyles.marginTop = 'auto';
+    classes.push(styles.centerContainer);
   }
 
   return (
-    <Box component="main" maxWidth="xl" sx={pageStyles}>
+    <Box component="main" maxWidth="xl" className={classes.join(' ')}>
       {children}
     </Box>
   );
