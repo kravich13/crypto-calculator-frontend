@@ -1,27 +1,22 @@
+import { IJwtTokensPayload } from '../store';
+
 export interface ILoginResponse {
-  accessToken: string;
-  refreshToken: string;
-  accessTokenExpiresIn: number;
-  refreshTokenExpiresIn: number;
+  emailCodeExpiresIn: number;
 }
 
 export interface ILoginRequest {
   email: string;
-  password: string;
 }
 
-export interface IEmailCodeRequest extends IEmailValidateRequest {
-  email: string;
-}
+export interface IEmailValidateResponse extends IJwtTokensPayload {}
 
 export interface IEmailValidateRequest {
+  email: string;
   code: string;
 }
 
-export interface IPasswordForgotRequest {
-  email: string;
-}
+export interface IRefreshTokensResponse extends IJwtTokensPayload {}
 
-export interface INewPasswordRequest extends IEmailCodeRequest {
-  password: string;
+export interface IRefreshTokensRequest {
+  refreshToken: string;
 }

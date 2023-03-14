@@ -6,7 +6,7 @@ import {
   useAppDispatch,
   userDataSlice,
 } from '@cc/shared/lib';
-import { IAuthContextLogoutData, ITokensData } from '@cc/shared/types';
+import { IAuthContextLogoutData, IJwtTokensPayload } from '@cc/shared/types';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -21,7 +21,7 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
 
   const [showModalLogout, setShowModalLogout] = useState(false);
 
-  const login = useCallback((tokensData: ITokensData) => {
+  const login = useCallback((tokensData: IJwtTokensPayload) => {
     dispatch(setAuth(tokensData));
   }, []);
 
@@ -57,7 +57,7 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
   useEffect(() => {
     try {
       const areTokensData = localStorage.getItem('tokensData');
-      const tokensData = areTokensData ? (JSON.parse(areTokensData) as ITokensData) : null;
+      const tokensData = areTokensData ? (JSON.parse(areTokensData) as IJwtTokensPayload) : null;
 
       if (tokensData && tokensData.refreshTokenExpiresIn > Date.now()) {
         login(tokensData);

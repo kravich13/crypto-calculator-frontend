@@ -1,4 +1,4 @@
-import { IAuthInitialState, ILoginResponse } from '@cc/shared/types';
+import { IAuthInitialState, IJwtTokensPayload } from '@cc/shared/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: IAuthInitialState = {
@@ -21,7 +21,7 @@ export const authSlice = createSlice({
     setNotAuth(state) {
       state.isAuth = false;
     },
-    setAuth(state, { payload }: PayloadAction<ILoginResponse>) {
+    setAuth(state, { payload }: PayloadAction<IJwtTokensPayload>) {
       localStorage.setItem('tokensData', JSON.stringify(payload));
 
       return {

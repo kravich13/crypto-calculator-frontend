@@ -1,9 +1,9 @@
-import { IAuthContextLogoutData, ITokensData } from '@cc/shared/types';
+import { IAuthContextLogoutData, IJwtTokensPayload } from '@cc/shared/types';
 import { createContext } from 'react';
 
 export interface IAuthContext {
   showModalLogout: boolean;
-  login: (tokensData: ITokensData) => void;
+  login: (tokensData: IJwtTokensPayload) => void;
   logout: (logoutData: IAuthContextLogoutData) => void;
 }
 

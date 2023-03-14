@@ -1,11 +1,8 @@
 import { emailValidation } from '@cc/entities/Authorization';
-import { RoutesTypes } from '@cc/shared/enums';
-import { useAppSelector } from '@cc/shared/lib';
 import { TextInput } from '@cc/shared/ui';
 import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
 import { LoadingButton } from '@mui/lab';
 import { Box, Grid } from '@mui/material';
-import Link from 'next/link';
 import React, { useCallback } from 'react';
 import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form';
 
@@ -19,8 +16,6 @@ interface ISendEmailForm {
 }
 
 export const SendEmail: React.FC<ISendEmailProps> = ({ isLoading, onConfirm }) => {
-  const isAuth = useAppSelector(({ authReducer }) => authReducer.isAuth);
-
   const { handleSubmit, control, resetField } = useForm<ISendEmailForm>({ mode: 'onBlur' });
   const { errors, isValid } = useFormState({ control });
 
@@ -29,8 +24,8 @@ export const SendEmail: React.FC<ISendEmailProps> = ({ isLoading, onConfirm }) =
   }, [resetField]);
 
   return (
-    <Box component="form" width="100%" noValidate sx={{ mt: 2 }} onSubmit={handleSubmit(onConfirm)}>
-      <Grid container spacing={2}>
+    <Box component="form" width="100%" noValidate onSubmit={handleSubmit(onConfirm)}>
+      <Grid container spacing={3}>
         <Grid item xs={12}>
           <Controller
             defaultValue=""
@@ -65,6 +60,7 @@ export const SendEmail: React.FC<ISendEmailProps> = ({ isLoading, onConfirm }) =
           }}
         >
           <LoadingButton
+            fullWidth
             type="submit"
             variant="contained"
             sx={{ textTransform: 'none' }}
@@ -75,13 +71,6 @@ export const SendEmail: React.FC<ISendEmailProps> = ({ isLoading, onConfirm }) =
           >
             Submit
           </LoadingButton>
-
-          <Link
-            href={isAuth ? RoutesTypes.MAIN : RoutesTypes.LOGIN}
-            style={{ textDecoration: 'none' }}
-          >
-            Cancel
-          </Link>
         </Grid>
       </Grid>
     </Box>
