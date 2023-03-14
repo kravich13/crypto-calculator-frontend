@@ -28,7 +28,7 @@ export const LoginForm = () => {
 
   const emailUser = useAppSelector((state) => state.userDataReducer.email);
 
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
 
   const [signIn, signUpData] = useSignInMutation();
   const [emailValidate, emailValidateData] = useEmailValidateMutation();

@@ -13,7 +13,7 @@ const nextConfig = {
       fallback: [
         {
           source: '/:path*',
-          destination: 'http://localhost:5001/:path*',
+          destination: 'http://0.0.0.0:5001/:path*',
         },
       ],
     };

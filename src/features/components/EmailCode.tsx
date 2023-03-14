@@ -1,7 +1,8 @@
 import { emailCodeValidation } from '@cc/entities/Authorization';
 import { useSignInMutation } from '@cc/shared/api';
-import { useAppDispatch, useAppSelector, userDataSlice } from '@cc/shared/lib';
-import { TextInput, Timer } from '@cc/shared/ui';
+import { EMAIL_CODE_MAX, EMAIL_CODE_MIN } from '@cc/shared/const';
+import { useAppDispatch, useAppSelector, useErrorMessage, userDataSlice } from '@cc/shared/lib';
+import { PopupAlert, TextInput, Timer } from '@cc/shared/ui';
 import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
 import LoginIcon from '@mui/icons-material/Login';
 import { LoadingButton } from '@mui/lab';
@@ -27,6 +28,7 @@ export const EmailCode: React.FC<IEmailCodeProps> = React.memo(({ isLoading, onC
   const { errors, isValid } = useFormState({ control });
 
   const [signIn, signUpData] = useSignInMutation();
+  const signUpError = useErrorMessage(signUpData.error);
 
   const loading = isLoading || signUpData.isLoading;
 
@@ -54,6 +56,8 @@ export const EmailCode: React.FC<IEmailCodeProps> = React.memo(({ isLoading, onC
 
   return (
     <Box component="form" noValidate onSubmit={handleSubmit(onConfirm)}>
+      {signUpData.isError && <PopupAlert text={signUpError} severity="error" variant="filled" />}
+
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Controller
@@ -64,6 +68,7 @@ export const EmailCode: React.FC<IEmailCodeProps> = React.memo(({ isLoading, onC
             render={({ field }) => (
               <TextInput
                 {...field}
+                inputProps={{ min: EMAIL_CODE_MIN, max: EMAIL_CODE_MAX }}
                 required
                 fullWidth
                 type="number"

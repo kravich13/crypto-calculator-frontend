@@ -1,3 +1,4 @@
+import { EMAIL_CODE_MAX, EMAIL_CODE_MIN } from '@cc/shared/const';
 import validator from 'validator';
 
 export const emailValidation = {
@@ -20,6 +21,8 @@ export const passwordValidation = {
 export const emailCodeValidation = {
   required: true,
   validate: (value: string) =>
-    (validator.isNumeric(value) && Number(value) >= 100000 && Number(value) <= 999999) ||
-    'Number range from 100000 to 999999.',
+    (validator.isNumeric(value) &&
+      Number(value) >= EMAIL_CODE_MIN &&
+      Number(value) <= EMAIL_CODE_MAX) ||
+    `Number range from ${EMAIL_CODE_MIN} to ${EMAIL_CODE_MAX}.`,
 };
