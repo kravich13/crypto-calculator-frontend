@@ -7,7 +7,7 @@ import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
 import LoginIcon from '@mui/icons-material/Login';
 import { LoadingButton } from '@mui/lab';
 import { Box, Grid, Typography } from '@mui/material';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form';
 
 interface IEmailCodeProps {
@@ -32,7 +32,8 @@ export const EmailCode: React.FC<IEmailCodeProps> = React.memo(({ isLoading, onC
 
   const loading = isLoading || signUpData.isLoading;
 
-  const isDisabledSendEmail = emailCodeExpiresIn > Date.now();
+  const [isDisabledSendEmail, setDisabledSendEmail] = useState(true);
+  // const isDisabledSendEmail = emailCodeExpiresIn > Date.now();
 
   const onClear = useCallback(() => {
     resetField('code');
@@ -53,6 +54,21 @@ export const EmailCode: React.FC<IEmailCodeProps> = React.memo(({ isLoading, onC
       );
     }
   }, [signUpData.data]);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      if (emailCodeExpiresIn < Date.now()) {
+        setDisabledSendEmail(false);
+        clearInterval(id);
+      } else {
+        setDisabledSendEmail(true);
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(id);
+    };
+  }, [emailCodeExpiresIn]);
 
   return (
     <Box component="form" noValidate onSubmit={handleSubmit(onConfirm)}>

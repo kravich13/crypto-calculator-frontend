@@ -55,7 +55,7 @@ export const SendEmail: React.FC<ISendEmailProps> = ({ isLoading, onConfirm }) =
             type="submit"
             variant="contained"
             sx={{ textTransform: 'none' }}
-            disabled={!isValid || isLoading}
+            disabled={!isValid}
             loading={isLoading}
             loadingPosition="end"
             endIcon={<ForwardToInboxIcon />}

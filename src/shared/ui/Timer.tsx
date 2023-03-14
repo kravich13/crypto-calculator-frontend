@@ -14,18 +14,18 @@ export const Timer: React.FC<ITimerProps> = memo(({ inputDate, stylesProps }) =>
   const [text, setText] = useState('00:00');
 
   useEffect(() => {
-    if (inputDate < Date.now()) {
-      return;
-    }
-
     const id = setInterval(() => {
-      const now = DateTime.now();
-      const end = DateTime.fromMillis(inputDate);
-      const remaining = end.diff(now).toObject();
-      const duration = Duration.fromObject(remaining);
-      const result = duration.toFormat('mm:ss');
+      if (inputDate < Date.now()) {
+        clearInterval(id);
+      } else {
+        const now = DateTime.now();
+        const end = DateTime.fromMillis(inputDate);
+        const remaining = end.diff(now).toObject();
+        const duration = Duration.fromObject(remaining);
+        const result = duration.toFormat('mm:ss');
 
-      setText(result);
+        setText(result);
+      }
     }, 1000);
 
     return () => {
