@@ -1,0 +1,15 @@
+.container {
+  background-image: url('../../../public/btc-tradingview-blur4.png');
+  -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  -o-background-size: 100% 100%;
+  background-size: 100% 100%;
+
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.centerContainer {
+  justify-content: center;
+}

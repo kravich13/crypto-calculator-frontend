@@ -5,16 +5,18 @@ const nextConfig = {
     domains: ['https://assets.coingecko.com'],
   },
   experimental: {
-    appDir: true,
+    appDir: false,
   },
 
   async rewrites() {
-    return [
-      {
-        source: '/:path*',
-        destination: 'http://localhost:5001/:path*',
-      },
-    ];
+    return {
+      fallback: [
+        {
+          source: '/:path*',
+          destination: 'http://localhost:5001/:path*',
+        },
+      ],
+    };
   },
 };
 

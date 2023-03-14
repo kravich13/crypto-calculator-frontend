@@ -12,25 +12,15 @@ import {
   useErrorMessage,
   userDataSlice,
 } from '@cc/shared/lib';
+import globalStyles from '@cc/shared/styles/Index.module.css';
 import { ISetCodeInput, ISetEmailInput } from '@cc/shared/types';
 import { PopupAlert } from '@cc/shared/ui';
-import {
-  Backdrop,
-  CircularProgress,
-  Container,
-  Step,
-  StepLabel,
-  Stepper,
-  Typography,
-  useMediaQuery,
-} from '@mui/material';
+import { Box, Container, Step, StepLabel, Stepper, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 
 export const PasswordRecoveryForm = () => {
-  const isMin800Width = useMediaQuery('(max-width:800px)');
-
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -105,55 +95,51 @@ export const PasswordRecoveryForm = () => {
   const stepRender = useMemo(() => {
     switch (step) {
       case 0:
-        return <SendEmail onConfirm={onConfirmForgotPassword} />;
+        return <SendEmail isLoading={isLoading} onConfirm={onConfirmForgotPassword} />;
       case 1:
-        return <EmailCode buttonTitle="Send code" onConfirm={onConfirmEmailCode} />;
+        return (
+          <EmailCode buttonTitle="Send code" isLoading={isLoading} onConfirm={onConfirmEmailCode} />
+        );
       case 2:
-        return <NewPassword onConfirm={onConfirmNewPassword} />;
+        return <NewPassword isLoading={isLoading} onConfirm={onConfirmNewPassword} />;
     }
-  }, [step]);
+  }, [step, isLoading]);
 
   return (
-    <>
-      <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={isLoading}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
-
+    <Container component="div" maxWidth="xs" className={globalStyles.opacityContainer}>
       {isError && <PopupAlert text={errorMessage} severity="error" variant="filled" />}
 
-      <Container component="div" maxWidth={isMin800Width ? 'xs' : 'md'}>
-        <Stepper activeStep={step} orientation={isMin800Width ? 'vertical' : 'horizontal'}>
-          <Step>
-            <StepLabel>
-              <Typography component="p" variant="h6">
-                Specify email
-              </Typography>
-            </StepLabel>
-          </Step>
-          <Step>
-            <StepLabel>
-              <Typography component="p" variant="h6">
-                Confirm recovery code
-              </Typography>
-            </StepLabel>
-          </Step>
-          <Step>
-            <StepLabel>
-              <Typography component="p" variant="h6">
-                Create a new password
-              </Typography>
-            </StepLabel>
-          </Step>
-        </Stepper>
-      </Container>
+      <Stepper activeStep={step} orientation="vertical">
+        <Step>
+          <StepLabel>
+            <Typography component="p" variant="h6">
+              Specify email
+            </Typography>
+          </StepLabel>
+        </Step>
+        <Step>
+          <StepLabel>
+            <Typography component="p" variant="h6">
+              Confirm recovery code
+            </Typography>
+          </StepLabel>
+        </Step>
+        <Step>
+          <StepLabel>
+            <Typography component="p" variant="h6">
+              Create a new password
+            </Typography>
+          </StepLabel>
+        </Step>
+      </Stepper>
 
-      <Container component="div" maxWidth="xs" sx={{ marginTop: 8 }}>
+      <Box sx={{ mt: 4 }}>
         <Typography component="p" textAlign="left" width="100%">
           {stepText}
         </Typography>
 
         {stepRender}
-      </Container>
-    </>
+      </Box>
+    </Container>
   );
 };

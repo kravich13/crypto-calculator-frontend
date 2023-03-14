@@ -8,17 +8,9 @@ import {
   useErrorMessage,
   userDataSlice,
 } from '@cc/shared/lib';
+import globalStyles from '@cc/shared/styles/Index.module.css';
 import { PopupAlert } from '@cc/shared/ui';
-import {
-  Backdrop,
-  CircularProgress,
-  Container,
-  Step,
-  StepLabel,
-  Stepper,
-  Typography,
-  useMediaQuery,
-} from '@mui/material';
+import { Box, Container, Step, StepLabel, Stepper, Typography, useMediaQuery } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
@@ -35,6 +27,8 @@ export const SignUpForm = () => {
 
   const [signUp, signUpData] = useSignUpMutation();
   const [emailValidate, emailValidateData] = useEmailValidateMutation();
+
+  const isLoading = signUpData.isLoading || emailValidateData.isLoading;
 
   const signUpErrorMessage = useErrorMessage(signUpData.error);
   const codeEmailErrorMessage = useErrorMessage(emailValidateData.error);
@@ -62,11 +56,18 @@ export const SignUpForm = () => {
   const stepRender = useMemo(() => {
     switch (step) {
       case 0:
-        return <SignUp onConfirm={onConfirmSignUp} />;
+        return <SignUp onConfirm={onConfirmSignUp} isLoading={isLoading} />;
       case 1:
-        return <EmailCode buttonTitle="Activate account" onConfirm={onConfirmEmailCode} />;
+        return (
+          <EmailCode
+            buttonTitle="Activate account"
+            onConfirm={onConfirmEmailCode}
+            isLoading={isLoading}
+            isLastStep={true}
+          />
+        );
     }
-  }, [step]);
+  }, [step, isLoading]);
 
   useEffect(() => {
     const hasSignUpData = step === 0 && signUpData.data;
@@ -84,14 +85,7 @@ export const SignUpForm = () => {
   }, [step, activateAccount, signUpData.data, emailValidateData.data]);
 
   return (
-    <>
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={signUpData.isLoading || emailValidateData.isLoading}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
-
+    <Container className={globalStyles.opacityContainer} maxWidth="xs">
       {(signUpData.isError || emailValidateData.isError) && (
         <PopupAlert
           text={signUpErrorMessage || codeEmailErrorMessage}
@@ -108,26 +102,24 @@ export const SignUpForm = () => {
         />
       )}
 
-      <Container component="div" maxWidth={isMin500Width ? 'xs' : 'sm'}>
-        <Stepper activeStep={step} orientation={isMin500Width ? 'vertical' : 'horizontal'}>
-          <Step>
-            <StepLabel>
-              <Typography component="p" variant="h6">
-                Sign up
-              </Typography>
-            </StepLabel>
-          </Step>
-          <Step>
-            <StepLabel optional="Optional">
-              <Typography component="p" variant="h6">
-                Verification code
-              </Typography>
-            </StepLabel>
-          </Step>
-        </Stepper>
-      </Container>
+      <Stepper activeStep={step} orientation={isMin500Width ? 'vertical' : 'horizontal'}>
+        <Step>
+          <StepLabel>
+            <Typography component="p" variant="h6">
+              Sign up
+            </Typography>
+          </StepLabel>
+        </Step>
+        <Step>
+          <StepLabel optional="Optional">
+            <Typography component="p" variant="h6">
+              Verification code
+            </Typography>
+          </StepLabel>
+        </Step>
+      </Stepper>
 
-      <Container component="div" maxWidth="xs" sx={{ marginTop: 1 }}>
+      <Box sx={{ marginTop: 1 }}>
         <Typography component="p" variant="subtitle1" textAlign="left" width="100%" marginTop={3}>
           {step === 0
             ? 'When you activate the verification code, all the functions of the application will be available.'
@@ -135,7 +127,7 @@ export const SignUpForm = () => {
         </Typography>
 
         {stepRender}
-      </Container>
-    </>
+      </Box>
+    </Container>
   );
 };

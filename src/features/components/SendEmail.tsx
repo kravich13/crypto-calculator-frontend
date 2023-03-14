@@ -1,12 +1,16 @@
 import { emailValidation } from '@cc/entities/Authorization';
 import { RoutesTypes } from '@cc/shared/enums';
+import { useAppSelector } from '@cc/shared/lib';
 import { TextInput } from '@cc/shared/ui';
-import { Box, Button, Grid } from '@mui/material';
+import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
+import { LoadingButton } from '@mui/lab';
+import { Box, Grid } from '@mui/material';
 import Link from 'next/link';
 import React, { useCallback } from 'react';
 import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form';
 
 interface ISendEmailProps {
+  isLoading: boolean;
   onConfirm: SubmitHandler<ISendEmailForm>;
 }
 
@@ -14,7 +18,9 @@ interface ISendEmailForm {
   email: string;
 }
 
-export const SendEmail: React.FC<ISendEmailProps> = ({ onConfirm }) => {
+export const SendEmail: React.FC<ISendEmailProps> = ({ isLoading, onConfirm }) => {
+  const isAuth = useAppSelector(({ authReducer }) => authReducer.isAuth);
+
   const { handleSubmit, control, resetField } = useForm<ISendEmailForm>({ mode: 'onBlur' });
   const { errors, isValid } = useFormState({ control });
 
@@ -42,6 +48,7 @@ export const SendEmail: React.FC<ISendEmailProps> = ({ onConfirm }) => {
                 error={Boolean(errors.email)}
                 helperText={errors.email?.message}
                 onClearValue={onClearEmail}
+                disabled={isLoading}
               />
             )}
           />
@@ -57,16 +64,22 @@ export const SendEmail: React.FC<ISendEmailProps> = ({ onConfirm }) => {
             alignItems: 'center',
           }}
         >
-          <Button
+          <LoadingButton
             type="submit"
             variant="contained"
             sx={{ textTransform: 'none' }}
-            disabled={!isValid}
+            disabled={!isValid || isLoading}
+            loading={isLoading}
+            loadingPosition="end"
+            endIcon={<ForwardToInboxIcon />}
           >
             Submit
-          </Button>
+          </LoadingButton>
 
-          <Link href={RoutesTypes.LOGIN} style={{ textDecoration: 'none' }}>
+          <Link
+            href={isAuth ? RoutesTypes.MAIN : RoutesTypes.LOGIN}
+            style={{ textDecoration: 'none' }}
+          >
             Cancel
           </Link>
         </Grid>

@@ -137,9 +137,9 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
             sx={{ textTransform: 'none', width: '120px' }}
             type="submit"
             variant="contained"
-            onClick={onBack}
             startIcon={<WestIcon />}
             title="dsds"
+            onClick={onBack}
           >
             Back
           </Button>
@@ -148,11 +148,11 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
             sx={{ textTransform: 'none', width: '120px' }}
             type="submit"
             variant="contained"
-            onClick={onCalculate}
             disabled={!isValid || addedCoins.length > maxNumberOfCoinsToInvest}
             loading={isLoading}
             loadingPosition="end"
             endIcon={<CalculateIcon />}
+            onClick={onCalculate}
           >
             Calculate
           </LoadingButton>

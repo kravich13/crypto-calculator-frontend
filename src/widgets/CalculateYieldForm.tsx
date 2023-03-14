@@ -10,6 +10,7 @@ import { DateTime } from 'luxon';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
+import globalStyles from '@cc/shared/styles/Index.module.css';
 
 interface IStepRender {
   [key: number]: JSX.Element;
@@ -28,8 +29,7 @@ export const CalculateYieldForm = () => {
   const periodAndAmountError = useErrorMessage(periodAndAmountResponse.error);
   const calculateProfitError = useErrorMessage(calculateProfitResponse.error);
 
-  const isPeriodAndAmountLoading = periodAndAmountResponse.isLoading;
-  const isCalculateProfitLoading = calculateProfitResponse.isLoading;
+  const isLoading = periodAndAmountResponse.isLoading || calculateProfitResponse.isLoading;
 
   const [step, setStep] = useState(0);
 
@@ -61,16 +61,10 @@ export const CalculateYieldForm = () => {
 
   const stepRender: IStepRender = useMemo(
     () => ({
-      0: <PeriodAndAmount isLoading={isPeriodAndAmountLoading} onConfirm={onConfirmStep0} />,
-      1: (
-        <SelectedInvestCoins
-          isLoading={isCalculateProfitLoading}
-          onBack={onBack}
-          onConfirm={onConfirmStep1}
-        />
-      ),
+      0: <PeriodAndAmount isLoading={isLoading} onConfirm={onConfirmStep0} />,
+      1: <SelectedInvestCoins isLoading={isLoading} onBack={onBack} onConfirm={onConfirmStep1} />,
     }),
-    [isPeriodAndAmountLoading, isCalculateProfitLoading]
+    [isLoading]
   );
 
   useEffect(() => {
@@ -89,7 +83,11 @@ export const CalculateYieldForm = () => {
   }, [step, periodAndAmountResponse.data, calculateProfitResponse.data]);
 
   return (
-    <>
+    <Container
+      component="div"
+      maxWidth={isMin520Width ? 'xs' : 'sm'}
+      className={globalStyles.opacityContainer}
+    >
       {periodAndAmountResponse.isError && (
         <PopupAlert
           text={periodAndAmountError || calculateProfitError}
@@ -98,29 +96,28 @@ export const CalculateYieldForm = () => {
         />
       )}
 
-      <Container component="div" maxWidth={isMin520Width ? 'xs' : 'sm'}>
-        <Typography component="h1" variant="h5" marginBottom={3} textAlign="center">
-          Calculation of profitability from monthly investments in cryptocurrency
-        </Typography>
+      <Typography component="h1" variant="h5" marginBottom={3} textAlign="center">
+        Calculation of profitability monthly investments in cryptocurrency
+      </Typography>
 
-        <Stepper activeStep={step} orientation={isMin520Width ? 'vertical' : 'horizontal'}>
-          <Step>
-            <StepLabel>
-              <Typography component="p" variant="h6">
-                Dates and monthly amount
-              </Typography>
-            </StepLabel>
-          </Step>
+      <Stepper activeStep={step} orientation={isMin520Width ? 'vertical' : 'horizontal'}>
+        <Step>
+          <StepLabel>
+            <Typography component="p" variant="h6">
+              Dates and monthly amount
+            </Typography>
+          </StepLabel>
+        </Step>
 
-          <Step>
-            <StepLabel>
-              <Typography component="p" variant="h6">
-                List of coins
-              </Typography>
-            </StepLabel>
-          </Step>
-        </Stepper>
-      </Container>
+        <Step>
+          <StepLabel>
+            <Typography component="p" variant="h6">
+              List of coins
+            </Typography>
+          </StepLabel>
+        </Step>
+      </Stepper>
+
       <Container component="div" maxWidth="xs" sx={{ marginTop: 1 }}>
         <Typography component="p" variant="subtitle1" marginTop={3}>
           {step === 0 ? 'Specify the monthly amount for investment, start and end date' : ''}
@@ -128,6 +125,6 @@ export const CalculateYieldForm = () => {
 
         {stepRender[step]}
       </Container>
-    </>
+    </Container>
   );
 };

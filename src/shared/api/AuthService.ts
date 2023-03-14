@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
+import { HYDRATE } from 'next-redux-wrapper';
 import {
   IEmailCodeRequest,
   IEmailValidateRequest,
@@ -13,6 +14,11 @@ import {
 export const authAPI = createApi({
   reducerPath: 'authAPI',
   baseQuery: fetchBaseQuery({ baseUrl: '/auth' }),
+  extractRehydrationInfo(action, { reducerPath }) {
+    if (action.type === HYDRATE) {
+      return action.payload[reducerPath];
+    }
+  },
   endpoints: (build) => ({
     signUp: build.mutation<ILoginResponse, ILoginRequest>({
       query: (data) => ({

@@ -9,7 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/cache": "^11.10.5",
     "@emotion/react": "^11.10.6",
+    "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.9",
     "@mui/lab": "^5.0.0-alpha.121",
@@ -25,7 +27,7 @@
     "lodash.debounce": "^4.0.8",
     "luxon": "^3.2.1",
     "next": "13.1.6",
-    "next-auth": "^4.19.2",
+    "next-redux-wrapper": "^8.1.0",
     "nextjs-progressbar": "^0.0.16",
     "react": "18.2.0",
     "react-dom": "18.2.0",

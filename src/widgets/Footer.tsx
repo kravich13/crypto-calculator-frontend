@@ -3,7 +3,6 @@ import { Box, Container, Typography, useMediaQuery } from '@mui/material';
 import Link from 'next/link';
 import React, { useCallback, useMemo } from 'react';
 import { v4 as uuid } from 'uuid';
-
 import styles from './styles/Footer.module.css';
 
 interface ILinkData {
@@ -57,7 +56,7 @@ export const Footer = React.memo(() => {
     <Container
       component="footer"
       maxWidth="xl"
-      sx={{ background: '#1565c0', marginTop: 'auto', paddingTop: '10px', paddingBottom: '10px' }}
+      sx={{ background: '#1565c0', paddingTop: '10px', paddingBottom: '10px' }}
       className={styles.Root}
     >
       <Box className={isMax490Width ? styles.mobileContainer : styles.mainContainer}>

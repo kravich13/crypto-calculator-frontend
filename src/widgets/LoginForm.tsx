@@ -2,8 +2,11 @@ import { emailValidation, logInPasswordValidation } from '@cc/entities/Authoriza
 import { useSignInMutation } from '@cc/shared/api';
 import { RoutesTypes } from '@cc/shared/enums';
 import { useAuthContext, useErrorMessage } from '@cc/shared/lib';
+import globalStyles from '@cc/shared/styles/Index.module.css';
 import { PasswordInput, PopupAlert, TextInput } from '@cc/shared/ui';
-import { Box, Button, Container, Grid, Typography } from '@mui/material';
+import LoginIcon from '@mui/icons-material/Login';
+import { LoadingButton } from '@mui/lab';
+import { Box, Container, Grid, Typography } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect } from 'react';
@@ -21,7 +24,7 @@ export const LoginForm = () => {
   const { handleSubmit, control, resetField } = useForm<IFormInputs>({ mode: 'onBlur' });
   const { errors, isValid } = useFormState({ control });
 
-  const [signIn, { isError, data, error }] = useSignInMutation();
+  const [signIn, { isError, data, error, isLoading }] = useSignInMutation();
   const errorMessage = useErrorMessage(error);
 
   const onConfirm: SubmitHandler<IFormInputs> = useCallback(({ email, password }) => {
@@ -40,71 +43,74 @@ export const LoginForm = () => {
   }, [data]);
 
   return (
-    <>
+    <Container maxWidth="xs" className={globalStyles.opacityContainer}>
       {isError && <PopupAlert text={errorMessage} severity="error" variant="filled" />}
 
-      <Container maxWidth="xs">
-        <Typography component="h1" variant="h5" textAlign="left" width="100%">
-          Log In
-        </Typography>
+      <Typography component="h1" variant="h5" textAlign="left" width="100%" mb={3}>
+        Log In
+      </Typography>
 
-        <Box component="form" noValidate sx={{ mt: 1 }} onSubmit={handleSubmit(onConfirm)}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Controller
-                name="email"
-                control={control}
-                defaultValue=""
-                rules={emailValidation}
-                render={({ field }) => (
-                  <TextInput
-                    {...field}
-                    type="email"
-                    label="Email"
-                    autoComplete="Email"
-                    onClearValue={onClearEmail}
-                    fullWidth={true}
-                    error={Boolean(errors.email)}
-                    helperText={errors.email?.message}
-                  />
-                )}
-              />
-            </Grid>
-
-            <Grid item xs={12}>
-              <Controller
-                name="password"
-                control={control}
-                defaultValue=""
-                rules={logInPasswordValidation}
-                render={({ field }) => (
-                  <PasswordInput
-                    label="Password"
-                    fullWidth={true}
-                    {...field}
-                    error={Boolean(errors.password)}
-                    helperText={errors.password?.message}
-                  />
-                )}
-              />
-            </Grid>
+      <Box component="form" noValidate sx={{ mt: 1 }} onSubmit={handleSubmit(onConfirm)}>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Controller
+              name="email"
+              control={control}
+              defaultValue=""
+              rules={emailValidation}
+              render={({ field }) => (
+                <TextInput
+                  {...field}
+                  type="email"
+                  label="Email"
+                  autoComplete="Email"
+                  onClearValue={onClearEmail}
+                  fullWidth={true}
+                  error={Boolean(errors.email)}
+                  helperText={errors.email?.message}
+                  disabled={isLoading}
+                />
+              )}
+            />
           </Grid>
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2, textTransform: 'none' }}
-            disabled={!isValid}
-          >
-            Log in
-          </Button>
+          <Grid item xs={12}>
+            <Controller
+              name="password"
+              control={control}
+              defaultValue=""
+              rules={logInPasswordValidation}
+              render={({ field }) => (
+                <PasswordInput
+                  label="Password"
+                  fullWidth={true}
+                  {...field}
+                  error={Boolean(errors.password)}
+                  helperText={errors.password?.message}
+                  disabled={isLoading}
+                />
+              )}
+            />
+          </Grid>
+        </Grid>
 
-          <Link href={RoutesTypes.PASSWORD_RECOVERY} style={{ textDecoration: 'none' }}>
-            Forgot password?
-          </Link>
-        </Box>
-      </Container>
-    </>
+        <LoadingButton
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 3, textTransform: 'none' }}
+          disabled={!isValid || isLoading}
+          loading={isLoading}
+          loadingPosition="end"
+          endIcon={<LoginIcon />}
+        >
+          Log in
+        </LoadingButton>
+
+        <Link href={RoutesTypes.PASSWORD_RECOVERY} style={{ textDecoration: 'none' }}>
+          Forgot password?
+        </Link>
+      </Box>
+    </Container>
   );
 };
