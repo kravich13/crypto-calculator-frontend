@@ -49,16 +49,7 @@ export const SendEmail: React.FC<ISendEmailProps> = ({ isLoading, onConfirm }) =
           />
         </Grid>
 
-        <Grid
-          item
-          xs={12}
-          style={{
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
+        <Grid item xs={12}>
           <LoadingButton
             fullWidth
             type="submit"

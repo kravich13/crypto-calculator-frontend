@@ -1,10 +1,12 @@
 import { emailCodeValidation } from '@cc/entities/Authorization';
-import { TextInput } from '@cc/shared/ui';
+import { useSignInMutation } from '@cc/shared/api';
+import { useAppDispatch, useAppSelector, userDataSlice } from '@cc/shared/lib';
+import { TextInput, Timer } from '@cc/shared/ui';
+import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
 import LoginIcon from '@mui/icons-material/Login';
-import SendIcon from '@mui/icons-material/Send';
 import { LoadingButton } from '@mui/lab';
-import { Box, Grid } from '@mui/material';
-import React, { useCallback } from 'react';
+import { Box, Grid, Typography } from '@mui/material';
+import React, { useCallback, useEffect } from 'react';
 import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form';
 
 interface IEmailCodeProps {
@@ -17,21 +19,42 @@ interface IEmailCodeForm {
 }
 
 export const EmailCode: React.FC<IEmailCodeProps> = React.memo(({ isLoading, onConfirm }) => {
+  const dispatch = useAppDispatch();
+  const { setEmailCodeExpiresIn } = userDataSlice.actions;
+  const { emailCodeExpiresIn, email } = useAppSelector((state) => state.userDataReducer);
+
   const { handleSubmit, control, resetField } = useForm<IEmailCodeForm>({ mode: 'onBlur' });
   const { errors, isValid } = useFormState({ control });
+
+  const [signIn, signUpData] = useSignInMutation();
+
+  const loading = isLoading || signUpData.isLoading;
+
+  const isDisabledSendEmail = emailCodeExpiresIn > Date.now();
 
   const onClear = useCallback(() => {
     resetField('code');
   }, [resetField]);
 
+  const onSendEmail = useCallback(() => {
+    signIn({ email });
+  }, [email]);
+
+  useEffect(() => {
+    const signUpPayload = signUpData.data;
+
+    if (signUpPayload) {
+      dispatch(
+        setEmailCodeExpiresIn({
+          emailCodeExpiresIn: signUpPayload.emailCodeExpiresIn,
+        })
+      );
+    }
+  }, [signUpData.data]);
+
   return (
-    <Box
-      component="form"
-      noValidate
-      onSubmit={handleSubmit(onConfirm)}
-      sx={{ mt: 3, width: '100%' }}
-    >
-      <Grid container spacing={2}>
+    <Box component="form" noValidate onSubmit={handleSubmit(onConfirm)}>
+      <Grid container spacing={3}>
         <Grid item xs={12}>
           <Controller
             defaultValue=""
@@ -54,20 +77,47 @@ export const EmailCode: React.FC<IEmailCodeProps> = React.memo(({ isLoading, onC
             )}
           />
         </Grid>
-      </Grid>
 
-      <LoadingButton
-        sx={{ mt: 3, textTransform: 'none' }}
-        type="submit"
-        fullWidth
-        variant="contained"
-        disabled={!isValid || isLoading}
-        loading={isLoading}
-        loadingPosition="end"
-        endIcon={<LoginIcon />}
-      >
-        Send
-      </LoadingButton>
+        <Grid item xs={12}>
+          <LoadingButton
+            sx={{ textTransform: 'none' }}
+            type="submit"
+            fullWidth
+            variant="contained"
+            disabled={!isValid}
+            loading={loading}
+            loadingPosition="end"
+            endIcon={<LoginIcon />}
+          >
+            Confirm
+          </LoadingButton>
+        </Grid>
+
+        <Grid
+          item
+          xs={12}
+          sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+        >
+          <Box sx={{ display: 'flex' }}>
+            <Typography color="GrayText" sx={{ mr: 1 }}>
+              Send again in
+            </Typography>
+
+            <Timer inputDate={emailCodeExpiresIn} stylesProps={{ color: 'GrayText' }} />
+          </Box>
+
+          <LoadingButton
+            onClick={onSendEmail}
+            variant="text"
+            disabled={isDisabledSendEmail}
+            loading={loading}
+            loadingPosition="end"
+            endIcon={<ForwardToInboxIcon />}
+          >
+            Send email
+          </LoadingButton>
+        </Grid>
+      </Grid>
     </Box>
   );
 });
