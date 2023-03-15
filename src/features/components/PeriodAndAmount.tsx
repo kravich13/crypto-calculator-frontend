@@ -27,33 +27,40 @@ export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(
 
     const startState = getFieldState('startDate', formState);
     const startValue = watch('startDate');
+
     const startDateIsValid = Boolean(!startState.invalid && startState.isTouched);
 
     const todayDate = useMemo(() => DateTime.now(), []);
+    const startDate = useMemo(
+      () =>
+        DateTime.fromFormat(Boolean(startValue) ? startValue : MIN_INVEST_DATE, INPUT_FORMAT_DATE),
+      [startValue]
+    );
+
     const yesterdayString = todayDate.minus({ day: 1 }).toFormat(INPUT_FORMAT_DATE);
     const todayString = todayDate.toFormat(INPUT_FORMAT_DATE);
+    const nextDayOfStartDateString = startDate.plus({ day: 1 }).toFormat(INPUT_FORMAT_DATE);
 
     const endDateValidate = useCallback(
       (value: string) => {
         const inputDate = DateTime.fromFormat(value, INPUT_FORMAT_DATE);
-        const minDate = DateTime.fromFormat(startValue, INPUT_FORMAT_DATE);
 
-        const equalOrGreaterToday = inputDate.toMillis() >= minDate.toMillis();
+        const greaterStart = inputDate.toMillis() > startDate.toMillis();
         const equalOrLessToday = inputDate.toMillis() <= todayDate.toMillis();
 
-        const isValidDate = equalOrGreaterToday && equalOrLessToday;
+        const isValidDate = greaterStart && equalOrLessToday;
 
         let validateText = '';
 
-        if (!equalOrGreaterToday) {
-          validateText = 'End date must be greater than or equal to start date.';
+        if (!greaterStart) {
+          validateText = 'End date must be greater than start date.';
         } else if (!equalOrLessToday) {
           validateText = 'End date must be less than or equal to today date.';
         }
 
         return isValidDate || validateText;
       },
-      [startValue, todayDate]
+      [startDate, todayDate]
     );
 
     return (
@@ -68,6 +75,7 @@ export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(
               render={({ field }) => (
                 <TextField
                   {...field}
+                  required
                   fullWidth
                   type="number"
                   label="Monthly investment"
@@ -93,6 +101,7 @@ export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(
               render={({ field }) => (
                 <TextField
                   {...field}
+                  required
                   type="date"
                   fullWidth
                   label="Start date (mm/dd/yyyy)"
@@ -115,13 +124,14 @@ export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(
               render={({ field }) => (
                 <TextField
                   {...field}
+                  required
                   type="date"
                   fullWidth
                   label="End date (mm/dd/yyyy)"
                   error={Boolean(errors.endDate)}
                   helperText={errors?.endDate?.message}
                   InputLabelProps={{ shrink: true }}
-                  inputProps={{ min: startValue || MIN_INVEST_DATE, max: todayString }}
+                  inputProps={{ min: nextDayOfStartDateString, max: todayString }}
                   disabled={!startDateIsValid || isLoading}
                 />
               )}

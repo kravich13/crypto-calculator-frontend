@@ -2,7 +2,13 @@ import { INPUT_FORMAT_DATE, ISelectedInvestCoinsForm } from '@cc/entities/Calcul
 import { PeriodAndAmount, SelectedInvestCoins } from '@cc/features';
 import { useCalculateProfitMutation, usePeriodAndAmountMutation } from '@cc/shared/api';
 import { RoutesTypes } from '@cc/shared/enums';
-import { baseCalculatorSlice, profitSlice, useAppDispatch, useErrorMessage } from '@cc/shared/lib';
+import {
+  baseCalculatorSlice,
+  profitSlice,
+  useAppDispatch,
+  useCheckValidToken,
+  useErrorMessage,
+} from '@cc/shared/lib';
 import { CalculateProfitRequest, IPeriodAndAmountForm } from '@cc/shared/types';
 import { PopupAlert } from '@cc/shared/ui';
 import { Container, Step, StepLabel, Stepper, Typography, useMediaQuery } from '@mui/material';
@@ -28,6 +34,9 @@ export const CalculateYieldForm = () => {
 
   const periodAndAmountError = useErrorMessage(periodAndAmountResponse.error);
   const calculateProfitError = useErrorMessage(calculateProfitResponse.error);
+
+  useCheckValidToken(periodAndAmountError, periodAndAmountRequest);
+  useCheckValidToken(calculateProfitError, calculateProfitRequest);
 
   const isLoading = periodAndAmountResponse.isLoading || calculateProfitResponse.isLoading;
 

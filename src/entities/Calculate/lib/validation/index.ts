@@ -25,7 +25,7 @@ export const startDateValidation = {
 
     return (
       isValidDate ||
-      `Date must be between 01/01/2023 and yesterday (${yesterdayDate.toFormat('LL/dd/y')}).`
+      `Date must be between 01/01/2013 and yesterday (${yesterdayDate.toFormat('LL/dd/y')}).`
     );
   },
 };

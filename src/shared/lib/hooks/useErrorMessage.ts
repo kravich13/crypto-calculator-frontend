@@ -1,13 +1,9 @@
-import { RoutesTypes } from '@cc/shared/enums';
 import { IResponseError } from '@cc/shared/types';
 import type { SerializedError } from '@reduxjs/toolkit';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useMemo } from 'react';
-import { useAuthContext } from './context';
 
 export const useErrorMessage = (errorData?: FetchBaseQueryError | SerializedError) => {
-  const { logout } = useAuthContext();
-
   const errorMessage = useMemo(() => {
     let message = '';
 
@@ -20,13 +16,7 @@ export const useErrorMessage = (errorData?: FetchBaseQueryError | SerializedErro
       } else if (status === 400 || status === 401) {
         const [errorData] = (data as IResponseError).errors;
 
-        if (errorData.message.includes('Invalid access token.')) {
-          message = 'Authorization timed out.';
-
-          logout({ notifyUser: true, redirectTo: RoutesTypes.MAIN });
-        } else {
-          message = errorData.message;
-        }
+        message = errorData.message;
       } else {
         message = 'Error sending data, please try again later.';
       }

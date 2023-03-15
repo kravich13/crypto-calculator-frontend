@@ -5,12 +5,12 @@ import {
   SelectedCoins,
 } from '@cc/entities/Calculate';
 import { useLazyCoinSearchQuery } from '@cc/shared/api';
-import { useAppSelector } from '@cc/shared/lib';
+import { useAppSelector, useCheckValidToken, useErrorMessage } from '@cc/shared/lib';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import WestIcon from '@mui/icons-material/West';
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, Typography } from '@mui/material';
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { SubmitHandler, useFieldArray, useForm, useFormState } from 'react-hook-form';
 import styles from '../styles/SelectedInvestCoins.module.css';
 
@@ -24,9 +24,16 @@ const LIMIT_FOR_SEARCH_REQUEST = 6;
 
 export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.memo(
   ({ isLoading, onBack, onConfirm }) => {
+    const currentSearchText = useRef('');
+
     const startDate = useAppSelector((state) => state.baseCalculatorReducer.startDate);
 
-    const [coinSearchRequest, { data: searchCoins }] = useLazyCoinSearchQuery();
+    const [coinSearchRequest, { data: searchCoins, error }] = useLazyCoinSearchQuery();
+
+    const errorMessage = useErrorMessage(error);
+    useCheckValidToken(errorMessage, () => {
+      coinSearchRequest({ limit: LIMIT_FOR_SEARCH_REQUEST, searchText: currentSearchText.current });
+    });
 
     const maxNumberOfCoinsToInvest = useAppSelector(
       (state) => state.baseCalculatorReducer.maxNumberOfCoinsToInvest
@@ -65,6 +72,7 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
     );
 
     const makeSearchRequest = useCallback((searchText: string) => {
+      currentSearchText.current = searchText;
       coinSearchRequest({ limit: LIMIT_FOR_SEARCH_REQUEST, searchText });
     }, []);
 

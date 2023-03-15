@@ -11,7 +11,7 @@ import {
 
 export const authAPI = createApi({
   reducerPath: 'authAPI',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://0.0.0.0:5001/auth' }),
+  baseQuery: fetchBaseQuery({ baseUrl: `${process.env.CRYPTO_API_URL}/auth` }),
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
       return action.payload[reducerPath];

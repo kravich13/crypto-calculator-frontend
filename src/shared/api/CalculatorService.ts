@@ -12,7 +12,7 @@ import {
 export const calculatorAPI = createApi({
   reducerPath: 'calculatorAPI',
   baseQuery: fetchBaseQuery({
-    baseUrl: '/crypto',
+    baseUrl: `${process.env.CRYPTO_API_URL}/crypto`,
     prepareHeaders(headers, { getState }) {
       const token = (getState() as any)?.authReducer?.accessToken;
 

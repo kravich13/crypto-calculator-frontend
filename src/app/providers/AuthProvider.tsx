@@ -76,14 +76,13 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
     try {
       const areTokensData = localStorage.getItem('tokensData');
       const tokensData = areTokensData ? (JSON.parse(areTokensData) as IJwtTokensPayload) : null;
-
       if (tokensData && tokensData.refreshTokenExpiresIn > Date.now()) {
         login({ tokensData });
       } else {
-        dispatch(setNotAuth());
+        // dispatch(setNotAuth());
       }
     } catch (err) {
-      dispatch(setNotAuth());
+      // dispatch(setNotAuth());
       console.warn('Parsing tokensData error.');
     }
   }, []);
