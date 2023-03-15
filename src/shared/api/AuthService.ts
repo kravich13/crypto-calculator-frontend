@@ -11,7 +11,7 @@ import {
 
 export const authAPI = createApi({
   reducerPath: 'authAPI',
-  baseQuery: fetchBaseQuery({ baseUrl: '/auth' }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://0.0.0.0:5001/auth' }),
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
       return action.payload[reducerPath];
@@ -44,4 +44,11 @@ export const authAPI = createApi({
   }),
 });
 
-export const { useSignInMutation, useEmailValidateMutation, useRefreshTokensMutation } = authAPI;
+export const {
+  useSignInMutation,
+  useEmailValidateMutation,
+  useRefreshTokensMutation,
+  util: { getRunningMutationsThunk },
+} = authAPI;
+
+export const { emailValidate } = authAPI.endpoints;

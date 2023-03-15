@@ -19,10 +19,11 @@ export const NotAuthHeaderContent: React.FC<INotAuthHeaderContentProps> = ({
     router.push(RoutesTypes.LOGIN);
   }, [router]);
 
-  const { isNotAuthPage } = useMemo(() => {
+  const { isNotAuthPage, isConfirmEmailPage } = useMemo(() => {
+    const isConfirmEmailPage = pathname?.includes(RoutesTypes.CONFIRM_EMAIL);
     const isLoginPage = pathname === RoutesTypes.LOGIN;
 
-    return { isNotAuthPage: !isLoginPage };
+    return { isNotAuthPage: !isLoginPage, isConfirmEmailPage };
   }, [pathname]);
 
   return (
@@ -37,21 +38,16 @@ export const NotAuthHeaderContent: React.FC<INotAuthHeaderContentProps> = ({
         },
       ]}
     >
-      {isNotAuthPage && (
+      {isNotAuthPage && !isConfirmEmailPage && (
         <>
           {isLoadingContent ? (
-            <Skeleton
-              variant="text"
-              width={120}
-              height={40}
-              sx={[isNotAuthPage && { marginRight: 2 }]}
-            />
+            <Skeleton variant="text" width={120} height={40} />
           ) : (
             <Button
-              sx={[{ textTransform: 'none' }, !isNotAuthPage && { width: '120px' }]}
+              sx={[{ textTransform: 'none', width: '120px' }]}
               color="inherit"
-              onClick={goToLogIn}
               variant="outlined"
+              onClick={goToLogIn}
             >
               Log In
             </Button>

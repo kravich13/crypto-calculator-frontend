@@ -7,17 +7,6 @@ const nextConfig = {
   experimental: {
     appDir: false,
   },
-
-  async rewrites() {
-    return {
-      fallback: [
-        {
-          source: '/:path*',
-          destination: 'http://0.0.0.0:5001/:path*',
-        },
-      ],
-    };
-  },
 };
 
 module.exports = nextConfig;

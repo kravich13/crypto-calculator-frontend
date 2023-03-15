@@ -6,7 +6,7 @@ import {
   useAppDispatch,
   userDataSlice,
 } from '@cc/shared/lib';
-import { IAuthContextLogoutData, IJwtTokensPayload } from '@cc/shared/types';
+import { IAuthContentLoginData, IAuthContextLogoutData, IJwtTokensPayload } from '@cc/shared/types';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -20,9 +20,27 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
   const router = useRouter();
 
   const [showModalLogout, setShowModalLogout] = useState(false);
+  const [showModalLogin, setShowModalLogin] = useState(false);
 
-  const login = useCallback((tokensData: IJwtTokensPayload) => {
-    dispatch(setAuth(tokensData));
+  const login = useCallback(({ tokensData, notifyUser, redirectTo }: IAuthContentLoginData) => {
+    if (notifyUser) {
+      setShowModalLogin(true);
+
+      setTimeout(() => {
+        if (redirectTo) {
+          dispatch(setAuth(tokensData));
+          router.push(redirectTo);
+        }
+
+        setShowModalLogin(false);
+      }, 5000);
+    } else {
+      dispatch(setAuth(tokensData));
+
+      if (redirectTo) {
+        router.push(redirectTo);
+      }
+    }
   }, []);
 
   const clearStates = useCallback(() => {
@@ -60,7 +78,7 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
       const tokensData = areTokensData ? (JSON.parse(areTokensData) as IJwtTokensPayload) : null;
 
       if (tokensData && tokensData.refreshTokenExpiresIn > Date.now()) {
-        login(tokensData);
+        login({ tokensData });
       } else {
         dispatch(setNotAuth());
       }
@@ -71,7 +89,7 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ showModalLogout, login, logout }}>
+    <AuthContext.Provider value={{ showModalLogout, showModalLogin, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

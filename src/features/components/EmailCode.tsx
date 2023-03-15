@@ -33,7 +33,6 @@ export const EmailCode: React.FC<IEmailCodeProps> = React.memo(({ isLoading, onC
   const loading = isLoading || signUpData.isLoading;
 
   const [isDisabledSendEmail, setDisabledSendEmail] = useState(true);
-  // const isDisabledSendEmail = emailCodeExpiresIn > Date.now();
 
   const onClear = useCallback(() => {
     resetField('code');

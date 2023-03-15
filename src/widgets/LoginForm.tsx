@@ -6,6 +6,7 @@ import {
   useAppSelector,
   useAuthContext,
   useErrorMessage,
+  useNotAuthPage,
   userDataSlice,
 } from '@cc/shared/lib';
 import globalStyles from '@cc/shared/styles/Index.module.css';
@@ -21,6 +22,8 @@ interface IStepReturn {
 }
 
 export const LoginForm = () => {
+  useNotAuthPage({ redirectTo: RoutesTypes.MAIN });
+
   const { login } = useAuthContext();
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -34,7 +37,7 @@ export const LoginForm = () => {
   const [emailValidate, emailValidateData] = useEmailValidateMutation();
 
   const signUpError = useErrorMessage(signUpData.error);
-  const emaemailValidateError = useErrorMessage(emailValidateData.error);
+  const emailValidateError = useErrorMessage(emailValidateData.error);
 
   const isLoading = signUpData.isLoading || emailValidateData.isLoading;
   const isError = signUpData.isError || emailValidateData.isError;
@@ -72,7 +75,7 @@ export const LoginForm = () => {
       dispatch(setEmailCodeExpiresIn(signUpData.data));
       setStep(1);
     } else if (step === 1 && emailValidateData.data) {
-      login(emailValidateData.data);
+      login({ tokensData: emailValidateData.data });
       router.push(RoutesTypes.MAIN);
     }
   }, [step, signUpData.data, emailValidateData.data]);
@@ -80,7 +83,7 @@ export const LoginForm = () => {
   return (
     <Container maxWidth="xs" className={globalStyles.opacityContainer}>
       {isError && (
-        <PopupAlert text={signUpError || emaemailValidateError} severity="error" variant="filled" />
+        <PopupAlert text={signUpError || emailValidateError} severity="error" variant="filled" />
       )}
 
       <Typography component="h1" variant="h5" textAlign="left" width="100%" mb={3}>
