@@ -1,25 +1,28 @@
 import { useRefreshTokensMutation } from '@cc/shared/api';
 import { RoutesTypes } from '@cc/shared/enums';
+import { SerializedError } from '@reduxjs/toolkit';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useEffect } from 'react';
 import { useAuthContext } from './context';
 import { useAppSelector } from './redux';
 import { useErrorMessage } from './useErrorMessage';
 
-export const useCheckValidToken = <T extends Function>(
-  inputMessage: string,
-  repeatedRequest: T
+export const useRefreshRequest = (
+  inputError: FetchBaseQueryError | SerializedError | undefined,
+  repeatedRequest: Function
 ) => {
-  const refreshToken = useAppSelector((state) => state.authReducer.refreshToken);
   const { logout, login } = useAuthContext();
+  const refreshToken = useAppSelector((state) => state.authReducer.refreshToken);
   const [refreshTokens, { data, reset, isLoading, error }] = useRefreshTokensMutation();
 
+  const inputErrorMessage = useErrorMessage(inputError);
   const refreshErrorMessage = useErrorMessage(error);
 
   useEffect(() => {
-    if (inputMessage.includes('Invalid access token')) {
+    if (inputErrorMessage.includes('Invalid access token')) {
       refreshTokens({ refreshToken });
     }
-  }, [inputMessage, refreshToken]);
+  }, [inputErrorMessage, refreshToken]);
 
   useEffect(() => {
     if (data) {
@@ -37,5 +40,5 @@ export const useCheckValidToken = <T extends Function>(
     }
   }, [refreshErrorMessage]);
 
-  return { isLoading, errorMessage: refreshErrorMessage };
+  return { isLoading, errorMessage: inputErrorMessage || refreshErrorMessage };
 };
