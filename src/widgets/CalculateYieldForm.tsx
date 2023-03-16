@@ -35,10 +35,23 @@ export const CalculateYieldForm = () => {
   const periodAndAmountError = useErrorMessage(periodAndAmountResponse.error);
   const calculateProfitError = useErrorMessage(calculateProfitResponse.error);
 
-  useCheckValidToken(periodAndAmountError, periodAndAmountRequest);
-  useCheckValidToken(calculateProfitError, calculateProfitRequest);
+  const { isLoading: periodRepeatedLoading, errorMessage: periodRepeatedErrorMessage } =
+    useCheckValidToken(periodAndAmountError, periodAndAmountRequest);
 
-  const isLoading = periodAndAmountResponse.isLoading || calculateProfitResponse.isLoading;
+  const { isLoading: calculateRepeatedLoading, errorMessage: calculateRepeateErrorMessage } =
+    useCheckValidToken(calculateProfitError, calculateProfitRequest);
+
+  const isLoading =
+    periodAndAmountResponse.isLoading ||
+    calculateProfitResponse.isLoading ||
+    periodRepeatedLoading ||
+    calculateRepeatedLoading;
+
+  const errorMessage =
+    periodAndAmountError ||
+    calculateProfitError ||
+    periodRepeatedErrorMessage ||
+    calculateRepeateErrorMessage;
 
   const [step, setStep] = useState(0);
 
@@ -97,12 +110,8 @@ export const CalculateYieldForm = () => {
       maxWidth={isMin520Width ? 'xs' : 'sm'}
       className={globalStyles.opacityContainer}
     >
-      {periodAndAmountResponse.isError && (
-        <PopupAlert
-          text={periodAndAmountError || calculateProfitError}
-          severity="error"
-          variant="filled"
-        />
+      {Boolean(errorMessage) && (
+        <PopupAlert text={errorMessage} severity="error" variant="filled" />
       )}
 
       <Typography component="h1" variant="h5" marginBottom={3} textAlign="center">

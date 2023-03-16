@@ -3,19 +3,23 @@ import { RoutesTypes } from '@cc/shared/enums';
 import { useEffect } from 'react';
 import { useAuthContext } from './context';
 import { useAppSelector } from './redux';
+import { useErrorMessage } from './useErrorMessage';
 
-export const useCheckValidToken = <T extends Function>(message: string, repeatedRequest: T) => {
+export const useCheckValidToken = <T extends Function>(
+  inputMessage: string,
+  repeatedRequest: T
+) => {
   const refreshToken = useAppSelector((state) => state.authReducer.refreshToken);
   const { logout, login } = useAuthContext();
-  const [refreshTokens, { data, reset }] = useRefreshTokensMutation();
+  const [refreshTokens, { data, reset, isLoading, error }] = useRefreshTokensMutation();
+
+  const refreshErrorMessage = useErrorMessage(error);
 
   useEffect(() => {
-    if (message.includes('Invalid refresh token')) {
-      logout({ notifyUser: true, redirectTo: RoutesTypes.MAIN });
-    } else if (message.includes('Invalid access token')) {
+    if (inputMessage.includes('Invalid access token')) {
       refreshTokens({ refreshToken });
     }
-  }, [message, refreshToken]);
+  }, [inputMessage, refreshToken]);
 
   useEffect(() => {
     if (data) {
@@ -25,4 +29,13 @@ export const useCheckValidToken = <T extends Function>(message: string, repeated
       repeatedRequest();
     }
   }, [data]);
+
+  useEffect(() => {
+    if (refreshErrorMessage.includes('Invalid refresh token')) {
+      logout({ notifyUser: true, redirectTo: RoutesTypes.MAIN });
+      reset();
+    }
+  }, [refreshErrorMessage]);
+
+  return { isLoading, errorMessage: refreshErrorMessage };
 };

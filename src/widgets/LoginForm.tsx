@@ -6,7 +6,6 @@ import {
   useAppSelector,
   useAuthContext,
   useErrorMessage,
-  useNotAuthPage,
   userDataSlice,
 } from '@cc/shared/lib';
 import globalStyles from '@cc/shared/styles/Index.module.css';
@@ -22,8 +21,6 @@ interface IStepReturn {
 }
 
 export const LoginForm = () => {
-  useNotAuthPage({ redirectTo: RoutesTypes.MAIN });
-
   const { login } = useAuthContext();
   const router = useRouter();
   const dispatch = useAppDispatch();
