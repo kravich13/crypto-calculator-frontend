@@ -25,6 +25,7 @@ export const DetailedInvestmentStatistics = () => {
       symbol,
       share,
       startingPrice,
+      averagePrice,
       lastPrice,
       capital,
       purchasedCoins,
@@ -36,57 +37,59 @@ export const DetailedInvestmentStatistics = () => {
       const profitTitle = `${profit >= 0 ? '+' : '-'} $${profitNumber}`;
 
       return (
-        <React.Fragment key={coinId}>
-          <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-            <TableCell component="th" scope="row">
-              <MainCoinInfoContainer
-                image={image}
-                symbol={symbol}
-                name={name}
-                imageHeight={24}
-                imageWidth={24}
+        <TableRow key={coinId} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+          <TableCell component="th" scope="row">
+            <MainCoinInfoContainer
+              image={image}
+              symbol={symbol}
+              name={name}
+              imageHeight={24}
+              imageWidth={24}
+            />
+          </TableCell>
+
+          <TableCell align="right">
+            <Typography>{share}%</Typography>
+          </TableCell>
+
+          <TableCell align="right">
+            <Typography>${startingPrice}</Typography>
+          </TableCell>
+
+          <TableCell align="right">
+            <Typography>${averagePrice}</Typography>
+          </TableCell>
+
+          <TableCell align="right">
+            <Typography>${lastPrice}</Typography>
+          </TableCell>
+
+          <TableCell align="right">
+            <Box>
+              <Typography>${capital}</Typography>
+
+              <Typography color="GrayText" variant="body2" fontWeight="500">
+                {purchasedCoins} {symbol.toUpperCase()}
+              </Typography>
+            </Box>
+          </TableCell>
+
+          <TableCell align="right">
+            <Box>
+              <Typography>{profitTitle}</Typography>
+
+              <InvestmentPercent
+                percent={growth}
+                textStyles={{
+                  color: growth >= 0 ? '#16C784' : '#EA3943',
+                  fontSize: 14,
+                  justifyContent: 'end',
+                  fontWeight: 600,
+                }}
               />
-            </TableCell>
-
-            <TableCell align="right">
-              <Typography>{share}%</Typography>
-            </TableCell>
-
-            <TableCell align="right">
-              <Typography>${startingPrice}</Typography>
-            </TableCell>
-
-            <TableCell align="right">
-              <Typography>${lastPrice}</Typography>
-            </TableCell>
-
-            <TableCell align="right">
-              <Box>
-                <Typography>${capital}</Typography>
-
-                <Typography color="GrayText" variant="body2" fontWeight="500">
-                  {purchasedCoins} {symbol.toUpperCase()}
-                </Typography>
-              </Box>
-            </TableCell>
-
-            <TableCell align="right">
-              <Box>
-                <Typography>{profitTitle}</Typography>
-
-                <InvestmentPercent
-                  percent={growth}
-                  textStyles={{
-                    color: growth >= 0 ? '#16C784' : '#EA3943',
-                    fontSize: 14,
-                    justifyContent: 'end',
-                    fontWeight: 600,
-                  }}
-                />
-              </Box>
-            </TableCell>
-          </TableRow>
-        </React.Fragment>
+            </Box>
+          </TableCell>
+        </TableRow>
       );
     },
     []
@@ -111,7 +114,11 @@ export const DetailedInvestmentStatistics = () => {
               </TableCell>
 
               <TableCell align="right">
-                <Typography fontWeight="600">Starting price</Typography>
+                <Typography fontWeight="600">Start price</Typography>
+              </TableCell>
+
+              <TableCell align="right">
+                <Typography fontWeight="600">Avg. price</Typography>
               </TableCell>
 
               <TableCell align="right">
