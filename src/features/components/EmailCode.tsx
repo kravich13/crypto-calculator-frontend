@@ -1,77 +1,143 @@
 import { emailCodeValidation } from '@cc/entities/Authorization';
-import { TextInput } from '@cc/shared/ui';
+import { useSignInMutation } from '@cc/shared/api';
+import { EMAIL_CODE_MAX, EMAIL_CODE_MIN } from '@cc/shared/const';
+import { useAppDispatch, useAppSelector, useErrorMessage, userDataSlice } from '@cc/shared/lib';
+import { PopupAlert, TextInput, Timer } from '@cc/shared/ui';
+import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
 import LoginIcon from '@mui/icons-material/Login';
-import SendIcon from '@mui/icons-material/Send';
 import { LoadingButton } from '@mui/lab';
-import { Box, Grid } from '@mui/material';
-import React, { useCallback } from 'react';
+import { Box, Grid, Typography } from '@mui/material';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form';
 
 interface IEmailCodeProps {
-  buttonTitle: string;
   isLoading: boolean;
-  isLastStep?: boolean;
   onConfirm: SubmitHandler<IEmailCodeForm>;
 }
 
-export interface IEmailCodeForm {
+interface IEmailCodeForm {
   code: string;
 }
 
-export const EmailCode: React.FC<IEmailCodeProps> = React.memo(
-  ({ isLoading, isLastStep, buttonTitle, onConfirm }) => {
-    const { handleSubmit, control, resetField } = useForm<IEmailCodeForm>({ mode: 'onBlur' });
-    const { errors, isValid } = useFormState({ control });
+export const EmailCode: React.FC<IEmailCodeProps> = React.memo(({ isLoading, onConfirm }) => {
+  const dispatch = useAppDispatch();
+  const { setEmailCodeExpiresIn } = userDataSlice.actions;
+  const { emailCodeExpiresIn, email } = useAppSelector((state) => state.userDataReducer);
 
-    const onClear = useCallback(() => {
-      resetField('code');
-    }, [resetField]);
+  const { handleSubmit, control, resetField } = useForm<IEmailCodeForm>({ mode: 'onBlur' });
+  const { errors, isValid } = useFormState({ control });
 
-    return (
-      <Box
-        component="form"
-        noValidate
-        onSubmit={handleSubmit(onConfirm)}
-        sx={{ mt: 3, width: '100%' }}
-      >
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Controller
-              defaultValue=""
-              name="code"
-              control={control}
-              rules={emailCodeValidation}
-              render={({ field }) => (
-                <TextInput
-                  {...field}
-                  required
-                  fullWidth
-                  type="number"
-                  label="Email code"
-                  autoComplete="Code"
-                  error={Boolean(errors.code)}
-                  helperText={errors.code?.message}
-                  onClearValue={onClear}
-                  disabled={isLoading}
-                />
-              )}
-            />
-          </Grid>
+  const [signIn, signUpData] = useSignInMutation();
+  const signUpError = useErrorMessage(signUpData.error);
+
+  const loading = isLoading || signUpData.isLoading;
+
+  const [isDisabledSendEmail, setDisabledSendEmail] = useState(true);
+
+  const onClear = useCallback(() => {
+    resetField('code');
+  }, [resetField]);
+
+  const onSendEmail = useCallback(() => {
+    signIn({ email });
+  }, [email]);
+
+  useEffect(() => {
+    const signUpPayload = signUpData.data;
+
+    if (signUpPayload) {
+      dispatch(
+        setEmailCodeExpiresIn({
+          emailCodeExpiresIn: signUpPayload.emailCodeExpiresIn,
+        })
+      );
+    }
+  }, [signUpData.data]);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      if (emailCodeExpiresIn < Date.now()) {
+        setDisabledSendEmail(false);
+        clearInterval(id);
+      } else {
+        setDisabledSendEmail(true);
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(id);
+    };
+  }, [emailCodeExpiresIn]);
+
+  return (
+    <Box component="form" noValidate onSubmit={handleSubmit(onConfirm)}>
+      {signUpData.isError && <PopupAlert text={signUpError} severity="error" variant="filled" />}
+
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <Controller
+            defaultValue=""
+            name="code"
+            control={control}
+            rules={emailCodeValidation}
+            render={({ field }) => (
+              <TextInput
+                {...field}
+                inputProps={{ min: EMAIL_CODE_MIN, max: EMAIL_CODE_MAX }}
+                required
+                fullWidth
+                type="number"
+                label="Email code"
+                autoComplete="Code"
+                error={Boolean(errors.code)}
+                helperText={errors.code?.message}
+                onClearValue={onClear}
+                disabled={isLoading}
+              />
+            )}
+          />
         </Grid>
 
-        <LoadingButton
-          sx={{ mt: 3, textTransform: 'none' }}
-          type="submit"
-          fullWidth
-          variant="contained"
-          disabled={!isValid || isLoading}
-          loading={isLoading}
-          loadingPosition="end"
-          endIcon={isLastStep ? <LoginIcon /> : <SendIcon />}
+        <Grid item xs={12}>
+          <LoadingButton
+            sx={{ textTransform: 'none' }}
+            type="submit"
+            fullWidth
+            variant="contained"
+            disabled={!isValid}
+            loading={loading}
+            loadingPosition="end"
+            endIcon={<LoginIcon />}
+          >
+            Confirm
+          </LoadingButton>
+        </Grid>
+
+        <Grid
+          item
+          xs={12}
+          sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
         >
-          {buttonTitle}
-        </LoadingButton>
-      </Box>
-    );
-  }
-);
+          <Box sx={{ display: 'flex' }}>
+            <Typography color="GrayText" sx={{ mr: 1 }}>
+              Send again in
+            </Typography>
+
+            <Timer inputDate={emailCodeExpiresIn} stylesProps={{ color: 'GrayText' }} />
+          </Box>
+
+          <LoadingButton
+            onClick={onSendEmail}
+            variant="text"
+            disabled={isDisabledSendEmail}
+            loading={loading}
+            loadingPosition="end"
+            endIcon={<ForwardToInboxIcon />}
+          >
+            Send email
+          </LoadingButton>
+        </Grid>
+      </Grid>
+    </Box>
+  );
+});

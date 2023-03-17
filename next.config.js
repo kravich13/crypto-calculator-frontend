@@ -7,16 +7,8 @@ const nextConfig = {
   experimental: {
     appDir: false,
   },
-
-  async rewrites() {
-    return {
-      fallback: [
-        {
-          source: '/:path*',
-          destination: 'http://localhost:5001/:path*',
-        },
-      ],
-    };
+  env: {
+    CRYPTO_API_URL: 'http://0.0.0.0:5001',
   },
 };
 

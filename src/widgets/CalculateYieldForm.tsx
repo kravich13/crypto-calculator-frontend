@@ -2,7 +2,13 @@ import { INPUT_FORMAT_DATE, ISelectedInvestCoinsForm } from '@cc/entities/Calcul
 import { PeriodAndAmount, SelectedInvestCoins } from '@cc/features';
 import { useCalculateProfitMutation, usePeriodAndAmountMutation } from '@cc/shared/api';
 import { RoutesTypes } from '@cc/shared/enums';
-import { baseCalculatorSlice, profitSlice, useAppDispatch, useErrorMessage } from '@cc/shared/lib';
+import {
+  baseCalculatorSlice,
+  profitSlice,
+  useAppDispatch,
+  useRefreshRequest,
+} from '@cc/shared/lib';
+import globalStyles from '@cc/shared/styles/Index.module.css';
 import { CalculateProfitRequest, IPeriodAndAmountForm } from '@cc/shared/types';
 import { PopupAlert } from '@cc/shared/ui';
 import { Container, Step, StepLabel, Stepper, Typography, useMediaQuery } from '@mui/material';
@@ -10,7 +16,6 @@ import { DateTime } from 'luxon';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
-import globalStyles from '@cc/shared/styles/Index.module.css';
 
 interface IStepRender {
   [key: number]: JSX.Element;
@@ -26,10 +31,21 @@ export const CalculateYieldForm = () => {
   const [periodAndAmountRequest, periodAndAmountResponse] = usePeriodAndAmountMutation();
   const [calculateProfitRequest, calculateProfitResponse] = useCalculateProfitMutation();
 
-  const periodAndAmountError = useErrorMessage(periodAndAmountResponse.error);
-  const calculateProfitError = useErrorMessage(calculateProfitResponse.error);
+  const periodRefreshData = useRefreshRequest(periodAndAmountResponse.error, () =>
+    periodAndAmountRequest(periodAndAmountResponse.originalArgs!)
+  );
 
-  const isLoading = periodAndAmountResponse.isLoading || calculateProfitResponse.isLoading;
+  const calculateRefreshData = useRefreshRequest(calculateProfitResponse.error, () =>
+    calculateProfitRequest(calculateProfitResponse.originalArgs!)
+  );
+
+  const isLoading =
+    periodAndAmountResponse.isLoading ||
+    calculateProfitResponse.isLoading ||
+    periodRefreshData.isLoading ||
+    calculateRefreshData.isLoading;
+
+  const errorMessage = periodRefreshData.errorMessage || calculateRefreshData.errorMessage;
 
   const [step, setStep] = useState(0);
 
@@ -88,12 +104,8 @@ export const CalculateYieldForm = () => {
       maxWidth={isMin520Width ? 'xs' : 'sm'}
       className={globalStyles.opacityContainer}
     >
-      {periodAndAmountResponse.isError && (
-        <PopupAlert
-          text={periodAndAmountError || calculateProfitError}
-          severity="error"
-          variant="filled"
-        />
+      {Boolean(errorMessage) && (
+        <PopupAlert text={errorMessage} severity="error" variant="filled" />
       )}
 
       <Typography component="h1" variant="h5" marginBottom={3} textAlign="center">

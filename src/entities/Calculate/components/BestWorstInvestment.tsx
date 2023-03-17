@@ -33,9 +33,7 @@ export const BestWorstInvestment: React.FC<IBestWorstInvestmentProps> = ({ coins
 
   return (
     <Box className={styles.container}>
-      <Box sx={{ mr: 4 }}>
-        <BestWorstItem coin={getBestWorstCoin(maxCoin, maxProfit)} isMaxCoin={true} />
-      </Box>
+      <BestWorstItem coin={getBestWorstCoin(maxCoin, maxProfit)} isMaxCoin={true} />
 
       <BestWorstItem coin={getBestWorstCoin(minCoin, minProfit)} isMaxCoin={false} />
     </Box>

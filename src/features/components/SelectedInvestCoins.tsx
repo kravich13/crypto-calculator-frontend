@@ -5,7 +5,7 @@ import {
   SelectedCoins,
 } from '@cc/entities/Calculate';
 import { useLazyCoinSearchQuery } from '@cc/shared/api';
-import { useAppSelector } from '@cc/shared/lib';
+import { useAppSelector, useRefreshRequest } from '@cc/shared/lib';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import WestIcon from '@mui/icons-material/West';
 import { LoadingButton } from '@mui/lab';
@@ -26,7 +26,12 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
   ({ isLoading, onBack, onConfirm }) => {
     const startDate = useAppSelector((state) => state.baseCalculatorReducer.startDate);
 
-    const [coinSearchRequest, { data: searchCoins }] = useLazyCoinSearchQuery();
+    const [coinSearchRequest, { data: searchCoins, error, originalArgs }] =
+      useLazyCoinSearchQuery();
+
+    useRefreshRequest(error, () => {
+      coinSearchRequest(originalArgs!);
+    });
 
     const maxNumberOfCoinsToInvest = useAppSelector(
       (state) => state.baseCalculatorReducer.maxNumberOfCoinsToInvest

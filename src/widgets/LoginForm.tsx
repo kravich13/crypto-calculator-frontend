@@ -1,115 +1,116 @@
-import { emailValidation, logInPasswordValidation } from '@cc/entities/Authorization';
-import { useSignInMutation } from '@cc/shared/api';
+import { EmailCode, SendEmail } from '@cc/features';
+import { useEmailValidateMutation, useSignInMutation } from '@cc/shared/api';
 import { RoutesTypes } from '@cc/shared/enums';
-import { useAuthContext, useErrorMessage } from '@cc/shared/lib';
+import {
+  useAppDispatch,
+  useAppSelector,
+  useAuthContext,
+  useErrorMessage,
+  userDataSlice,
+} from '@cc/shared/lib';
 import globalStyles from '@cc/shared/styles/Index.module.css';
-import { PasswordInput, PopupAlert, TextInput } from '@cc/shared/ui';
-import LoginIcon from '@mui/icons-material/Login';
-import { LoadingButton } from '@mui/lab';
-import { Box, Container, Grid, Typography } from '@mui/material';
-import Link from 'next/link';
+import { ISetEmailInput } from '@cc/shared/types';
+import { PopupAlert } from '@cc/shared/ui';
+import { Box, Container, Step, StepLabel, Stepper, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { useCallback, useEffect } from 'react';
-import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { SubmitHandler } from 'react-hook-form';
 
-interface IFormInputs {
-  email: string;
-  password: string;
+interface IStepReturn {
+  [key: number]: string | JSX.Element;
 }
 
 export const LoginForm = () => {
   const { login } = useAuthContext();
   const router = useRouter();
+  const dispatch = useAppDispatch();
+  const { setEmail, setEmailCodeExpiresIn } = userDataSlice.actions;
 
-  const { handleSubmit, control, resetField } = useForm<IFormInputs>({ mode: 'onBlur' });
-  const { errors, isValid } = useFormState({ control });
+  const emailUser = useAppSelector((state) => state.userDataReducer.email);
 
-  const [signIn, { isError, data, error, isLoading }] = useSignInMutation();
-  const errorMessage = useErrorMessage(error);
+  const [step, setStep] = useState(0);
 
-  const onConfirm: SubmitHandler<IFormInputs> = useCallback(({ email, password }) => {
-    signIn({ email, password });
+  const [signIn, signUpData] = useSignInMutation();
+  const [emailValidate, emailValidateData] = useEmailValidateMutation();
+
+  const signUpError = useErrorMessage(signUpData.error);
+  const emailValidateError = useErrorMessage(emailValidateData.error);
+
+  const isLoading = signUpData.isLoading || emailValidateData.isLoading;
+  const isError = signUpData.isError || emailValidateData.isError;
+
+  const onSendEmail: SubmitHandler<ISetEmailInput> = useCallback(async (data) => {
+    dispatch(setEmail(data));
+    signIn(data);
   }, []);
 
-  const onClearEmail = useCallback(() => {
-    resetField('email');
-  }, [resetField]);
+  const onConfirmEmailCode: SubmitHandler<{ code: string }> = useCallback(
+    ({ code }) => {
+      emailValidate({ code, email: emailUser });
+    },
+    [emailUser]
+  );
+
+  const stepText: IStepReturn = useMemo(
+    () => ({
+      0: 'Enter email to login',
+      1: `Enter code sent to your email ${emailUser}`,
+    }),
+    [emailUser]
+  );
+
+  const stepRender: IStepReturn = useMemo(
+    () => ({
+      0: <SendEmail isLoading={isLoading} onConfirm={onSendEmail} />,
+      1: <EmailCode isLoading={isLoading} onConfirm={onConfirmEmailCode} />,
+    }),
+    [isLoading, onConfirmEmailCode]
+  );
 
   useEffect(() => {
-    if (data) {
+    if (step === 0 && signUpData.data) {
+      dispatch(setEmailCodeExpiresIn(signUpData.data));
+      setStep(1);
+    } else if (step === 1 && emailValidateData.data) {
+      login({ tokensData: emailValidateData.data });
       router.push(RoutesTypes.MAIN);
-      login(data);
     }
-  }, [data]);
+  }, [step, signUpData.data, emailValidateData.data]);
 
   return (
     <Container maxWidth="xs" className={globalStyles.opacityContainer}>
-      {isError && <PopupAlert text={errorMessage} severity="error" variant="filled" />}
+      {isError && (
+        <PopupAlert text={signUpError || emailValidateError} severity="error" variant="filled" />
+      )}
 
       <Typography component="h1" variant="h5" textAlign="left" width="100%" mb={3}>
         Log In
       </Typography>
 
-      <Box component="form" noValidate sx={{ mt: 1 }} onSubmit={handleSubmit(onConfirm)}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Controller
-              name="email"
-              control={control}
-              defaultValue=""
-              rules={emailValidation}
-              render={({ field }) => (
-                <TextInput
-                  {...field}
-                  type="email"
-                  label="Email"
-                  autoComplete="Email"
-                  onClearValue={onClearEmail}
-                  fullWidth={true}
-                  error={Boolean(errors.email)}
-                  helperText={errors.email?.message}
-                  disabled={isLoading}
-                />
-              )}
-            />
-          </Grid>
+      <Stepper activeStep={step} orientation="vertical">
+        <Step>
+          <StepLabel>
+            <Typography component="p" variant="h6">
+              Specify email
+            </Typography>
+          </StepLabel>
+        </Step>
 
-          <Grid item xs={12}>
-            <Controller
-              name="password"
-              control={control}
-              defaultValue=""
-              rules={logInPasswordValidation}
-              render={({ field }) => (
-                <PasswordInput
-                  label="Password"
-                  fullWidth={true}
-                  {...field}
-                  error={Boolean(errors.password)}
-                  helperText={errors.password?.message}
-                  disabled={isLoading}
-                />
-              )}
-            />
-          </Grid>
-        </Grid>
+        <Step>
+          <StepLabel>
+            <Typography component="p" variant="h6">
+              Confirm login code
+            </Typography>
+          </StepLabel>
+        </Step>
+      </Stepper>
 
-        <LoadingButton
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 3, textTransform: 'none' }}
-          disabled={!isValid || isLoading}
-          loading={isLoading}
-          loadingPosition="end"
-          endIcon={<LoginIcon />}
-        >
-          Log in
-        </LoadingButton>
+      <Box sx={{ mt: 4 }}>
+        <Typography component="p" textAlign="left" width="100%" sx={{ mb: 3 }}>
+          {stepText[step]}
+        </Typography>
 
-        <Link href={RoutesTypes.PASSWORD_RECOVERY} style={{ textDecoration: 'none' }}>
-          Forgot password?
-        </Link>
+        {stepRender[step]}
       </Box>
     </Container>
   );

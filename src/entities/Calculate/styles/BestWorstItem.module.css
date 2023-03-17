@@ -7,4 +7,13 @@
   .titlesContainer {
     display: flex;
   }
+  .container:not(:last-child) {
+    margin-bottom: 10px;
+  }
+}
+
+@media screen and (min-width: 770px) {
+  .container:not(:last-child) {
+    margin-right: 20px;
+  }
 }

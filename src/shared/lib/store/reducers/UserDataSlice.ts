@@ -1,14 +1,14 @@
-import { ISetCodeInput, ISetEmailInput } from '@cc/shared/types';
+import { ISetEmailCodeExpiresIn, ISetEmailInput } from '@cc/shared/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface IUserDataState {
   email: string;
-  code: string;
+  emailCodeExpiresIn: number;
 }
 
 const initialState: IUserDataState = {
   email: '',
-  code: '',
+  emailCodeExpiresIn: -1,
 };
 
 export const userDataSlice = createSlice({
@@ -21,8 +21,8 @@ export const userDataSlice = createSlice({
     setEmail(state, { payload }: PayloadAction<ISetEmailInput>) {
       state.email = payload.email;
     },
-    setCode(state, { payload }: PayloadAction<ISetCodeInput>) {
-      state.code = payload.code;
+    setEmailCodeExpiresIn(state, { payload }: PayloadAction<ISetEmailCodeExpiresIn>) {
+      state.emailCodeExpiresIn = payload.emailCodeExpiresIn;
     },
   },
 });

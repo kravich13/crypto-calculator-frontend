@@ -1,42 +1,23 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 import { HYDRATE } from 'next-redux-wrapper';
 import {
-  IEmailCodeRequest,
   IEmailValidateRequest,
-  IHeadersRequest,
+  IEmailValidateResponse,
   ILoginRequest,
   ILoginResponse,
-  INewPasswordRequest,
-  IPasswordForgotRequest,
-  ISuccessResponseStatus,
+  IRefreshTokensRequest,
+  IRefreshTokensResponse,
 } from '../types';
 
 export const authAPI = createApi({
   reducerPath: 'authAPI',
-  baseQuery: fetchBaseQuery({ baseUrl: '/auth' }),
+  baseQuery: fetchBaseQuery({ baseUrl: `${process.env.CRYPTO_API_URL}/auth` }),
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
       return action.payload[reducerPath];
     }
   },
   endpoints: (build) => ({
-    signUp: build.mutation<ILoginResponse, ILoginRequest>({
-      query: (data) => ({
-        url: '/sign-up',
-        method: 'POST',
-        body: data,
-      }),
-    }),
-
-    emailValidate: build.mutation<ISuccessResponseStatus, IEmailValidateRequest & IHeadersRequest>({
-      query: ({ code, authorization }) => ({
-        url: '/email/validate',
-        method: 'POST',
-        headers: { authorization },
-        body: { code },
-      }),
-    }),
-
     signIn: build.mutation<ILoginResponse, ILoginRequest>({
       query: (data) => ({
         url: '/sign-in',
@@ -45,25 +26,17 @@ export const authAPI = createApi({
       }),
     }),
 
-    codeEmail: build.mutation<ISuccessResponseStatus, IEmailCodeRequest>({
+    emailValidate: build.mutation<IEmailValidateResponse, IEmailValidateRequest>({
       query: (data) => ({
-        url: '/email/code',
+        url: '/email/validate',
         method: 'POST',
         body: data,
       }),
     }),
 
-    forgotPassword: build.mutation<ISuccessResponseStatus, IPasswordForgotRequest>({
+    refreshTokens: build.mutation<IRefreshTokensResponse, IRefreshTokensRequest>({
       query: (data) => ({
-        url: '/email/forgot',
-        method: 'POST',
-        body: data,
-      }),
-    }),
-
-    newPassword: build.mutation<ILoginResponse, INewPasswordRequest>({
-      query: (data) => ({
-        url: '/email/new-password',
+        url: '/refresh-tokens',
         method: 'POST',
         body: data,
       }),
@@ -73,9 +46,9 @@ export const authAPI = createApi({
 
 export const {
   useSignInMutation,
-  useSignUpMutation,
-  useCodeEmailMutation,
-  useForgotPasswordMutation,
-  useNewPasswordMutation,
   useEmailValidateMutation,
+  useRefreshTokensMutation,
+  util: { getRunningMutationsThunk },
 } = authAPI;
+
+export const { emailValidate } = authAPI.endpoints;

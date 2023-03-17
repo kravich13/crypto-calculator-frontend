@@ -1,38 +1,29 @@
-import { RoutesTypes } from '@cc/shared/enums';
-import { IResponseError } from '@cc/shared/types';
+import {
+  isFetchBaseQueryError,
+  isIAPIResponseError,
+  isSerializedError,
+} from '@cc/shared/type-guards';
 import type { SerializedError } from '@reduxjs/toolkit';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useMemo } from 'react';
-import { useAuthContext } from './context';
 
 export const useErrorMessage = (errorData?: FetchBaseQueryError | SerializedError) => {
-  const { logout } = useAuthContext();
-
   const errorMessage = useMemo(() => {
-    let message = '';
+    let message: string | undefined = '';
 
-    if (errorData) {
-      const { data, status, originalStatus } = errorData as any;
+    if (isSerializedError(errorData)) {
+      message = errorData.message;
+    }
 
-      if ((status === 200 || originalStatus === 200) && (data as IResponseError)?.errors) {
-        const [errorData] = (data as IResponseError).errors;
-        message = errorData.message;
-      } else if (status === 400 || status === 401) {
-        const [errorData] = (data as IResponseError).errors;
+    if (isFetchBaseQueryError(errorData)) {
+      const { status, data } = errorData;
 
-        if (errorData.message.includes('Invalid access token.')) {
-          message = 'Authorization timed out.';
-
-          logout({ notifyUser: true, redirectTo: RoutesTypes.MAIN });
-        } else {
-          message = errorData.message;
-        }
-      } else {
-        message = 'Error sending data, please try again later.';
+      if ((status === 200 || status === 400 || status === 401) && isIAPIResponseError(data)) {
+        message = data.errors[0].message;
       }
     }
 
-    return message;
+    return message || 'Error sending data, please try again later.';
   }, [errorData]);
 
   return errorMessage;
