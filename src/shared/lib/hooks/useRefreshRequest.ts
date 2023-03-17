@@ -31,7 +31,7 @@ export const useRefreshRequest = (
 
       repeatedRequest();
     }
-  }, [data]);
+  }, [data, repeatedRequest]);
 
   useEffect(() => {
     if (refreshErrorMessage.includes('Invalid refresh token')) {

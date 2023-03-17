@@ -1,4 +1,4 @@
-export interface IResponseError {
+export interface IAPIResponseError {
   errors: {
     message: string;
   }[];
