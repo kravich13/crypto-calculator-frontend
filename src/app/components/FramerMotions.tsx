@@ -14,7 +14,6 @@ export const FramerMotions: React.FC<IFramerMotions> = ({ children }) => {
         key={pathname}
         initial="initialState"
         animate="animateState"
-        transition={{ duration: 0.83 }}
         variants={{
           initialState: { opacity: 0.83 },
           animateState: { opacity: 1 },

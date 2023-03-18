@@ -9,10 +9,10 @@ import { useMemo } from 'react';
 
 export const useErrorMessage = (errorData?: FetchBaseQueryError | SerializedError) => {
   const errorMessage = useMemo(() => {
-    let message: string | undefined = '';
+    let message = '';
 
     if (isSerializedError(errorData)) {
-      message = errorData.message;
+      message = errorData.message || '';
     }
 
     if (isFetchBaseQueryError(errorData)) {
@@ -20,10 +20,12 @@ export const useErrorMessage = (errorData?: FetchBaseQueryError | SerializedErro
 
       if ((status === 200 || status === 400 || status === 401) && isIAPIResponseError(data)) {
         message = data.errors[0].message;
+      } else {
+        message = 'Error sending data, please try again later.';
       }
     }
 
-    return message || 'Error sending data, please try again later.';
+    return message;
   }, [errorData]);
 
   return errorMessage;

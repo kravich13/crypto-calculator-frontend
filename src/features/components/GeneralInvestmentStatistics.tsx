@@ -6,11 +6,11 @@ import styles from '../styles/GeneralInvestmentStatistics.module.css';
 
 export const GeneralInvestmentStatistics = () => {
   const { investmentPeriod, totalCapital, totalGrowth, totalInvested, coins } = useAppSelector(
-    ({ profitReducer }) => ({ ...profitReducer })
+    ({ profitReducer }) => profitReducer
   );
 
   const { startDate, endDate, monthlyInvestment } = useAppSelector(
-    ({ baseCalculatorReducer: { maxNumberOfCoinsToInvest, ...rest } }) => ({ ...rest })
+    ({ baseCalculatorReducer: { maxNumberOfCoinsToInvest, ...rest } }) => rest
   );
 
   const profit = Number((totalCapital - totalInvested).toFixed(2));
@@ -51,10 +51,23 @@ export const GeneralInvestmentStatistics = () => {
         </Typography>
 
         <Typography>
-          Investment period from {startDate} to {endDate} ({investmentPeriodTitle})
+          Investment period from
+          <Typography component="span" fontWeight="600" fontStyle="italic">
+            {` ${startDate} `}
+          </Typography>
+          to
+          <Typography component="span" fontWeight="600" fontStyle="italic">
+            {` ${endDate} `}
+          </Typography>
+          ({investmentPeriodTitle})
         </Typography>
 
-        <Typography>The monthly investment ${monthlyInvestment}</Typography>
+        <Typography>
+          Monthly investment
+          <Typography component="span" fontWeight="600" fontStyle="italic">
+            {` $${monthlyInvestment}`}
+          </Typography>
+        </Typography>
       </Box>
 
       <Box mb={2}>

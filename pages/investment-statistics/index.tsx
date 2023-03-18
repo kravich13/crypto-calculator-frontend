@@ -22,7 +22,7 @@ export default function InvestmentStatistics() {
       </Head>
 
       {hasProfitData && (
-        <Container maxWidth="md" className={globalStyles.contentPageContainer}>
+        <Container maxWidth="lg" className={globalStyles.contentPageContainer}>
           <Box mb={3}>
             <GeneralInvestmentStatistics />
           </Box>

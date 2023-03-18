@@ -1,4 +1,3 @@
-import { useRefreshTokensMutation } from '@cc/shared/api';
 import {
   AuthContext,
   authSlice,
@@ -8,7 +7,6 @@ import {
   userDataSlice,
 } from '@cc/shared/lib';
 import { IAuthContentLoginData, IAuthContextLogoutData, IJwtTokensPayload } from '@cc/shared/types';
-import { QueryStatus } from '@reduxjs/toolkit/dist/query';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
@@ -20,8 +18,6 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
   const { setAuth, setNotAuth } = authSlice.actions;
   const dispatch = useAppDispatch();
   const router = useRouter();
-
-  const [refreshTokens, { data: resJWTPayload, status }] = useRefreshTokensMutation();
 
   const [showModalLogout, setShowModalLogout] = useState(false);
   const [showModalLogin, setShowModalLogin] = useState(false);
@@ -83,7 +79,11 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
       const areTokensData = localStorage.getItem('tokensData');
       tokens = areTokensData ? (JSON.parse(areTokensData) as IJwtTokensPayload) : null;
 
-      if (tokens && tokens.refreshTokenExpiresIn < Date.now()) {
+      if (
+        tokens &&
+        tokens.accessTokenExpiresIn < Date.now() &&
+        tokens.refreshTokenExpiresIn < Date.now()
+      ) {
         tokens = null;
       }
     } catch (err) {
@@ -95,19 +95,11 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
 
   useEffect(() => {
     if (tokensPayload) {
-      refreshTokens({ refreshToken: tokensPayload.refreshToken });
+      login({ tokensData: tokensPayload });
     } else {
       dispatch(setNotAuth());
     }
   }, [tokensPayload]);
-
-  useEffect(() => {
-    if (status === QueryStatus.rejected) {
-      dispatch(setNotAuth());
-    } else if (status === QueryStatus.fulfilled && resJWTPayload) {
-      login({ tokensData: resJWTPayload });
-    }
-  }, [status, resJWTPayload]);
 
   return (
     <AuthContext.Provider value={{ showModalLogout, showModalLogin, login, logout }}>
