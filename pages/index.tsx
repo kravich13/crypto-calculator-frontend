@@ -1,13 +1,6 @@
 import { PageLayout } from '@cc/app/components';
-import globalStyles from '@cc/shared/styles/Index.module.css';
-import { Chip, Container, Divider, Typography } from '@mui/material';
+import { MainContent } from '@cc/widgets';
 import Head from 'next/head';
-import LegacyImage from 'next/legacy/image';
-import step1Image from '../public/main-page-images/step-1.jpg';
-import step2Image from '../public/main-page-images/step-2.jpg';
-import step3Image from '../public/main-page-images/step-3.jpg';
-import step4Image from '../public/main-page-images/step-4.jpg';
-import step5Image from '../public/main-page-images/step-5.jpg';
 
 export default function Home() {
   return (
@@ -19,76 +12,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Container
-        component="div"
-        maxWidth="md"
-        className={globalStyles.contentPageContainer}
-        style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-      >
-        <Typography component="h1" variant="h5" textAlign="center">
-          Welcome to cryptocurrency historical data calculator
-        </Typography>
-
-        <Divider style={{ width: '100%' }}>
-          <Chip label="STEP 1" variant="outlined" size="medium" color="primary" component="h2" />
-        </Divider>
-
-        <LegacyImage
-          alt="Step-1"
-          src={step1Image}
-          objectFit="contain"
-          placeholder="blur"
-          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg=="
-        />
-
-        <Divider style={{ width: '100%' }}>
-          <Chip label="STEP 2" variant="outlined" size="medium" color="primary" component="h2" />
-        </Divider>
-
-        <LegacyImage
-          alt="Step-2"
-          src={step2Image}
-          objectFit="contain"
-          placeholder="blur"
-          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg=="
-        />
-
-        <Divider style={{ width: '100%' }}>
-          <Chip label="STEP 3" variant="outlined" size="medium" color="primary" component="h2" />
-        </Divider>
-
-        <LegacyImage
-          alt="Step-3"
-          src={step3Image}
-          objectFit="contain"
-          placeholder="blur"
-          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg=="
-        />
-
-        <Divider style={{ width: '100%' }}>
-          <Chip label="STEP 4" variant="outlined" size="medium" color="primary" component="h2" />
-        </Divider>
-
-        <LegacyImage
-          alt="Step-4"
-          src={step4Image}
-          objectFit="contain"
-          placeholder="blur"
-          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg=="
-        />
-
-        <Divider style={{ width: '100%' }}>
-          <Chip label="STEP 5" variant="outlined" size="medium" color="primary" component="h2" />
-        </Divider>
-
-        <LegacyImage
-          alt="Step-5"
-          src={step5Image}
-          objectFit="contain"
-          placeholder="blur"
-          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg=="
-        />
-      </Container>
+      <MainContent />
     </PageLayout>
   );
 }

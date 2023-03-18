@@ -1,0 +1,27 @@
+.image {
+  border-radius: 8px;
+}
+.contentContainer {
+  display: flex;
+}
+
+.boxContent {
+  width: 100%;
+}
+
+@media screen and (max-width: 870px) {
+  .contentContainer {
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+@media screen and (min-width: 870px) {
+  .mainContainer:not(:last-child) {
+    margin-bottom: 30px;
+  }
+  .contentContainer {
+    flex-direction: row;
+    align-items: center;
+  }
+}
