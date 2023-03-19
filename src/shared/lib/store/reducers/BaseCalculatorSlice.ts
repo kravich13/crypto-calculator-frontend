@@ -1,18 +1,18 @@
 import { IPeriodAndAmountForm } from '@cc/shared/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface IBaseCalculatorSlice extends IPeriodAndAmountForm {
+interface ICalculatorSlice extends IPeriodAndAmountForm {
   maxNumberOfCoinsToInvest: number;
 }
 
-const initialState: IBaseCalculatorSlice = {
+const initialState: ICalculatorSlice = {
   maxNumberOfCoinsToInvest: 1,
   monthlyInvestment: '',
   startDate: '',
   endDate: '',
 };
 
-export const baseCalculatorSlice = createSlice({
+export const calculatorSlice = createSlice({
   name: 'calculator',
   initialState,
   reducers: {
@@ -30,4 +30,4 @@ export const baseCalculatorSlice = createSlice({
   },
 });
 
-export const baseCalculatorReducer = baseCalculatorSlice.reducer;
+export const { reducer: calculatorReducer, actions: calculatorActions } = calculatorSlice;

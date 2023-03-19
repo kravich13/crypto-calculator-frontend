@@ -1,7 +1,7 @@
 import { emailCodeValidation } from '@cc/entities/Authorization';
 import { useSignInMutation } from '@cc/shared/api';
 import { EMAIL_CODE_MAX, EMAIL_CODE_MIN } from '@cc/shared/const';
-import { useAppDispatch, useAppSelector, useErrorMessage, userDataSlice } from '@cc/shared/lib';
+import { useAppDispatch, useAppSelector, useErrorMessage, userDataActions } from '@cc/shared/lib';
 import { PopupAlert, TextInput, Timer } from '@cc/shared/ui';
 import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
 import LoginIcon from '@mui/icons-material/Login';
@@ -21,7 +21,7 @@ interface IEmailCodeForm {
 
 export const EmailCode: React.FC<IEmailCodeProps> = React.memo(({ isLoading, onConfirm }) => {
   const dispatch = useAppDispatch();
-  const { setEmailCodeExpiresIn } = userDataSlice.actions;
+
   const { emailCodeExpiresIn, email } = useAppSelector((state) => state.userDataReducer);
 
   const { handleSubmit, control, resetField } = useForm<IEmailCodeForm>({ mode: 'onBlur' });
@@ -47,7 +47,7 @@ export const EmailCode: React.FC<IEmailCodeProps> = React.memo(({ isLoading, onC
 
     if (signUpPayload) {
       dispatch(
-        setEmailCodeExpiresIn({
+        userDataActions.setEmailCodeExpiresIn({
           emailCodeExpiresIn: signUpPayload.emailCodeExpiresIn,
         })
       );

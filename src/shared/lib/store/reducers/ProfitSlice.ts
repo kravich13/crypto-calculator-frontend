@@ -30,4 +30,4 @@ export const profitSlice = createSlice({
   },
 });
 
-export const profitReducer = profitSlice.reducer;
+export const { reducer: profitReducer, actions: profitActions } = profitSlice;

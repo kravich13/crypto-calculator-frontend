@@ -1,12 +1,12 @@
 import { authAPI, calculatorAPI } from '@cc/shared/api';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { createWrapper } from 'next-redux-wrapper';
-import { authReducer, baseCalculatorReducer, profitReducer, userDataReducer } from './reducers';
+import { authReducer, calculatorReducer, profitReducer, userDataReducer } from './reducers';
 
 export const rootReducer = combineReducers({
   authReducer,
   userDataReducer,
-  baseCalculatorReducer,
+  baseCalculatorReducer: calculatorReducer,
   profitReducer,
 
   [authAPI.reducerPath]: authAPI.reducer,

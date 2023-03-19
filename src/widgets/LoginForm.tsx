@@ -6,7 +6,7 @@ import {
   useAppSelector,
   useAuthContext,
   useErrorMessage,
-  userDataSlice,
+  userDataActions,
 } from '@cc/shared/lib';
 import globalStyles from '@cc/shared/styles/Index.module.css';
 import { ISetEmailInput } from '@cc/shared/types';
@@ -24,7 +24,6 @@ export const LoginForm = () => {
   const { login } = useAuthContext();
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { setEmail, setEmailCodeExpiresIn } = userDataSlice.actions;
 
   const emailUser = useAppSelector((state) => state.userDataReducer.email);
 
@@ -40,7 +39,7 @@ export const LoginForm = () => {
   const isError = signUpData.isError || emailValidateData.isError;
 
   const onSendEmail: SubmitHandler<ISetEmailInput> = useCallback(async (data) => {
-    dispatch(setEmail(data));
+    dispatch(userDataActions.setEmail(data));
     signIn(data);
   }, []);
 
@@ -69,7 +68,7 @@ export const LoginForm = () => {
 
   useEffect(() => {
     if (step === 0 && signUpData.data) {
-      dispatch(setEmailCodeExpiresIn(signUpData.data));
+      dispatch(userDataActions.setEmailCodeExpiresIn(signUpData.data));
       setStep(1);
     } else if (step === 1 && emailValidateData.data) {
       login({ tokensData: emailValidateData.data });

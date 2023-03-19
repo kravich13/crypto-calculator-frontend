@@ -1,10 +1,10 @@
 import {
+  authActions,
   AuthContext,
-  authSlice,
-  baseCalculatorSlice,
-  profitSlice,
+  calculatorActions,
+  profitActions,
   useAppDispatch,
-  userDataSlice,
+  userDataActions,
 } from '@cc/shared/lib';
 import { IAuthContentLoginData, IAuthContextLogoutData, IJwtTokensPayload } from '@cc/shared/types';
 import { useRouter } from 'next/navigation';
@@ -15,7 +15,6 @@ interface IAuthProviderProps {
 }
 
 export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
-  const { setAuth, setNotAuth } = authSlice.actions;
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -28,14 +27,14 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
 
       setTimeout(() => {
         if (redirectTo) {
-          dispatch(setAuth(tokensData));
+          dispatch(authActions.setAuth(tokensData));
           router.push(redirectTo);
         }
 
         setShowModalLogin(false);
       }, 5000);
     } else {
-      dispatch(setAuth(tokensData));
+      dispatch(authActions.setAuth(tokensData));
 
       if (redirectTo) {
         router.push(redirectTo);
@@ -44,10 +43,10 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
   }, []);
 
   const clearStates = useCallback(() => {
-    dispatch(authSlice.actions.setNotAuth());
-    dispatch(userDataSlice.actions.clearState());
-    dispatch(baseCalculatorSlice.actions.clearState());
-    dispatch(profitSlice.actions.clearState());
+    dispatch(authActions.setNotAuth());
+    dispatch(userDataActions.clearState());
+    dispatch(calculatorActions.clearState());
+    dispatch(profitActions.clearState());
   }, []);
 
   const logout = useCallback(({ notifyUser, redirectTo }: IAuthContextLogoutData) => {
@@ -97,7 +96,7 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
     if (tokensPayload) {
       login({ tokensData: tokensPayload });
     } else {
-      dispatch(setNotAuth());
+      dispatch(authActions.setNotAuth());
     }
   }, [tokensPayload]);
 
