@@ -13,9 +13,7 @@ export const useErrorMessage = (errorData?: FetchBaseQueryError | SerializedErro
 
     if (isSerializedError(errorData)) {
       message = errorData.message || '';
-    }
-
-    if (isFetchBaseQueryError(errorData)) {
+    } else if (isFetchBaseQueryError(errorData)) {
       const { status, data } = errorData;
 
       if ((status === 200 || status === 400 || status === 401) && isIAPIResponseError(data)) {
@@ -23,6 +21,8 @@ export const useErrorMessage = (errorData?: FetchBaseQueryError | SerializedErro
       } else {
         message = 'Error sending data, please try again later.';
       }
+    } else if (Boolean(errorData)) {
+      message = 'Error sending data, please try again later.';
     }
 
     return message;

@@ -4,5 +4,4 @@ export interface ICalculateData {
   step: number;
   description: string;
   src: StaticImageData;
-  position: 'left' | 'right';
 }

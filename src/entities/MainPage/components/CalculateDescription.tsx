@@ -1,6 +1,5 @@
 import { Box, Chip, Container, Divider, Typography } from '@mui/material';
 import LegacyImage from 'next/legacy/image';
-import { useMemo } from 'react';
 import styles from '../styles/CalculateDescription.module.css';
 import { ICalculateData } from '../types';
 
@@ -10,27 +9,10 @@ export const CalculateDescription: React.FC<ICalculateDescriptionProps> = ({
   step,
   description,
   src,
-  position,
 }) => {
-  const descriptionRender = useMemo(() => <Typography>{description}</Typography>, [description]);
-
-  const boxImageRender = useMemo(
-    () => (
-      <LegacyImage
-        src={src}
-        alt={`Step-${step}`}
-        objectFit="contain"
-        placeholder="blur"
-        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg=="
-        className={styles.image}
-      />
-    ),
-    [src, step]
-  );
-
   return (
-    <Container maxWidth="lg" className={styles.mainContainer}>
-      <Divider sx={{ mb: 1 }}>
+    <Container maxWidth="lg" className={styles.mainContainer} sx={{ mb: 3 }}>
+      <Divider className={styles.divider}>
         <Chip
           label={`STEP ${step}`}
           variant="outlined"
@@ -41,12 +23,21 @@ export const CalculateDescription: React.FC<ICalculateDescriptionProps> = ({
       </Divider>
 
       <Box className={styles.contentContainer}>
-        <Box className={styles.boxContent} sx={{ mr: 10 }}>
-          {position === 'left' ? descriptionRender : boxImageRender}
+        <Box className={styles.boxContent}>
+          <Typography component="h2" variant="h6">
+            {description}
+          </Typography>
         </Box>
 
         <Box className={styles.boxContent}>
-          {position === 'left' ? boxImageRender : descriptionRender}
+          <LegacyImage
+            src={src}
+            alt={`Step-${step}`}
+            objectFit="contain"
+            placeholder="blur"
+            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg=="
+            style={{ borderRadius: 8 }}
+          />
         </Box>
       </Box>
     </Container>

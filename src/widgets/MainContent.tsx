@@ -1,4 +1,9 @@
-import { BaseDescription, CalculateDescription, ICalculateData } from '@cc/entities/MainPage';
+import {
+  BaseDescription,
+  CalculateDescription,
+  ICalculateData,
+  ResultsDescription,
+} from '@cc/entities/MainPage';
 import { RoutesTypes } from '@cc/shared/enums';
 import { useAppSelector } from '@cc/shared/lib';
 import globalStyles from '@cc/shared/styles/Index.module.css';
@@ -20,9 +25,21 @@ export const MainContent = () => {
 
   const calculateStepsData = useMemo(
     (): ICalculateData[] => [
-      { step: 1, description: 'tes1', src: step1Image, position: 'left' },
-      { step: 2, description: 'test2', src: step2Image, position: 'right' },
-      { step: 3, description: 'test3', src: step3Image, position: 'left' },
+      {
+        step: 1,
+        description: 'Select the monthly investment amount, start date and end date',
+        src: step1Image,
+      },
+      {
+        step: 2,
+        description: 'Enter the title the coin you are interested in and select it',
+        src: step2Image,
+      },
+      {
+        step: 3,
+        description: 'Allocate the monthly investment amount as a percentage for each coin',
+        src: step3Image,
+      },
     ],
     []
   );
@@ -45,11 +62,13 @@ export const MainContent = () => {
 
       <BaseDescription />
 
-      <Button variant="contained" onClick={onRedirect} sx={{ mt: 2, mb: 3, width: 120 }}>
-        {Boolean(isAuth) ? 'calculate now' : 'login'}
+      <Button variant="contained" onClick={onRedirect} sx={{ mt: 2, mb: 3 }}>
+        {Boolean(isAuth) ? 'calculate now' : 'login now'}
       </Button>
 
       {calculateStepsData.map(renderStepData)}
+
+      <ResultsDescription />
 
       <ScrollTopButton />
     </Container>

@@ -1,16 +1,32 @@
 import { Box, Container, Typography } from '@mui/material';
+import styles from '../styles/BaseDescription.module.css';
 
 export const BaseDescription = () => {
   return (
-    <Container maxWidth="lg" style={{ display: 'flex', justifyContent: 'center' }}>
-      <Typography sx={{ width: '50%', mr: 10 }}>
-        The program works with historical data on the exchange rates of cryptocurrencies and allows
-        you to estimate how profitable your investments in cryptocurrencies would have been if you
-        had made them in the past.
-      </Typography>
+    <Container maxWidth="lg" className={styles.container}>
+      <Box className={[styles.boxContent, styles.description].join(' ')}>
+        <Typography>
+          Imagine that you started investing $100 monthly in DogeCoin in 2018. By May 2021 your
+          capital would have grown to 700k.
+        </Typography>
 
-      <Box style={{ width: '50%' }}>
-        <Typography>After selecting the input options, you will learn:</Typography>
+        <br />
+
+        <Typography>
+          With our service, you can make your list of coins for investment and see how profitable
+          this portfolio would be.
+        </Typography>
+
+        <br />
+
+        <Typography>
+          With this information, you can decide if you should invest in crypto in the future in the
+          same way.
+        </Typography>
+      </Box>
+
+      <Box className={styles.boxContent}>
+        <Typography>Our tool will help you calculate:</Typography>
 
         <ul>
           <li>Profitability in $ and % for individual coins.</li>
