@@ -3,8 +3,8 @@ import { PeriodAndAmount, SelectedInvestCoins } from '@cc/features';
 import { useCalculateProfitMutation, usePeriodAndAmountMutation } from '@cc/shared/api';
 import { RoutesTypes } from '@cc/shared/enums';
 import {
-  baseCalculatorSlice,
-  profitSlice,
+  calculatorActions,
+  profitActions,
   useAppDispatch,
   useRefreshRequest,
 } from '@cc/shared/lib';
@@ -24,10 +24,9 @@ interface IStepRender {
 export const CalculateYieldForm = () => {
   const isMin520Width = useMediaQuery('(max-width:520px)');
   const router = useRouter();
-  const { setPeriodAndAmount, setMaxNumberOfCoinsToInvest } = baseCalculatorSlice.actions;
-  const { setBaseProfit } = profitSlice.actions;
 
   const dispatch = useAppDispatch();
+
   const [periodAndAmountRequest, periodAndAmountResponse] = usePeriodAndAmountMutation();
   const [calculateProfitRequest, calculateProfitResponse] = useCalculateProfitMutation();
 
@@ -50,7 +49,7 @@ export const CalculateYieldForm = () => {
   const [step, setStep] = useState(0);
 
   const onConfirmStep0: SubmitHandler<IPeriodAndAmountForm> = useCallback(async (data) => {
-    dispatch(setPeriodAndAmount(data));
+    dispatch(calculatorActions.setPeriodAndAmount(data));
 
     const startDate = DateTime.fromFormat(data.startDate, INPUT_FORMAT_DATE).toUTC().toMillis();
     const endDate = DateTime.fromFormat(data.endDate, INPUT_FORMAT_DATE).toUTC().toMillis();
@@ -88,11 +87,11 @@ export const CalculateYieldForm = () => {
     const profitData = calculateProfitResponse.data;
 
     if (step === 0 && periodData) {
-      dispatch(setMaxNumberOfCoinsToInvest(periodData.maxNumberOfCoinsToInvest));
+      dispatch(calculatorActions.setMaxNumberOfCoinsToInvest(periodData.maxNumberOfCoinsToInvest));
       setStep(1);
       periodAndAmountResponse.reset();
     } else if (step === 1 && profitData) {
-      dispatch(setBaseProfit(profitData));
+      dispatch(profitActions.setBaseProfit(profitData));
       router.push(RoutesTypes.INVESTMENT_STATISTICS);
       calculateProfitResponse.reset();
     }

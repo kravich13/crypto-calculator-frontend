@@ -1,10 +1,37 @@
+.profitContainer {
+  display: flex;
+}
+
 .finalDataBox {
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 6px;
 }
+
+.finalBalance {
+  display: flex;
+}
+
 .percent {
   margin-left: 8px;
   padding: 0 6px;
   border-radius: 8px;
+}
+
+.finalBalance {
+  margin-bottom: 8px;
+}
+
+@media screen and (min-width: 640px) {
+  .profitContainer {
+    flex-direction: row;
+    gap: 40px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .profitContainer {
+    flex-direction: column;
+  }
 }

@@ -1,19 +1,14 @@
 .container {
   display: flex;
+  flex-direction: row;
   align-items: center;
+  gap: 10px;
 }
 
-@media screen and (max-width: 770px) {
-  .titlesContainer {
-    display: flex;
-  }
-  .container:not(:last-child) {
-    margin-bottom: 10px;
-  }
+.container > div {
+  display: flex;
 }
 
-@media screen and (min-width: 770px) {
-  .container:not(:last-child) {
-    margin-right: 20px;
-  }
+.container:not(:last-child) {
+  margin-bottom: 8px;
 }

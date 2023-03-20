@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  max-width: 780px;
+}
+
+@media screen and (min-width: 870px) {
+  .container {
+    flex-direction: row;
+    justify-content: center;
+  }
+  .boxContent:nth-child(odd) {
+    margin-right: 50px;
+  }
+  .boxContent {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 870px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .description {
+    margin-bottom: 40px;
+  }
+  .boxContent {
+    max-width: 500px;
+  }
+}

@@ -33,7 +33,6 @@ export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
   removeAddedCoin,
   distributeEqually,
 }) => {
-  const minPercentForInvest = (100 / addedCoins.length).toFixed(2);
   const minPercentTitle = 100 / maxNumberOfCoinsToInvest;
 
   const renderItem = useCallback(
@@ -46,7 +45,7 @@ export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
             <Controller
               name={`addedCoins.${index}.percent`}
               defaultValue={percent}
-              rules={{ required: true, min: minPercentForInvest, max: 100 }}
+              rules={{ required: true, min: 10, max: 100 }}
               control={control}
               render={({ field }) => (
                 <TextField
@@ -59,7 +58,7 @@ export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
                   InputProps={{
                     startAdornment: <InputAdornment position="start">%</InputAdornment>,
                   }}
-                  inputProps={{ min: minPercentForInvest, max: 100 }}
+                  inputProps={{ min: 10, max: 100 }}
                   className={styles.input}
                   sx={{ mr: 2 }}
                   disabled={isLoading}
@@ -81,7 +80,7 @@ export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
         <Divider />
       </Box>
     ),
-    [control, isLoading, minPercentForInvest, getIndexError, removeAddedCoin]
+    [control, isLoading, getIndexError, removeAddedCoin]
   );
 
   return (

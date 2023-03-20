@@ -2,9 +2,9 @@ import { PageLayout } from '@cc/app/components';
 import { DetailedInvestmentStatistics, GeneralInvestmentStatistics } from '@cc/features';
 import { RoutesTypes } from '@cc/shared/enums';
 import { useAppSelector, useAuthPage, useRedirectCondition } from '@cc/shared/lib';
-import { Box, Container } from '@mui/material';
-import Head from 'next/head';
 import globalStyles from '@cc/shared/styles/Index.module.css';
+import { Box, Container, Divider } from '@mui/material';
+import Head from 'next/head';
 
 export default function InvestmentStatistics() {
   const hasProfitData = useAppSelector(({ profitReducer: { hasData } }) => hasData);
@@ -22,10 +22,12 @@ export default function InvestmentStatistics() {
       </Head>
 
       {hasProfitData && (
-        <Container maxWidth="md" className={globalStyles.contentPageContainer}>
-          <Box mb={3}>
+        <Container maxWidth="lg" className={globalStyles.contentPageContainer}>
+          <Box mb={3} display="flex" justifyContent="center">
             <GeneralInvestmentStatistics />
           </Box>
+
+          <Divider variant="fullWidth" style={{ marginBottom: 20 }} />
 
           <DetailedInvestmentStatistics />
         </Container>

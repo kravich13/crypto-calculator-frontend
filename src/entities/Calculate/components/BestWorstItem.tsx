@@ -41,8 +41,8 @@ export const BestWorstItem: React.FC<IBestWorstInvestmentProps> = ({
         className={sharedStyles.coinIcon}
       />
 
-      <Box sx={{ ml: 1 }} className={styles.titlesContainer}>
-        <Typography color="GrayText" fontWeight="500">
+      <Box className={styles.titlesContainer}>
+        <Typography color="GrayText" fontWeight="500" width={50}>
           {isMaxCoin ? 'Best' : 'Worst'}
         </Typography>
 

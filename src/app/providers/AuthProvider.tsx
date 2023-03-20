@@ -1,14 +1,12 @@
-import { useRefreshTokensMutation } from '@cc/shared/api';
 import {
+  authActions,
   AuthContext,
-  authSlice,
-  baseCalculatorSlice,
-  profitSlice,
+  calculatorActions,
+  profitActions,
   useAppDispatch,
-  userDataSlice,
+  userDataActions,
 } from '@cc/shared/lib';
 import { IAuthContentLoginData, IAuthContextLogoutData, IJwtTokensPayload } from '@cc/shared/types';
-import { QueryStatus } from '@reduxjs/toolkit/dist/query';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
@@ -17,11 +15,8 @@ interface IAuthProviderProps {
 }
 
 export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
-  const { setAuth, setNotAuth } = authSlice.actions;
   const dispatch = useAppDispatch();
   const router = useRouter();
-
-  const [refreshTokens, { data: resJWTPayload, status }] = useRefreshTokensMutation();
 
   const [showModalLogout, setShowModalLogout] = useState(false);
   const [showModalLogin, setShowModalLogin] = useState(false);
@@ -32,14 +27,14 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
 
       setTimeout(() => {
         if (redirectTo) {
-          dispatch(setAuth(tokensData));
+          dispatch(authActions.setAuth(tokensData));
           router.push(redirectTo);
         }
 
         setShowModalLogin(false);
       }, 5000);
     } else {
-      dispatch(setAuth(tokensData));
+      dispatch(authActions.setAuth(tokensData));
 
       if (redirectTo) {
         router.push(redirectTo);
@@ -48,10 +43,10 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
   }, []);
 
   const clearStates = useCallback(() => {
-    dispatch(authSlice.actions.setNotAuth());
-    dispatch(userDataSlice.actions.clearState());
-    dispatch(baseCalculatorSlice.actions.clearState());
-    dispatch(profitSlice.actions.clearState());
+    dispatch(authActions.setNotAuth());
+    dispatch(userDataActions.clearState());
+    dispatch(calculatorActions.clearState());
+    dispatch(profitActions.clearState());
   }, []);
 
   const logout = useCallback(({ notifyUser, redirectTo }: IAuthContextLogoutData) => {
@@ -83,7 +78,11 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
       const areTokensData = localStorage.getItem('tokensData');
       tokens = areTokensData ? (JSON.parse(areTokensData) as IJwtTokensPayload) : null;
 
-      if (tokens && tokens.refreshTokenExpiresIn < Date.now()) {
+      if (
+        tokens &&
+        tokens.accessTokenExpiresIn < Date.now() &&
+        tokens.refreshTokenExpiresIn < Date.now()
+      ) {
         tokens = null;
       }
     } catch (err) {
@@ -95,19 +94,11 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
 
   useEffect(() => {
     if (tokensPayload) {
-      refreshTokens({ refreshToken: tokensPayload.refreshToken });
+      login({ tokensData: tokensPayload });
     } else {
-      dispatch(setNotAuth());
+      dispatch(authActions.setNotAuth());
     }
   }, [tokensPayload]);
-
-  useEffect(() => {
-    if (status === QueryStatus.rejected) {
-      dispatch(setNotAuth());
-    } else if (status === QueryStatus.fulfilled && resJWTPayload) {
-      login({ tokensData: resJWTPayload });
-    }
-  }, [status, resJWTPayload]);
 
   return (
     <AuthContext.Provider value={{ showModalLogout, showModalLogin, login, logout }}>

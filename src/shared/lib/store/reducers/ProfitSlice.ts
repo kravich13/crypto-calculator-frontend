@@ -4,7 +4,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 type ProfitSlice = ICalculateProfitResponse & { hasData?: boolean };
 
 const initialState: ProfitSlice = {
-  hasData: true,
+  hasData: false,
   totalInvested: 0,
   investmentPeriod: 0,
   totalCapital: 0,
@@ -30,4 +30,4 @@ export const profitSlice = createSlice({
   },
 });
 
-export const profitReducer = profitSlice.reducer;
+export const { reducer: profitReducer, actions: profitActions } = profitSlice;

@@ -6,11 +6,11 @@ import styles from '../styles/GeneralInvestmentStatistics.module.css';
 
 export const GeneralInvestmentStatistics = () => {
   const { investmentPeriod, totalCapital, totalGrowth, totalInvested, coins } = useAppSelector(
-    ({ profitReducer }) => ({ ...profitReducer })
+    ({ profitReducer }) => profitReducer
   );
 
   const { startDate, endDate, monthlyInvestment } = useAppSelector(
-    ({ baseCalculatorReducer: { maxNumberOfCoinsToInvest, ...rest } }) => ({ ...rest })
+    ({ baseCalculatorReducer: { maxNumberOfCoinsToInvest, ...rest } }) => rest
   );
 
   const profit = Number((totalCapital - totalInvested).toFixed(2));
@@ -20,7 +20,6 @@ export const GeneralInvestmentStatistics = () => {
 
   const percentStyles = useMemo(
     () => ({
-      marginLeft: '8px',
       paddingRight: '8px',
       paddingLeft: '2px',
       borderRadius: '8px',
@@ -40,56 +39,57 @@ export const GeneralInvestmentStatistics = () => {
   );
 
   return (
-    <>
+    <Box>
       <Typography component="h1" variant="h5" textAlign="center" mb={3}>
         General statistics
       </Typography>
 
       <Box mb={2}>
-        <Typography component="p" variant="h6">
-          Your investment conditions
+        <Typography>
+          Investment period:
+          <Typography component="span" fontWeight="600" fontStyle="italic">
+            {` ${startDate} - ${endDate} `}
+          </Typography>
+          ({investmentPeriodTitle})
         </Typography>
 
         <Typography>
-          Investment period from {startDate} to {endDate} ({investmentPeriodTitle})
-        </Typography>
-
-        <Typography>The monthly investment ${monthlyInvestment}</Typography>
-      </Box>
-
-      <Box mb={2}>
-        <Typography component="p" variant="h6">
-          Final balance
-        </Typography>
-
-        <Box className={styles.finalDataBox}>
-          <Typography component="p" variant="h6">
-            ${totalCapital}
+          Monthly investment
+          <Typography component="span" fontWeight="600" fontStyle="italic">
+            {` $${monthlyInvestment}`}
           </Typography>
+        </Typography>
+      </Box>
 
-          <InvestmentPercent percent={totalGrowth} textStyles={percentStyles} />
+      <Box className={styles.profitContainer}>
+        <Box>
+          <Box className={styles.finalBalance}>
+            <Typography color="GrayText" fontWeight="500" mr={1}>
+              Invested
+            </Typography>
+
+            <Box className={styles.finalDataBox}>
+              <Typography>${totalInvested}</Typography>
+
+              <Typography style={profitStyles}>{profitTitle}</Typography>
+            </Box>
+          </Box>
+
+          <Box className={styles.finalBalance}>
+            <Typography color="GrayText" fontWeight="500" mr={1} width={{ width: 60 }}>
+              Balance
+            </Typography>
+
+            <Box className={styles.finalDataBox}>
+              <Typography>${totalCapital}</Typography>
+
+              <InvestmentPercent percent={totalGrowth} textStyles={percentStyles} />
+            </Box>
+          </Box>
         </Box>
-      </Box>
-
-      <Box mb={2}>
-        <Typography component="p" variant="h6">
-          Invested
-        </Typography>
-
-        <Typography component="p" variant="h6">
-          ${totalInvested}
-        </Typography>
-
-        <Typography style={profitStyles}>{profitTitle}</Typography>
-      </Box>
-
-      <Box mb={2}>
-        <Typography component="p" variant="h6" mb={1}>
-          Best/worst investment
-        </Typography>
 
         {Boolean(coins.length) && <BestWorstInvestment coins={coins} />}
       </Box>
-    </>
+    </Box>
   );
 };
