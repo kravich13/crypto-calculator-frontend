@@ -1,13 +1,13 @@
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import styles from '../styles/BaseDescription.module.css';
 
 export const BaseDescription = () => {
   return (
-    <Container maxWidth="lg" className={styles.container}>
+    <Box className={styles.container}>
       <Box className={[styles.boxContent, styles.description].join(' ')}>
         <Typography>
-          Imagine that you started investing $100 monthly in DogeCoin in 2018. By May 2021 your
-          capital would have grown to 700k.
+          Imagine that you started investing $100 monthly in DogeCoin in 2019. By May 2021 your
+          capital would have grown to 500k.
         </Typography>
 
         <br />
@@ -35,6 +35,6 @@ export const BaseDescription = () => {
           <li>Starting, average and last price for each coin.</li>
         </ul>
       </Box>
-    </Container>
+    </Box>
   );
 };

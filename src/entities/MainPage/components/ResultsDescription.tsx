@@ -1,10 +1,10 @@
-import { Chip, Container, Divider, Typography } from '@mui/material';
+import { Box, Chip, Container, Divider, Typography } from '@mui/material';
 import LegacyImage from 'next/legacy/image';
 import step4Image from '../../../../public/main-page-images/step-4.jpg';
 
 export const ResultsDescription = () => {
   return (
-    <Container maxWidth="lg">
+    <Box>
       <Divider>
         <Chip label="STEP 4" variant="outlined" size="medium" color="primary" component="h2" />
       </Divider>
@@ -21,6 +21,6 @@ export const ResultsDescription = () => {
         blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg=="
         style={{ borderRadius: 8 }}
       />
-    </Container>
+    </Box>
   );
 };

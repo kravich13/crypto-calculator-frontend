@@ -1,4 +1,4 @@
-import { Box, Chip, Container, Divider, Typography } from '@mui/material';
+import { Box, Chip, Divider, Typography } from '@mui/material';
 import LegacyImage from 'next/legacy/image';
 import styles from '../styles/CalculateDescription.module.css';
 import { ICalculateData } from '../types';
@@ -11,7 +11,7 @@ export const CalculateDescription: React.FC<ICalculateDescriptionProps> = ({
   src,
 }) => {
   return (
-    <Container maxWidth="lg" className={styles.mainContainer} sx={{ mb: 3 }}>
+    <Box className={styles.mainContainer} sx={{ mb: 3 }}>
       <Divider className={styles.divider}>
         <Chip
           label={`STEP ${step}`}
@@ -40,6 +40,6 @@ export const CalculateDescription: React.FC<ICalculateDescriptionProps> = ({
           />
         </Box>
       </Box>
-    </Container>
+    </Box>
   );
 };
