@@ -1,10 +1,10 @@
+import { PRIMARY_COLOR } from '@cc/shared/const';
 import { Box, Typography } from '@mui/material';
 import React from 'react';
-
 import styles from '../styles/SearchNavigationButtons.module.css';
 
 export const SearchNavigationButtons: React.FC = React.memo(() => {
-  const buttonsProps = { fontSize: 'small', color: '#1565c0' };
+  const buttonsProps = { fontSize: 'small', color: PRIMARY_COLOR };
 
   return (
     <Box component="div" className={styles.container}>
