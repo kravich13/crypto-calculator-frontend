@@ -1,4 +1,5 @@
 import { InvestmentPercent, MainCoinInfoContainer } from '@cc/entities/Calculate';
+import { LOSS_COLOR, PROFIT_COLOR } from '@cc/shared/const';
 import { useAppSelector } from '@cc/shared/lib';
 import { CalculateCoinProfitData } from '@cc/shared/types';
 import {
@@ -12,7 +13,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 
 export const DetailedInvestmentStatistics = () => {
   const coins = useAppSelector(({ profitReducer: { coins } }) => coins);
@@ -81,7 +82,7 @@ export const DetailedInvestmentStatistics = () => {
               <InvestmentPercent
                 percent={growth}
                 textStyles={{
-                  color: growth >= 0 ? '#16C784' : '#EA3943',
+                  color: growth >= 0 ? PROFIT_COLOR : LOSS_COLOR,
                   fontSize: 14,
                   justifyContent: 'end',
                   fontWeight: 600,

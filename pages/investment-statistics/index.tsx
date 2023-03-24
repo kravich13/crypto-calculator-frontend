@@ -1,5 +1,5 @@
 import { PageLayout } from '@cc/app/components';
-import { DetailedInvestmentStatistics, GeneralInvestmentStatistics } from '@cc/features';
+import { Chart, DetailedInvestmentStatistics, GeneralInvestmentStatistics } from '@cc/features';
 import { RoutesTypes } from '@cc/shared/enums';
 import { useAppSelector, useAuthPage, useRedirectCondition } from '@cc/shared/lib';
 import globalStyles from '@cc/shared/styles/Index.module.css';
@@ -8,6 +8,12 @@ import Head from 'next/head';
 
 export default function InvestmentStatistics() {
   const hasProfitData = useAppSelector(({ profitReducer: { hasData } }) => hasData);
+  const monthlyCapitals = useAppSelector(
+    ({ profitReducer: { monthlyCapitals } }) => monthlyCapitals
+  );
+
+  const capitalsProfit = monthlyCapitals.map(({ capital }) => capital);
+  const capitalsDate = monthlyCapitals.map(({ date }) => date);
 
   useAuthPage({ redirectTo: RoutesTypes.MAIN });
   useRedirectCondition({ redirectTo: RoutesTypes.CALCULATE_YIELD, condition: !hasProfitData });
@@ -25,6 +31,10 @@ export default function InvestmentStatistics() {
         <Container maxWidth="lg" className={globalStyles.contentPageContainer}>
           <Box mb={3} display="flex" justifyContent="center">
             <GeneralInvestmentStatistics />
+          </Box>
+
+          <Box mb={3}>
+            <Chart dollars={capitalsProfit} labels={capitalsDate} />
           </Box>
 
           <Divider variant="fullWidth" style={{ marginBottom: 20 }} />

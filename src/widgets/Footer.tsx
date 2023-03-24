@@ -1,3 +1,4 @@
+import { PRIMARY_COLOR } from '@cc/shared/const';
 import { GitHub, LinkedIn, Telegram } from '@mui/icons-material';
 import { Box, Container, Typography, useMediaQuery } from '@mui/material';
 import Link from 'next/link';
@@ -56,7 +57,7 @@ export const Footer = React.memo(() => {
     <Container
       component="footer"
       maxWidth="xl"
-      sx={{ background: '#1565c0', paddingTop: '10px', paddingBottom: '10px' }}
+      sx={{ background: PRIMARY_COLOR, paddingTop: '10px', paddingBottom: '10px' }}
       className={styles.Root}
     >
       <Box className={isMax490Width ? styles.mobileContainer : styles.mainContainer}>

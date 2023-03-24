@@ -1,3 +1,4 @@
+import { PRIMARY_COLOR } from '@cc/shared/const';
 import { IMainCoinInfo } from '@cc/shared/types';
 import { Box, Typography, useMediaQuery } from '@mui/material';
 import React from 'react';
@@ -35,7 +36,7 @@ export const SearchRenderItem: React.FC<ISearchRenderItemProps> = React.memo(
             <Typography fontSize="small" color="GrayText" className={styles.selectText}>
               Select
             </Typography>
-            <Box fontSize="small" color="#1565c0" className={navigationButtonStyles.button}>
+            <Box fontSize="small" color={PRIMARY_COLOR} className={navigationButtonStyles.button}>
               ↵
             </Box>
           </Box>
