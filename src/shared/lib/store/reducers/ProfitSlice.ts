@@ -10,6 +10,7 @@ const initialState: ProfitSlice = {
   totalCapital: 0,
   totalGrowth: 0,
   coins: [],
+  monthlyCapitals: [],
 };
 
 export const profitSlice = createSlice({
@@ -25,6 +26,8 @@ export const profitSlice = createSlice({
       state.totalCapital = payload.totalCapital;
       state.totalGrowth = payload.totalGrowth;
       state.coins = payload.coins;
+      state.monthlyCapitals = payload.monthlyCapitals;
+
       state.hasData = true;
     },
   },

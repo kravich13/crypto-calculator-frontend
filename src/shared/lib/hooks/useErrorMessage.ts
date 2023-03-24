@@ -17,7 +17,16 @@ export const useErrorMessage = (errorData?: FetchBaseQueryError | SerializedErro
       const { status, data } = errorData;
 
       if ((status === 200 || status === 400 || status === 401) && isIAPIResponseError(data)) {
-        message = data.errors[0].message;
+        const errorMessage = data.errors[0].message;
+
+        if (
+          !(
+            errorMessage.includes('Invalid access token') ||
+            errorMessage.includes('Invalid refresh token')
+          )
+        ) {
+          message = errorMessage;
+        }
       } else {
         message = 'Error sending data, please try again later.';
       }

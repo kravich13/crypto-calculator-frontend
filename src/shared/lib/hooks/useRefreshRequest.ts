@@ -11,6 +11,7 @@ export const useRefreshRequest = (
   inputError: FetchBaseQueryError | SerializedError | undefined,
   repeatedRequest: Function
 ) => {
+  const isAuth = useAppSelector(({ authReducer }) => authReducer.isAuth);
   const { logout, login } = useAuthContext();
   const refreshToken = useAppSelector((state) => state.authReducer.refreshToken);
   const [refreshTokens, { data, reset, isLoading, error }] = useRefreshTokensMutation();
@@ -34,11 +35,11 @@ export const useRefreshRequest = (
   }, [data, repeatedRequest]);
 
   useEffect(() => {
-    if (refreshErrorMessage.includes('Invalid refresh token')) {
+    if (refreshErrorMessage.includes('Invalid refresh token') && isAuth) {
       logout({ notifyUser: true, redirectTo: RoutesTypes.MAIN });
       reset();
     }
-  }, [refreshErrorMessage]);
+  }, [refreshErrorMessage, isAuth]);
 
   return { isLoading, errorMessage: inputErrorMessage || refreshErrorMessage };
 };

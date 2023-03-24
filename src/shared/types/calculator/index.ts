@@ -17,3 +17,8 @@ export interface ICoinProfitData {
 }
 
 export type CalculateCoinProfitData = ICoinProfitData & IMainCoinInfo;
+
+export interface IMonthlyCapital {
+  date: number;
+  capital: number;
+}
