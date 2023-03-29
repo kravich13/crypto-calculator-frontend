@@ -8,6 +8,7 @@ const MyDocument: NextPage = () => {
   return (
     <Html lang="en">
       <Head />
+
       <body>
         <Main />
         <NextScript />

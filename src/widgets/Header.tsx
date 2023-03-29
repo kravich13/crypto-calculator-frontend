@@ -27,7 +27,7 @@ export const Header: React.FC = () => {
       <Toolbar className={tollbarClasses.join(' ')}>
         <Container component="div" maxWidth="xl" className={logoClasses.join(' ')}>
           <Typography component="span" variant="h5" sx={{ cursor: 'pointer' }} onClick={goToMain}>
-            Crypto Calculator
+            Crypto Metrics
           </Typography>
         </Container>
 
