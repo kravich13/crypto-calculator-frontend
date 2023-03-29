@@ -63,7 +63,7 @@ export const Footer = React.memo(() => {
       <Box className={isMax490Width ? styles.mobileContainer : styles.mainContainer}>
         <Box className={isMax490Width ? styles.mobileLogo : ''}>
           <Typography color="white" variant="h6" component="p">
-            Crypto Calculator
+            Crypto Metrics
           </Typography>
         </Box>
 
