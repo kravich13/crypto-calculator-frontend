@@ -6,8 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "test": "jest"
+    "next:lint": "next lint",
+    "test": "jest",
+    "tsc": "tsc",
+    "lint": "eslint . --ext .tsx --ext .ts src/",
+    "lint:fix": "yarn lint --fix",
+    "prettier": "prettier --config ./.prettierrc --check \"src*/**/*.ts\" --check \"src*/**/*.tsx\" ",
+    "prettier:fix": "yarn prettier --write"
   },
   "dependencies": {
     "@emotion/cache": "^11.10.5",
