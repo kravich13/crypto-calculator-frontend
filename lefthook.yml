@@ -1,7 +1,7 @@
 pre-commit:
   commands:
     tsc-runner:
-      run: npm run tsc
+      run: yarn tsc
 
     prettier-fixer:
       glob: '*.{js,ts,tsx}'
