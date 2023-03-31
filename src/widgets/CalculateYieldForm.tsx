@@ -44,7 +44,8 @@ export const CalculateYieldForm = () => {
     periodRefreshData.isLoading ||
     calculateRefreshData.isLoading;
 
-  const errorMessage = periodRefreshData.errorMessage || calculateRefreshData.errorMessage;
+  const errorMessage = periodRefreshData.error.message || calculateRefreshData.error.message;
+  const isError = periodRefreshData.error.showError || calculateRefreshData.error.showError;
 
   const [step, setStep] = useState(0);
 
@@ -103,9 +104,7 @@ export const CalculateYieldForm = () => {
       maxWidth={isMin520Width ? 'xs' : 'sm'}
       className={globalStyles.opacityContainer}
     >
-      {Boolean(errorMessage) && (
-        <PopupAlert text={errorMessage} severity="error" variant="filled" />
-      )}
+      {isError && <PopupAlert text={errorMessage} severity="error" variant="filled" />}
 
       <Typography component="h1" variant="h5" marginBottom={3} textAlign="center">
         Calculation of profitability monthly investments in cryptocurrency

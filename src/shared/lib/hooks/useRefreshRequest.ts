@@ -12,18 +12,22 @@ export const useRefreshRequest = (
   repeatedRequest: Function
 ) => {
   const isAuth = useAppSelector(({ authReducer }) => authReducer.isAuth);
-  const { logout, login } = useAuthContext();
   const refreshToken = useAppSelector((state) => state.authReducer.refreshToken);
+
+  const { logout, login } = useAuthContext();
   const [refreshTokens, { data, reset, isLoading, error }] = useRefreshTokensMutation();
 
-  const inputErrorMessage = useErrorMessage(inputError);
-  const refreshErrorMessage = useErrorMessage(error);
+  const inputCustomError = useErrorMessage(inputError);
+  const refreshError = useErrorMessage(error);
+
+  const inputMessage = inputCustomError.message;
+  const refreshMessage = refreshError.message;
 
   useEffect(() => {
-    if (inputErrorMessage.includes('Invalid access token')) {
+    if (inputMessage.includes('Invalid access token')) {
       refreshTokens({ refreshToken });
     }
-  }, [inputErrorMessage, refreshToken]);
+  }, [inputMessage, refreshToken]);
 
   useEffect(() => {
     if (data) {
@@ -35,11 +39,11 @@ export const useRefreshRequest = (
   }, [data, repeatedRequest]);
 
   useEffect(() => {
-    if (refreshErrorMessage.includes('Invalid refresh token') && isAuth) {
+    if (refreshMessage.includes('Invalid refresh token') && isAuth) {
       logout({ notifyUser: true, redirectTo: RoutesTypes.MAIN });
       reset();
     }
-  }, [refreshErrorMessage, isAuth]);
+  }, [refreshMessage, isAuth]);
 
-  return { isLoading, errorMessage: inputErrorMessage || refreshErrorMessage };
+  return { isLoading, error: inputCustomError || refreshError };
 };

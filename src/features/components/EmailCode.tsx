@@ -27,10 +27,10 @@ export const EmailCode: React.FC<IEmailCodeProps> = React.memo(({ isLoading, onC
   const { handleSubmit, control, resetField } = useForm<IEmailCodeForm>({ mode: 'onBlur' });
   const { errors, isValid } = useFormState({ control });
 
-  const [signIn, signUpData] = useSignInMutation();
-  const signUpError = useErrorMessage(signUpData.error);
+  const [signIn, signInData] = useSignInMutation();
+  const signUpError = useErrorMessage(signInData.error);
 
-  const loading = isLoading || signUpData.isLoading;
+  const loading = isLoading || signInData.isLoading;
 
   const [isDisabledSendEmail, setDisabledSendEmail] = useState(true);
 
@@ -43,7 +43,7 @@ export const EmailCode: React.FC<IEmailCodeProps> = React.memo(({ isLoading, onC
   }, [email]);
 
   useEffect(() => {
-    const signUpPayload = signUpData.data;
+    const signUpPayload = signInData.data;
 
     if (signUpPayload) {
       dispatch(
@@ -52,7 +52,7 @@ export const EmailCode: React.FC<IEmailCodeProps> = React.memo(({ isLoading, onC
         })
       );
     }
-  }, [signUpData.data]);
+  }, [signInData.data]);
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -71,7 +71,9 @@ export const EmailCode: React.FC<IEmailCodeProps> = React.memo(({ isLoading, onC
 
   return (
     <Box component="form" noValidate onSubmit={handleSubmit(onConfirm)}>
-      {signUpData.isError && <PopupAlert text={signUpError} severity="error" variant="filled" />}
+      {signUpError.showError && (
+        <PopupAlert text={signUpError.message} severity="error" variant="filled" />
+      )}
 
       <Grid container spacing={3}>
         <Grid item xs={12}>
