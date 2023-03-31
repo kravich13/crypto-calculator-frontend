@@ -6,8 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "test": "jest"
+    "next:lint": "next lint",
+    "test": "jest",
+    "tsc": "tsc",
+    "lint": "eslint . --ext .tsx --ext .ts src/",
+    "lint:fix": "yarn lint --fix",
+    "prettier": "prettier --config ./.prettierrc --check \"src*/**/*.ts\" --check \"src*/**/*.tsx\" ",
+    "prettier:fix": "yarn prettier --write"
   },
   "dependencies": {
     "@emotion/cache": "^11.10.5",
@@ -32,6 +37,7 @@
     "next": "13.2.4",
     "next-redux-wrapper": "^8.1.0",
     "nextjs-progressbar": "^0.0.16",
+    "prettier": "^2.8.7",
     "react": "18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "18.2.0",
