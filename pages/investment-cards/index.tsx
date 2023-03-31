@@ -1,13 +1,8 @@
 import { PageLayout } from '@cc/app/components';
-import { RoutesTypes } from '@cc/shared/enums';
-import { useAuthPage, useRedirectCondition } from '@cc/shared/lib';
 import { InvestmentCardsList } from '@cc/widgets';
 import Head from 'next/head';
 
 export default function InvestmentCards() {
-  useAuthPage({ redirectTo: RoutesTypes.MAIN });
-  useRedirectCondition({ redirectTo: RoutesTypes.MAIN });
-
   return (
     <PageLayout>
       <Head>

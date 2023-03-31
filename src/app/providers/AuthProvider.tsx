@@ -6,13 +6,16 @@ import {
   useAppDispatch,
   userDataActions,
 } from '@cc/shared/lib';
-import { IAuthContentLoginData, IAuthContextLogoutData, IJwtTokensPayload } from '@cc/shared/types';
+import {
+  IAuthContentLoginData,
+  IAuthContextLogoutData,
+  IChildrenProps,
+  IJwtTokensPayload,
+} from '@cc/shared/types';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-interface IAuthProviderProps {
-  children: React.ReactNode;
-}
+interface IAuthProviderProps extends IChildrenProps {}
 
 export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
   const dispatch = useAppDispatch();

@@ -1,10 +1,10 @@
+import { IChildrenProps } from '@cc/shared/types';
 import { Box } from '@mui/material';
 import styles from '../styles/PageLayout.module.css';
 
-interface IPagelayoutProps {
+interface IPagelayoutProps extends IChildrenProps {
   centerContent?: boolean;
   fullContent?: boolean;
-  children: React.ReactNode;
 }
 
 export const PageLayout: React.FC<IPagelayoutProps> = ({ centerContent = false, children }) => {

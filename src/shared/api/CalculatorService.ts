@@ -7,6 +7,7 @@ import {
   ICoinSearchRequest,
   IPeriodAndAmountRequest,
   IPeriodAndAmountResponse,
+  RootState,
 } from '../types';
 
 export const calculatorAPI = createApi({
@@ -14,7 +15,7 @@ export const calculatorAPI = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.CRYPTO_API_URL}/crypto`,
     prepareHeaders(headers, { getState }) {
-      const token = (getState() as any)?.authReducer?.accessToken;
+      const token = (getState() as RootState).authReducer.accessToken;
 
       if (token) {
         headers.set('authorization', `Bearer ${token}`);
