@@ -1,9 +1,8 @@
+import { IChildrenProps } from '@cc/shared/types';
 import { AnimatePresence, motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 
-interface IFramerMotions {
-  children: React.ReactNode;
-}
+interface IFramerMotions extends IChildrenProps {}
 
 export const FramerMotions: React.FC<IFramerMotions> = ({ children }) => {
   const pathname = usePathname();

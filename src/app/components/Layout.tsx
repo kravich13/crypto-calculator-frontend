@@ -1,11 +1,10 @@
+import { IChildrenProps } from '@cc/shared/types';
 import { Footer, Header, ModalLogin, ModalLogout } from '@cc/widgets';
 import { Box } from '@mui/material';
 import NextNProgress from 'nextjs-progressbar';
 import styles from '../styles/Layout.module.css';
 
-interface IlayoutProps {
-  children: React.ReactNode;
-}
+interface IlayoutProps extends IChildrenProps {}
 
 export const Layout: React.FC<IlayoutProps> = ({ children }) => {
   return (
