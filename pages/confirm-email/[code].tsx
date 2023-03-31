@@ -18,9 +18,11 @@ const ConfirmEmail = () => {
   const { login } = useAuthContext();
 
   const query = useRouter().query as IRouterQuery;
-  const [emailValidate, { isError, data, error }] = useEmailValidateMutation();
+  const [emailValidate, { data, error }] = useEmailValidateMutation();
 
-  const errorMessage = useErrorMessage(error).includes('Code lifetime expired')
+  const emailValidateError = useErrorMessage(error);
+
+  const errorMessage = emailValidateError.message.includes('Code lifetime expired')
     ? 'Code lifetime expired.'
     : '';
 
@@ -46,7 +48,7 @@ const ConfirmEmail = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      {showContent && isError && (
+      {showContent && Boolean(errorMessage) && (
         <Container maxWidth="xs" className={globalStyles.opacityContainer}>
           <Typography variant="h6" component="h1" color="red" fontWeight="600">
             An error has occurred

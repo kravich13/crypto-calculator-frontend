@@ -7,12 +7,18 @@ import type { SerializedError } from '@reduxjs/toolkit';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useMemo } from 'react';
 
-export const useErrorMessage = (errorData?: FetchBaseQueryError | SerializedError) => {
-  const errorMessage = useMemo(() => {
-    let message = '';
+interface IResult {
+  showError: boolean;
+  message: string;
+}
+
+export const useErrorMessage = (errorData?: FetchBaseQueryError | SerializedError) =>
+  useMemo(() => {
+    const result: IResult = { message: '', showError: false };
 
     if (isSerializedError(errorData)) {
-      message = errorData.message || '';
+      result.message = errorData.message || '';
+      result.showError = Boolean(errorData.message);
     } else if (isFetchBaseQueryError(errorData)) {
       const { status, data } = errorData;
 
@@ -20,22 +26,22 @@ export const useErrorMessage = (errorData?: FetchBaseQueryError | SerializedErro
         const errorMessage = data.errors[0].message;
 
         if (
-          !(
-            errorMessage.includes('Invalid access token') ||
-            errorMessage.includes('Invalid refresh token')
-          )
+          errorMessage.includes('Invalid access token') ||
+          errorMessage.includes('Invalid refresh token')
         ) {
-          message = errorMessage;
+          result.message = errorMessage;
+        } else {
+          result.message = errorMessage;
+          result.showError = true;
         }
       } else {
-        message = 'Error sending data, please try again later.';
+        result.message = 'Error sending data, please try again later.';
+        result.showError = true;
       }
     } else if (Boolean(errorData)) {
-      message = 'Error sending data, please try again later.';
+      result.message = 'Error sending data, please try again later.';
+      result.showError = true;
     }
 
-    return message;
+    return result;
   }, [errorData]);
-
-  return errorMessage;
-};

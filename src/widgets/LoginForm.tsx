@@ -36,7 +36,8 @@ export const LoginForm = () => {
   const emailValidateError = useErrorMessage(emailValidateData.error);
 
   const isLoading = signUpData.isLoading || emailValidateData.isLoading;
-  const isError = signUpData.isError || emailValidateData.isError;
+  const isError = signUpError.showError || emailValidateError.showError;
+  const errorMessage = signUpError.message || emailValidateError.message;
 
   const onSendEmail: SubmitHandler<ISetEmailInput> = useCallback(async (data) => {
     dispatch(userDataActions.setEmail(data));
@@ -78,9 +79,7 @@ export const LoginForm = () => {
 
   return (
     <Container maxWidth="xs" className={globalStyles.opacityContainer}>
-      {isError && (
-        <PopupAlert text={signUpError || emailValidateError} severity="error" variant="filled" />
-      )}
+      {isError && <PopupAlert text={errorMessage} severity="error" variant="filled" />}
 
       <Typography component="h1" variant="h5" textAlign="left" width="100%" mb={3}>
         Log In

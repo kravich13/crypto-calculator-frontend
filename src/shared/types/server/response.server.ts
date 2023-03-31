@@ -1,7 +1,7 @@
+export type APIMessageErrorType = { message: string }[];
+
 export interface IAPIResponseError {
-  errors: {
-    message: string;
-  }[];
+  errors: APIMessageErrorType;
 }
 
 export interface ISuccessResponseStatus {

@@ -6,6 +6,7 @@ const nextConfig = {
   },
   experimental: {
     appDir: false,
+    forceSwcTransforms: true,
   },
   env: {
     CRYPTO_API_URL: 'http://0.0.0.0:5001',
