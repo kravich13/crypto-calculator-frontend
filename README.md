@@ -1,46 +1,53 @@
-# Getting Started with Create React App
+# Crypto Metrics
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
+- [Crypto Metrics](#crypto-metrics)
+  - [Розробка](#розробка)
+  - [Мета проекту](#мета-проекту)
+  - [Функціонал](#функціонал)
+  - [Дорожня карта](#дорожня-карта)
+  - [Команда](#команда)
 
-## Available Scripts
+## Розробка
 
-In the project directory, you can run:
+- [Список API](https://docs.google.com/spreadsheets/d/1vTmBQFo2wFX0oCJeqGHTAz3dn5wm5x6eL-0KkI70c0g/edit?usp=sharing)
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Мета проекту
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Програма працює з історичними даними щодо зміни курсів криптовалют і дозволяє оцінити, наскільки прибутковими були б ваші інвестиції в криптовалюти, якби ви зробили їх у минулому.
 
-### `npm test`
+Вибравши вхідні параметри, ви дізнаєтесь:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Прибутковість в `$` та `%` за окремими монетами.
+- Чистий прибуток в `$` та `%`.
+- Сумарний капітал.
+- Початкову, середню та кінцеву ціну для кожної монети.
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Функціонал
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Доступні вхідні параметри:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Початкова дата інвестування.
+- Кінцева дата інвестування та поточна дата.
+- Інвестована сума на місяць.
+- Розумний пошук за існуючими монетами та додавання їх до списку (до 5 монет).
+- Розподіл інвестованої суми у `%` на кожну обрану монету (10% btc, eth 20%, й тощо до 100%).
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Дорожня карта
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- [x] Графік балансу за кожен місяць інвестування.
+- [ ] Вибір до 15 монет.
+- [ ] Вибрати фільтр для монет у пошуку за падінням/зростанням ціни, монети тільки з топ-50, 100 (прив'язка до початкової дати інвестування).
+- [ ] Зберігати вибрані параметри та їх результат у картках.
+- [ ] Редагувати картки.
+- [ ] На окремій сторінці отримати список найкращіх монет для інвестування у даний час.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Команда
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [Maksym Baranosvkyi](https://github.com/mkbaranovskyi/)
+- [Vladislav Onatskyi](https://github.com/kravich13/)

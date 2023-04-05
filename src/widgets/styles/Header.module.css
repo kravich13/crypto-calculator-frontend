@@ -1,0 +1,11 @@
+.header {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.mobileHeader {
+  display: flex;
+  flex-direction: column;
+}
+.mobileLogoContainer {
+  text-align: center;
+}

@@ -1,0 +1,36 @@
+.contentContainer {
+  display: flex;
+}
+
+@media screen and (min-width: 870px) {
+  .mainContainer:nth-child(odd) .contentContainer {
+    flex-direction: row-reverse;
+  }
+
+  .divider {
+    margin-bottom: 16px;
+  }
+
+  .contentContainer {
+    align-items: center;
+  }
+  .contentContainer {
+    gap: 50px;
+  }
+
+  .boxContent {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 870px) {
+  .contentContainer {
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .boxContent > h2 {
+    text-align: center;
+  }
+}

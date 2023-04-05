@@ -1,0 +1,13 @@
+.container {
+  position: relative;
+  z-index: 1;
+}
+.searchContainer {
+  position: absolute;
+  background: white;
+  padding: 8px;
+  border-left: 2px solid #1876d1;
+  border-bottom: 2px solid #1876d1;
+  border-right: 2px solid #1876d1;
+  border-radius: 4px;
+}

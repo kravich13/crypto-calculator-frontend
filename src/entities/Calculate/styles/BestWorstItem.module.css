@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.container > div {
+  display: flex;
+}
+
+.container:not(:last-child) {
+  margin-bottom: 8px;
+}

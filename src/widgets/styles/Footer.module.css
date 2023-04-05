@@ -1,0 +1,43 @@
+.mainContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+.mobileContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.mobileLogo {
+  margin-bottom: 10px;
+}
+.contentContainer {
+  display: flex;
+  flex-direction: row;
+}
+.columnContainer {
+  width: 120px;
+}
+.rowContainer {
+  display: flex;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+}
+.rowHeader {
+  text-align: center;
+  padding-bottom: 5px;
+  color: white;
+}
+.link {
+  all: unset;
+  cursor: pointer;
+  line-height: 0;
+}
+.buttonLink {
+  height: 24px;
+  width: 24px;
+  border-radius: 4px;
+  background: white;
+}
