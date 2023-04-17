@@ -10,19 +10,17 @@ import { LoadingButton } from '@mui/lab';
 import { Box, Grid, InputAdornment, TextField } from '@mui/material';
 import { DateTime } from 'luxon';
 import React, { useCallback, useMemo } from 'react';
-import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form';
+import { Controller, SubmitHandler, UseFormReturn, useFormState } from 'react-hook-form';
 
 interface IPeriodAndAmountProps {
   isLoading: boolean;
+  state: UseFormReturn<IPeriodAndAmountForm, any>;
   onConfirm: SubmitHandler<IPeriodAndAmountForm>;
 }
 
 export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(
-  ({ isLoading, onConfirm }) => {
-    const { control, formState, watch, getFieldState, handleSubmit } =
-      useForm<IPeriodAndAmountForm>({
-        mode: 'onBlur',
-      });
+  ({ isLoading, state, onConfirm }) => {
+    const { control, formState, watch, getFieldState, handleSubmit } = state;
     const { errors, isValid } = useFormState({ control });
 
     const startState = getFieldState('startDate', formState);
