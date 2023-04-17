@@ -1,19 +1,28 @@
 import { RoutesTypes } from '@cc/shared/enums';
 import { useAppSelector, useAuthContext } from '@cc/shared/lib';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { Avatar, Box, Fade, IconButton, Menu, MenuItem, Typography } from '@mui/material';
+import { Avatar, Box, Button, Fade, IconButton, Menu, MenuItem, Typography } from '@mui/material';
+import { useRouter } from 'next/navigation';
 import React, { useCallback, useState } from 'react';
 
 export const AuthHeaderContent: React.FC = () => {
   const emailUser = useAppSelector((state) => state.userDataReducer.email);
+  const hasProfitData = useAppSelector((state) => state.profitReducer.hasData);
+
   const { logout } = useAuthContext();
+
+  const router = useRouter();
 
   const avatarTitle = emailUser.at(0)?.toUpperCase();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isOpen = Boolean(anchorEl);
 
-  const handleClick = useCallback((event: React.MouseEvent<HTMLElement>) => {
+  const onClickLastCalculation = useCallback(() => {
+    router.push(RoutesTypes.INVESTMENT_STATISTICS);
+  }, [router]);
+
+  const onClickUserMenu = useCallback((event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   }, []);
 
@@ -28,7 +37,13 @@ export const AuthHeaderContent: React.FC = () => {
 
   return (
     <Box>
-      <IconButton title="Manage account" onClick={handleClick}>
+      {Boolean(hasProfitData) && (
+        <Button variant="text" color="inherit" onClick={onClickLastCalculation}>
+          Last calculation
+        </Button>
+      )}
+
+      <IconButton title={emailUser} onClick={onClickUserMenu}>
         <Avatar sx={{ width: 34, height: 34 }}>{avatarTitle}</Avatar>
       </IconButton>
 

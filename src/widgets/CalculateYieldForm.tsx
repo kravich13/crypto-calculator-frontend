@@ -15,13 +15,15 @@ import { Container, Step, StepLabel, Stepper, Typography, useMediaQuery } from '
 import { DateTime } from 'luxon';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { SubmitHandler } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 export const CalculateYieldForm = () => {
   const isMin520Width = useMediaQuery('(max-width:520px)');
   const router = useRouter();
 
   const dispatch = useAppDispatch();
+
+  const periodAndAmountState = useForm<IPeriodAndAmountForm>({ mode: 'onBlur' });
 
   const [periodAndAmountRequest, periodAndAmountResponse] = usePeriodAndAmountMutation();
   const [calculateProfitRequest, calculateProfitResponse] = useCalculateProfitMutation();
@@ -73,10 +75,16 @@ export const CalculateYieldForm = () => {
 
   const stepRender = useMemo(
     (): Record<number, JSX.Element> => ({
-      0: <PeriodAndAmount isLoading={isLoading} onConfirm={onConfirmStep0} />,
+      0: (
+        <PeriodAndAmount
+          isLoading={isLoading}
+          state={periodAndAmountState}
+          onConfirm={onConfirmStep0}
+        />
+      ),
       1: <SelectedInvestCoins isLoading={isLoading} onBack={onBack} onConfirm={onConfirmStep1} />,
     }),
-    [isLoading]
+    [isLoading, periodAndAmountState]
   );
 
   useEffect(() => {

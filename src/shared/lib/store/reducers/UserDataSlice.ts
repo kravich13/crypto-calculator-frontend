@@ -19,6 +19,8 @@ export const userDataSlice = createSlice({
       return { ...initialState };
     },
     setEmail(state, { payload }: PayloadAction<ISetEmailInput>) {
+      localStorage.setItem('userData', JSON.stringify(payload));
+
       state.email = payload.email;
     },
     setEmailCodeExpiresIn(state, { payload }: PayloadAction<ISetEmailCodeExpiresIn>) {

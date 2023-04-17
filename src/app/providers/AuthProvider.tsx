@@ -11,6 +11,7 @@ import {
   IAuthContextLogoutData,
   IChildrenProps,
   IJwtTokensPayload,
+  LocalStorageUserData,
 } from '@cc/shared/types';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -78,8 +79,8 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
     let tokens: IJwtTokensPayload | null = null;
 
     try {
-      const areTokensData = localStorage.getItem('tokensData');
-      tokens = areTokensData ? (JSON.parse(areTokensData) as IJwtTokensPayload) : null;
+      const tokensData = localStorage.getItem('tokensData');
+      tokens = tokensData ? (JSON.parse(tokensData) as IJwtTokensPayload) : null;
 
       if (
         tokens &&
@@ -95,13 +96,30 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
     return tokens;
   }, []);
 
+  const userData = useMemo(() => {
+    let data: LocalStorageUserData | null = null;
+
+    try {
+      const userData = localStorage.getItem('userData');
+      data = userData ? (JSON.parse(userData) as LocalStorageUserData) : null;
+    } catch (err) {
+      console.warn('Parsing userData error.');
+    }
+
+    return data;
+  }, []);
+
   useEffect(() => {
+    if (userData) {
+      dispatch(userDataActions.setEmail({ email: userData.email }));
+    }
+
     if (tokensPayload) {
       login({ tokensData: tokensPayload });
     } else {
       dispatch(authActions.setNotAuth());
     }
-  }, [tokensPayload]);
+  }, [tokensPayload, userData]);
 
   return (
     <AuthContext.Provider value={{ showModalLogout, showModalLogin, login, logout }}>

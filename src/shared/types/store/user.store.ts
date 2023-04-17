@@ -1,3 +1,5 @@
+export type LocalStorageUserData = ISetEmailInput;
+
 export interface ISetEmailInput {
   email: string;
 }
