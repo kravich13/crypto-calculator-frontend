@@ -15,7 +15,7 @@ export const PageLayout: React.FC<IPagelayoutProps> = ({ centerContent = false, 
   }
 
   return (
-    <Box component="main" maxWidth="xl" className={classes.join(' ')}>
+    <Box component="main" className={classes.join(' ')}>
       {children}
     </Box>
   );

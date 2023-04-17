@@ -12,7 +12,7 @@ export const Header: React.FC = () => {
   const isMin500Width = useMediaQuery('(max-width:500px)');
 
   const tollbarClasses = [styles.header, isMin500Width && styles.mobileHeader];
-  const logoClasses = [isMin500Width && styles.mobileLogoContainer];
+  const containerClasses = [isMin500Width ? styles.mobileLogoContainer : styles.contentContainer];
 
   const isAuth = useAppSelector((state) => state.authReducer.isAuth);
 
@@ -25,17 +25,17 @@ export const Header: React.FC = () => {
   return (
     <AppBar position="sticky">
       <Toolbar className={tollbarClasses.join(' ')}>
-        <Container component="div" maxWidth="xl" className={logoClasses.join(' ')}>
+        <Container component="div" maxWidth="lg" className={containerClasses.join(' ')}>
           <Typography component="span" variant="h5" sx={{ cursor: 'pointer' }} onClick={goToMain}>
             Crypto Metrics
           </Typography>
-        </Container>
 
-        {isAuth ? (
-          <AuthHeaderContent />
-        ) : (
-          <NotAuthHeaderContent isLoadingContent={Boolean(isAuth === undefined)} />
-        )}
+          {isAuth ? (
+            <AuthHeaderContent />
+          ) : (
+            <NotAuthHeaderContent isLoadingContent={Boolean(isAuth === undefined)} />
+          )}
+        </Container>
       </Toolbar>
     </AppBar>
   );

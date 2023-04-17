@@ -17,10 +17,6 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 
-interface IStepRender {
-  [key: number]: JSX.Element;
-}
-
 export const CalculateYieldForm = () => {
   const isMin520Width = useMediaQuery('(max-width:520px)');
   const router = useRouter();
@@ -75,8 +71,8 @@ export const CalculateYieldForm = () => {
     setStep(0);
   }, []);
 
-  const stepRender: IStepRender = useMemo(
-    () => ({
+  const stepRender = useMemo(
+    (): Record<number, JSX.Element> => ({
       0: <PeriodAndAmount isLoading={isLoading} onConfirm={onConfirmStep0} />,
       1: <SelectedInvestCoins isLoading={isLoading} onBack={onBack} onConfirm={onConfirmStep1} />,
     }),

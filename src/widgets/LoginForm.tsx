@@ -16,10 +16,6 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 
-interface IStepReturn {
-  [key: number]: string | JSX.Element;
-}
-
 export const LoginForm = () => {
   const { login } = useAuthContext();
   const router = useRouter();
@@ -51,16 +47,16 @@ export const LoginForm = () => {
     [emailUser]
   );
 
-  const stepText: IStepReturn = useMemo(
-    () => ({
+  const stepText = useMemo(
+    (): Record<number, string> => ({
       0: 'Enter email to login',
       1: `Enter code sent to your email ${emailUser}`,
     }),
     [emailUser]
   );
 
-  const stepRender: IStepReturn = useMemo(
-    () => ({
+  const stepRender = useMemo(
+    (): Record<number, JSX.Element> => ({
       0: <SendEmail isLoading={isLoading} onConfirm={onSendEmail} />,
       1: <EmailCode isLoading={isLoading} onConfirm={onConfirmEmailCode} />,
     }),
