@@ -17,7 +17,7 @@ export default function InvestmentStatistics() {
 
   return (
     <AuthPage>
-      <ProtectedPage redirectTo={RoutesTypes.CALCULATE_YIELD} condition={!hasProfitData}>
+      <ProtectedPage redirectTo={RoutesTypes.CALCULATE_YIELD} condition={Boolean(!hasProfitData)}>
         <PageLayout>
           <Head>
             <title>Investment statistics | Crypto Metrics</title>

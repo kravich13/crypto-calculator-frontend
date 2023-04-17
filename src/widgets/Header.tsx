@@ -1,9 +1,11 @@
 import { AuthHeaderContent, NotAuthHeaderContent } from '@cc/entities/Header';
 import { RoutesTypes } from '@cc/shared/enums';
 import { useAppSelector } from '@cc/shared/lib';
-import { AppBar, Container, Toolbar, Typography, useMediaQuery } from '@mui/material';
+import { AppBar, Container, Toolbar, useMediaQuery } from '@mui/material';
+import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useCallback } from 'react';
+import CryptoMetricsFrame2 from '../../public/logo/crypto-metrics-frame-2.svg';
 import styles from './styles/Header.module.css';
 
 export const Header: React.FC = () => {
@@ -26,9 +28,12 @@ export const Header: React.FC = () => {
     <AppBar position="sticky">
       <Toolbar className={tollbarClasses.join(' ')}>
         <Container component="div" maxWidth="lg" className={containerClasses.join(' ')}>
-          <Typography component="span" variant="h5" sx={{ cursor: 'pointer' }} onClick={goToMain}>
-            Crypto Metrics
-          </Typography>
+          <Image
+            alt="Crypto Metrics"
+            src={CryptoMetricsFrame2}
+            style={{ cursor: 'pointer' }}
+            onClick={goToMain}
+          />
 
           {isAuth ? (
             <AuthHeaderContent />

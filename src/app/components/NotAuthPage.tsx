@@ -3,6 +3,7 @@ import { useAppSelector } from '@cc/shared/lib';
 import { IChildrenProps } from '@cc/shared/types';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { PageLayout } from './PageLayout';
 
 interface IRedirectTo {
   redirectTo?: RoutesTypes;
@@ -23,7 +24,7 @@ const NotAuthComponent: React.FC<NotAuthPropsType> = ({
     }
   }, [isAuth, router, redirectTo]);
 
-  return !isAuth ? <>{children}</> : null;
+  return !isAuth ? <>{children}</> : <PageLayout>{}</PageLayout>;
 };
 
 export const NotAuthPage: React.FC<NotAuthPropsType> = (props) => <NotAuthComponent {...props} />;
