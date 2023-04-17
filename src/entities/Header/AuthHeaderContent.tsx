@@ -2,7 +2,7 @@ import { RoutesTypes } from '@cc/shared/enums';
 import { useAppSelector, useAuthContext } from '@cc/shared/lib';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Avatar, Box, Button, Fade, IconButton, Menu, MenuItem, Typography } from '@mui/material';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import React, { useCallback, useState } from 'react';
 
 export const AuthHeaderContent: React.FC = () => {
@@ -12,6 +12,11 @@ export const AuthHeaderContent: React.FC = () => {
   const { logout } = useAuthContext();
 
   const router = useRouter();
+  const pathname = usePathname();
+
+  const showCalculationButton = Boolean(
+    hasProfitData && pathname !== RoutesTypes.INVESTMENT_STATISTICS
+  );
 
   const avatarTitle = emailUser.at(0)?.toUpperCase();
 
@@ -37,7 +42,7 @@ export const AuthHeaderContent: React.FC = () => {
 
   return (
     <Box>
-      {Boolean(hasProfitData) && (
+      {showCalculationButton && (
         <Button variant="text" color="inherit" onClick={onClickLastCalculation}>
           Last calculation
         </Button>

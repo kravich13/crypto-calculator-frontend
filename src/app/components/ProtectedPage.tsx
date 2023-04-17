@@ -2,6 +2,7 @@ import { RoutesTypes } from '@cc/shared/enums';
 import { IChildrenProps } from '@cc/shared/types';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { PageLayout } from './PageLayout';
 
 interface IRedirectTo {
   redirectTo: RoutesTypes;
@@ -19,7 +20,7 @@ const ProtectedComponent: React.FC<ProtectedPropsType> = ({ children, redirectTo
     }
   }, [condition, router, redirectTo]);
 
-  return condition ? <>{children}</> : null;
+  return !condition ? <>{children}</> : <PageLayout>{}</PageLayout>;
 };
 
 export const ProtectedPage: React.FC<ProtectedPropsType> = (props) => (

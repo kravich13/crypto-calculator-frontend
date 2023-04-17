@@ -3,6 +3,7 @@ import { useAppSelector } from '@cc/shared/lib';
 import { IChildrenProps } from '@cc/shared/types';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { PageLayout } from './PageLayout';
 
 interface IRedirectTo {
   redirectTo?: RoutesTypes;
@@ -20,7 +21,7 @@ const AuthComponent: React.FC<AuthPropsType> = ({ children, redirectTo = RoutesT
     }
   }, [isAuth, router, redirectTo]);
 
-  return isAuth ? <>{children}</> : null;
+  return isAuth ? <>{children}</> : <PageLayout>{}</PageLayout>;
 };
 
 export const AuthPage: React.FC<AuthPropsType> = (props) => <AuthComponent {...props} />;
