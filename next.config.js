@@ -9,7 +9,7 @@ const nextConfig = {
     forceSwcTransforms: true,
   },
   env: {
-    CRYPTO_API_URL: 'http://0.0.0.0:5001',
+    CRYPTO_API_URL: process.env.CRYPTO_API_URL,
   },
 };
 

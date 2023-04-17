@@ -2,6 +2,12 @@
   padding-top: 10px;
   padding-bottom: 10px;
 }
+.contentContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
 .mobileHeader {
   display: flex;
   flex-direction: column;

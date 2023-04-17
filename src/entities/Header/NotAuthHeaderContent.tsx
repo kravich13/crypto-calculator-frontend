@@ -1,5 +1,5 @@
 import { RoutesTypes } from '@cc/shared/enums';
-import { Button, Container, Skeleton, useMediaQuery } from '@mui/material';
+import { Box, Button, Skeleton, useMediaQuery } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useCallback, useMemo } from 'react';
 
@@ -27,7 +27,7 @@ export const NotAuthHeaderContent: React.FC<INotAuthHeaderContentProps> = ({
   }, [pathname]);
 
   return (
-    <Container
+    <Box
       component="div"
       sx={[
         {
@@ -54,6 +54,6 @@ export const NotAuthHeaderContent: React.FC<INotAuthHeaderContentProps> = ({
           )}
         </>
       )}
-    </Container>
+    </Box>
   );
 };
