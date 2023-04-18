@@ -65,13 +65,15 @@ export const LoginForm = () => {
 
   useEffect(() => {
     if (step === 0 && signUpData.data) {
-      dispatch(userDataActions.setEmailCodeExpiresIn(signUpData.data));
+      const { emailCodeExpiresIn } = signUpData.data;
+
+      dispatch(userDataActions.setEmailCodeExpiresIn({ emailCodeExpiresIn }));
       setStep(1);
     } else if (step === 1 && emailValidateData.data) {
       login({ tokensData: emailValidateData.data });
       router.push(RoutesTypes.MAIN);
     }
-  }, [step, signUpData.data, emailValidateData.data]);
+  }, [step, signUpData.data, emailValidateData.data, emailUser]);
 
   return (
     <Container maxWidth="xs" className={globalStyles.opacityContainer}>

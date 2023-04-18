@@ -34,10 +34,15 @@ const ConfirmEmail = () => {
   }, []);
 
   useEffect(() => {
-    if (data) {
-      login({ tokensData: data, notifyUser: true, redirectTo: RoutesTypes.MAIN });
+    if (data && query.email) {
+      login({
+        tokensData: data,
+        userData: { email: query.email },
+        notifyUser: true,
+        redirectTo: RoutesTypes.MAIN,
+      });
     }
-  }, [data]);
+  }, [data, query?.email]);
 
   return (
     <NotAuthPage>
