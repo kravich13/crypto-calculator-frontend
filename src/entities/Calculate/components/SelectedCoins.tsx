@@ -22,6 +22,7 @@ interface ISelectedCoinsProps {
   getIndexError: (index: number) => boolean;
   removeAddedCoin: (index: number) => void;
   distributeEqually: () => void;
+  onEnterSelectedCoins: () => void;
 }
 
 export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
@@ -32,8 +33,18 @@ export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
   getIndexError,
   removeAddedCoin,
   distributeEqually,
+  onEnterSelectedCoins,
 }) => {
   const minPercentTitle = 100 / maxNumberOfCoinsToInvest;
+
+  const onKeyPress = useCallback(
+    (event: React.KeyboardEvent<HTMLDivElement>) => {
+      if (event.code === 'Enter') {
+        onEnterSelectedCoins();
+      }
+    },
+    [onEnterSelectedCoins]
+  );
 
   const renderItem = useCallback(
     ({ coinId, name, symbol, image, percent }: ISelectedInvestCoin, index: number) => (
@@ -62,6 +73,7 @@ export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
                   className={styles.input}
                   sx={{ mr: 2 }}
                   disabled={isLoading}
+                  onKeyDown={onKeyPress}
                 />
               )}
             />
@@ -80,7 +92,7 @@ export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
         <Divider />
       </Box>
     ),
-    [control, isLoading, getIndexError, removeAddedCoin]
+    [control, isLoading, getIndexError, onKeyPress, removeAddedCoin]
   );
 
   return (
@@ -103,7 +115,6 @@ export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
 
       <Box className={styles.boxButton}>
         <Button
-          type="submit"
           variant="outlined"
           style={{ textTransform: 'none' }}
           onClick={distributeEqually}
