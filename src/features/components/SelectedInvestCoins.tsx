@@ -37,7 +37,7 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
       (state) => state.baseCalculatorReducer.maxNumberOfCoinsToInvest
     );
 
-    const { control, handleSubmit, setValue } = useForm<ISelectedInvestCoinsForm>({
+    const { control, handleSubmit, setValue, watch } = useForm<ISelectedInvestCoinsForm>({
       mode: 'onBlur',
     });
 
@@ -50,6 +50,7 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
     const { errors, isValid } = useFormState({ control, name: 'addedCoins' });
 
     const canAddCoin = addedCoins.length < maxNumberOfCoinsToInvest;
+    const canCalculate = isValid && addedCoins.length <= maxNumberOfCoinsToInvest;
 
     const errorTitle = useMemo(() => {
       if (addedCoins.length === 0) {
@@ -96,9 +97,11 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
       })();
     }, [handleSubmit, onConfirm]);
 
-    const onSubmit = useCallback((event: React.ChangeEvent<HTMLFormElement>) => {
-      event.preventDefault();
-    }, []);
+    const onEnterSelectedCoins = useCallback(() => {
+      if (canCalculate) {
+        onCalculate();
+      }
+    }, [canCalculate, onCalculate]);
 
     return (
       <Box>
@@ -115,7 +118,7 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
           makeSearchRequest={makeSearchRequest}
         />
 
-        <Box component="form" noValidate onSubmit={onSubmit} mt={3}>
+        <Box component="form" noValidate onSubmit={onEnterSelectedCoins} mt={3}>
           <SelectedCoins
             isLoading={isLoading}
             maxNumberOfCoinsToInvest={maxNumberOfCoinsToInvest}
@@ -124,6 +127,7 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
             getIndexError={getIndexError}
             removeAddedCoin={remove}
             distributeEqually={distributeEqually}
+            onEnterSelectedCoins={onEnterSelectedCoins}
           />
         </Box>
 
@@ -153,7 +157,7 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
             sx={{ textTransform: 'none', width: '120px' }}
             type="submit"
             variant="contained"
-            disabled={!isValid || addedCoins.length > maxNumberOfCoinsToInvest}
+            disabled={!canCalculate}
             loading={isLoading}
             loadingPosition="end"
             endIcon={<CalculateIcon />}

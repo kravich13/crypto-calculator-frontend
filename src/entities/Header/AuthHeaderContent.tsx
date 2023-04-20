@@ -3,7 +3,7 @@ import { useAppSelector, useAuthContext } from '@cc/shared/lib';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Avatar, Box, Button, Fade, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 export const AuthHeaderContent: React.FC = () => {
   const emailUser = useAppSelector((state) => state.userDataReducer.email);
@@ -40,6 +40,45 @@ export const AuthHeaderContent: React.FC = () => {
     logout({ redirectTo: RoutesTypes.MAIN });
   }, []);
 
+  const normalizeHash = useCallback(
+    (hash: number, min: number, max: number) => Math.floor((hash % (max - min)) + min),
+    []
+  );
+
+  const getHashOfString = useCallback((str: string) => {
+    let hash = 0;
+
+    for (let i = 0; i < str.length; i++) {
+      hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+
+    hash = Math.abs(hash);
+
+    return hash;
+  }, []);
+
+  const generateHSL = useCallback((name: string) => {
+    const hRange = [0, 360];
+    const sRange = [0, 100];
+    const lRange = [0, 100];
+
+    const hash = getHashOfString(name);
+
+    return [
+      normalizeHash(hash, hRange[0], hRange[1]),
+      normalizeHash(hash, sRange[0], sRange[1]),
+      normalizeHash(hash, lRange[0], lRange[1]),
+    ];
+  }, []);
+
+  const HSLtoString = useCallback((hsl: number[]) => `hsl(${hsl[0]}, ${hsl[1]}%, ${hsl[2]}%)`, []);
+
+  const colorByUser = useMemo(() => {
+    const hsl = generateHSL(emailUser);
+
+    return HSLtoString(hsl);
+  }, [emailUser]);
+
   return (
     <Box>
       {showCalculationButton && (
@@ -49,7 +88,7 @@ export const AuthHeaderContent: React.FC = () => {
       )}
 
       <IconButton title={emailUser} onClick={onClickUserMenu}>
-        <Avatar sx={{ width: 34, height: 34 }}>{avatarTitle}</Avatar>
+        <Avatar sx={{ width: 34, height: 34, backgroundColor: colorByUser }}>{avatarTitle}</Avatar>
       </IconButton>
 
       <Menu open={isOpen} anchorEl={anchorEl} TransitionComponent={Fade} onClose={handleClose}>

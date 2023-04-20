@@ -16,14 +16,16 @@ export const userDataSlice = createSlice({
   initialState,
   reducers: {
     clearState() {
+      localStorage.removeItem('userData');
+
       return { ...initialState };
     },
     setEmail(state, { payload }: PayloadAction<ISetEmailInput>) {
-      localStorage.setItem('userData', JSON.stringify(payload));
-
       state.email = payload.email;
     },
     setEmailCodeExpiresIn(state, { payload }: PayloadAction<ISetEmailCodeExpiresIn>) {
+      localStorage.setItem('userData', JSON.stringify({ email: state.email }));
+
       state.emailCodeExpiresIn = payload.emailCodeExpiresIn;
     },
   },

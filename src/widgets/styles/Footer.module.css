@@ -15,15 +15,13 @@
 .contentContainer {
   display: flex;
   flex-direction: row;
+  gap: 24px;
 }
-.columnContainer {
-  width: 120px;
-}
+
 .rowContainer {
   display: flex;
   height: 32px;
   align-items: center;
-  justify-content: center;
 }
 .rowHeader {
   text-align: center;
@@ -40,4 +38,17 @@
   width: 24px;
   border-radius: 4px;
   background: white;
+}
+
+@media screen and (max-width: 390px) {
+  .contentContainer {
+    display: flex;
+    flex-direction: column;
+  }
+  .columnContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }

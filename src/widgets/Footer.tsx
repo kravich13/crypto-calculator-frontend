@@ -35,8 +35,12 @@ export const Footer = React.memo(() => {
   );
 
   const renderLink = useCallback(
-    ({ id, linkedin, github, telegram }: ILinkData) => (
-      <Box key={id} className={styles.rowContainer}>
+    ({ id, linkedin, github, telegram }: ILinkData, position?: 'left' | 'right') => (
+      <Box
+        key={id}
+        className={styles.rowContainer}
+        style={{ justifyContent: position === 'right' ? 'right' : 'left' }}
+      >
         <Link href={linkedin} target="_blank" className={styles.link}>
           <LinkedIn className={styles.buttonLink} />
         </Link>
@@ -67,21 +71,27 @@ export const Footer = React.memo(() => {
 
         <Box className={styles.contentContainer}>
           <Box className={styles.columnContainer}>
-            <Typography className={styles.rowHeader}>Developers</Typography>
+            <Typography className={styles.rowHeader} style={{ textAlign: 'left' }}>
+              Idea and development
+            </Typography>
 
-            <Box className={styles.rowContainer}>
-              <Typography color="Highlight">Frontend</Typography>
+            <Box className={styles.rowContainer} style={{ justifyContent: 'left' }}>
+              <Typography style={{ color: '#EAFCB6' }}>Vladislav Onatskyi</Typography>
             </Box>
 
-            <Box className={styles.rowContainer}>
-              <Typography color="Highlight">Backend</Typography>
-            </Box>
+            {renderLink(links[1])}
           </Box>
 
           <Box className={styles.columnContainer}>
-            <Typography className={styles.rowHeader}>Contacts</Typography>
+            <Typography className={styles.rowHeader} style={{ textAlign: 'right' }}>
+              Consulting
+            </Typography>
 
-            {links.map(renderLink)}
+            <Box className={styles.rowContainer} style={{ justifyContent: 'right' }}>
+              <Typography style={{ color: '#EAFCB6' }}>Maksym Baranovskyi</Typography>
+            </Box>
+
+            {renderLink(links[1], 'right')}
           </Box>
         </Box>
       </Box>

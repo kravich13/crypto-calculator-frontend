@@ -1,5 +1,5 @@
 import { RoutesTypes } from '@cc/shared/enums';
-import { IJwtTokensPayload } from '../store';
+import { IJwtTokensPayload, LocalStorageUserData } from '../store';
 
 export interface IAuthContext {
   showModalLogout: boolean;
@@ -15,4 +15,5 @@ export interface IAuthContextLogoutData {
 
 export interface IAuthContentLoginData extends IAuthContextLogoutData {
   tokensData: IJwtTokensPayload;
+  userData?: LocalStorageUserData | null;
 }

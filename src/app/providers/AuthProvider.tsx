@@ -6,6 +6,7 @@ import {
   useAppDispatch,
   userDataActions,
 } from '@cc/shared/lib';
+import { isTokensData, isUserData } from '@cc/shared/type-guards';
 import {
   IAuthContentLoginData,
   IAuthContextLogoutData,
@@ -16,6 +17,8 @@ import {
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
+const LOG_IN_OUT_DELAY = 2500;
+
 interface IAuthProviderProps extends IChildrenProps {}
 
 export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
@@ -25,26 +28,40 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
   const [showModalLogout, setShowModalLogout] = useState(false);
   const [showModalLogin, setShowModalLogin] = useState(false);
 
-  const login = useCallback(({ tokensData, notifyUser, redirectTo }: IAuthContentLoginData) => {
-    if (notifyUser) {
-      setShowModalLogin(true);
-
-      setTimeout(() => {
-        if (redirectTo) {
-          dispatch(authActions.setAuth(tokensData));
-          router.push(redirectTo);
-        }
-
-        setShowModalLogin(false);
-      }, 5000);
-    } else {
+  const setAuthData = useCallback(
+    (tokensData: IJwtTokensPayload, userData?: LocalStorageUserData | null) => {
       dispatch(authActions.setAuth(tokensData));
 
-      if (redirectTo) {
-        router.push(redirectTo);
+      if (userData?.email) {
+        dispatch(userDataActions.setEmail({ email: userData.email }));
       }
-    }
-  }, []);
+    },
+    []
+  );
+
+  const login = useCallback(
+    ({ tokensData, notifyUser, redirectTo, userData }: IAuthContentLoginData) => {
+      if (notifyUser) {
+        setShowModalLogin(true);
+
+        setTimeout(() => {
+          if (redirectTo) {
+            setAuthData(tokensData, userData);
+            router.push(redirectTo);
+          }
+
+          setShowModalLogin(false);
+        }, LOG_IN_OUT_DELAY);
+      } else {
+        setAuthData(tokensData, userData);
+
+        if (redirectTo) {
+          router.push(redirectTo);
+        }
+      }
+    },
+    []
+  );
 
   const clearStates = useCallback(() => {
     dispatch(authActions.setNotAuth());
@@ -65,7 +82,7 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
         }
 
         setShowModalLogout(false);
-      }, 5000);
+      }, LOG_IN_OUT_DELAY);
     } else {
       clearStates();
 
@@ -79,15 +96,15 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
     let tokens: IJwtTokensPayload | null = null;
 
     try {
-      const tokensData = localStorage.getItem('tokensData');
-      tokens = tokensData ? (JSON.parse(tokensData) as IJwtTokensPayload) : null;
+      const tokensDataString = localStorage.getItem('tokensData');
+      const tokensData = tokensDataString ? JSON.parse(tokensDataString) : null;
 
-      if (
-        tokens &&
-        tokens.accessTokenExpiresIn < Date.now() &&
-        tokens.refreshTokenExpiresIn < Date.now()
-      ) {
-        tokens = null;
+      if (tokensData && isTokensData(tokensData)) {
+        tokens = tokensData;
+
+        if (tokens.accessTokenExpiresIn < Date.now() && tokens.refreshTokenExpiresIn < Date.now()) {
+          tokens = null;
+        }
       }
     } catch (err) {
       console.warn('Parsing tokensData error.');
@@ -100,8 +117,12 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
     let data: LocalStorageUserData | null = null;
 
     try {
-      const userData = localStorage.getItem('userData');
-      data = userData ? (JSON.parse(userData) as LocalStorageUserData) : null;
+      const userDataString = localStorage.getItem('userData');
+      const userData = userDataString ? JSON.parse(userDataString) : null;
+
+      if (userData && isUserData(userData)) {
+        data = userData;
+      }
     } catch (err) {
       console.warn('Parsing userData error.');
     }
@@ -110,12 +131,8 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (userData) {
-      dispatch(userDataActions.setEmail({ email: userData.email }));
-    }
-
     if (tokensPayload) {
-      login({ tokensData: tokensPayload });
+      login({ tokensData: tokensPayload, userData });
     } else {
       dispatch(authActions.setNotAuth());
     }
