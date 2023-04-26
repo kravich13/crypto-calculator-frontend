@@ -1,7 +1,15 @@
 import { InvestmentPercent, MainCoinInfoContainer } from '@cc/entities/Calculate';
+import {
+  DetailedColumnItem,
+  DetailedColumnTitleData,
+  DetailedColumnTitles,
+  DetailedColumnType,
+  ISelectedColumnData,
+} from '@cc/entities/InvestmentStatistics';
 import { LOSS_COLOR, PROFIT_COLOR } from '@cc/shared/const';
 import { useAppSelector } from '@cc/shared/lib';
 import { CalculateCoinProfitData } from '@cc/shared/types';
+import { SortByNumbers, SortByString } from '@cc/shared/utils';
 import {
   Box,
   Paper,
@@ -13,12 +21,75 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { useCallback } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
 export const DetailedInvestmentStatistics = () => {
-  const coins = useAppSelector(({ profitReducer: { coins } }) => coins);
+  const requestCoins = useAppSelector(({ profitReducer: { coins } }) => coins);
 
-  const renderItem = useCallback(
+  const lastColumnName = useRef<DetailedColumnType>();
+
+  const [selectedColumn, setSelectedColumn] = useState<ISelectedColumnData>();
+  const [coins, setCoins] = useState<CalculateCoinProfitData[]>(requestCoins);
+
+  const columnTitle = useMemo(
+    (): DetailedColumnTitles => ({
+      name: { title: 'Name', position: 'left' },
+      share: { title: 'Share', position: 'right' },
+      startingPrice: { title: 'Start price', position: 'right' },
+      averagePrice: { title: 'Avg. price', position: 'right' },
+      lastPrice: { title: 'Last price', position: 'right' },
+      capital: { title: 'Holdings', position: 'right' },
+      growth: { title: 'Profit/Loss', position: 'right' },
+    }),
+    []
+  );
+
+  const coinsCopy = useMemo(
+    (): CalculateCoinProfitData[] => [...requestCoins.map((value) => ({ ...value }))],
+    [requestCoins]
+  );
+
+  const onClickSortTable = useCallback(
+    (column: DetailedColumnType) => {
+      const isRepeatedDescending =
+        selectedColumn?.isDescending === undefined ? true : !selectedColumn?.isDescending;
+
+      const isSameColumn = lastColumnName.current === column;
+      const firstSortInDescending = true;
+
+      const isDescending = isSameColumn ? isRepeatedDescending : firstSortInDescending;
+
+      if (column === 'name') {
+        const sortedCoins = coinsCopy.sort((a, b) => SortByString(a[column], b[column]));
+
+        setCoins(isDescending ? sortedCoins.reverse() : sortedCoins);
+      } else {
+        setCoins(
+          coinsCopy.sort((a, b) => SortByNumbers({ a: a[column], b: b[column], isDescending }))
+        );
+      }
+
+      setSelectedColumn({ column, isDescending });
+
+      lastColumnName.current = column;
+    },
+    [coinsCopy, selectedColumn?.isDescending]
+  );
+
+  const renderColumn = useCallback(
+    ([key, values]: [string, DetailedColumnTitleData]) => (
+      <DetailedColumnItem
+        key={`${key}-${values.title}`}
+        column={key as DetailedColumnType}
+        onClickSortTable={onClickSortTable}
+        selectedColumn={selectedColumn}
+        {...values}
+      />
+    ),
+    [onClickSortTable, selectedColumn]
+  );
+
+  const renderRow = useCallback(
     ({
       coinId,
       name,
@@ -105,38 +176,12 @@ export const DetailedInvestmentStatistics = () => {
       <TableContainer component={Paper}>
         <Table stickyHeader sx={{ minWidth: 750 }}>
           <TableHead>
-            <TableRow>
-              <TableCell>
-                <Typography fontWeight="600">Name</Typography>
-              </TableCell>
-
-              <TableCell align="right">
-                <Typography fontWeight="600">Share</Typography>
-              </TableCell>
-
-              <TableCell align="right">
-                <Typography fontWeight="600">Start price</Typography>
-              </TableCell>
-
-              <TableCell align="right">
-                <Typography fontWeight="600">Avg. price</Typography>
-              </TableCell>
-
-              <TableCell align="right">
-                <Typography fontWeight="600">Last price</Typography>
-              </TableCell>
-
-              <TableCell align="right">
-                <Typography fontWeight="600">Holdings</Typography>
-              </TableCell>
-
-              <TableCell align="right">
-                <Typography fontWeight="600">Profit/Loss</Typography>
-              </TableCell>
+            <TableRow style={{ cursor: 'pointer' }}>
+              {Object.entries(columnTitle).map(renderColumn)}
             </TableRow>
           </TableHead>
 
-          <TableBody>{coins.map(renderItem)}</TableBody>
+          <TableBody>{coins.map(renderRow)}</TableBody>
         </Table>
       </TableContainer>
     </>
