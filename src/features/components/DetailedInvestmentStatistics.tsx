@@ -21,13 +21,14 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
 export const DetailedInvestmentStatistics = () => {
   const requestCoins = useAppSelector(({ profitReducer: { coins } }) => coins);
 
-  const [selectedColumn, setSelectedColumn] = useState<ISelectedColumnData>();
+  const lastColumnName = useRef<DetailedColumnType>();
 
+  const [selectedColumn, setSelectedColumn] = useState<ISelectedColumnData>();
   const [coins, setCoins] = useState<CalculateCoinProfitData[]>(requestCoins);
 
   const columnTitle = useMemo(
@@ -50,27 +51,29 @@ export const DetailedInvestmentStatistics = () => {
 
   const onClickSortTable = useCallback(
     (column: DetailedColumnType) => {
-      const isSortDown = Boolean(selectedColumn?.isSortDown);
+      const isRepeatedDescending =
+        selectedColumn?.isDescending === undefined ? true : !selectedColumn?.isDescending;
+
+      const isSameColumn = lastColumnName.current === column;
+      const firstSortInDescending = true;
+
+      const isDescending = isSameColumn ? isRepeatedDescending : firstSortInDescending;
 
       if (column === 'name') {
         const sortedCoins = coinsCopy.sort((a, b) => SortByString(a[column], b[column]));
 
-        setCoins(isSortDown ? sortedCoins : sortedCoins.reverse());
+        setCoins(isDescending ? sortedCoins.reverse() : sortedCoins);
       } else {
         setCoins(
-          coinsCopy.sort((a, b) =>
-            SortByNumbers({
-              a: a[column],
-              b: b[column],
-              isAscending: isSortDown,
-            })
-          )
+          coinsCopy.sort((a, b) => SortByNumbers({ a: a[column], b: b[column], isDescending }))
         );
       }
 
-      setSelectedColumn({ column, isSortDown: isSortDown ? false : !isSortDown });
+      setSelectedColumn({ column, isDescending });
+
+      lastColumnName.current = column;
     },
-    [coinsCopy, selectedColumn?.isSortDown]
+    [coinsCopy, selectedColumn?.isDescending]
   );
 
   const renderColumn = useCallback(

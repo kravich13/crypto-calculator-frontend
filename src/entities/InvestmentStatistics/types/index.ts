@@ -20,5 +20,5 @@ export type DetailedColumnTitles = {
 
 export interface ISelectedColumnData {
   column: DetailedColumnType;
-  isSortDown: boolean;
+  isDescending: boolean;
 }

@@ -23,8 +23,8 @@ export const DetailedColumnItem: React.FC<IDetailedColumnItemProps> = ({
   const currentColumn = selectedColumn?.column === column;
 
   const renderSortButton = useMemo(
-    () => (selectedColumn?.isSortDown ? <ArrowDropDownIcon /> : <ArrowDropUpIcon />),
-    [selectedColumn?.isSortDown]
+    () => (selectedColumn?.isDescending ? <ArrowDropDownIcon /> : <ArrowDropUpIcon />),
+    [selectedColumn?.isDescending]
   );
 
   const renderSortButtonContent = useCallback(
