@@ -13,12 +13,95 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+
+type ColumnNameType = Pick<
+  CalculateCoinProfitData,
+  'name' | 'share' | 'startingPrice' | 'averagePrice' | 'lastPrice' | 'capital' | 'growth'
+>;
+
+type ColumnNameKeys = keyof ColumnNameType;
+
+interface ColumnTitleData {
+  title: string;
+  position: 'right' | 'left';
+}
+
+type ColumnTitlesValue = {
+  [key in ColumnNameKeys]: ColumnTitleData;
+};
 
 export const DetailedInvestmentStatistics = () => {
-  const coins = useAppSelector(({ profitReducer: { coins } }) => coins);
+  const requestCoins = useAppSelector(({ profitReducer: { coins } }) => coins);
+  const [isSortedDown, setSortedDown] = useState<boolean>();
 
-  const renderItem = useCallback(
+  const [coins, setCoins] = useState<CalculateCoinProfitData[]>(requestCoins);
+
+  const columnTitle = useMemo(
+    (): ColumnTitlesValue => ({
+      name: { title: 'Name', position: 'left' },
+      share: { title: 'Share', position: 'right' },
+      startingPrice: { title: 'Start price', position: 'right' },
+      averagePrice: { title: 'Avg. price', position: 'right' },
+      lastPrice: { title: 'Last price', position: 'right' },
+      capital: { title: 'Holdings', position: 'right' },
+      growth: { title: 'Profit/Loss', position: 'right' },
+    }),
+    []
+  );
+
+  const coinsCopy = useMemo(
+    (): CalculateCoinProfitData[] => [...requestCoins.map((value) => ({ ...value }))],
+    [requestCoins]
+  );
+
+  const getSortValueForString = useCallback(
+    (a: string, b: string) => {
+      if (!isSortedDown) {
+        return a < b ? -1 : 1;
+      } else {
+        return a > b ? -1 : 1;
+      }
+    },
+    [isSortedDown]
+  );
+
+  const getSortValueForNumber = useCallback(
+    (a: number, b: number) => {
+      if (!isSortedDown) {
+        return a - b;
+      } else {
+        return a + b;
+      }
+    },
+    [isSortedDown]
+  );
+
+  const onClickSortTable = useCallback(
+    (type: ColumnNameKeys) => {
+      if (type === 'name') {
+        setCoins(coinsCopy.sort((a, b) => getSortValueForString(a[type], b[type])));
+      } else {
+        setCoins(coinsCopy.sort((a, b) => getSortValueForNumber(a[type], b[type])));
+      }
+
+      setSortedDown((prev) => (prev === undefined ? true : !prev));
+    },
+    [coinsCopy, getSortValueForNumber, getSortValueForString]
+  );
+
+  const renderColumn = useCallback(
+    ([key, { title, position }]: [string, ColumnTitleData]) => (
+      <TableCell onClick={() => onClickSortTable(key as ColumnNameKeys)} title={title}>
+        <Typography key={`${key}-${title}`} align={position} fontWeight="600">
+          {title}
+        </Typography>
+      </TableCell>
+    ),
+    [onClickSortTable]
+  );
+
+  const renderRow = useCallback(
     ({
       coinId,
       name,
@@ -105,38 +188,12 @@ export const DetailedInvestmentStatistics = () => {
       <TableContainer component={Paper}>
         <Table stickyHeader sx={{ minWidth: 750 }}>
           <TableHead>
-            <TableRow>
-              <TableCell>
-                <Typography fontWeight="600">Name</Typography>
-              </TableCell>
-
-              <TableCell align="right">
-                <Typography fontWeight="600">Share</Typography>
-              </TableCell>
-
-              <TableCell align="right">
-                <Typography fontWeight="600">Start price</Typography>
-              </TableCell>
-
-              <TableCell align="right">
-                <Typography fontWeight="600">Avg. price</Typography>
-              </TableCell>
-
-              <TableCell align="right">
-                <Typography fontWeight="600">Last price</Typography>
-              </TableCell>
-
-              <TableCell align="right">
-                <Typography fontWeight="600">Holdings</Typography>
-              </TableCell>
-
-              <TableCell align="right">
-                <Typography fontWeight="600">Profit/Loss</Typography>
-              </TableCell>
+            <TableRow style={{ cursor: 'pointer' }}>
+              {Object.entries(columnTitle).map(renderColumn)}
             </TableRow>
           </TableHead>
 
-          <TableBody>{coins.map(renderItem)}</TableBody>
+          <TableBody>{coins.map(renderRow)}</TableBody>
         </Table>
       </TableContainer>
     </>
