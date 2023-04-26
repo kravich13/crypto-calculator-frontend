@@ -1,7 +1,15 @@
 import { InvestmentPercent, MainCoinInfoContainer } from '@cc/entities/Calculate';
+import {
+  DetailedColumnItem,
+  DetailedColumnTitleData,
+  DetailedColumnTitles,
+  DetailedColumnType,
+  ISelectedColumnData,
+} from '@cc/entities/InvestmentStatistics';
 import { LOSS_COLOR, PROFIT_COLOR } from '@cc/shared/const';
 import { useAppSelector } from '@cc/shared/lib';
 import { CalculateCoinProfitData } from '@cc/shared/types';
+import { SortByNumbers, SortByString } from '@cc/shared/utils';
 import {
   Box,
   Paper,
@@ -13,32 +21,17 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-
-type ColumnNameType = Pick<
-  CalculateCoinProfitData,
-  'name' | 'share' | 'startingPrice' | 'averagePrice' | 'lastPrice' | 'capital' | 'growth'
->;
-
-type ColumnNameKeys = keyof ColumnNameType;
-
-interface ColumnTitleData {
-  title: string;
-  position: 'right' | 'left';
-}
-
-type ColumnTitlesValue = {
-  [key in ColumnNameKeys]: ColumnTitleData;
-};
+import { useCallback, useMemo, useState } from 'react';
 
 export const DetailedInvestmentStatistics = () => {
   const requestCoins = useAppSelector(({ profitReducer: { coins } }) => coins);
-  const [isSortedDown, setSortedDown] = useState<boolean>();
+
+  const [selectedColumn, setSelectedColumn] = useState<ISelectedColumnData>();
 
   const [coins, setCoins] = useState<CalculateCoinProfitData[]>(requestCoins);
 
   const columnTitle = useMemo(
-    (): ColumnTitlesValue => ({
+    (): DetailedColumnTitles => ({
       name: { title: 'Name', position: 'left' },
       share: { title: 'Share', position: 'right' },
       startingPrice: { title: 'Start price', position: 'right' },
@@ -55,50 +48,42 @@ export const DetailedInvestmentStatistics = () => {
     [requestCoins]
   );
 
-  const getSortValueForString = useCallback(
-    (a: string, b: string) => {
-      if (!isSortedDown) {
-        return a < b ? -1 : 1;
-      } else {
-        return a > b ? -1 : 1;
-      }
-    },
-    [isSortedDown]
-  );
-
-  const getSortValueForNumber = useCallback(
-    (a: number, b: number) => {
-      if (!isSortedDown) {
-        return a - b;
-      } else {
-        return a + b;
-      }
-    },
-    [isSortedDown]
-  );
-
   const onClickSortTable = useCallback(
-    (type: ColumnNameKeys) => {
-      if (type === 'name') {
-        setCoins(coinsCopy.sort((a, b) => getSortValueForString(a[type], b[type])));
+    (column: DetailedColumnType) => {
+      const isSortDown = Boolean(selectedColumn?.isSortDown);
+
+      if (column === 'name') {
+        const sortedCoins = coinsCopy.sort((a, b) => SortByString(a[column], b[column]));
+
+        setCoins(isSortDown ? sortedCoins : sortedCoins.reverse());
       } else {
-        setCoins(coinsCopy.sort((a, b) => getSortValueForNumber(a[type], b[type])));
+        setCoins(
+          coinsCopy.sort((a, b) =>
+            SortByNumbers({
+              a: a[column],
+              b: b[column],
+              isAscending: isSortDown,
+            })
+          )
+        );
       }
 
-      setSortedDown((prev) => (prev === undefined ? true : !prev));
+      setSelectedColumn({ column, isSortDown: isSortDown ? false : !isSortDown });
     },
-    [coinsCopy, getSortValueForNumber, getSortValueForString]
+    [coinsCopy, selectedColumn?.isSortDown]
   );
 
   const renderColumn = useCallback(
-    ([key, { title, position }]: [string, ColumnTitleData]) => (
-      <TableCell onClick={() => onClickSortTable(key as ColumnNameKeys)} title={title}>
-        <Typography key={`${key}-${title}`} align={position} fontWeight="600">
-          {title}
-        </Typography>
-      </TableCell>
+    ([key, values]: [string, DetailedColumnTitleData]) => (
+      <DetailedColumnItem
+        key={`${key}-${values.title}`}
+        column={key as DetailedColumnType}
+        onClickSortTable={onClickSortTable}
+        selectedColumn={selectedColumn}
+        {...values}
+      />
     ),
-    [onClickSortTable]
+    [onClickSortTable, selectedColumn]
   );
 
   const renderRow = useCallback(
