@@ -104,19 +104,19 @@ export const SearchInput: React.FC<ISearchInputProps> = React.memo(
           $searchInput.current?.blur();
         }
       },
-      [searchData, selectedItem]
+      [onClickSelectedItem, searchData, selectedItem]
     );
 
     const renderItem = useCallback(
-      (item: IMainCoinInfo) => (
+      (item: IMainCoinInfo, index: number) => (
         <SearchRenderItem
-          key={item.coinId}
+          key={`${item.coinId}-${index}`}
           item={item}
           isSelected={item.coinId === selectedItem?.coinId}
           onClickSelectedItem={onClickSelectedItem}
         />
       ),
-      [selectedItem]
+      [onClickSelectedItem, selectedItem?.coinId]
     );
 
     return (

@@ -48,7 +48,7 @@ export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
 
   const renderItem = useCallback(
     ({ coinId, name, symbol, image, percent }: ISelectedInvestCoin, index: number) => (
-      <Box key={coinId}>
+      <Box key={`${coinId}-${index}`}>
         <Box className={styles.formContainer}>
           <MainCoinInfoContainer image={image} name={name} symbol={symbol} />
 

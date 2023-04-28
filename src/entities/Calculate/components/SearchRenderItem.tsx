@@ -25,7 +25,6 @@ export const SearchRenderItem: React.FC<ISearchRenderItemProps> = React.memo(
     return (
       <Box
         component="div"
-        key={coinId}
         className={containerClasses.join(' ')}
         onMouseDown={() => onClickSelectedItem({ coinId, name, image, symbol })}
       >
