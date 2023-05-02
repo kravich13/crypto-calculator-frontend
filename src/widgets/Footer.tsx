@@ -79,7 +79,7 @@ export const Footer = React.memo(() => {
               <Typography style={{ color: '#EAFCB6' }}>Vladislav Onatskyi</Typography>
             </Box>
 
-            {renderLink(links[1])}
+            {renderLink(links[0])}
           </Box>
 
           <Box className={styles.columnContainer}>
