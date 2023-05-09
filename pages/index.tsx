@@ -15,11 +15,6 @@ export default function Home() {
         />
         <meta name="keywords" content={`${KEY_WORDS_SEO}`} />
         <meta name="author" content="Crypto Metrics" />
-        <meta name="twitter:title" content="Crypto Calculator - Calculate your crypto holdings" />
-        <meta
-          name="twitter:description"
-          content="Calculate the value of your crypto holdings and keep track of your portfolio using Crypto Metrics. Get live prices for Bitcoin, Ethereum, and other popular cryptocurrencies."
-        />
       </Head>
 
       <MainContent />
