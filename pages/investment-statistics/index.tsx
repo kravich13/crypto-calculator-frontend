@@ -4,6 +4,7 @@ import { KEY_WORDS_SEO } from '@cc/shared/const';
 import { RoutesTypes } from '@cc/shared/enums';
 import { useAppSelector } from '@cc/shared/lib';
 import globalStyles from '@cc/shared/styles/Index.module.css';
+import { ScrollTopButton } from '@cc/shared/ui';
 import { Box, Container, Divider } from '@mui/material';
 import Head from 'next/head';
 
@@ -35,21 +36,21 @@ export default function InvestmentStatistics() {
             <meta name="robots" content="noindex, nofollow" />
           </Head>
 
-          {hasProfitData && (
-            <Container maxWidth="lg" className={globalStyles.contentPageContainer}>
-              <Box mb={3} display="flex" justifyContent="center">
-                <GeneralInvestmentStatistics />
-              </Box>
+          <Container maxWidth="lg" className={globalStyles.contentPageContainer}>
+            <Box mb={3} display="flex" justifyContent="center">
+              <GeneralInvestmentStatistics />
+            </Box>
 
-              <Box mb={3}>
-                <Chart dollars={capitalsProfit} labels={capitalsDate} />
-              </Box>
+            <Box mb={3}>
+              <Chart dollars={capitalsProfit} labels={capitalsDate} />
+            </Box>
 
-              <Divider variant="fullWidth" style={{ marginBottom: 20 }} />
+            <Divider variant="fullWidth" style={{ marginBottom: 20 }} />
 
-              <DetailedInvestmentStatistics />
-            </Container>
-          )}
+            <DetailedInvestmentStatistics />
+          </Container>
+
+          <ScrollTopButton />
         </PageLayout>
       </ProtectedPage>
     </AuthPage>

@@ -7,7 +7,6 @@ import {
 import { RoutesTypes } from '@cc/shared/enums';
 import { useAppSelector } from '@cc/shared/lib';
 import globalStyles from '@cc/shared/styles/Index.module.css';
-import { ScrollTopButton } from '@cc/shared/ui';
 import { Button, Container, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
@@ -69,8 +68,6 @@ export const MainContent = () => {
       {calculateStepsData.map(renderStepData)}
 
       <ResultsDescription />
-
-      <ScrollTopButton />
     </Container>
   );
 };
