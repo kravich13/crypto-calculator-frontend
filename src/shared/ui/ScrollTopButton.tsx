@@ -16,7 +16,7 @@ export const ScrollTopButton = memo(() => {
   }, []);
 
   const checkScroll = useCallback(() => {
-    if (triggerRef) {
+    if (triggerRef.current) {
       setIsVisible(true);
 
       clearTimeout(scrollTimeoutRef.current);
