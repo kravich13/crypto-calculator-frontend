@@ -1,5 +1,6 @@
 import { PageLayout } from '@cc/app/components';
 import { KEY_WORDS_SEO } from '@cc/shared/const';
+import { ScrollTopButton } from '@cc/shared/ui';
 import { MainContent } from '@cc/widgets';
 import Head from 'next/head';
 
@@ -18,6 +19,8 @@ export default function Home() {
       </Head>
 
       <MainContent />
+
+      <ScrollTopButton />
     </PageLayout>
   );
 }
