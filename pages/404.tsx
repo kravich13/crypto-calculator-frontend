@@ -16,9 +16,6 @@ export default function Custom404() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content={description} />
         <meta name="keywords" content={`${KEY_WORDS_SEO}, 404 error page, page not found`} />
-        <meta property="og:title" content={title} />
-        <meta property="og:type" content="website" />
-        <meta property="og:description" content={description} />
       </Head>
 
       <Container maxWidth="xs" className={globalStyles.opacityContainer}>
