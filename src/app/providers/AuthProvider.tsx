@@ -6,7 +6,6 @@ import {
   useAppDispatch,
   userDataActions,
 } from '@cc/shared/lib';
-import { isTokensData, isUserData } from '@cc/shared/type-guards';
 import {
   IAuthContentLoginData,
   IAuthContextLogoutData,
@@ -15,7 +14,8 @@ import {
   LocalStorageUserData,
 } from '@cc/shared/types';
 import { useRouter } from 'next/navigation';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { useReadLocalStorage } from 'usehooks-ts';
 
 const LOG_IN_OUT_DELAY = 2500;
 
@@ -27,6 +27,9 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
 
   const [showModalLogout, setShowModalLogout] = useState(false);
   const [showModalLogin, setShowModalLogin] = useState(false);
+
+  const tokensPayload = useReadLocalStorage<IJwtTokensPayload | null>('tokensData');
+  const userData = useReadLocalStorage<LocalStorageUserData | null>('userData');
 
   const setAuthData = useCallback(
     (tokensData: IJwtTokensPayload, userData?: LocalStorageUserData | null) => {
@@ -92,46 +95,8 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
     }
   }, []);
 
-  const tokensPayload = useMemo(() => {
-    let tokens: IJwtTokensPayload | null = null;
-
-    try {
-      const tokensDataString = localStorage.getItem('tokensData');
-      const tokensData = tokensDataString ? JSON.parse(tokensDataString) : null;
-
-      if (tokensData && isTokensData(tokensData)) {
-        tokens = tokensData;
-
-        if (tokens.accessTokenExpiresIn < Date.now() && tokens.refreshTokenExpiresIn < Date.now()) {
-          tokens = null;
-        }
-      }
-    } catch (err) {
-      console.warn('Parsing tokensData error.');
-    }
-
-    return tokens;
-  }, []);
-
-  const userData = useMemo(() => {
-    let data: LocalStorageUserData | null = null;
-
-    try {
-      const userDataString = localStorage.getItem('userData');
-      const userData = userDataString ? JSON.parse(userDataString) : null;
-
-      if (userData && isUserData(userData)) {
-        data = userData;
-      }
-    } catch (err) {
-      console.warn('Parsing userData error.');
-    }
-
-    return data;
-  }, []);
-
   useEffect(() => {
-    if (tokensPayload) {
+    if (tokensPayload && userData) {
       login({ tokensData: tokensPayload, userData });
     } else {
       dispatch(authActions.setNotAuth());
