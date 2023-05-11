@@ -1,9 +1,8 @@
 import { RoutesTypes } from '@cc/shared/enums';
-import { Box, Button, IconButton, Skeleton, Switch, useMediaQuery } from '@mui/material';
+import { Box, Button, Skeleton, useMediaQuery } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useCallback, useMemo } from 'react';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
-import LightModeIcon from '@mui/icons-material/LightMode';
+import { ThemeButton } from './ThemeButton';
 
 interface INotAuthHeaderContentProps {
   isLoadingContent: boolean;
@@ -55,8 +54,7 @@ export const NotAuthHeaderContent: React.FC<INotAuthHeaderContentProps> = ({
                 Log In
               </Button>
 
-              <DarkModeIcon cursor="pointer" />
-              <LightModeIcon cursor="pointer" />
+              <ThemeButton />
             </Box>
           )}
         </>

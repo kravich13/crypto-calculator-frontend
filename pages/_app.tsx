@@ -24,11 +24,11 @@ export default function App({
   return (
     <Provider store={store}>
       <CacheProvider value={emotionCache}>
-        <ThemeProvider>
-          <CssBaseline />
-
-          <AuthProvider>
+        <AuthProvider>
+          <ThemeProvider>
             <FramerMotions>
+              <CssBaseline />
+
               <Layout>
                 <Head>
                   <link rel="apple-touch-icon" sizes="180x180" href="/logo/apple-touch-icon.png" />
@@ -41,8 +41,8 @@ export default function App({
                 <Component {...props} />
               </Layout>
             </FramerMotions>
-          </AuthProvider>
-        </ThemeProvider>
+          </ThemeProvider>
+        </AuthProvider>
       </CacheProvider>
     </Provider>
   );

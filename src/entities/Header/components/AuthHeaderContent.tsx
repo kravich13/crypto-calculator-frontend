@@ -1,9 +1,12 @@
 import { RoutesTypes } from '@cc/shared/enums';
-import { useAppSelector, useAuthContext } from '@cc/shared/lib';
+import { useAppSelector, useAuthContext, useThemeContext } from '@cc/shared/lib';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Avatar, Box, Button, Fade, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useCallback, useMemo, useState } from 'react';
+import { ThemeButton } from './ThemeButton';
 
 export const AuthHeaderContent: React.FC = () => {
   const emailUser = useAppSelector((state) => state.authReducer.email);
@@ -80,7 +83,7 @@ export const AuthHeaderContent: React.FC = () => {
   }, [emailUser]);
 
   return (
-    <Box>
+    <Box style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
       {showCalculationButton && (
         <Button variant="text" color="inherit" onClick={onClickLastCalculation}>
           Last calculation
@@ -90,6 +93,8 @@ export const AuthHeaderContent: React.FC = () => {
       <IconButton title={emailUser} onClick={onClickUserMenu}>
         <Avatar sx={{ width: 34, height: 34, backgroundColor: colorByUser }}>{avatarTitle}</Avatar>
       </IconButton>
+
+      <ThemeButton />
 
       <Menu open={isOpen} anchorEl={anchorEl} TransitionComponent={Fade} onClose={handleClose}>
         <MenuItem onClick={onLogout}>

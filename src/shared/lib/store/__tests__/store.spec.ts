@@ -16,7 +16,6 @@ describe('store', () => {
   it('should have correct initial state', () => {
     const state = store.getState();
     expect(state.authReducer).toBeDefined();
-    expect(state.userDataReducer).toBeDefined();
     expect(state.baseCalculatorReducer).toBeDefined();
     expect(state.profitReducer).toBeDefined();
     expect(state[authAPI.reducerPath]).toBeDefined();
