@@ -1,7 +1,9 @@
 import { RoutesTypes } from '@cc/shared/enums';
-import { Box, Button, Skeleton, useMediaQuery } from '@mui/material';
+import { Box, Button, IconButton, Skeleton, Switch, useMediaQuery } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useCallback, useMemo } from 'react';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
 
 interface INotAuthHeaderContentProps {
   isLoadingContent: boolean;
@@ -43,14 +45,19 @@ export const NotAuthHeaderContent: React.FC<INotAuthHeaderContentProps> = ({
           {isLoadingContent ? (
             <Skeleton variant="text" width={120} height={40} />
           ) : (
-            <Button
-              sx={[{ textTransform: 'none', width: '120px' }]}
-              color="inherit"
-              variant="outlined"
-              onClick={goToLogIn}
-            >
-              Log In
-            </Button>
+            <Box style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <Button
+                sx={[{ textTransform: 'none', width: '120px' }]}
+                color="inherit"
+                variant="outlined"
+                onClick={goToLogIn}
+              >
+                Log In
+              </Button>
+
+              <DarkModeIcon cursor="pointer" />
+              <LightModeIcon cursor="pointer" />
+            </Box>
           )}
         </>
       )}
