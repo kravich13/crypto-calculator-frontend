@@ -1,14 +1,8 @@
-import { ISetEmailCodeExpiresIn, ISetEmailInput } from '@cc/shared/types';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IUserDataInitialState, ThemeMode } from '@cc/shared/types';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-interface IUserDataState {
-  email: string;
-  emailCodeExpiresIn: number;
-}
-
-const initialState: IUserDataState = {
-  email: '',
-  emailCodeExpiresIn: -1,
+const initialState: IUserDataInitialState = {
+  theme: 'light',
 };
 
 export const userDataSlice = createSlice({
@@ -16,17 +10,15 @@ export const userDataSlice = createSlice({
   initialState,
   reducers: {
     clearState() {
-      localStorage.removeItem('userData');
+      localStorage.removeItem('themeMode');
 
       return { ...initialState };
     },
-    setEmail(state, { payload }: PayloadAction<ISetEmailInput>) {
-      state.email = payload.email;
-    },
-    setEmailCodeExpiresIn(state, { payload }: PayloadAction<ISetEmailCodeExpiresIn>) {
-      localStorage.setItem('userData', JSON.stringify({ email: state.email }));
 
-      state.emailCodeExpiresIn = payload.emailCodeExpiresIn;
+    setTheme(state, { payload }: PayloadAction<ThemeMode>) {
+      localStorage.setItem('themeMode', JSON.stringify({ email: payload }));
+
+      state.theme = payload;
     },
   },
 });

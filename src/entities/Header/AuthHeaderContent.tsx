@@ -6,7 +6,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import React, { useCallback, useMemo, useState } from 'react';
 
 export const AuthHeaderContent: React.FC = () => {
-  const emailUser = useAppSelector((state) => state.userDataReducer.email);
+  const emailUser = useAppSelector((state) => state.authReducer.email);
   const hasProfitData = useAppSelector((state) => state.profitReducer.hasData);
 
   const { logout } = useAuthContext();

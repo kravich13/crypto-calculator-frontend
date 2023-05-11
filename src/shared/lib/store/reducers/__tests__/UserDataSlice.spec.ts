@@ -1,9 +1,9 @@
+import { IUserDataInitialState } from '@cc/shared/types';
 import { userDataActions, userDataReducer } from '../UserDataSlice';
 
 describe('userData reducer', () => {
-  const initialState = {
-    email: '',
-    emailCodeExpiresIn: -1,
+  const initialState: IUserDataInitialState = {
+    theme: 'light',
   };
 
   it('should return the initial state', () => {
@@ -14,19 +14,10 @@ describe('userData reducer', () => {
     expect(userDataReducer(initialState, userDataActions.clearState())).toEqual(initialState);
   });
 
-  it('should handle setEmail', () => {
-    const email = 'test@example.com';
-    const action = userDataActions.setEmail({ email });
+  it('should handle setTheme', () => {
+    const action = userDataActions.setTheme('dark');
     const newState = userDataReducer(initialState, action);
 
-    expect(newState.email).toEqual(email);
-  });
-
-  it('should handle setEmailCodeExpiresIn', () => {
-    const emailCodeExpiresIn = 120;
-    const action = userDataActions.setEmailCodeExpiresIn({ emailCodeExpiresIn });
-    const newState = userDataReducer(initialState, action);
-
-    expect(newState.emailCodeExpiresIn).toEqual(emailCodeExpiresIn);
+    expect(newState.theme).toEqual('dark');
   });
 });

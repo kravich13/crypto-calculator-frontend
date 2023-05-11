@@ -4,7 +4,6 @@ import {
   calculatorActions,
   profitActions,
   useAppDispatch,
-  userDataActions,
 } from '@cc/shared/lib';
 import {
   IAuthContentLoginData,
@@ -36,7 +35,7 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
       dispatch(authActions.setAuth(tokensData));
 
       if (userData?.email) {
-        dispatch(userDataActions.setEmail({ email: userData.email }));
+        dispatch(authActions.setEmail({ email: userData.email }));
       }
     },
     []
@@ -68,7 +67,6 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
 
   const clearStates = useCallback(() => {
     dispatch(authActions.setNotAuth());
-    dispatch(userDataActions.clearState());
     dispatch(calculatorActions.clearState());
     dispatch(profitActions.clearState());
   }, []);

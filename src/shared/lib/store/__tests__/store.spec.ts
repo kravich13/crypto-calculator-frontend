@@ -1,5 +1,5 @@
 import { authAPI, calculatorAPI } from '@cc/shared/api';
-import { authActions, calculatorActions, userDataActions } from '../reducers';
+import { authActions, calculatorActions } from '../reducers';
 import { setupStore } from '../store';
 
 describe('store', () => {
@@ -34,8 +34,8 @@ describe('store', () => {
     );
     expect(store.getState().authReducer.isAuth).toBeTruthy();
 
-    store.dispatch(userDataActions.setEmail({ email: 'example@test.com' }));
-    expect(store.getState().userDataReducer.email).toBe('example@test.com');
+    store.dispatch(authActions.setEmail({ email: 'example@test.com' }));
+    expect(store.getState().authReducer.email).toBe('example@test.com');
 
     store.dispatch(calculatorActions.setMaxNumberOfCoinsToInvest(10));
     expect(store.getState().baseCalculatorReducer.maxNumberOfCoinsToInvest).toBe(10);

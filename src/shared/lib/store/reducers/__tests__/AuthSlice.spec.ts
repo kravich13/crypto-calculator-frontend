@@ -1,4 +1,4 @@
-import { IJwtTokensPayload } from '@cc/shared/types';
+import { IAuthInitialState } from '@cc/shared/types';
 import { authActions, authReducer } from '../AuthSlice';
 
 const localStorageMock = {
@@ -12,9 +12,11 @@ Object.defineProperty(window, 'localStorage', {
   value: localStorageMock,
 });
 
-const initialTokens: IJwtTokensPayload = {
+const initialTokens: IAuthInitialState = {
+  email: '',
   accessToken: '',
   refreshToken: '',
+  emailCodeExpiresIn: -1,
   accessTokenExpiresIn: -1,
   refreshTokenExpiresIn: -1,
 };
@@ -26,6 +28,7 @@ describe('authSlice', () => {
 
   it('setNotAuth should remove tokens data from localStorage', () => {
     localStorageMock.setItem('tokensData', JSON.stringify(initialTokens));
+
     const expectedState = { ...initialTokens, isAuth: false };
 
     expect(authReducer(initialTokens, authActions.setNotAuth())).toEqual(expectedState);
@@ -33,12 +36,15 @@ describe('authSlice', () => {
   });
 
   it('setAuth should set tokens data in localStorage', () => {
-    const tokensData: IJwtTokensPayload = {
+    const tokensData: IAuthInitialState = {
+      email: 'test@gmail.com',
       accessToken: 'access_token',
       refreshToken: 'refresh_token',
       accessTokenExpiresIn: 3600,
       refreshTokenExpiresIn: 36000,
+      emailCodeExpiresIn: 60,
     };
+
     const expectedState = { ...tokensData, isAuth: true };
 
     expect(authReducer(initialTokens, authActions.setAuth(tokensData))).toEqual(expectedState);
