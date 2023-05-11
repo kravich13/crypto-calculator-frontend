@@ -25,7 +25,7 @@ export const ModalLogout: React.FC = () => {
         </Typography>
 
         <Typography sx={{ mt: 2 }}>
-          Within 5 seconds you will be redirected to the main page.
+          Within 3 seconds you will be redirected to the main page.
         </Typography>
       </Box>
     </Modal>
