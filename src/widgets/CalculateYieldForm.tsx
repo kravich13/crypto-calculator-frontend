@@ -10,7 +10,7 @@ import {
 } from '@cc/shared/lib';
 import globalStyles from '@cc/shared/styles/Index.module.css';
 import { CalculateProfitRequest, IPeriodAndAmountForm } from '@cc/shared/types';
-import { PopupAlert } from '@cc/shared/ui';
+import { PopupAlert } from '@cc/shared/ui/components';
 import { Container, Step, StepLabel, Stepper, Typography, useMediaQuery } from '@mui/material';
 import { DateTime } from 'luxon';
 import { useRouter } from 'next/navigation';

@@ -1,0 +1,14 @@
+.container {
+  flex-grow: 1;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.darkContainer {
+}
+
+.lightContainer {
+  background: rgba(255, 255, 255, 0.9);
+  border-right: 1px solid rgb(183, 183, 183);
+  border-left: 1px solid rgb(183, 183, 183);
+}

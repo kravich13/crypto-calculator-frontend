@@ -10,7 +10,7 @@ import {
 } from '@cc/shared/lib';
 import globalStyles from '@cc/shared/styles/Index.module.css';
 import { ISetEmailInput } from '@cc/shared/types';
-import { PopupAlert } from '@cc/shared/ui';
+import { PopupAlert } from '@cc/shared/ui/components';
 import { Box, Container, Step, StepLabel, Stepper, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';

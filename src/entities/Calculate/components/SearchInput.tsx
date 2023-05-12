@@ -1,5 +1,5 @@
 import { IMainCoinInfo } from '@cc/shared/types';
-import { TextInput } from '@cc/shared/ui';
+import { TextInput } from '@cc/shared/ui/components';
 import { SearchOutlined } from '@mui/icons-material';
 import { Box, InputAdornment, useMediaQuery } from '@mui/material';
 import debounce from 'lodash.debounce';

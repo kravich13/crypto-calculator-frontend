@@ -1,6 +1,6 @@
 import { PageLayout } from '@cc/app/components';
 import { KEY_WORDS_SEO } from '@cc/shared/const';
-import { ScrollTopButton } from '@cc/shared/ui';
+import { ScrollTopButton } from '@cc/shared/ui/components';
 import { MainContent } from '@cc/widgets';
 import Head from 'next/head';
 

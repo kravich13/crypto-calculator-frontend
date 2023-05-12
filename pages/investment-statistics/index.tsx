@@ -4,7 +4,7 @@ import { KEY_WORDS_SEO } from '@cc/shared/const';
 import { RoutesTypes } from '@cc/shared/enums';
 import { useAppSelector } from '@cc/shared/lib';
 import globalStyles from '@cc/shared/styles/Index.module.css';
-import { ScrollTopButton } from '@cc/shared/ui';
+import { ScrollTopButton } from '@cc/shared/ui/components';
 import { Box, Container, Divider } from '@mui/material';
 import Head from 'next/head';
 

@@ -1,9 +1,12 @@
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { Box, Fab, Fade, useScrollTrigger } from '@mui/material';
+import { Box, Fab, Fade, useScrollTrigger, useTheme } from '@mui/material';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
-import { GET_PRIMARY_COLOR } from '../const';
+import { GET_PRIMARY_COLOR, ICON_COLOR } from '../../const';
+import { useThemeContext } from '../../lib';
 
 export const ScrollTopButton = memo(() => {
+  const { themeMode } = useThemeContext();
+  const { palette } = useTheme();
   const trigger = useScrollTrigger({ disableHysteresis: true });
 
   const scrollTimeoutRef = useRef<NodeJS.Timeout>();
@@ -51,9 +54,14 @@ export const ScrollTopButton = memo(() => {
         <Fab
           size="medium"
           variant="circular"
-          style={{ border: '1px solid white', background: GET_PRIMARY_COLOR(0.83) }}
+          style={{
+            border: `1px solid ${ICON_COLOR}`,
+            background:
+              themeMode === 'light' ? GET_PRIMARY_COLOR(0.83) : palette.action.disabledBackground,
+            boxShadow: 'initial',
+          }}
         >
-          <KeyboardArrowUpIcon style={{ color: 'white' }} />
+          <KeyboardArrowUpIcon style={{ color: ICON_COLOR }} />
         </Fab>
       </Box>
     </Fade>
