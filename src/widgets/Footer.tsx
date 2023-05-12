@@ -1,6 +1,8 @@
-import { PRIMARY_COLOR } from '@cc/shared/const';
+import { ICON_COLOR, PRIMARY_COLOR } from '@cc/shared/const';
+import { useThemeContext } from '@cc/shared/lib';
+import ColorsStyles from '@cc/shared/styles/Colors.module.css';
 import { GitHub, LinkedIn, Telegram } from '@mui/icons-material';
-import { Box, Container, Typography, useMediaQuery } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 import Link from 'next/link';
 import React, { useCallback, useMemo } from 'react';
 import { v4 as uuid } from 'uuid';
@@ -14,7 +16,10 @@ interface ILinkData {
 }
 
 export const Footer = React.memo(() => {
-  const isMax490Width = useMediaQuery('(max-width:490px)');
+  const { palette } = useTheme();
+  const { themeMode } = useThemeContext();
+
+  const headerColor = themeMode === 'light' ? 'white' : 'whitesmoke';
 
   const links: ILinkData[] = useMemo(
     () => [
@@ -42,15 +47,15 @@ export const Footer = React.memo(() => {
         style={{ justifyContent: position === 'right' ? 'right' : 'left' }}
       >
         <Link href={linkedin} target="_blank" className={styles.link}>
-          <LinkedIn className={styles.buttonLink} />
+          <LinkedIn className={styles.buttonLink} style={{ color: 'whitesmoke' }} />
         </Link>
 
         <Link href={github} target="_blank" className={styles.link} style={{ margin: '0 5px' }}>
-          <GitHub className={styles.buttonLink} />
+          <GitHub className={styles.buttonLink} style={{ color: 'whitesmoke' }} />
         </Link>
 
         <Link href={telegram} target="_blank" className={styles.link}>
-          <Telegram className={styles.buttonLink} />
+          <Telegram className={styles.buttonLink} style={{ color: 'whitesmoke' }} />
         </Link>
       </Box>
     ),
@@ -60,35 +65,49 @@ export const Footer = React.memo(() => {
   return (
     <Box
       component="footer"
-      sx={{ background: PRIMARY_COLOR, paddingTop: '10px', paddingBottom: '10px' }}
+      sx={{
+        background: themeMode === 'light' ? PRIMARY_COLOR : palette.background.default,
+        paddingTop: '10px',
+        paddingBottom: '10px',
+      }}
+      className={themeMode === 'dark' ? ColorsStyles.headerOrFooterBGImage : ''}
     >
-      <Box className={isMax490Width ? styles.mobileContainer : styles.mainContainer}>
-        <Box className={isMax490Width ? styles.mobileLogo : ''}>
-          <Typography color="white" variant="h6" component="p">
+      <Box className={styles.mainContainer}>
+        <Box className={styles.mobileLogo}>
+          <Typography variant="h6" component="p" fontWeight="600" style={{ color: ICON_COLOR }}>
             Crypto Metrics
           </Typography>
         </Box>
 
         <Box className={styles.contentContainer}>
           <Box className={styles.columnContainer}>
-            <Typography className={styles.rowHeader} style={{ textAlign: 'left' }}>
+            <Typography
+              className={styles.rowHeader}
+              style={{
+                textAlign: 'left',
+                color: headerColor,
+              }}
+            >
               Idea and development
             </Typography>
 
             <Box className={styles.rowContainer} style={{ justifyContent: 'left' }}>
-              <Typography style={{ color: '#EAFCB6' }}>Vladislav Onatskyi</Typography>
+              <Typography style={{ color: ICON_COLOR }}>Vladislav Onatskyi</Typography>
             </Box>
 
             {renderLink(links[0])}
           </Box>
 
           <Box className={styles.columnContainer}>
-            <Typography className={styles.rowHeader} style={{ textAlign: 'right' }}>
+            <Typography
+              className={styles.rowHeader}
+              style={{ textAlign: 'right', color: headerColor }}
+            >
               Consulting
             </Typography>
 
             <Box className={styles.rowContainer} style={{ justifyContent: 'right' }}>
-              <Typography style={{ color: '#EAFCB6' }}>Maksym Baranovskyi</Typography>
+              <Typography style={{ color: ICON_COLOR }}>Maksym Baranovskyi</Typography>
             </Box>
 
             {renderLink(links[1], 'right')}
