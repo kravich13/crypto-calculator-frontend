@@ -1,2 +1,1 @@
-export * from './AuthHeaderContent';
-export * from './NotAuthHeaderContent';
+export * from './components';

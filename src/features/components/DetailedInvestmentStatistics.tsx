@@ -20,11 +20,13 @@ import {
   TableHead,
   TableRow,
   Typography,
+  useTheme,
 } from '@mui/material';
 import { useCallback, useMemo, useRef, useState } from 'react';
 
 export const DetailedInvestmentStatistics = () => {
   const requestCoins = useAppSelector(({ profitReducer: { coins } }) => coins);
+  const { palette } = useTheme();
 
   const lastColumnName = useRef<DetailedColumnType>();
 
@@ -140,7 +142,11 @@ export const DetailedInvestmentStatistics = () => {
             <Box>
               <Typography>${capital}</Typography>
 
-              <Typography color="GrayText" variant="body2" fontWeight="500">
+              <Typography
+                style={{ color: palette.text.secondary }}
+                variant="body2"
+                fontWeight="500"
+              >
                 {purchasedCoins} {symbol.toUpperCase()}
               </Typography>
             </Box>

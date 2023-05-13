@@ -1,7 +1,7 @@
 import { PageLayout } from '@cc/app/components';
 import { KEY_WORDS_SEO } from '@cc/shared/const';
-import globalStyles from '@cc/shared/styles/Index.module.css';
-import { Container, Typography } from '@mui/material';
+import { LayoutContent } from '@cc/shared/ui';
+import { Typography } from '@mui/material';
 import Head from 'next/head';
 
 export default function Custom404() {
@@ -18,11 +18,11 @@ export default function Custom404() {
         <meta name="keywords" content={`${KEY_WORDS_SEO}, 404 error page, page not found`} />
       </Head>
 
-      <Container maxWidth="xs" className={globalStyles.opacityContainer}>
+      <LayoutContent isCenterPosition containerStyles={{ maxWidth: 'xs' }}>
         <Typography variant="h5" component="h1" fontWeight="600" textAlign="center">
           404 - Page Not Found
         </Typography>
-      </Container>
+      </LayoutContent>
     </PageLayout>
   );
 }

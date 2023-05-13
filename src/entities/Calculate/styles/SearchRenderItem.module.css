@@ -5,16 +5,22 @@
   border-radius: 8px;
   cursor: pointer;
 }
-.selectedItem {
+
+.selectedDarkItem {
+  background: rgb(83, 83, 83);
+}
+.selectedLightItem {
   background: #bbdefb;
 }
-.hoverItem:hover {
+.hoverDarkItem:hover {
+  background: rgb(83, 83, 83);
+}
+.hoverLightItem:hover {
   background: #bbdefb;
 }
+
 .selectContainer {
   display: flex;
   align-items: center;
-}
-.selectText {
-  padding-right: 5px;
+  gap: 5px;
 }

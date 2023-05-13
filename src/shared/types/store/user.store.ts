@@ -1,9 +1,5 @@
-export type LocalStorageUserData = ISetEmailInput;
+export type ThemeMode = 'light' | 'dark';
 
-export interface ISetEmailInput {
-  email: string;
-}
-
-export interface ISetEmailCodeExpiresIn {
-  emailCodeExpiresIn: number;
+export interface IUserDataInitialState {
+  theme: ThemeMode;
 }

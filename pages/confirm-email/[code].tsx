@@ -2,8 +2,8 @@ import { NotAuthPage, PageLayout } from '@cc/app/components';
 import { useEmailValidateMutation } from '@cc/shared/api';
 import { RoutesTypes } from '@cc/shared/enums';
 import { useAuthContext, useErrorMessage } from '@cc/shared/lib';
-import globalStyles from '@cc/shared/styles/Index.module.css';
-import { Container, Typography } from '@mui/material';
+import { LayoutContent } from '@cc/shared/ui';
+import { Typography } from '@mui/material';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -57,7 +57,7 @@ const ConfirmEmail = () => {
         </Head>
 
         {Boolean(errorMessage) && (
-          <Container maxWidth="xs" className={globalStyles.opacityContainer}>
+          <LayoutContent isCenterPosition containerStyles={{ maxWidth: 'xs' }}>
             <Typography variant="h6" component="h1" color="red" fontWeight="600">
               An error has occurred
             </Typography>
@@ -67,7 +67,7 @@ const ConfirmEmail = () => {
             )}
 
             <Typography sx={{ mt: 2 }}>{forUserText}</Typography>
-          </Container>
+          </LayoutContent>
         )}
       </PageLayout>
     </NotAuthPage>

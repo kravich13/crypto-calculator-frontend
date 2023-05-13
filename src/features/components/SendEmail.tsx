@@ -1,5 +1,5 @@
 import { emailValidation } from '@cc/entities/Authorization';
-import { TextInput } from '@cc/shared/ui';
+import { TextInput } from '@cc/shared/ui/components';
 import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
 import { LoadingButton } from '@mui/lab';
 import { Box, Grid } from '@mui/material';

@@ -4,10 +4,20 @@
 }
 .searchContainer {
   position: absolute;
-  background: white;
   padding: 8px;
+  border-radius: 4px;
+}
+
+.searchDarkContainer {
+  background: rgba(48, 48, 48);
+  border-left: 2px solid #8fc9f9;
+  border-bottom: 2px solid #8fc9f9;
+  border-right: 2px solid #8fc9f9;
+}
+
+.searchLightContainer {
+  background: rgba(255, 255, 255);
   border-left: 2px solid #1876d1;
   border-bottom: 2px solid #1876d1;
   border-right: 2px solid #1876d1;
-  border-radius: 4px;
 }

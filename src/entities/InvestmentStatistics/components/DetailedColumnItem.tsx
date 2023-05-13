@@ -1,6 +1,7 @@
+import { useThemeContext } from '@cc/shared/lib';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import { Box, TableCell, Typography } from '@mui/material';
+import { Box, TableCell, Typography, useTheme } from '@mui/material';
 import { useCallback, useMemo } from 'react';
 import styles from '../styles/DetailedColumnItem.module.css';
 import { DetailedColumnPosition, DetailedColumnType, ISelectedColumnData } from '../types';
@@ -20,6 +21,9 @@ export const DetailedColumnItem: React.FC<IDetailedColumnItemProps> = ({
   title,
   onClickSortTable,
 }) => {
+  const { themeMode } = useThemeContext();
+  const { palette } = useTheme();
+
   const currentColumn = selectedColumn?.column === column;
 
   const renderSortButton = useMemo(
@@ -38,7 +42,11 @@ export const DetailedColumnItem: React.FC<IDetailedColumnItemProps> = ({
   );
 
   return (
-    <TableCell onClick={() => onClickSortTable(column)} title={title}>
+    <TableCell
+      onClick={() => onClickSortTable(column)}
+      title={title}
+      style={{ background: themeMode === 'light' ? palette.background.default : palette.grey[900] }}
+    >
       <Box
         className={styles.container}
         style={{ justifyContent: position === 'right' ? 'flex-end' : 'flex-start' }}

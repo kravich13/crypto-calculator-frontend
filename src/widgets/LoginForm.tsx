@@ -2,16 +2,15 @@ import { EmailCode, SendEmail } from '@cc/features';
 import { useEmailValidateMutation, useSignInMutation } from '@cc/shared/api';
 import { RoutesTypes } from '@cc/shared/enums';
 import {
+  authActions,
   useAppDispatch,
   useAppSelector,
   useAuthContext,
   useErrorMessage,
-  userDataActions,
 } from '@cc/shared/lib';
-import globalStyles from '@cc/shared/styles/Index.module.css';
 import { ISetEmailInput } from '@cc/shared/types';
-import { PopupAlert } from '@cc/shared/ui';
-import { Box, Container, Step, StepLabel, Stepper, Typography } from '@mui/material';
+import { LayoutContent, PopupAlert } from '@cc/shared/ui/components';
+import { Box, Step, StepLabel, Stepper, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
@@ -21,7 +20,7 @@ export const LoginForm = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const emailUser = useAppSelector((state) => state.userDataReducer.email);
+  const emailUser = useAppSelector((state) => state.authReducer.email);
 
   const [step, setStep] = useState(0);
 
@@ -36,7 +35,7 @@ export const LoginForm = () => {
   const errorMessage = signUpError.message || emailValidateError.message;
 
   const onSendEmail: SubmitHandler<ISetEmailInput> = useCallback(async (data) => {
-    dispatch(userDataActions.setEmail(data));
+    dispatch(authActions.setEmail(data));
     signIn(data);
   }, []);
 
@@ -67,7 +66,7 @@ export const LoginForm = () => {
     if (step === 0 && signUpData.data) {
       const { emailCodeExpiresIn } = signUpData.data;
 
-      dispatch(userDataActions.setEmailCodeExpiresIn({ emailCodeExpiresIn }));
+      dispatch(authActions.setEmailCodeExpiresIn({ emailCodeExpiresIn }));
       setStep(1);
     } else if (step === 1 && emailValidateData.data) {
       login({ tokensData: emailValidateData.data });
@@ -76,7 +75,7 @@ export const LoginForm = () => {
   }, [step, signUpData.data, emailValidateData.data, emailUser]);
 
   return (
-    <Container maxWidth="xs" className={globalStyles.opacityContainer}>
+    <LayoutContent isCenterPosition containerStyles={{ maxWidth: 'xs' }}>
       {isError && <PopupAlert text={errorMessage} severity="error" variant="filled" />}
 
       <Typography component="h1" variant="h5" textAlign="left" width="100%" mb={3}>
@@ -108,6 +107,6 @@ export const LoginForm = () => {
 
         {stepRender[step]}
       </Box>
-    </Container>
+    </LayoutContent>
   );
 };

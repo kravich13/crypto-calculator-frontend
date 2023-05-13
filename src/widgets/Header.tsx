@@ -1,4 +1,4 @@
-import { AuthHeaderContent, NotAuthHeaderContent } from '@cc/entities/Header';
+import { AuthHeaderContent, NotAuthHeaderContent } from '@cc/entities/Header/components';
 import { RoutesTypes } from '@cc/shared/enums';
 import { useAppSelector } from '@cc/shared/lib';
 import { AppBar, Container, Toolbar, useMediaQuery } from '@mui/material';

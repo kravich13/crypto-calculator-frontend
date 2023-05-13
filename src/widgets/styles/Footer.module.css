@@ -4,14 +4,7 @@
   justify-content: space-around;
   align-items: center;
 }
-.mobileContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.mobileLogo {
-  margin-bottom: 10px;
-}
+
 .contentContainer {
   display: flex;
   flex-direction: row;
@@ -26,7 +19,6 @@
 .rowHeader {
   text-align: center;
   padding-bottom: 5px;
-  color: white;
 }
 .link {
   all: unset;
@@ -37,7 +29,16 @@
   height: 24px;
   width: 24px;
   border-radius: 4px;
-  background: white;
+}
+
+@media screen and (max-width: 550px) {
+  .mainContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+  .mobileLogo {
+    margin-bottom: 10px;
+  }
 }
 
 @media screen and (max-width: 390px) {

@@ -9,18 +9,13 @@
 .containerNavigate {
   display: flex;
   flex-direction: row;
+  gap: 5px;
 }
 .button {
-  background: #e0e0e0;
+  background: rgb(198, 198, 198);
   padding: 0 8px;
   text-align: center;
   vertical-align: center;
   border-radius: 4px;
   font-weight: 600;
-}
-.firstButton {
-  margin-right: 5px;
-}
-.text {
-  margin-left: 5px;
 }

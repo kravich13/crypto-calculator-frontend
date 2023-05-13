@@ -1,15 +1,14 @@
 import { FramerMotions, Layout } from '@cc/app/components';
-import { AuthProvider } from '@cc/app/providers';
+import { AuthProvider, ThemeProvider } from '@cc/app/providers';
 import { createEmotionCache } from '@cc/app/utility';
 import { wrapper } from '@cc/shared/lib';
 import { CacheProvider, EmotionCache } from '@emotion/react';
-import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
+import { CssBaseline } from '@mui/material';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { Provider } from 'react-redux';
 
 const clientSideEmotionCache = createEmotionCache();
-const theme = createTheme();
 
 interface IAppProps extends AppProps {
   emotionCache?: EmotionCache;
@@ -25,11 +24,11 @@ export default function App({
   return (
     <Provider store={store}>
       <CacheProvider value={emotionCache}>
-        <ThemeProvider theme={theme}>
-          <AuthProvider>
-            <CssBaseline />
-
+        <AuthProvider>
+          <ThemeProvider>
             <FramerMotions>
+              <CssBaseline />
+
               <Layout>
                 <Head>
                   <link rel="apple-touch-icon" sizes="180x180" href="/logo/apple-touch-icon.png" />
@@ -42,8 +41,8 @@ export default function App({
                 <Component {...props} />
               </Layout>
             </FramerMotions>
-          </AuthProvider>
-        </ThemeProvider>
+          </ThemeProvider>
+        </AuthProvider>
       </CacheProvider>
     </Provider>
   );

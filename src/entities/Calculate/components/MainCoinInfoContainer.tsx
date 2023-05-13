@@ -1,5 +1,5 @@
 import sharedStyles from '@cc/shared/styles/Index.module.css';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
 import styles from '../styles/MainCoinInfoContainer.module.css';
@@ -18,20 +18,29 @@ export const MainCoinInfoContainer: React.FC<IMainCoinInfoContainerProps> = ({
   image,
   imageHeight = 20,
   imageWidth = 20,
-}) => (
-  <Box className={styles.container}>
-    <Image
-      loader={({}) => image}
-      src={image}
-      alt="Image"
-      width={imageWidth}
-      height={imageHeight}
-      unoptimized
-      className={sharedStyles.coinIcon}
-    />
+}) => {
+  const { palette } = useTheme();
+  const symbolTitle = symbol.toUpperCase();
 
-    <Typography className={styles.nameText}>{name}</Typography>
+  return (
+    <Box className={styles.container}>
+      <Image
+        loader={({}) => image}
+        src={image}
+        alt="Image"
+        width={imageWidth}
+        height={imageHeight}
+        unoptimized
+        className={sharedStyles.coinIcon}
+      />
 
-    <Typography color="GrayText">{symbol.toUpperCase()}</Typography>
-  </Box>
-);
+      <Typography className={styles.nameText} title={name}>
+        {name}
+      </Typography>
+
+      <Typography style={{ color: palette.text.secondary }} title={symbolTitle}>
+        {symbolTitle}
+      </Typography>
+    </Box>
+  );
+};

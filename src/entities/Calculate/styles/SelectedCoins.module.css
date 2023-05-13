@@ -9,12 +9,10 @@
 }
 .selectedMaxCoins {
   text-align: center;
-  color: #5d5d5d;
   margin-bottom: 4px;
 }
 .selectedCoins {
   text-align: center;
-  color: #5d5d5d;
   margin-bottom: 24px;
 }
 .boxButton {
@@ -30,5 +28,5 @@
   height: 28px;
 }
 .deleteButton:hover {
-  color: red;
+  color: rgb(149, 0, 0);
 }
