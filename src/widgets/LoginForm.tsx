@@ -64,9 +64,9 @@ export const LoginForm = () => {
 
   useEffect(() => {
     if (step === 0 && signUpData.data) {
-      const { emailCodeExpiresIn } = signUpData.data;
+      const { emailCodeResendExpiresIn } = signUpData.data;
 
-      dispatch(authActions.setEmailCodeExpiresIn({ emailCodeExpiresIn }));
+      dispatch(authActions.setEmailCodeResendExpiresIn({ emailCodeResendExpiresIn }));
       setStep(1);
     } else if (step === 1 && emailValidateData.data) {
       login({ tokensData: emailValidateData.data });

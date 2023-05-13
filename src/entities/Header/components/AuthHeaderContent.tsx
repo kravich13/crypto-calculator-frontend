@@ -1,7 +1,17 @@
 import { RoutesTypes } from '@cc/shared/enums';
 import { useAppSelector, useAuthContext } from '@cc/shared/lib';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { Avatar, Box, Button, Fade, IconButton, Menu, MenuItem, Typography } from '@mui/material';
+import {
+  Avatar,
+  Box,
+  Button,
+  Fade,
+  IconButton,
+  Menu,
+  MenuItem,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useCallback, useMemo, useState } from 'react';
 import styles from '../styles/AuthHeaderContent.module.css';
@@ -12,6 +22,7 @@ export const AuthHeaderContent: React.FC = () => {
   const hasProfitData = useAppSelector((state) => state.profitReducer.hasData);
 
   const { logout } = useAuthContext();
+  const { palette } = useTheme();
 
   const router = useRouter();
   const pathname = usePathname();
@@ -99,7 +110,7 @@ export const AuthHeaderContent: React.FC = () => {
         <MenuItem onClick={onLogout}>
           <LogoutIcon style={{ color: 'red', marginRight: 4 }} />
 
-          <Typography color="red" fontWeight="600">
+          <Typography fontWeight="600" style={{ color: palette.error.dark }}>
             Logout
           </Typography>
         </MenuItem>

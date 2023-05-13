@@ -16,7 +16,7 @@ const initialTokens: IAuthInitialState = {
   email: '',
   accessToken: '',
   refreshToken: '',
-  emailCodeExpiresIn: -1,
+  emailCodeResendExpiresIn: -1,
   accessTokenExpiresIn: -1,
   refreshTokenExpiresIn: -1,
 };
@@ -42,7 +42,7 @@ describe('authSlice', () => {
       refreshToken: 'refresh_token',
       accessTokenExpiresIn: 3600,
       refreshTokenExpiresIn: 36000,
-      emailCodeExpiresIn: 60,
+      emailCodeResendExpiresIn: 60,
     };
 
     const expectedState = { ...tokensData, isAuth: true };

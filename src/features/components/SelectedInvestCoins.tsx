@@ -9,7 +9,7 @@ import { useAppSelector, useRefreshRequest } from '@cc/shared/lib';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import WestIcon from '@mui/icons-material/West';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Typography, useTheme } from '@mui/material';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { SubmitHandler, useFieldArray, useForm, useFormState } from 'react-hook-form';
 import styles from '../styles/SelectedInvestCoins.module.css';
@@ -25,6 +25,7 @@ const LIMIT_FOR_SEARCH_REQUEST = 6;
 export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.memo(
   ({ isLoading, onBack, onConfirm }) => {
     const startDate = useAppSelector((state) => state.baseCalculatorReducer.startDate);
+    const { palette } = useTheme();
 
     const [coinSearchRequest, { data: searchCoins, error, originalArgs }] =
       useLazyCoinSearchQuery();
@@ -132,10 +133,9 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
         </Box>
 
         <Typography
-          sx={{ mt: 2, mb: 2 }}
+          sx={{ mt: 2, mb: 2, color: palette.error.dark }}
           textAlign="center"
           variant="subtitle1"
-          color="red"
           fontStyle="oblique"
         >
           {errorTitle}

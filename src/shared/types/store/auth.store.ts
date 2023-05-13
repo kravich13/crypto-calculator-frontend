@@ -11,12 +11,12 @@ export interface ISetEmailInput {
   email: string;
 }
 
-export interface ISetEmailCodeExpiresIn {
-  emailCodeExpiresIn: number;
+export interface ISetEmailCodeResendExpiresIn {
+  emailCodeResendExpiresIn: number;
 }
 
 export interface IAuthInitialState extends IJwtTokensPayload {
   isAuth?: boolean;
   email: string;
-  emailCodeExpiresIn: number;
+  emailCodeResendExpiresIn: number;
 }
