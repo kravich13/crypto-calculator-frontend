@@ -23,7 +23,9 @@ export const EmailCode: React.FC<IEmailCodeProps> = React.memo(({ isLoading, onC
   const dispatch = useAppDispatch();
 
   const email = useAppSelector((state) => state.authReducer.email);
-  const emailCodeExpiresIn = useAppSelector((state) => state.authReducer.emailCodeExpiresIn);
+  const emailCodeResendExpiresIn = useAppSelector(
+    (state) => state.authReducer.emailCodeResendExpiresIn
+  );
 
   const { handleSubmit, control, resetField } = useForm<IEmailCodeForm>({ mode: 'onBlur' });
   const { errors, isValid } = useFormState({ control });
@@ -48,16 +50,20 @@ export const EmailCode: React.FC<IEmailCodeProps> = React.memo(({ isLoading, onC
 
     if (signUpPayload) {
       dispatch(
-        authActions.setEmailCodeExpiresIn({
-          emailCodeExpiresIn: signUpPayload.emailCodeExpiresIn,
+        authActions.setEmailCodeResendExpiresIn({
+          emailCodeResendExpiresIn: signUpPayload.emailCodeResendExpiresIn,
         })
       );
     }
   }, [signInData.data]);
 
   useEffect(() => {
+    if (emailCodeResendExpiresIn < Date.now()) {
+      setDisabledSendEmail(false);
+    }
+
     const id = setInterval(() => {
-      if (emailCodeExpiresIn < Date.now()) {
+      if (emailCodeResendExpiresIn < Date.now()) {
         setDisabledSendEmail(false);
         clearInterval(id);
       } else {
@@ -68,7 +74,7 @@ export const EmailCode: React.FC<IEmailCodeProps> = React.memo(({ isLoading, onC
     return () => {
       clearInterval(id);
     };
-  }, [emailCodeExpiresIn]);
+  }, [emailCodeResendExpiresIn]);
 
   return (
     <Box component="form" noValidate onSubmit={handleSubmit(onConfirm)}>
@@ -126,7 +132,7 @@ export const EmailCode: React.FC<IEmailCodeProps> = React.memo(({ isLoading, onC
               Send again in
             </Typography>
 
-            <Timer inputDate={emailCodeExpiresIn} stylesProps={{ color: 'GrayText' }} />
+            <Timer inputDate={emailCodeResendExpiresIn} stylesProps={{ color: 'GrayText' }} />
           </Box>
 
           <LoadingButton

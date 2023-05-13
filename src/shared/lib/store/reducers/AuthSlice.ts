@@ -1,7 +1,7 @@
 import {
   IAuthInitialState,
   IJwtTokensPayload,
-  ISetEmailCodeExpiresIn,
+  ISetEmailCodeResendExpiresIn,
   ISetEmailInput,
 } from '@cc/shared/types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
@@ -10,7 +10,7 @@ const initialState: IAuthInitialState = {
   email: '',
   accessToken: '',
   refreshToken: '',
-  emailCodeExpiresIn: -1,
+  emailCodeResendExpiresIn: -1,
   accessTokenExpiresIn: -1,
   refreshTokenExpiresIn: -1,
 };
@@ -40,10 +40,10 @@ export const authSlice = createSlice({
       state.email = payload.email;
     },
 
-    setEmailCodeExpiresIn(state, { payload }: PayloadAction<ISetEmailCodeExpiresIn>) {
+    setEmailCodeResendExpiresIn(state, { payload }: PayloadAction<ISetEmailCodeResendExpiresIn>) {
       localStorage.setItem('userData', JSON.stringify({ email: state.email }));
 
-      state.emailCodeExpiresIn = payload.emailCodeExpiresIn;
+      state.emailCodeResendExpiresIn = payload.emailCodeResendExpiresIn;
     },
   },
 });

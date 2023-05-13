@@ -39,12 +39,12 @@ export const NotAuthHeaderContent: React.FC<INotAuthHeaderContentProps> = ({
         },
       ]}
     >
-      {isNotAuthPage && !isConfirmEmailPage && (
-        <>
-          {isLoadingContent ? (
-            <Skeleton variant="text" width={120} height={40} />
-          ) : (
-            <Box style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      <Box style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        {isNotAuthPage && !isConfirmEmailPage && (
+          <>
+            {isLoadingContent ? (
+              <Skeleton variant="text" width={120} height={40} />
+            ) : (
               <Button
                 sx={[{ textTransform: 'none', width: '120px' }]}
                 color="inherit"
@@ -53,12 +53,12 @@ export const NotAuthHeaderContent: React.FC<INotAuthHeaderContentProps> = ({
               >
                 Log In
               </Button>
+            )}
+          </>
+        )}
 
-              <ThemeButton />
-            </Box>
-          )}
-        </>
-      )}
+        {!isLoadingContent && <ThemeButton />}
+      </Box>
     </Box>
   );
 };

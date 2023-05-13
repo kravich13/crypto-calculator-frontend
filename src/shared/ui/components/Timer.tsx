@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
 import { DateTime, Duration } from 'luxon';
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 
 interface ITimerProps {
   inputDate: number;
@@ -14,17 +14,19 @@ export const Timer: React.FC<ITimerProps> = memo(({ inputDate, stylesProps }) =>
   const [text, setText] = useState('00:00');
 
   useEffect(() => {
+    const time = getFormatTime(inputDate);
+
+    if (inputDate > Date.now()) {
+      setText(time);
+    }
+
     const id = setInterval(() => {
       if (inputDate < Date.now()) {
         clearInterval(id);
       } else {
-        const now = DateTime.now();
-        const end = DateTime.fromMillis(inputDate);
-        const remaining = end.diff(now).toObject();
-        const duration = Duration.fromObject(remaining);
-        const result = duration.toFormat('mm:ss');
+        const time = getFormatTime(inputDate);
 
-        setText(result);
+        setText(time);
       }
     }, 1000);
 
@@ -32,6 +34,17 @@ export const Timer: React.FC<ITimerProps> = memo(({ inputDate, stylesProps }) =>
       clearInterval(id);
     };
   }, [inputDate]);
+
+  const getFormatTime = useCallback((date: number) => {
+    const now = DateTime.now();
+    const end = DateTime.fromMillis(date);
+    const remaining = end.diff(now).toObject();
+    const duration = Duration.fromObject(remaining);
+
+    const result = duration.toFormat('mm:ss');
+
+    return result;
+  }, []);
 
   return <Typography {...stylesProps}>{text}</Typography>;
 });

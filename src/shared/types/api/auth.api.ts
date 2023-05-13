@@ -1,7 +1,7 @@
 import { IJwtTokensPayload } from '../store';
 
 export interface ILoginResponse {
-  emailCodeExpiresIn: number;
+  emailCodeResendExpiresIn: number;
 }
 
 export interface ILoginRequest {
