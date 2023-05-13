@@ -44,7 +44,7 @@ export const CalculateYieldForm = () => {
   const errorMessage = periodRefreshData.error.message || calculateRefreshData.error.message;
   const isError = periodRefreshData.error.showError || calculateRefreshData.error.showError;
 
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
 
   const onConfirmStep0: SubmitHandler<IPeriodAndAmountForm> = useCallback(async (data) => {
     dispatch(calculatorActions.setPeriodAndAmount(data));

@@ -3,9 +3,8 @@ import { Chart, DetailedInvestmentStatistics, GeneralInvestmentStatistics } from
 import { KEY_WORDS_SEO } from '@cc/shared/const';
 import { RoutesTypes } from '@cc/shared/enums';
 import { useAppSelector } from '@cc/shared/lib';
-import globalStyles from '@cc/shared/styles/Index.module.css';
-import { ScrollTopButton } from '@cc/shared/ui/components';
-import { Box, Container, Divider } from '@mui/material';
+import { LayoutContent, ScrollTopButton } from '@cc/shared/ui';
+import { Box, Divider } from '@mui/material';
 import Head from 'next/head';
 
 export default function InvestmentStatistics() {
@@ -36,7 +35,7 @@ export default function InvestmentStatistics() {
             <meta name="robots" content="noindex, nofollow" />
           </Head>
 
-          <Container maxWidth="lg" className={globalStyles.contentPageContainer}>
+          <LayoutContent containerStyles={{ maxWidth: 'lg' }}>
             <Box mb={3} display="flex" justifyContent="center">
               <GeneralInvestmentStatistics />
             </Box>
@@ -48,7 +47,7 @@ export default function InvestmentStatistics() {
             <Divider variant="fullWidth" style={{ marginBottom: 20 }} />
 
             <DetailedInvestmentStatistics />
-          </Container>
+          </LayoutContent>
 
           <ScrollTopButton />
         </PageLayout>

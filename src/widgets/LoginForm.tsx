@@ -8,10 +8,9 @@ import {
   useAuthContext,
   useErrorMessage,
 } from '@cc/shared/lib';
-import globalStyles from '@cc/shared/styles/Index.module.css';
 import { ISetEmailInput } from '@cc/shared/types';
-import { PopupAlert } from '@cc/shared/ui/components';
-import { Box, Container, Step, StepLabel, Stepper, Typography } from '@mui/material';
+import { LayoutContent, PopupAlert } from '@cc/shared/ui/components';
+import { Box, Step, StepLabel, Stepper, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
@@ -76,7 +75,7 @@ export const LoginForm = () => {
   }, [step, signUpData.data, emailValidateData.data, emailUser]);
 
   return (
-    <Container maxWidth="xs" className={globalStyles.opacityContainer}>
+    <LayoutContent isCenterPosition containerStyles={{ maxWidth: 'xs' }}>
       {isError && <PopupAlert text={errorMessage} severity="error" variant="filled" />}
 
       <Typography component="h1" variant="h5" textAlign="left" width="100%" mb={3}>
@@ -108,6 +107,6 @@ export const LoginForm = () => {
 
         {stepRender[step]}
       </Box>
-    </Container>
+    </LayoutContent>
   );
 };

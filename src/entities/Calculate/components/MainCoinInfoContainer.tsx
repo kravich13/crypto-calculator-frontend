@@ -3,7 +3,6 @@ import { Box, Typography, useTheme } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
 import styles from '../styles/MainCoinInfoContainer.module.css';
-import { useThemeContext } from '@cc/shared/lib';
 
 interface IMainCoinInfoContainerProps {
   name: string;
@@ -21,6 +20,7 @@ export const MainCoinInfoContainer: React.FC<IMainCoinInfoContainerProps> = ({
   imageWidth = 20,
 }) => {
   const { palette } = useTheme();
+  const symbolTitle = symbol.toUpperCase();
 
   return (
     <Box className={styles.container}>
@@ -34,9 +34,13 @@ export const MainCoinInfoContainer: React.FC<IMainCoinInfoContainerProps> = ({
         className={sharedStyles.coinIcon}
       />
 
-      <Typography className={styles.nameText}>{name}</Typography>
+      <Typography className={styles.nameText} title={name}>
+        {name}
+      </Typography>
 
-      <Typography style={{ color: palette.text.secondary }}>{symbol.toUpperCase()}</Typography>
+      <Typography style={{ color: palette.text.secondary }} title={symbolTitle}>
+        {symbolTitle}
+      </Typography>
     </Box>
   );
 };

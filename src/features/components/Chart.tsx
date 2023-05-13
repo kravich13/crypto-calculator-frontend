@@ -1,5 +1,5 @@
 import { GET_LOSS_COLOR, GET_PROFIT_COLOR, LOSS_COLOR, PROFIT_COLOR } from '@cc/shared/const';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Typography, useTheme } from '@mui/material';
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -39,6 +39,8 @@ interface IChartProps {
 }
 
 export const Chart: React.FC<IChartProps> = memo(({ labels, dollars }) => {
+  const { palette } = useTheme();
+
   const [isLogChart, setLogShart] = useState(false);
 
   const firstBalance = dollars.at(0) || 0;
@@ -97,10 +99,16 @@ export const Chart: React.FC<IChartProps> = memo(({ labels, dollars }) => {
             maintainAspectRatio: false,
             hover: { intersect: false, mode: 'nearest', axis: 'x' },
             scales: {
-              x: { grid: { display: false } },
+              x: {
+                grid: { display: false },
+                ticks: { color: palette.text.secondary },
+                border: { color: palette.divider },
+              },
               y: {
+                grid: { color: palette.divider },
                 type: isLogChart ? 'logarithmic' : 'linear',
-                ticks: { callback: (value) => `$${value}` },
+                ticks: { callback: (value) => `$${value}`, color: palette.text.secondary },
+                border: { color: palette.divider },
               },
             },
             layout: { autoPadding: true },
