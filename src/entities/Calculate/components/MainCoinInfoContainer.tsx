@@ -1,8 +1,8 @@
-import sharedStyles from '@cc/shared/styles/Index.module.css';
+import sharedStyles from '@cc/shared/styles/Index.module.scss';
 import { Box, Typography, useTheme } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
-import styles from '../styles/MainCoinInfoContainer.module.css';
+import styles from '../styles/MainCoinInfoContainer.module.scss';
 
 interface IMainCoinInfoContainerProps {
   name: string;

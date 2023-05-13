@@ -1,9 +1,9 @@
-import { LOSS_COLOR, PROFIT_COLOR } from '@cc/shared/const';
-import sharedStyles from '@cc/shared/styles/Index.module.css';
+import sharedStyles from '@cc/shared/styles/Index.module.scss';
+import variables from '@cc/shared/styles/Variables.module.scss';
 import { Box, Typography } from '@mui/material';
 import Image from 'next/image';
 import React, { useMemo } from 'react';
-import styles from '../styles/BestWorstItem.module.css';
+import styles from '../styles/BestWorstItem.module.scss';
 import { InvestmentPercent } from './InvestmentPercent';
 
 interface IBestWorstInvestmentProps {
@@ -25,7 +25,11 @@ export const BestWorstItem: React.FC<IBestWorstInvestmentProps> = ({
   const profitTitle = `${profit >= 0 ? '+' : '-'} $${profitNumber}`;
 
   const profitTextStyle = useMemo(
-    () => ({ color: growth >= 0 ? PROFIT_COLOR : LOSS_COLOR, fontSize: 16, fontWeight: 600 }),
+    () => ({
+      color: growth >= 0 ? variables.profit : variables.loss,
+      fontSize: 16,
+      fontWeight: 600,
+    }),
     [growth]
   );
 

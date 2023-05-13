@@ -1,9 +1,9 @@
 import { BestWorstInvestment, InvestmentPercent } from '@cc/entities/Calculate';
-import { LOSS_COLOR, PROFIT_COLOR } from '@cc/shared/const';
 import { useAppSelector } from '@cc/shared/lib';
+import variables from '@cc/shared/styles/Variables.module.scss';
 import { Box, Typography } from '@mui/material';
 import { useMemo } from 'react';
-import styles from '../styles/GeneralInvestmentStatistics.module.css';
+import styles from '../styles/GeneralInvestmentStatistics.module.scss';
 
 export const GeneralInvestmentStatistics = () => {
   const { investmentPeriod, totalCapital, totalGrowth, totalInvested, coins } = useAppSelector(
@@ -24,7 +24,7 @@ export const GeneralInvestmentStatistics = () => {
       paddingRight: '8px',
       paddingLeft: '2px',
       borderRadius: '8px',
-      background: totalGrowth >= 0 ? PROFIT_COLOR : LOSS_COLOR,
+      background: totalGrowth >= 0 ? variables.profit : variables.loss,
       color: 'white',
       fontWeight: 500,
     }),
@@ -33,7 +33,7 @@ export const GeneralInvestmentStatistics = () => {
 
   const profitStyles = useMemo(
     () => ({
-      color: profit >= 0 ? PROFIT_COLOR : LOSS_COLOR,
+      color: profit >= 0 ? variables.profit : variables.loss,
       fontWeight: 600,
     }),
     [profit]

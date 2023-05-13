@@ -3,7 +3,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { Box, TableCell, Typography, useTheme } from '@mui/material';
 import { useCallback, useMemo } from 'react';
-import styles from '../styles/DetailedColumnItem.module.css';
+import styles from '../styles/DetailedColumnItem.module.scss';
 import { DetailedColumnPosition, DetailedColumnType, ISelectedColumnData } from '../types';
 
 interface IDetailedColumnItemProps {

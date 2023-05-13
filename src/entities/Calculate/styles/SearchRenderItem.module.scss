@@ -6,17 +6,20 @@
   cursor: pointer;
 }
 
+$bg-item-dark: rgb(83, 83, 83);
+$bg-item-light: #bbdefb;
+
 .selectedDarkItem {
-  background: rgb(83, 83, 83);
+  background: $bg-item-dark;
 }
 .selectedLightItem {
-  background: #bbdefb;
+  background: $bg-item-light;
 }
 .hoverDarkItem:hover {
-  background: rgb(83, 83, 83);
+  background: $bg-item-dark;
 }
 .hoverLightItem:hover {
-  background: #bbdefb;
+  background: $bg-item-light;
 }
 
 .selectContainer {

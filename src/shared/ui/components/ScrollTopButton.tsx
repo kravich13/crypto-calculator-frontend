@@ -1,8 +1,9 @@
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Box, Fab, Fade, useScrollTrigger, useTheme } from '@mui/material';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
-import { GET_PRIMARY_COLOR, ICON_COLOR } from '../../const';
+import { GET_PRIMARY_LIGHT_COLOR } from '../../const';
 import { useThemeContext } from '../../lib';
+import variables from '../../styles/Variables.module.scss';
 
 export const ScrollTopButton = memo(() => {
   const { themeMode } = useThemeContext();
@@ -55,13 +56,15 @@ export const ScrollTopButton = memo(() => {
           size="medium"
           variant="circular"
           style={{
-            border: `1px solid ${ICON_COLOR}`,
+            border: `1px solid ${variables.logo}`,
             background:
-              themeMode === 'light' ? GET_PRIMARY_COLOR(0.83) : palette.action.disabledBackground,
+              themeMode === 'light'
+                ? GET_PRIMARY_LIGHT_COLOR(0.83)
+                : palette.action.disabledBackground,
             boxShadow: 'initial',
           }}
         >
-          <KeyboardArrowUpIcon style={{ color: ICON_COLOR }} />
+          <KeyboardArrowUpIcon style={{ color: variables.logo }} />
         </Fab>
       </Box>
     </Fade>

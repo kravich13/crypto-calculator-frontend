@@ -6,8 +6,8 @@ import {
   DetailedColumnType,
   ISelectedColumnData,
 } from '@cc/entities/InvestmentStatistics';
-import { LOSS_COLOR, PROFIT_COLOR } from '@cc/shared/const';
 import { useAppSelector } from '@cc/shared/lib';
+import variables from '@cc/shared/styles/Variables.module.scss';
 import { CalculateCoinProfitData } from '@cc/shared/types';
 import { SortByNumbers, SortByString } from '@cc/shared/utils';
 import {
@@ -159,7 +159,7 @@ export const DetailedInvestmentStatistics = () => {
               <InvestmentPercent
                 percent={growth}
                 textStyles={{
-                  color: growth >= 0 ? PROFIT_COLOR : LOSS_COLOR,
+                  color: growth >= 0 ? variables.profit : variables.loss,
                   fontSize: 14,
                   justifyContent: 'end',
                   fontWeight: 600,

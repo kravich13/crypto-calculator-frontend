@@ -1,11 +1,17 @@
-import { PRIMARY_COLOR } from '@cc/shared/const';
+import { useThemeContext } from '@cc/shared/lib';
+import variables from '@cc/shared/styles/Variables.module.scss';
 import { Box, Typography, useTheme } from '@mui/material';
 import React from 'react';
-import styles from '../styles/SearchNavigationButtons.module.css';
+import styles from '../styles/SearchNavigationButtons.module.scss';
 
 export const SearchNavigationButtons: React.FC = React.memo(() => {
+  const { themeMode } = useThemeContext();
   const { palette } = useTheme();
-  const buttonsProps = { fontSize: 'small', color: PRIMARY_COLOR };
+
+  const buttonsProps = {
+    fontSize: 'small',
+    color: themeMode === 'light' ? variables.primaryLight : variables.primaryDark,
+  };
 
   return (
     <Box component="div" className={styles.container}>

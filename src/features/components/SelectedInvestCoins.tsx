@@ -12,7 +12,7 @@ import { LoadingButton } from '@mui/lab';
 import { Box, Button, Typography, useTheme } from '@mui/material';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { SubmitHandler, useFieldArray, useForm, useFormState } from 'react-hook-form';
-import styles from '../styles/SelectedInvestCoins.module.css';
+import styles from '../styles/SelectedInvestCoins.module.scss';
 
 interface ISelectedInvestCoinsProps {
   isLoading: boolean;

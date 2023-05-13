@@ -1,0 +1,20 @@
+@use 'sass:color' as color;
+
+$primary-light: #1565c0;
+$primary-dark: #8fc9f9;
+$profit: #16c784;
+$loss: #ea3943;
+$logo: #eafcb6;
+
+:export {
+  primaryLight: $primary-light;
+  primaryDark: $primary-dark;
+  profit: $profit;
+  loss: $loss;
+  logo: $logo;
+
+  primaryLight500: color.scale(red, $alpha: -50%);
+  primaryLight600: color.scale(red, $alpha: -40%);
+  primaryLight700: color.scale(red, $alpha: -30%);
+  primaryLight800: color.scale(red, $alpha: -20%);
+}

@@ -2,7 +2,7 @@ import { IChildrenProps } from '@cc/shared/types';
 import { Footer, Header, ModalLogin, ModalLogout } from '@cc/widgets';
 import { Box } from '@mui/material';
 import NextNProgress from 'nextjs-progressbar';
-import styles from '../styles/Layout.module.css';
+import styles from '../styles/Layout.module.scss';
 
 interface IlayoutProps extends IChildrenProps {}
 

@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import React, { useCallback } from 'react';
 import { Control, Controller } from 'react-hook-form';
-import styles from '../styles/SelectedCoins.module.css';
+import styles from '../styles/SelectedCoins.module.scss';
 import { ISelectedInvestCoin, ISelectedInvestCoinsForm } from '../types';
 import { MainCoinInfoContainer } from './MainCoinInfoContainer';
 

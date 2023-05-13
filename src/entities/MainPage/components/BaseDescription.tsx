@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import styles from '../styles/BaseDescription.module.css';
+import styles from '../styles/BaseDescription.module.scss';
 
 export const BaseDescription = () => {
   return (

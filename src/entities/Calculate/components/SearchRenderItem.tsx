@@ -1,11 +1,11 @@
-import { PRIMARY_COLOR } from '@cc/shared/const';
+import { useThemeContext } from '@cc/shared/lib';
+import variables from '@cc/shared/styles/Variables.module.scss';
 import { IMainCoinInfo } from '@cc/shared/types';
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import React from 'react';
-import navigationButtonStyles from '../styles/SearchNavigationButtons.module.css';
-import styles from '../styles/SearchRenderItem.module.css';
+import navigationButtonStyles from '../styles/SearchNavigationButtons.module.scss';
+import styles from '../styles/SearchRenderItem.module.scss';
 import { MainCoinInfoContainer } from './MainCoinInfoContainer';
-import { useThemeContext } from '@cc/shared/lib';
 
 interface ISearchRenderItemProps {
   item: IMainCoinInfo;
@@ -48,7 +48,11 @@ export const SearchRenderItem: React.FC<ISearchRenderItemProps> = React.memo(
               Select
             </Typography>
 
-            <Box fontSize="small" color={PRIMARY_COLOR} className={navigationButtonStyles.button}>
+            <Box
+              fontSize="small"
+              color={themeMode === 'light' ? variables.primaryLight : variables.primaryDark}
+              className={navigationButtonStyles.button}
+            >
               ↵
             </Box>
           </Box>

@@ -1,12 +1,12 @@
-import { ICON_COLOR, PRIMARY_COLOR } from '@cc/shared/const';
 import { useThemeContext } from '@cc/shared/lib';
-import ColorsStyles from '@cc/shared/styles/Colors.module.css';
+import sharedStyles from '@cc/shared/styles/Index.module.scss';
+import colors from '@cc/shared/styles/Variables.module.scss';
 import { GitHub, LinkedIn, Telegram } from '@mui/icons-material';
 import { Box, Typography, useTheme } from '@mui/material';
 import Link from 'next/link';
 import React, { useCallback, useMemo } from 'react';
 import { v4 as uuid } from 'uuid';
-import styles from './styles/Footer.module.css';
+import styles from './styles/Footer.module.scss';
 
 interface ILinkData {
   id: string;
@@ -66,15 +66,15 @@ export const Footer = React.memo(() => {
     <Box
       component="footer"
       sx={{
-        background: themeMode === 'light' ? PRIMARY_COLOR : palette.background.default,
+        background: themeMode === 'light' ? colors.primaryLight : palette.background.default,
         paddingTop: '10px',
         paddingBottom: '10px',
       }}
-      className={themeMode === 'dark' ? ColorsStyles.headerOrFooterBGImage : ''}
+      className={themeMode === 'dark' ? sharedStyles.headerOrFooterBGImage : ''}
     >
       <Box className={styles.mainContainer}>
         <Box className={styles.mobileLogo}>
-          <Typography variant="h6" component="p" fontWeight="600" style={{ color: ICON_COLOR }}>
+          <Typography variant="h6" component="p" fontWeight="600" style={{ color: colors.logo }}>
             Crypto Metrics
           </Typography>
         </Box>
@@ -92,7 +92,7 @@ export const Footer = React.memo(() => {
             </Typography>
 
             <Box className={styles.rowContainer} style={{ justifyContent: 'left' }}>
-              <Typography style={{ color: ICON_COLOR }}>Vladislav Onatskyi</Typography>
+              <Typography style={{ color: colors.logo }}>Vladislav Onatskyi</Typography>
             </Box>
 
             {renderLink(links[0])}
@@ -107,7 +107,7 @@ export const Footer = React.memo(() => {
             </Typography>
 
             <Box className={styles.rowContainer} style={{ justifyContent: 'right' }}>
-              <Typography style={{ color: ICON_COLOR }}>Maksym Baranovskyi</Typography>
+              <Typography style={{ color: colors.logo }}>Maksym Baranovskyi</Typography>
             </Box>
 
             {renderLink(links[1], 'right')}
