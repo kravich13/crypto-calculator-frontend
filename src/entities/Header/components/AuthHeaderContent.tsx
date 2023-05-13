@@ -1,11 +1,10 @@
 import { RoutesTypes } from '@cc/shared/enums';
-import { useAppSelector, useAuthContext, useThemeContext } from '@cc/shared/lib';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
-import LightModeIcon from '@mui/icons-material/LightMode';
+import { useAppSelector, useAuthContext } from '@cc/shared/lib';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Avatar, Box, Button, Fade, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useCallback, useMemo, useState } from 'react';
+import styles from '../styles/AuthHeaderContent.module.css';
 import { ThemeButton } from './ThemeButton';
 
 export const AuthHeaderContent: React.FC = () => {
@@ -83,7 +82,7 @@ export const AuthHeaderContent: React.FC = () => {
   }, [emailUser]);
 
   return (
-    <Box style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+    <Box className={styles.container}>
       {showCalculationButton && (
         <Button variant="text" color="inherit" onClick={onClickLastCalculation}>
           Last calculation
