@@ -6,8 +6,8 @@ import {
 } from '@cc/entities/MainPage';
 import { RoutesTypes } from '@cc/shared/enums';
 import { useAppSelector } from '@cc/shared/lib';
-import globalStyles from '@cc/shared/styles/Index.module.css';
-import { Button, Container, Typography } from '@mui/material';
+import { LayoutContent } from '@cc/shared/ui';
+import { Button, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
 import step1Image from '../../public/main-page-images/step-1.jpg';
@@ -49,11 +49,11 @@ export const MainContent = () => {
   );
 
   return (
-    <Container
-      component="div"
-      maxWidth="lg"
-      className={globalStyles.contentPageContainer}
-      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+    <LayoutContent
+      containerStyles={{
+        maxWidth: 'lg',
+        style: { display: 'flex', flexDirection: 'column', alignItems: 'center' },
+      }}
     >
       <Typography component="h1" variant="h5" textAlign="center" sx={{ mb: 4 }}>
         Cryptocurrency historical data calculator
@@ -68,6 +68,6 @@ export const MainContent = () => {
       {calculateStepsData.map(renderStepData)}
 
       <ResultsDescription />
-    </Container>
+    </LayoutContent>
   );
 };

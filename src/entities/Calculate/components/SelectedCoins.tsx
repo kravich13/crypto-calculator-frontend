@@ -105,7 +105,9 @@ export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
         Сan select a maximum of {maxNumberOfCoinsToInvest} coins
       </Typography>
 
-      <Typography className={styles.selectedCoins}>Selected coins: {addedCoins.length}</Typography>
+      <Typography className={styles.selectedCoins} color="darkgoldenrod">
+        Selected coins: {addedCoins.length}
+      </Typography>
 
       <Typography>
         Specify the investment percentage for each selected coin (at least

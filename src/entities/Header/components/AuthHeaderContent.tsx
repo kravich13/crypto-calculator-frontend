@@ -83,7 +83,7 @@ export const AuthHeaderContent: React.FC = () => {
   }, [emailUser]);
 
   return (
-    <Box style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+    <Box style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
       {showCalculationButton && (
         <Button variant="text" color="inherit" onClick={onClickLastCalculation}>
           Last calculation

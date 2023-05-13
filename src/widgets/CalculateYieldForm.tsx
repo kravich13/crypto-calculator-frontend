@@ -8,9 +8,8 @@ import {
   useAppDispatch,
   useRefreshRequest,
 } from '@cc/shared/lib';
-import globalStyles from '@cc/shared/styles/Index.module.css';
 import { CalculateProfitRequest, IPeriodAndAmountForm } from '@cc/shared/types';
-import { PopupAlert } from '@cc/shared/ui/components';
+import { LayoutContent, PopupAlert } from '@cc/shared/ui';
 import { Container, Step, StepLabel, Stepper, Typography, useMediaQuery } from '@mui/material';
 import { DateTime } from 'luxon';
 import { useRouter } from 'next/navigation';
@@ -45,7 +44,7 @@ export const CalculateYieldForm = () => {
   const errorMessage = periodRefreshData.error.message || calculateRefreshData.error.message;
   const isError = periodRefreshData.error.showError || calculateRefreshData.error.showError;
 
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(1);
 
   const onConfirmStep0: SubmitHandler<IPeriodAndAmountForm> = useCallback(async (data) => {
     dispatch(calculatorActions.setPeriodAndAmount(data));
@@ -103,11 +102,7 @@ export const CalculateYieldForm = () => {
   }, [step, periodAndAmountResponse.data, calculateProfitResponse.data]);
 
   return (
-    <Container
-      component="div"
-      maxWidth={isMin520Width ? 'xs' : 'sm'}
-      className={globalStyles.opacityContainer}
-    >
+    <LayoutContent isCenterPosition containerStyles={{ maxWidth: isMin520Width ? 'xs' : 'sm' }}>
       {isError && <PopupAlert text={errorMessage} severity="error" variant="filled" />}
 
       <Typography component="h1" variant="h5" marginBottom={3} textAlign="center">
@@ -139,6 +134,6 @@ export const CalculateYieldForm = () => {
 
         {stepRender[step]}
       </Container>
-    </Container>
+    </LayoutContent>
   );
 };

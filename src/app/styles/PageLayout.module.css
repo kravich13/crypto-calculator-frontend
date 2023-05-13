@@ -1,5 +1,4 @@
 .container {
-  background-image: url('../../../public/background-images/btc-tradingview-blur4.png');
   background-attachment: fixed;
   background-size: cover;
 
@@ -12,4 +11,11 @@
 
 .centerContainer {
   justify-content: center;
+}
+
+.darkBGImage {
+  background-image: url('../../../public/background-images/dark-blur4.png');
+}
+.lightBGImage {
+  background-image: url('../../../public/background-images/light-blur4.png');
 }

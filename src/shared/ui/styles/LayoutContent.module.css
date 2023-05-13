@@ -3,12 +3,26 @@
   padding-top: 30px;
   padding-bottom: 30px;
 }
-
 .darkContainer {
+  background: rgba(48, 48, 48, 0.9);
+  border-right: 1px solid #eafcb6;
+  border-left: 1px solid #eafcb6;
 }
-
 .lightContainer {
   background: rgba(255, 255, 255, 0.9);
-  border-right: 1px solid rgb(183, 183, 183);
-  border-left: 1px solid rgb(183, 183, 183);
+  border-right: 1px solid rgba(0, 0, 0, 0.3);
+  border-left: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.centerContainer {
+  padding: 30px;
+  border-radius: 8px;
+}
+.darkCenterContainer {
+  background: rgba(48, 48, 48, 0.9);
+  box-shadow: 0 0 20px rgb(215, 215, 215);
+}
+.lightCenterContainer {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 20px rgb(45, 45, 45);
 }

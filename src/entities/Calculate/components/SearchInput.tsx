@@ -9,6 +9,7 @@ import styles from '../styles/SearchInput.module.css';
 import { ISelectedInvestCoinsForm } from '../types';
 import { SearchNavigationButtons } from './SearchNavigationButtons';
 import { SearchRenderItem } from './SearchRenderItem';
+import { useThemeContext } from '@cc/shared/lib';
 
 interface ISearchInputProps {
   isLoading: boolean;
@@ -22,12 +23,18 @@ interface ISearchInputProps {
 export const SearchInput: React.FC<ISearchInputProps> = React.memo(
   ({ isLoading, searchData, label, canAddCoin, prependSelectedCoin, makeSearchRequest }) => {
     const isMin990Width = useMediaQuery('(min-width:990px)');
+    const { themeMode } = useThemeContext();
 
     const $container = useRef<HTMLDivElement>();
     const $searchInput = useRef<HTMLInputElement>();
     const [searchValue, setSearchValue] = useState('');
     const [showElements, setShowElements] = useState(false);
     const [selectedItem, setSelectedItem] = useState<IMainCoinInfo>();
+
+    const searchContainerStyles = [
+      styles.searchContainer,
+      themeMode === 'light' ? styles.searchLightContainer : styles.searchDarkContainer,
+    ];
 
     useEffect(() => {
       setSelectedItem(searchData[0]);
@@ -145,10 +152,11 @@ export const SearchInput: React.FC<ISearchInputProps> = React.memo(
 
         {showElements && Boolean(searchData.length) && (
           <Box
-            className={styles.searchContainer}
+            className={searchContainerStyles.join(' ')}
             style={{ width: $container.current!.clientWidth }}
           >
             {searchData.map(renderItem)}
+
             {isMin990Width && <SearchNavigationButtons />}
           </Box>
         )}

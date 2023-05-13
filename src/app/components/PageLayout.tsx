@@ -1,6 +1,7 @@
 import { IChildrenProps } from '@cc/shared/types';
 import { Box } from '@mui/material';
 import styles from '../styles/PageLayout.module.css';
+import { useThemeContext } from '@cc/shared/lib';
 
 interface IPagelayoutProps extends IChildrenProps {
   centerContent?: boolean;
@@ -8,7 +9,12 @@ interface IPagelayoutProps extends IChildrenProps {
 }
 
 export const PageLayout: React.FC<IPagelayoutProps> = ({ centerContent = false, children }) => {
-  const classes = [styles.container];
+  const { themeMode } = useThemeContext();
+
+  const classes = [
+    styles.container,
+    themeMode === 'light' ? styles.lightBGImage : styles.darkBGImage,
+  ];
 
   if (centerContent) {
     classes.push(styles.centerContainer);
