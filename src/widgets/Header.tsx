@@ -1,7 +1,7 @@
 import { AuthHeaderContent, NotAuthHeaderContent } from '@cc/entities/Header/components';
 import { RoutesTypes } from '@cc/shared/enums';
 import { useAppSelector } from '@cc/shared/lib';
-import { AppBar, Container, Toolbar, useMediaQuery } from '@mui/material';
+import { AppBar, Container, Toolbar } from '@mui/material';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useCallback } from 'react';
@@ -11,10 +11,6 @@ import styles from './styles/Header.module.scss';
 export const Header: React.FC = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const isMin500Width = useMediaQuery('(max-width:500px)');
-
-  const tollbarClasses = [styles.header, isMin500Width && styles.mobileHeader];
-  const containerClasses = [isMin500Width ? styles.mobileLogoContainer : styles.contentContainer];
 
   const isAuth = useAppSelector((state) => state.authReducer.isAuth);
 
@@ -26,8 +22,8 @@ export const Header: React.FC = () => {
 
   return (
     <AppBar position="sticky">
-      <Toolbar className={tollbarClasses.join(' ')}>
-        <Container component="div" maxWidth="lg" className={containerClasses.join(' ')}>
+      <Toolbar className={styles.header}>
+        <Container component="div" maxWidth="lg" className={styles.container}>
           <Image
             alt="Crypto Metrics"
             src={CryptoMetricsFrame2}

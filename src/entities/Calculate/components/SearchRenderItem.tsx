@@ -16,7 +16,6 @@ interface ISearchRenderItemProps {
 export const SearchRenderItem: React.FC<ISearchRenderItemProps> = React.memo(
   ({ item: { coinId, name, symbol, image }, isSelected, onClickSelectedItem }) => {
     const isMin990Width = useMediaQuery('(min-width:990px)');
-    const isMax400Width = useMediaQuery('(max-width:400px)');
     const { themeMode } = useThemeContext();
     const { palette } = useTheme();
 
@@ -31,16 +30,13 @@ export const SearchRenderItem: React.FC<ISearchRenderItemProps> = React.memo(
       );
     }
 
-    const characters = isMax400Width ? 20 : 28;
-    const nameTitle = name.length >= characters ? `${name.substring(0, characters)}...` : name;
-
     return (
       <Box
         component="div"
         className={containerClasses.join(' ')}
         onMouseDown={() => onClickSelectedItem({ coinId, name, image, symbol })}
       >
-        <MainCoinInfoContainer image={image} name={nameTitle} symbol={symbol} />
+        <MainCoinInfoContainer image={image} name={name} symbol={symbol} />
 
         {isSelected && isMin990Width && (
           <Box component="div" className={styles.selectContainer}>
@@ -50,7 +46,7 @@ export const SearchRenderItem: React.FC<ISearchRenderItemProps> = React.memo(
 
             <Box
               fontSize="small"
-              color={themeMode === 'light' ? variables.primaryLight : variables.primaryDark}
+              color={variables.primaryLight}
               className={navigationButtonStyles.button}
             >
               ↵

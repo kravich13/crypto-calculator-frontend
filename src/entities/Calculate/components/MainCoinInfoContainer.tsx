@@ -34,9 +34,11 @@ export const MainCoinInfoContainer: React.FC<IMainCoinInfoContainerProps> = ({
         className={sharedStyles.coinIcon}
       />
 
-      <Typography className={styles.nameText} title={name}>
-        {name}
-      </Typography>
+      <Box className={styles.nameContainer}>
+        <Typography className={styles.nameText} title={name}>
+          {name + 'dsadasbdsajbdasdba dbasdasdasdasdsadasjdbsadb ajdbsajbdjasd'}
+        </Typography>
+      </Box>
 
       <Typography style={{ color: palette.text.secondary }} title={symbolTitle}>
         {symbolTitle}

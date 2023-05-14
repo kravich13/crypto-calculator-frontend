@@ -1,23 +1,17 @@
-.header {
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
 .container {
   display: flex;
+  flex-direction: row;
 }
 
 @media screen and (max-width: 700px) {
   .container {
-    flex-direction: column;
     justify-content: center;
-    align-items: center;
+    padding-top: 12px;
   }
 }
 
 @media screen and (min-width: 700px) {
   .container {
-    flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-end;
   }
 }

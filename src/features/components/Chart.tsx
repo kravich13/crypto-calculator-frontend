@@ -1,4 +1,3 @@
-import { GET_LOSS_COLOR, GET_PROFIT_COLOR } from '@cc/shared/const';
 import variables from '@cc/shared/styles/Variables.module.scss';
 import { Box, Button, Typography, useTheme } from '@mui/material';
 import {
@@ -48,7 +47,7 @@ export const Chart: React.FC<IChartProps> = memo(({ labels, dollars }) => {
   const lastBalance = dollars.at(-1) || 0;
   const isPositiveBalance = firstBalance <= lastBalance;
 
-  const backgroundColor = isPositiveBalance ? GET_PROFIT_COLOR(0.4) : GET_LOSS_COLOR(0.4);
+  const backgroundColor = isPositiveBalance ? variables.profit400 : variables.loss400;
   const lineColor = isPositiveBalance ? variables.profit : variables.loss;
 
   const onTooltipLabel = useCallback(function (this: TooltipModel<'line'>) {
