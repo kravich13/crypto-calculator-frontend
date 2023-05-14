@@ -1,7 +1,8 @@
 import { RoutesTypes } from '@cc/shared/enums';
-import { Box, Button, Skeleton, useMediaQuery } from '@mui/material';
+import { Box, Button, Skeleton } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useCallback, useMemo } from 'react';
+import styles from '../styles/NoAuthHeaderContent.module.scss';
 import { ThemeButton } from './ThemeButton';
 
 interface INotAuthHeaderContentProps {
@@ -11,8 +12,6 @@ interface INotAuthHeaderContentProps {
 export const NotAuthHeaderContent: React.FC<INotAuthHeaderContentProps> = ({
   isLoadingContent,
 }) => {
-  const isMax500Width = useMediaQuery('(max-width:500px)');
-
   const router = useRouter();
   const pathname = usePathname();
 
@@ -28,17 +27,7 @@ export const NotAuthHeaderContent: React.FC<INotAuthHeaderContentProps> = ({
   }, [pathname]);
 
   return (
-    <Box
-      component="div"
-      sx={[
-        {
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: isMax500Width ? 'center' : 'flex-end',
-          paddingTop: isMax500Width ? 1 : 0,
-        },
-      ]}
-    >
+    <Box component="div" className={styles.container}>
       <Box style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
         {isNotAuthPage && !isConfirmEmailPage && (
           <>

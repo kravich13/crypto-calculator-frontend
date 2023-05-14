@@ -1,9 +1,9 @@
-import { LOSS_COLOR, PROFIT_COLOR } from '@cc/shared/const';
-import sharedStyles from '@cc/shared/styles/Index.module.css';
-import { Box, Typography } from '@mui/material';
+import sharedStyles from '@cc/shared/styles/Index.module.scss';
+import variables from '@cc/shared/styles/Variables.module.scss';
+import { Box, Typography, useTheme } from '@mui/material';
 import Image from 'next/image';
 import React, { useMemo } from 'react';
-import styles from '../styles/BestWorstItem.module.css';
+import styles from '../styles/BestWorstItem.module.scss';
 import { InvestmentPercent } from './InvestmentPercent';
 
 interface IBestWorstInvestmentProps {
@@ -21,11 +21,17 @@ export const BestWorstItem: React.FC<IBestWorstInvestmentProps> = ({
   coin: { image, growth, profit, name, symbol },
   isMaxCoin,
 }) => {
+  const { palette } = useTheme();
+
   const profitNumber = profit >= 0 ? profit : Math.abs(profit);
   const profitTitle = `${profit >= 0 ? '+' : '-'} $${profitNumber}`;
 
   const profitTextStyle = useMemo(
-    () => ({ color: growth >= 0 ? PROFIT_COLOR : LOSS_COLOR, fontSize: 16, fontWeight: 600 }),
+    () => ({
+      color: growth >= 0 ? variables.profit : variables.loss,
+      fontSize: 16,
+      fontWeight: 600,
+    }),
     [growth]
   );
 
@@ -43,7 +49,7 @@ export const BestWorstItem: React.FC<IBestWorstInvestmentProps> = ({
       />
 
       <Box className={styles.titlesContainer}>
-        <Typography color="GrayText" fontWeight="500" width={50}>
+        <Typography fontWeight="500" width={50} style={{ color: palette.text.secondary }}>
           {isMaxCoin ? 'Best' : 'Worst'}
         </Typography>
 

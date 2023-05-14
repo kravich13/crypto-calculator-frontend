@@ -3,30 +3,42 @@
   align-items: center;
   justify-content: space-between;
   margin: 8px 0;
+  gap: 16px;
 }
+
+.flexContainer {
+  display: flex;
+}
+
 .title {
   text-align: center;
 }
+
 .selectedMaxCoins {
   text-align: center;
   margin-bottom: 4px;
 }
+
 .selectedCoins {
   text-align: center;
   margin-bottom: 24px;
 }
+
 .boxButton {
   text-align: center;
   margin: 20px 0;
 }
+
 .input {
   width: 100px;
 }
+
 .deleteButton {
   align-self: center;
   width: 28px;
   height: 28px;
 }
+
 .deleteButton:hover {
   color: rgb(149, 0, 0);
 }

@@ -2,7 +2,7 @@ import { CalculateCoinProfitData } from '@cc/shared/types';
 import { Box } from '@mui/material';
 import React, { useCallback, useMemo } from 'react';
 import { BestWorstItem } from './BestWorstItem';
-import styles from '../styles/BestWorstInvestment.module.css';
+import styles from '../styles/BestWorstInvestment.module.scss';
 
 interface IBestWorstInvestmentProps {
   coins: CalculateCoinProfitData[];

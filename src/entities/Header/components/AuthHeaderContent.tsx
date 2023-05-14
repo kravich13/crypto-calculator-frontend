@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useCallback, useMemo, useState } from 'react';
-import styles from '../styles/AuthHeaderContent.module.css';
+import styles from '../styles/AuthHeaderContent.module.scss';
 import { ThemeButton } from './ThemeButton';
 
 export const AuthHeaderContent: React.FC = () => {

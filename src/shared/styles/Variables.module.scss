@@ -1,0 +1,37 @@
+@use 'sass:color' as color;
+
+$primary-light: #1565c0;
+$primary-dark: #8fc9f9;
+$profit: #16c784;
+$loss: #ea3943;
+$logo: #eafcb6;
+
+:export {
+  primaryLight: $primary-light;
+  primaryDark: $primary-dark;
+  profit: $profit;
+  loss: $loss;
+  logo: $logo;
+
+  primaryLight500: color.scale($primary-light, $alpha: -50%);
+  primaryLight600: color.scale($primary-light, $alpha: -40%);
+  primaryLight700: color.scale($primary-light, $alpha: -30%);
+  primaryLight800: color.scale($primary-light, $alpha: -20%);
+
+  primaryDark500: color.scale($primary-dark, $alpha: -50%);
+  primaryDark600: color.scale($primary-dark, $alpha: -40%);
+  primaryDark700: color.scale($primary-dark, $alpha: -30%);
+  primaryDark800: color.scale($primary-dark, $alpha: -20%);
+
+  profit400: color.scale($profit, $alpha: -60%);
+  profit500: color.scale($profit, $alpha: -50%);
+  profit600: color.scale($profit, $alpha: -40%);
+  profit700: color.scale($profit, $alpha: -30%);
+  profit800: color.scale($profit, $alpha: -20%);
+
+  loss400: color.scale($loss, $alpha: -60%);
+  loss500: color.scale($loss, $alpha: -50%);
+  loss600: color.scale($loss, $alpha: -40%);
+  loss700: color.scale($loss, $alpha: -30%);
+  loss800: color.scale($loss, $alpha: -20%);
+}

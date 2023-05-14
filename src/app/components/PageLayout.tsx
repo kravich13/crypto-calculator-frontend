@@ -1,6 +1,6 @@
 import { IChildrenProps } from '@cc/shared/types';
 import { Box } from '@mui/material';
-import styles from '../styles/PageLayout.module.css';
+import styles from '../styles/PageLayout.module.scss';
 import { useThemeContext } from '@cc/shared/lib';
 
 interface IPagelayoutProps extends IChildrenProps {

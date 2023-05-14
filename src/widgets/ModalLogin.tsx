@@ -1,7 +1,7 @@
 import { useAuthContext, useThemeContext } from '@cc/shared/lib';
 import { Box, Modal, Typography, useTheme } from '@mui/material';
 import React from 'react';
-import styles from './styles/Modal.module.css';
+import styles from './styles/Modal.module.scss';
 
 export const ModalLogin: React.FC = () => {
   const { themeMode } = useThemeContext();

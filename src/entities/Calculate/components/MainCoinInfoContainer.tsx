@@ -1,8 +1,8 @@
-import sharedStyles from '@cc/shared/styles/Index.module.css';
+import sharedStyles from '@cc/shared/styles/Index.module.scss';
 import { Box, Typography, useTheme } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
-import styles from '../styles/MainCoinInfoContainer.module.css';
+import styles from '../styles/MainCoinInfoContainer.module.scss';
 
 interface IMainCoinInfoContainerProps {
   name: string;
@@ -34,9 +34,11 @@ export const MainCoinInfoContainer: React.FC<IMainCoinInfoContainerProps> = ({
         className={sharedStyles.coinIcon}
       />
 
-      <Typography className={styles.nameText} title={name}>
-        {name}
-      </Typography>
+      <Box className={styles.nameContainer}>
+        <Typography className={styles.nameText} title={name}>
+          {name + 'dsadasbdsajbdasdba dbasdasdasdasdsadasjdbsadb ajdbsajbdjasd'}
+        </Typography>
+      </Box>
 
       <Typography style={{ color: palette.text.secondary }} title={symbolTitle}>
         {symbolTitle}

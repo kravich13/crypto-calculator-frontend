@@ -1,6 +1,6 @@
 import { Box, Chip, Divider, Typography } from '@mui/material';
 import LegacyImage from 'next/legacy/image';
-import styles from '../styles/CalculateDescription.module.css';
+import styles from '../styles/CalculateDescription.module.scss';
 import { ICalculateData } from '../types';
 
 interface ICalculateDescriptionProps extends ICalculateData {}

@@ -1,4 +1,4 @@
-import { GET_LOSS_COLOR, GET_PROFIT_COLOR, LOSS_COLOR, PROFIT_COLOR } from '@cc/shared/const';
+import variables from '@cc/shared/styles/Variables.module.scss';
 import { Box, Button, Typography, useTheme } from '@mui/material';
 import {
   CategoryScale,
@@ -18,7 +18,7 @@ import 'chartjs-adapter-luxon';
 import { DateTime } from 'luxon';
 import { memo, useCallback, useState } from 'react';
 import { Line } from 'react-chartjs-2';
-import styles from '../styles/Chart.module.css';
+import styles from '../styles/Chart.module.scss';
 
 ChartJS.register(
   LineElement,
@@ -47,8 +47,8 @@ export const Chart: React.FC<IChartProps> = memo(({ labels, dollars }) => {
   const lastBalance = dollars.at(-1) || 0;
   const isPositiveBalance = firstBalance <= lastBalance;
 
-  const backgroundColor = isPositiveBalance ? GET_PROFIT_COLOR(0.4) : GET_LOSS_COLOR(0.4);
-  const lineColor = isPositiveBalance ? PROFIT_COLOR : LOSS_COLOR;
+  const backgroundColor = isPositiveBalance ? variables.profit400 : variables.loss400;
+  const lineColor = isPositiveBalance ? variables.profit : variables.loss;
 
   const onTooltipLabel = useCallback(function (this: TooltipModel<'line'>) {
     const priceValue = this.dataPoints[0].formattedValue;

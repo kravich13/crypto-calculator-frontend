@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.nameContainer {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+.nameText {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

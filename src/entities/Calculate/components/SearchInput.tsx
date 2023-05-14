@@ -5,7 +5,7 @@ import { Box, InputAdornment, useMediaQuery } from '@mui/material';
 import debounce from 'lodash.debounce';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { UseFieldArrayPrepend } from 'react-hook-form';
-import styles from '../styles/SearchInput.module.css';
+import styles from '../styles/SearchInput.module.scss';
 import { ISelectedInvestCoinsForm } from '../types';
 import { SearchNavigationButtons } from './SearchNavigationButtons';
 import { SearchRenderItem } from './SearchRenderItem';

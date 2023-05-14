@@ -1,7 +1,7 @@
 import { useThemeContext } from '@cc/shared/lib';
-import { Container, ContainerProps } from '@mui/material';
+import { Container, ContainerProps, useTheme } from '@mui/material';
 import { IChildrenProps } from '../../types';
-import styles from '../styles/LayoutContent.module.css';
+import styles from '../styles/LayoutContent.module.scss';
 
 interface ILayoutContentProps extends IChildrenProps {
   containerStyles?: ContainerProps;
@@ -14,6 +14,8 @@ export const LayoutContent: React.FC<ILayoutContentProps> = ({
   isCenterPosition,
 }) => {
   const { themeMode } = useThemeContext();
+  const { palette } = useTheme();
+
   const mainClasses: string[] = [];
 
   if (isCenterPosition) {
@@ -29,6 +31,10 @@ export const LayoutContent: React.FC<ILayoutContentProps> = ({
   return (
     <Container
       className={[...mainClasses, containerStyles?.className].join(' ')}
+      sx={{
+        borderLeft: `1px solid ${palette.divider}`,
+        borderRight: `1px solid ${palette.divider}`,
+      }}
       {...containerStyles}
     >
       {children}
