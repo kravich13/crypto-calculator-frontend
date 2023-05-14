@@ -1,11 +1,12 @@
 import { BestWorstInvestment, InvestmentPercent } from '@cc/entities/Calculate';
 import { useAppSelector } from '@cc/shared/lib';
 import variables from '@cc/shared/styles/Variables.module.scss';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 import { useMemo } from 'react';
 import styles from '../styles/GeneralInvestmentStatistics.module.scss';
 
 export const GeneralInvestmentStatistics = () => {
+  const { palette } = useTheme();
   const { investmentPeriod, totalCapital, totalGrowth, totalInvested, coins } = useAppSelector(
     ({ profitReducer }) => profitReducer
   );
@@ -65,7 +66,7 @@ export const GeneralInvestmentStatistics = () => {
       <Box className={styles.profitContainer}>
         <Box>
           <Box className={styles.finalBalance}>
-            <Typography color="GrayText" fontWeight="500" mr={1}>
+            <Typography fontWeight="500" mr={1} style={{ color: palette.text.secondary }}>
               Invested
             </Typography>
 
@@ -77,7 +78,11 @@ export const GeneralInvestmentStatistics = () => {
           </Box>
 
           <Box className={styles.finalBalance}>
-            <Typography color="GrayText" fontWeight="500" mr={1} width={{ width: 60 }}>
+            <Typography
+              fontWeight="500"
+              mr={1}
+              width={{ width: 60, color: palette.text.secondary }}
+            >
               Balance
             </Typography>
 
