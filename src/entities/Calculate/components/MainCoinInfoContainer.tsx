@@ -36,7 +36,7 @@ export const MainCoinInfoContainer: React.FC<IMainCoinInfoContainerProps> = ({
 
       <Box className={styles.nameContainer}>
         <Typography className={styles.nameText} title={name}>
-          {name + 'dsadasbdsajbdasdba dbasdasdasdasdsadasjdbsadb ajdbsajbdjasd'}
+          {name}
         </Typography>
       </Box>
 
