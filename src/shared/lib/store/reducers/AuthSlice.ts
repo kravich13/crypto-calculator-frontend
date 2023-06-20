@@ -37,6 +37,8 @@ export const authSlice = createSlice({
     },
 
     setEmail(state, { payload }: PayloadAction<ISetEmailInput>) {
+      localStorage.setItem('userData', JSON.stringify({ email: payload.email }));
+
       state.email = payload.email;
     },
 
