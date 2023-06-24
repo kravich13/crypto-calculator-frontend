@@ -5,6 +5,8 @@ import { RoutesTypes } from '@cc/shared/enums';
 import { useAppSelector } from '@cc/shared/lib';
 import { LayoutContent, ScrollTopButton } from '@cc/shared/ui';
 import { Box, Divider } from '@mui/material';
+import type { GetStaticProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 
 export default function InvestmentStatistics() {
@@ -55,3 +57,11 @@ export default function InvestmentStatistics() {
     </AuthPage>
   );
 }
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale || 'en')),
+    },
+  };
+};

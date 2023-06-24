@@ -1,10 +1,11 @@
 import { NotAuthPage, PageLayout } from '@cc/app/components';
 import { KEY_WORDS_SEO } from '@cc/shared/const';
 import { LoginForm } from '@cc/widgets';
-import { NextPage } from 'next';
+import type { GetStaticProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 
-const Login: NextPage = () => {
+const Login = () => {
   return (
     <NotAuthPage>
       <PageLayout centerContent>
@@ -22,6 +23,14 @@ const Login: NextPage = () => {
       </PageLayout>
     </NotAuthPage>
   );
+};
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale || 'en')),
+    },
+  };
 };
 
 export default Login;

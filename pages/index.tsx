@@ -2,6 +2,8 @@ import { PageLayout } from '@cc/app/components';
 import { KEY_WORDS_SEO } from '@cc/shared/const';
 import { ScrollTopButton } from '@cc/shared/ui/components';
 import { MainContent } from '@cc/widgets';
+import type { GetStaticProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 
 export default function Home() {
@@ -24,3 +26,11 @@ export default function Home() {
     </PageLayout>
   );
 }
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale || 'en')),
+    },
+  };
+};

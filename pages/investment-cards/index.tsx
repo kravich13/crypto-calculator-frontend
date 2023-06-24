@@ -1,5 +1,7 @@
 import { PageLayout } from '@cc/app/components';
 import { InvestmentCardsList } from '@cc/widgets';
+import type { GetStaticProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 
 export default function InvestmentCards() {
@@ -14,3 +16,11 @@ export default function InvestmentCards() {
     </PageLayout>
   );
 }
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale || 'en')),
+    },
+  };
+};

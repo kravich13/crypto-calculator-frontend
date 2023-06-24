@@ -1,6 +1,8 @@
 import { AuthPage, PageLayout } from '@cc/app/components';
 import { KEY_WORDS_SEO } from '@cc/shared/const';
 import { CalculateYieldForm } from '@cc/widgets';
+import type { GetStaticProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 
 export default function CalculateYield() {
@@ -27,3 +29,11 @@ export default function CalculateYield() {
     </AuthPage>
   );
 }
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale || 'en')),
+    },
+  };
+};

@@ -4,6 +4,8 @@ import { RoutesTypes } from '@cc/shared/enums';
 import { useAuthContext, useErrorMessage } from '@cc/shared/lib';
 import { LayoutContent } from '@cc/shared/ui';
 import { Typography, useTheme } from '@mui/material';
+import type { GetStaticProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -78,6 +80,14 @@ const ConfirmEmail = () => {
       </PageLayout>
     </NotAuthPage>
   );
+};
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale || 'en')),
+    },
+  };
 };
 
 export default ConfirmEmail;
