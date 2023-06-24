@@ -15,7 +15,7 @@ import {
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useCallback, useMemo, useState } from 'react';
 import styles from '../styles/AuthHeaderContent.module.scss';
-import { ThemeButton } from './ThemeButton';
+import { GeneralContent } from './GeneralContent';
 
 export const AuthHeaderContent: React.FC = () => {
   const emailUser = useAppSelector((state) => state.authReducer.email);
@@ -104,7 +104,7 @@ export const AuthHeaderContent: React.FC = () => {
         <Avatar sx={{ width: 34, height: 34, backgroundColor: colorByUser }}>{avatarTitle}</Avatar>
       </IconButton>
 
-      <ThemeButton />
+      <GeneralContent />
 
       <Menu open={isOpen} anchorEl={anchorEl} TransitionComponent={Fade} onClose={handleClose}>
         <MenuItem onClick={onLogout}>

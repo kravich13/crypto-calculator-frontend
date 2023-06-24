@@ -3,7 +3,7 @@ import { Box, Button, Skeleton } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useCallback, useMemo } from 'react';
 import styles from '../styles/NoAuthHeaderContent.module.scss';
-import { ThemeButton } from './ThemeButton';
+import { GeneralContent } from './GeneralContent';
 
 interface INotAuthHeaderContentProps {
   isLoadingContent: boolean;
@@ -28,7 +28,7 @@ export const NotAuthHeaderContent: React.FC<INotAuthHeaderContentProps> = ({
 
   return (
     <Box component="div" className={styles.container}>
-      <Box style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      <Box style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
         {isNotAuthPage && !isConfirmEmailPage && (
           <>
             {isLoadingContent ? (
@@ -46,7 +46,7 @@ export const NotAuthHeaderContent: React.FC<INotAuthHeaderContentProps> = ({
           </>
         )}
 
-        {!isLoadingContent && <ThemeButton />}
+        {!isLoadingContent && <GeneralContent />}
       </Box>
     </Box>
   );
