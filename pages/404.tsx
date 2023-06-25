@@ -8,7 +8,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 
 export default function Custom404() {
-  const [getTranslation] = useTranslation();
+  const { t } = useTranslation();
 
   const title = '404 Not Found | Crypto Metrics';
   const description =
@@ -25,7 +25,7 @@ export default function Custom404() {
 
       <LayoutContent isCenterPosition containerStyles={{ maxWidth: 'xs' }}>
         <Typography variant="h5" component="h1" fontWeight="600" textAlign="center">
-          404 - {getTranslation('cc.page.404.title')}
+          404 - {t('cc.page.404.title')}
         </Typography>
       </LayoutContent>
     </PageLayout>

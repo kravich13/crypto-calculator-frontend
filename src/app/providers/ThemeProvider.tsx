@@ -18,6 +18,9 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({ children }) => {
 
   const theme = createTheme({
     palette: { mode: themeMode },
+    components: {
+      MuiTypography: { styleOverrides: { root: { wordWrap: 'break-word' } } },
+    },
   });
 
   const toggleTheme = useCallback(() => {

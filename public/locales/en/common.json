@@ -1,3 +1,41 @@
 {
-  "cc.page.404.title": "Page Not Found"
+  "cc.page.404.title": "Page Not Found",
+
+  "cc.entities.header.button.lastCalculation": "Last calculation",
+  "cc.entities.header.button.logout": "Logout",
+  "cc.entities.header.button.login": "Log In",
+
+  "cc.page.main.stepTitle": "STEP {{count}}",
+
+  "cc.page.main.mainContent.title": "Cryptocurrency historical data calculator",
+  "cc.page.main.mainContent.step1Description": "Select the monthly investment amount, start date and end dater",
+  "cc.page.main.mainContent.step2Description": "Enter the title the coin you are interested in and select it",
+  "cc.page.main.mainContent.step3Description": "Allocate the monthly investment amount as a percentage for each coin",
+  "cc.page.main.mainContent.button.calculate": "calculate now",
+  "cc.page.main.mainContent.button.login": "login now",
+
+  "cc.page.main.baseDescription.firstDescription": "Imagine that you started investing $100 monthly in DogeCoin in 2019. By May 2021 your capital would have grown to $500k.",
+  "cc.page.main.baseDescription.secondDescription": "With our service, you can make your list of coins for investment and see how profitable this portfolio would be.",
+  "cc.page.main.baseDescription.thirdDescription": "With this information, you can decide if you should invest in crypto in the future in the same way.",
+  "cc.page.main.baseDescription.tool.subtitle": "Our tool will help you calculate:",
+  "cc.page.main.baseDescription.tool.firstDescription": "Profitability in $ and % for individual coins.",
+  "cc.page.main.baseDescription.tool.secondDescription": "Total profit in $ and %.",
+  "cc.page.main.baseDescription.tool.thirdDescription": "Total capital.",
+  "cc.page.main.baseDescription.tool.fourthDescription": "Starting, average and last price for each coin.",
+
+  "cc.page.main.resultsDescription.generalTitle": "Get your general results",
+  "cc.page.main.resultsDescription.detailedTitle": "Get your detailed results",
+
+  "cc.page.login.loginForm.title": "Log In",
+  "cc.page.login.loginForm.step1.stepperLabel": "Specify email",
+  "cc.page.login.loginForm.step1.description": "Enter email to login",
+  "cc.page.login.loginForm.step2.stepperLabel": "Confirm login code",
+  "cc.page.login.loginForm.step2.description": "Enter code sent to your email",
+
+  "cc.page.login.sendEmail.inputLabel": "Email Address",
+  "cc.page.login.sendEmail.submitButton": "Submit",
+
+  "cc.page.login.emailCode.inputLabel": "Email Code",
+  "cc.page.login.emailCode.button.confirm": "Confirm",
+  "cc.page.login.emailCode.button.sendAgain": "Send again in"
 }

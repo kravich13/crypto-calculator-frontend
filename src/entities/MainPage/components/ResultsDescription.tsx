@@ -2,16 +2,25 @@ import { Box, Chip, Divider, Typography } from '@mui/material';
 import LegacyImage from 'next/legacy/image';
 import step4Image from '../../../../public/main-page-images/step-4.jpg';
 import step5Image from '../../../../public/main-page-images/step-5.jpg';
+import { useTranslation } from 'next-i18next';
 
 export const ResultsDescription = () => {
+  const { t } = useTranslation();
+
   return (
     <Box>
       <Divider>
-        <Chip label="STEP 4" variant="outlined" size="medium" color="primary" component="h2" />
+        <Chip
+          label={t('cc.page.main.stepTitle', { count: 4 })}
+          variant="outlined"
+          size="medium"
+          color="primary"
+          component="h2"
+        />
       </Divider>
 
       <Typography component="h2" variant="h6" textAlign="center" sx={{ mb: 2 }}>
-        Get your general results
+        {t('cc.page.main.resultsDescription.generalTitle')}
       </Typography>
 
       <LegacyImage
@@ -24,11 +33,17 @@ export const ResultsDescription = () => {
       />
 
       <Divider>
-        <Chip label="STEP 5" variant="outlined" size="medium" color="primary" component="h2" />
+        <Chip
+          label={t('cc.page.main.stepTitle', { count: 5 })}
+          variant="outlined"
+          size="medium"
+          color="primary"
+          component="h2"
+        />
       </Divider>
 
       <Typography component="h2" variant="h6" textAlign="center" sx={{ mb: 2 }}>
-        Get your detailed results
+        {t('cc.page.main.resultsDescription.detailedTitle')}
       </Typography>
 
       <LegacyImage

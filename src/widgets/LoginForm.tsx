@@ -11,6 +11,7 @@ import {
 import { ISetEmailInput } from '@cc/shared/types';
 import { LayoutContent, PopupAlert } from '@cc/shared/ui/components';
 import { Box, Step, StepLabel, Stepper, Typography } from '@mui/material';
+import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
@@ -19,10 +20,11 @@ export const LoginForm = () => {
   const { login } = useAuthContext();
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const emailUser = useAppSelector((state) => state.authReducer.email);
 
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(1);
 
   const [signIn, signUpData] = useSignInMutation();
   const [emailValidate, emailValidateData] = useEmailValidateMutation();
@@ -48,8 +50,8 @@ export const LoginForm = () => {
 
   const stepText = useMemo(
     (): Record<number, string> => ({
-      0: 'Enter email to login',
-      1: `Enter code sent to your email ${emailUser}`,
+      0: t('cc.page.login.loginForm.step1.stepperLabel'),
+      1: `${t('cc.page.login.loginForm.step2.stepperLabel')} ${emailUser}`,
     }),
     [emailUser]
   );
@@ -79,14 +81,14 @@ export const LoginForm = () => {
       {isError && <PopupAlert text={errorMessage} severity="error" variant="filled" />}
 
       <Typography component="h1" variant="h5" textAlign="left" width="100%" mb={3}>
-        Log In
+        {t('cc.page.login.loginForm.title')}
       </Typography>
 
       <Stepper activeStep={step} orientation="vertical">
         <Step>
           <StepLabel>
             <Typography component="p" variant="h6">
-              Specify email
+              {t('cc.page.login.loginForm.step1.stepperLabel')}
             </Typography>
           </StepLabel>
         </Step>
@@ -94,7 +96,7 @@ export const LoginForm = () => {
         <Step>
           <StepLabel>
             <Typography component="p" variant="h6">
-              Confirm login code
+              {t('cc.page.login.loginForm.step2.stepperLabel')}
             </Typography>
           </StepLabel>
         </Step>

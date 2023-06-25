@@ -1,3 +1,41 @@
 {
-  "cc.page.404.title": "Сторінка Не Знайдена"
+  "cc.page.404.title": "Сторінка Не Знайдена",
+
+  "cc.entities.header.button.lastCalculation": "Останній розрахунок",
+  "cc.entities.header.button.logout": "Вийти",
+  "cc.entities.header.button.login": "Увійти",
+
+  "cc.page.main.stepTitle": "КРОК {{count}}",
+
+  "cc.page.main.mainContent.title": "Калькулятор історичних даних криптовалют",
+  "cc.page.main.mainContent.step1Description": "Виберіть щомісячну суму інвестицій, дату початку та дату закінчення",
+  "cc.page.main.mainContent.step2Description": "Введіть назву монети яка вас цікавить, і виберіть її",
+  "cc.page.main.mainContent.step3Description": "Розподіліть щомісячну суму інвестицій у відсотках для кожної монети",
+  "cc.page.main.mainContent.button.calculate": "розрахуйте зараз",
+  "cc.page.main.mainContent.button.login": "увійдіть зараз",
+
+  "cc.page.main.baseDescription.firstDescription": "Уявіть, що ви почали інвестувати $100 щомісяця в DogeCoin у 2019 році. До травня 2021 року ваш капітал виріс би до $500к.",
+  "cc.page.main.baseDescription.secondDescription": "За допомогою нашого сервісу ви можете скласти свій список монет для інвестування і подивитися, наскільки прибутковим буде цей портфель.",
+  "cc.page.main.baseDescription.thirdDescription": "Маючи цю інформацію, ви можете вирішити, чи варто вам інвестувати в криптовалюту в майбутньому таким же чином.",
+  "cc.page.main.baseDescription.tool.subtitle": "Наш інструмент допоможе вам розрахувати:",
+  "cc.page.main.baseDescription.tool.firstDescription": "Прибутковість у $ та % для окремих монет.",
+  "cc.page.main.baseDescription.tool.secondDescription": "Загальний прибуток у $ та %.",
+  "cc.page.main.baseDescription.tool.thirdDescription": "Загальний капітал.",
+  "cc.page.main.baseDescription.tool.fourthDescription": "Стартова, середня та остання ціна для кожної монети.",
+
+  "cc.page.main.resultsDescription.generalTitle": "Отримайте загальні результати",
+  "cc.page.main.resultsDescription.detailedTitle": "Отримайте детальні результати",
+
+  "cc.page.login.loginForm.title": "Увійти",
+  "cc.page.login.loginForm.step1.stepperLabel": "Вкажіть імейл",
+  "cc.page.login.loginForm.step1.description": "Введі імейл для входу",
+  "cc.page.login.loginForm.step2.stepperLabel": "Підтвердьте код входу",
+  "cc.page.login.loginForm.step2.description": "Введіть код, надісланий на ваш імейл",
+
+  "cc.page.login.sendEmail.inputLabel": "Адреса імейлу",
+  "cc.page.login.sendEmail.submitButton": "Надіслати",
+
+  "cc.page.login.emailCode.inputLabel": "Код імейлу",
+  "cc.page.login.emailCode.button.confirm": "Підтвердити",
+  "cc.page.login.emailCode.button.sendAgain": "Надіслати знову через"
 }

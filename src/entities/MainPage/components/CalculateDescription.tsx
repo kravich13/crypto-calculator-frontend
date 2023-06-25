@@ -2,6 +2,7 @@ import { Box, Chip, Divider, Typography } from '@mui/material';
 import LegacyImage from 'next/legacy/image';
 import styles from '../styles/CalculateDescription.module.scss';
 import { ICalculateData } from '../types';
+import { useTranslation } from 'next-i18next';
 
 interface ICalculateDescriptionProps extends ICalculateData {}
 
@@ -10,11 +11,13 @@ export const CalculateDescription: React.FC<ICalculateDescriptionProps> = ({
   description,
   src,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Box className={styles.mainContainer} sx={{ mb: 3 }}>
       <Divider className={styles.divider}>
         <Chip
-          label={`STEP ${step}`}
+          label={t('cc.page.main.stepTitle', { count: step })}
           variant="outlined"
           size="medium"
           color="primary"

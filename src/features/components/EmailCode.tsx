@@ -7,6 +7,7 @@ import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
 import LoginIcon from '@mui/icons-material/Login';
 import { LoadingButton } from '@mui/lab';
 import { Box, Grid, Typography } from '@mui/material';
+import { useTranslation } from 'next-i18next';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form';
 
@@ -21,6 +22,7 @@ interface IEmailCodeForm {
 
 export const EmailCode: React.FC<IEmailCodeProps> = React.memo(({ isLoading, onConfirm }) => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const email = useAppSelector((state) => state.authReducer.email);
   const emailCodeResendExpiresIn = useAppSelector(
@@ -96,7 +98,7 @@ export const EmailCode: React.FC<IEmailCodeProps> = React.memo(({ isLoading, onC
                 required
                 fullWidth
                 type="number"
-                label="Email code"
+                label={t('cc.page.login.emailCode.inputLabel')}
                 autoComplete="Code"
                 error={Boolean(errors.code)}
                 helperText={errors.code?.message}
@@ -118,23 +120,11 @@ export const EmailCode: React.FC<IEmailCodeProps> = React.memo(({ isLoading, onC
             loadingPosition="end"
             endIcon={<LoginIcon />}
           >
-            Confirm
+            <Typography noWrap>{t('cc.page.login.emailCode.button.confirm')}</Typography>
           </LoadingButton>
         </Grid>
 
-        <Grid
-          item
-          xs={12}
-          sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
-        >
-          <Box sx={{ display: 'flex' }}>
-            <Typography color="GrayText" sx={{ mr: 1 }}>
-              Send again in
-            </Typography>
-
-            <Timer inputDate={emailCodeResendExpiresIn} stylesProps={{ color: 'GrayText' }} />
-          </Box>
-
+        <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <LoadingButton
             onClick={onSendEmail}
             variant="text"
@@ -143,7 +133,11 @@ export const EmailCode: React.FC<IEmailCodeProps> = React.memo(({ isLoading, onC
             loadingPosition="end"
             endIcon={<ForwardToInboxIcon />}
           >
-            Send email
+            <Typography noWrap mr={0.5}>
+              {t('cc.page.login.emailCode.button.sendAgain')}
+            </Typography>
+
+            <Timer inputDate={emailCodeResendExpiresIn} />
           </LoadingButton>
         </Grid>
       </Grid>
