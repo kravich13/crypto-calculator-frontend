@@ -12,6 +12,7 @@ import { CalculateProfitRequest, IPeriodAndAmountForm } from '@cc/shared/types';
 import { LayoutContent, PopupAlert } from '@cc/shared/ui';
 import { Container, Step, StepLabel, Stepper, Typography, useMediaQuery } from '@mui/material';
 import { DateTime } from 'luxon';
+import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -19,6 +20,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 export const CalculateYieldForm = () => {
   const isMin520Width = useMediaQuery('(max-width:520px)');
   const router = useRouter();
+  const { t } = useTranslation();
 
   const dispatch = useAppDispatch();
 
@@ -106,14 +108,14 @@ export const CalculateYieldForm = () => {
       {isError && <PopupAlert text={errorMessage} severity="error" variant="filled" />}
 
       <Typography component="h1" variant="h5" marginBottom={3} textAlign="center">
-        Calculation of profitability monthly investments in cryptocurrency
+        {t('cc.page.calculateYieldForm.title')}
       </Typography>
 
       <Stepper activeStep={step} orientation={isMin520Width ? 'vertical' : 'horizontal'}>
         <Step>
           <StepLabel>
             <Typography component="p" variant="h6">
-              Dates and monthly amount
+              {t('cc.page.calculateYieldForm.step1.stepperLabel')}
             </Typography>
           </StepLabel>
         </Step>
@@ -121,7 +123,7 @@ export const CalculateYieldForm = () => {
         <Step>
           <StepLabel>
             <Typography component="p" variant="h6">
-              List of coins
+              {t('cc.page.calculateYieldForm.step2.stepperLabel')}
             </Typography>
           </StepLabel>
         </Step>
@@ -129,7 +131,7 @@ export const CalculateYieldForm = () => {
 
       <Container component="div" maxWidth="xs" sx={{ marginTop: 1 }}>
         <Typography component="p" variant="subtitle1" marginTop={3}>
-          {step === 0 ? 'Specify the monthly amount for investment, start and end date' : ''}
+          {step === 0 ? t('cc.page.calculateYieldForm.step1.description') : ''}
         </Typography>
 
         {stepRender[step]}

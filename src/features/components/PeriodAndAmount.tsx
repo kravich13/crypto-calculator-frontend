@@ -1,15 +1,17 @@
 import {
   INPUT_FORMAT_DATE,
   MIN_INVEST_DATE,
+  endDateValidation,
   mounthlyValidation,
   startDateValidation,
 } from '@cc/entities/Calculate';
 import { IPeriodAndAmountForm } from '@cc/shared/types';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { LoadingButton } from '@mui/lab';
-import { Box, Grid, InputAdornment, TextField } from '@mui/material';
+import { Box, Grid, InputAdornment, TextField, Typography } from '@mui/material';
 import { DateTime } from 'luxon';
-import React, { useCallback, useMemo } from 'react';
+import { useTranslation } from 'next-i18next';
+import React, { useMemo } from 'react';
 import { Controller, SubmitHandler, UseFormReturn, useFormState } from 'react-hook-form';
 
 interface IPeriodAndAmountProps {
@@ -22,6 +24,7 @@ export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(
   ({ isLoading, state, onConfirm }) => {
     const { control, formState, watch, getFieldState, handleSubmit } = state;
     const { errors, isValid } = useFormState({ control });
+    const { t } = useTranslation();
 
     const startState = getFieldState('startDate', formState);
     const startValue = watch('startDate');
@@ -39,28 +42,6 @@ export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(
     const todayString = todayDate.toFormat(INPUT_FORMAT_DATE);
     const nextDayOfStartDateString = startDate.plus({ day: 1 }).toFormat(INPUT_FORMAT_DATE);
 
-    const endDateValidate = useCallback(
-      (value: string) => {
-        const inputDate = DateTime.fromFormat(value, INPUT_FORMAT_DATE);
-
-        const greaterStart = inputDate.toMillis() > startDate.toMillis();
-        const equalOrLessToday = inputDate.toMillis() <= todayDate.toMillis();
-
-        const isValidDate = greaterStart && equalOrLessToday;
-
-        let validateText = '';
-
-        if (!greaterStart) {
-          validateText = 'End date must be greater than start date.';
-        } else if (!equalOrLessToday) {
-          validateText = 'End date must be less than or equal to today date.';
-        }
-
-        return isValidDate || validateText;
-      },
-      [startDate, todayDate]
-    );
-
     return (
       <Box component="form" noValidate onSubmit={handleSubmit(onConfirm)} sx={{ mt: 3 }}>
         <Grid container spacing={2}>
@@ -69,14 +50,14 @@ export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(
               defaultValue=""
               name="monthlyInvestment"
               control={control}
-              rules={mounthlyValidation}
+              rules={mounthlyValidation(t)}
               render={({ field }) => (
                 <TextField
                   {...field}
                   required
                   fullWidth
                   type="number"
-                  label="Monthly investment"
+                  label={t('cc.page.periodAndAmount.monthlyInput.label')}
                   error={Boolean(errors.monthlyInvestment)}
                   helperText={errors.monthlyInvestment?.message}
                   InputLabelProps={{ shrink: true }}
@@ -95,14 +76,14 @@ export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(
               defaultValue=""
               name="startDate"
               control={control}
-              rules={startDateValidation}
+              rules={startDateValidation(t)}
               render={({ field }) => (
                 <TextField
                   {...field}
                   required
                   type="date"
                   fullWidth
-                  label="Start date (mm/dd/yyyy)"
+                  label={t('cc.page.periodAndAmount.startDateInput.label')}
                   error={Boolean(errors.startDate)}
                   helperText={errors?.startDate?.message}
                   InputLabelProps={{ shrink: true }}
@@ -118,14 +99,14 @@ export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(
               defaultValue=""
               name="endDate"
               control={control}
-              rules={{ required: true, validate: endDateValidate }}
+              rules={endDateValidation(startDate, todayDate, t)}
               render={({ field }) => (
                 <TextField
                   {...field}
                   required
                   type="date"
                   fullWidth
-                  label="End date (mm/dd/yyyy)"
+                  label={t('cc.page.periodAndAmount.endDateInput.label')}
                   error={Boolean(errors.endDate)}
                   helperText={errors?.endDate?.message}
                   InputLabelProps={{ shrink: true }}
@@ -148,7 +129,7 @@ export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(
             loadingPosition="end"
             endIcon={<ArrowForwardIcon />}
           >
-            Next
+            <Typography noWrap>{t('cc.page.periodAndAmount.nextButton')}</Typography>
           </LoadingButton>
         </Box>
       </Box>

@@ -37,5 +37,30 @@
 
   "cc.page.login.emailCode.inputLabel": "Код імейлу",
   "cc.page.login.emailCode.button.confirm": "Підтвердити",
-  "cc.page.login.emailCode.button.sendAgain": "Надіслати знову через"
+  "cc.page.login.emailCode.button.sendAgain": "Надіслати знову через",
+
+  "cc.page.code.title": "Виникла помилка",
+  "cc.page.code.reasonDescription": "Причина:",
+  "cc.page.code.errorMessage": "Закінчився термін дії коду.",
+  "cc.page.code.userText.error": "Увійти ще раз",
+  "cc.page.code.userText.notError": "Будь ласка, спробуйте пізніше",
+
+  "cc.widget.footer.subtitle.ideaAndDev": "Ідея та розробка",
+  "cc.widget.footer.person.vlad": "Владислав Онацький",
+  "cc.widget.footer.subtitle.consulting": "Консультування",
+  "cc.widget.footer.person.max": "Максим Барановський",
+
+  "cc.page.calculateYieldForm.title": "Розрахунок прибутковості щомісячних інвестицій в криптовалюту",
+  "cc.page.calculateYieldForm.step1.stepperLabel": "Дати та щомісячна сума",
+  "cc.page.calculateYieldForm.step1.description": "Вкажіть щомісячну суму для інвестування, дату початку та закінчення",
+  "cc.page.calculateYieldForm.step2.stepperLabel": "Список монет",
+
+  "cc.page.periodAndAmount.nextButton": "Далі",
+  "cc.page.periodAndAmount.monthlyInput.label": "Щомісячні інвестиції",
+  "cc.page.periodAndAmount.monthlyInput.errorMessage": "Значення має бути цілим числом і знаходитись в діапазоні від 20 до 1000000.",
+  "cc.page.periodAndAmount.startDateInput.label": "Дата початку (мм/дд/рррр)",
+  "cc.page.periodAndAmount.startDateInput.errorMessage": "Дата повинна бути між 01/01/2013 та вчорашнім днем.",
+  "cc.page.periodAndAmount.endDateInput.label": "Дата закінчення (мм/дд/рррр)",
+  "cc.page.periodAndAmount.endDateInput.firstErrorMessage": "Дата закінчення повинна бути більшою за дату початку.",
+  "cc.page.periodAndAmount.endDateInput.secondErrorMessage": "Кінцева дата повинна бути меншою або дорівнювати сьогоднішній даті."
 }

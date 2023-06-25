@@ -7,6 +7,7 @@ import Link from 'next/link';
 import React, { useCallback, useMemo } from 'react';
 import { v4 as uuid } from 'uuid';
 import styles from './styles/Footer.module.scss';
+import { useTranslation } from 'next-i18next';
 
 interface ILinkData {
   id: string;
@@ -18,6 +19,7 @@ interface ILinkData {
 export const Footer = React.memo(() => {
   const { palette } = useTheme();
   const { themeMode } = useThemeContext();
+  const { t } = useTranslation();
 
   const headerColor = themeMode === 'light' ? 'white' : 'whitesmoke';
 
@@ -88,11 +90,13 @@ export const Footer = React.memo(() => {
                 color: headerColor,
               }}
             >
-              Idea and development
+              {t('cc.widget.footer.subtitle.ideaAndDev')}
             </Typography>
 
             <Box className={styles.rowContainer} style={{ justifyContent: 'left' }}>
-              <Typography style={{ color: colors.logo }}>Vladislav Onatskyi</Typography>
+              <Typography style={{ color: colors.logo }}>
+                {t('cc.widget.footer.person.vlad')}
+              </Typography>
             </Box>
 
             {renderLink(links[0])}
@@ -103,11 +107,14 @@ export const Footer = React.memo(() => {
               className={styles.rowHeader}
               style={{ textAlign: 'right', color: headerColor }}
             >
-              Consulting
+              {t('cc.widget.footer.subtitle.consulting')}
             </Typography>
 
             <Box className={styles.rowContainer} style={{ justifyContent: 'right' }}>
-              <Typography style={{ color: colors.logo }}>Maksym Baranovskyi</Typography>
+              <Typography style={{ color: colors.logo }}>
+                {' '}
+                {t('cc.widget.footer.person.max')}
+              </Typography>
             </Box>
 
             {renderLink(links[1], 'right')}

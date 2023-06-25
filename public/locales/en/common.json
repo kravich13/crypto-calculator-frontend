@@ -37,5 +37,30 @@
 
   "cc.page.login.emailCode.inputLabel": "Email Code",
   "cc.page.login.emailCode.button.confirm": "Confirm",
-  "cc.page.login.emailCode.button.sendAgain": "Send again in"
+  "cc.page.login.emailCode.button.sendAgain": "Send again in",
+
+  "cc.page.code.title": "An error has occurred",
+  "cc.page.code.reasonDescription": "Reason:",
+  "cc.page.code.errorMessage": "Code lifetime expired.",
+  "cc.page.code.userText.error": "Login again",
+  "cc.page.code.userText.notError": "Please try again later",
+
+  "cc.widget.footer.subtitle.ideaAndDev": "Idea and development",
+  "cc.widget.footer.person.vlad": "Vladyslav Onatskyi",
+  "cc.widget.footer.subtitle.consulting": "Consulting",
+  "cc.widget.footer.person.max": "Maksym Baranovskyi",
+
+  "cc.page.calculateYieldForm.title": "Calculation of profitability monthly investments in cryptocurrency",
+  "cc.page.calculateYieldForm.step1.stepperLabel": "Dates and monthly amount",
+  "cc.page.calculateYieldForm.step1.description": "Specify the monthly amount for investment, start and end date",
+  "cc.page.calculateYieldForm.step2.stepperLabel": "List of coins",
+
+  "cc.page.periodAndAmount.nextButton": "Next",
+  "cc.page.periodAndAmount.monthlyInput.label": "Monthly investment",
+  "cc.page.periodAndAmount.monthlyInput.errorMessage": "Value must be an integer and be between 20 and 1000000.",
+  "cc.page.periodAndAmount.startDateInput.label": "Start date (mm/dd/yyyy)",
+  "cc.page.periodAndAmount.startDateInput.errorMessage": "Date must be between 01/01/2013 and yesterday.",
+  "cc.page.periodAndAmount.endDateInput.label": "End date (mm/dd/yyyy)",
+  "cc.page.periodAndAmount.endDateInput.firstErrorMessage": "End date must be greater than start date.",
+  "cc.page.periodAndAmount.endDateInput.secondErrorMessage": "End date must be less than or equal to today date."
 }

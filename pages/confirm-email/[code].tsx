@@ -4,20 +4,28 @@ import { RoutesTypes } from '@cc/shared/enums';
 import { useAuthContext, useErrorMessage } from '@cc/shared/lib';
 import { LayoutContent } from '@cc/shared/ui';
 import { Typography, useTheme } from '@mui/material';
-import type { GetStaticProps } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
+import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 interface IRouterQuery {
-  code?: string;
   email?: string;
 }
 
-const ConfirmEmail = () => {
+interface ICodeProps {
+  code?: string;
+}
+
+const ConfirmEmail: NextPage<AppProps<ICodeProps>> = ({ pageProps }) => {
+  const code = pageProps.code;
+
   const { login } = useAuthContext();
   const { palette } = useTheme();
+  const { t } = useTranslation();
 
   const query = useRouter().query as IRouterQuery;
   const [emailValidate, { data, error }] = useEmailValidateMutation();
@@ -25,14 +33,16 @@ const ConfirmEmail = () => {
   const emailValidateError = useErrorMessage(error);
 
   const errorMessage = emailValidateError.message.includes('Code lifetime expired')
-    ? 'Code lifetime expired.'
+    ? t('cc.page.code.errorMessage')
     : '';
 
-  const forUserText = Boolean(errorMessage) ? 'Login again' : 'Please try again later';
+  const forUserText = Boolean(errorMessage)
+    ? t('cc.page.code.userText.error')
+    : t('cc.page.code.userText.notError');
 
   useEffect(() => {
-    if (query.code && query.email) {
-      emailValidate({ code: query.code, email: query.email });
+    if (code && query.email) {
+      emailValidate({ code, email: query.email });
     }
   }, []);
 
@@ -45,7 +55,7 @@ const ConfirmEmail = () => {
         redirectTo: RoutesTypes.MAIN,
       });
     }
-  }, [data, query?.email]);
+  }, [data, query.email]);
 
   return (
     <NotAuthPage>
@@ -67,11 +77,13 @@ const ConfirmEmail = () => {
               fontWeight="600"
               style={{ color: palette.error.dark }}
             >
-              An error has occurred
+              {t('cc.page.code.title')}
             </Typography>
 
             {Boolean(errorMessage) && (
-              <Typography sx={{ mt: 2 }}>Reason: {errorMessage}</Typography>
+              <Typography sx={{ mt: 2 }}>
+                {t('cc.page.code.reasonDescription')} {errorMessage}
+              </Typography>
             )}
 
             <Typography sx={{ mt: 2 }}>{forUserText}</Typography>
@@ -82,9 +94,12 @@ const ConfirmEmail = () => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
+export const getServerSideProps: GetServerSideProps = async ({ params, locale }) => {
+  const code = params?.code;
+
   return {
     props: {
+      code,
       ...(await serverSideTranslations(locale || 'en')),
     },
   };

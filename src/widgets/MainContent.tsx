@@ -42,7 +42,7 @@ export const MainContent = () => {
         src: step3Image,
       },
     ],
-    []
+    [t]
   );
 
   const renderStepData = useCallback(

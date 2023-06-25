@@ -1,8 +1,11 @@
 import { ThemeContext } from '@cc/shared/lib';
 import { IChildrenProps, ThemeMode } from '@cc/shared/types';
 import { ThemeProvider as MuiThemeProvider, createTheme, useMediaQuery } from '@mui/material';
+import * as locales from '@mui/material/locale';
 import { useCallback, useEffect, useState } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
+
+type SupportedLocales = keyof typeof locales;
 
 interface IThemeProviderProps extends IChildrenProps {}
 
@@ -19,7 +22,16 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({ children }) => {
   const theme = createTheme({
     palette: { mode: themeMode },
     components: {
-      MuiTypography: { styleOverrides: { root: { wordWrap: 'break-word' } } },
+      MuiTypography: {
+        styleOverrides: {
+          root: { wordWrap: 'break-word' },
+        },
+      },
+      MuiFormHelperText: {
+        styleOverrides: {
+          root: { wordWrap: 'break-word' },
+        },
+      },
     },
   });
 

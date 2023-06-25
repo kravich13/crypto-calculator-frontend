@@ -34,7 +34,7 @@ export const GeneralContent = () => {
 
   return (
     <Box className={styles.container}>
-      <FormControl variant="outlined">
+      <FormControl variant="standard">
         <Select
           value={locale}
           onChange={handleChange}

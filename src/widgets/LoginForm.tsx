@@ -24,7 +24,7 @@ export const LoginForm = () => {
 
   const emailUser = useAppSelector((state) => state.authReducer.email);
 
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
 
   const [signIn, signUpData] = useSignInMutation();
   const [emailValidate, emailValidateData] = useEmailValidateMutation();
@@ -53,7 +53,7 @@ export const LoginForm = () => {
       0: t('cc.page.login.loginForm.step1.stepperLabel'),
       1: `${t('cc.page.login.loginForm.step2.stepperLabel')} ${emailUser}`,
     }),
-    [emailUser]
+    [emailUser, t]
   );
 
   const stepRender = useMemo(
