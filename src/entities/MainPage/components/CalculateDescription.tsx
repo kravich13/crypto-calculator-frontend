@@ -17,7 +17,7 @@ export const CalculateDescription: React.FC<ICalculateDescriptionProps> = ({
     <Box className={styles.mainContainer} sx={{ mb: 3 }}>
       <Divider className={styles.divider}>
         <Chip
-          label={t('cc.page.main.stepTitle', { count: step })}
+          label={t('cc.entity.calculateDescription.stepTitle', { count: step })}
           variant="outlined"
           size="medium"
           color="primary"

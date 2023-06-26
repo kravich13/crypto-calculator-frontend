@@ -11,7 +11,7 @@ export const ResultsDescription = () => {
     <Box>
       <Divider>
         <Chip
-          label={t('cc.page.main.stepTitle', { count: 4 })}
+          label={t('cc.entity.resultsDescription.stepTitle', { count: 4 })}
           variant="outlined"
           size="medium"
           color="primary"
@@ -20,7 +20,7 @@ export const ResultsDescription = () => {
       </Divider>
 
       <Typography component="h2" variant="h6" textAlign="center" sx={{ mb: 2 }}>
-        {t('cc.page.main.resultsDescription.generalTitle')}
+        {t('cc.entity.resultsDescription.generalTitle')}
       </Typography>
 
       <LegacyImage
@@ -34,7 +34,7 @@ export const ResultsDescription = () => {
 
       <Divider>
         <Chip
-          label={t('cc.page.main.stepTitle', { count: 5 })}
+          label={t('cc.entity.resultsDescription.stepTitle', { count: 5 })}
           variant="outlined"
           size="medium"
           color="primary"
@@ -43,7 +43,7 @@ export const ResultsDescription = () => {
       </Divider>
 
       <Typography component="h2" variant="h6" textAlign="center" sx={{ mb: 2 }}>
-        {t('cc.page.main.resultsDescription.detailedTitle')}
+        {t('cc.entity.resultsDescription.detailedTitle')}
       </Typography>
 
       <LegacyImage

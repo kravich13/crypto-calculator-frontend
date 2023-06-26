@@ -108,14 +108,14 @@ export const CalculateYieldForm = () => {
       {isError && <PopupAlert text={errorMessage} severity="error" variant="filled" />}
 
       <Typography component="h1" variant="h5" marginBottom={3} textAlign="center">
-        {t('cc.page.calculateYieldForm.title')}
+        {t('cc.widget.calculateYieldForm.title')}
       </Typography>
 
       <Stepper activeStep={step} orientation={isMin520Width ? 'vertical' : 'horizontal'}>
         <Step>
           <StepLabel>
             <Typography component="p" variant="h6">
-              {t('cc.page.calculateYieldForm.step1.stepperLabel')}
+              {t('cc.widget.calculateYieldForm.step1.stepperLabel')}
             </Typography>
           </StepLabel>
         </Step>
@@ -123,7 +123,7 @@ export const CalculateYieldForm = () => {
         <Step>
           <StepLabel>
             <Typography component="p" variant="h6">
-              {t('cc.page.calculateYieldForm.step2.stepperLabel')}
+              {t('cc.widget.calculateYieldForm.step2.stepperLabel')}
             </Typography>
           </StepLabel>
         </Step>
@@ -131,7 +131,7 @@ export const CalculateYieldForm = () => {
 
       <Container component="div" maxWidth="xs" sx={{ marginTop: 1 }}>
         <Typography component="p" variant="subtitle1" marginTop={3}>
-          {step === 0 ? t('cc.page.calculateYieldForm.step1.description') : ''}
+          {step === 0 ? t('cc.widget.calculateYieldForm.step1.description') : ''}
         </Typography>
 
         {stepRender[step]}

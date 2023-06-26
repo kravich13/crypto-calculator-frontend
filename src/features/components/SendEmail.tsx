@@ -40,7 +40,7 @@ export const SendEmail: React.FC<ISendEmailProps> = ({ isLoading, onConfirm }) =
                 required
                 fullWidth
                 type="email"
-                label={t('cc.page.login.sendEmail.inputLabel')}
+                label={t('cc.feature.sendEmail.inputLabel')}
                 autoComplete="email"
                 error={Boolean(errors.email)}
                 helperText={errors.email?.message}
@@ -61,7 +61,7 @@ export const SendEmail: React.FC<ISendEmailProps> = ({ isLoading, onConfirm }) =
             loadingPosition="end"
             endIcon={<ForwardToInboxIcon />}
           >
-            <Typography noWrap>{t('cc.page.login.sendEmail.submitButton')}</Typography>
+            <Typography noWrap>{t('cc.feature.sendEmail.submitButton')}</Typography>
           </LoadingButton>
         </Grid>
       </Grid>

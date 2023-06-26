@@ -28,17 +28,17 @@ export const MainContent = () => {
     (): ICalculateData[] => [
       {
         step: 1,
-        description: t('cc.page.main.mainContent.step1Description'),
+        description: t('cc.widget.mainContent.step1Description'),
         src: step1Image,
       },
       {
         step: 2,
-        description: t('cc.page.main.mainContent.step2Description'),
+        description: t('cc.widget.mainContent.step2Description'),
         src: step2Image,
       },
       {
         step: 3,
-        description: t('cc.page.main.mainContent.step3Description'),
+        description: t('cc.widget.mainContent.step3Description'),
         src: step3Image,
       },
     ],
@@ -58,7 +58,7 @@ export const MainContent = () => {
       }}
     >
       <Typography component="h1" variant="h5" textAlign="center" sx={{ mb: 4 }}>
-        {t('cc.page.main.mainContent.title')}
+        {t('cc.widget.mainContent.title')}
       </Typography>
 
       <BaseDescription />
@@ -66,8 +66,8 @@ export const MainContent = () => {
       <Button variant="contained" onClick={onRedirect} sx={{ mt: 2, mb: 3 }}>
         <Typography noWrap>
           {Boolean(isAuth)
-            ? t('cc.page.main.mainContent.button.calculate')
-            : t('cc.page.main.mainContent.button.login')}
+            ? t('cc.widget.mainContent.button.calculate')
+            : t('cc.widget.mainContent.button.login')}
         </Typography>
       </Button>
 

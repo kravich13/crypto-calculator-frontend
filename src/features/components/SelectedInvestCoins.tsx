@@ -13,6 +13,7 @@ import { Box, Button, Typography, useTheme } from '@mui/material';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { SubmitHandler, useFieldArray, useForm, useFormState } from 'react-hook-form';
 import styles from '../styles/SelectedInvestCoins.module.scss';
+import { useTranslation } from 'next-i18next';
 
 interface ISelectedInvestCoinsProps {
   isLoading: boolean;
@@ -26,6 +27,7 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
   ({ isLoading, onBack, onConfirm }) => {
     const startDate = useAppSelector((state) => state.baseCalculatorReducer.startDate);
     const { palette } = useTheme();
+    const { t } = useTranslation();
 
     const [coinSearchRequest, { data: searchCoins, error, originalArgs }] =
       useLazyCoinSearchQuery();
@@ -55,11 +57,11 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
 
     const errorTitle = useMemo(() => {
       if (addedCoins.length === 0) {
-        return 'Coins not selected';
+        return t('cc.feature.selectedInvestCoins.error.firstTitle');
       } else if (!isValid) {
-        return 'The total percentage must be 100';
+        return t('cc.feature.selectedInvestCoins.error.secondTitle');
       }
-    }, [addedCoins.length, isValid]);
+    }, [addedCoins.length, isValid, t]);
 
     const searchData = useMemo(
       () =>
@@ -107,13 +109,13 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
     return (
       <Box>
         <Typography className={styles.coinsUntilDate}>
-          Coins until {startDate} are available for search.
+          {t('cc.feature.selectedInvestCoins.title', { startDate: 'dasda' })}
         </Typography>
 
         <SearchInput
           isLoading={isLoading}
           searchData={searchData}
-          label="Search by name"
+          label={t('cc.feature.selectedInvestCoins.searchInputLabel')}
           canAddCoin={canAddCoin}
           prependSelectedCoin={prepend}
           makeSearchRequest={makeSearchRequest}
@@ -141,20 +143,19 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
           {errorTitle}
         </Typography>
 
-        <Box style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Box className={styles.buttonsContainer}>
           <Button
-            sx={{ textTransform: 'none', width: '120px' }}
+            sx={{ textTransform: 'none', width: '140px' }}
             type="submit"
             variant="contained"
             startIcon={<WestIcon />}
-            title="dsds"
             onClick={onBack}
           >
-            Back
+            <Typography noWrap>{t('cc.feature.selectedInvestCoins.button.back')}</Typography>
           </Button>
 
           <LoadingButton
-            sx={{ textTransform: 'none', width: '120px' }}
+            sx={{ textTransform: 'none', width: '160px' }}
             type="submit"
             variant="contained"
             disabled={!canCalculate}
@@ -163,7 +164,7 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
             endIcon={<CalculateIcon />}
             onClick={onCalculate}
           >
-            Calculate
+            <Typography noWrap>{t('cc.feature.selectedInvestCoins.button.calculate')}</Typography>
           </LoadingButton>
         </Box>
       </Box>

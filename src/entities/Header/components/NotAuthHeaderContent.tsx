@@ -42,7 +42,7 @@ export const NotAuthHeaderContent: React.FC<INotAuthHeaderContentProps> = ({
                 variant="outlined"
                 onClick={goToLogIn}
               >
-                <Typography noWrap>{t('cc.entities.header.button.login')}</Typography>
+                <Typography noWrap>{t('cc.entity.noAuthHeaderContent.button.login')}</Typography>
               </Button>
             )}
           </>

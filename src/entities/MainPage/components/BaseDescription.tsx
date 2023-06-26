@@ -8,25 +8,25 @@ export const BaseDescription = () => {
   return (
     <Box className={styles.container}>
       <Box className={[styles.boxContent, styles.description].join(' ')}>
-        <Typography>{t('cc.page.main.baseDescription.firstDescription')}</Typography>
+        <Typography>{t('cc.entity.baseDescription.firstDescription')}</Typography>
 
         <br />
 
-        <Typography>{t('cc.page.main.baseDescription.secondDescription')}</Typography>
+        <Typography>{t('cc.entity.baseDescription.secondDescription')}</Typography>
 
         <br />
 
-        <Typography>{t('cc.page.main.baseDescription.thirdDescription')}</Typography>
+        <Typography>{t('cc.entity.baseDescription.thirdDescription')}</Typography>
       </Box>
 
       <Box className={styles.boxContent}>
-        <Typography>{t('cc.page.main.baseDescription.tool.subtitle')}</Typography>
+        <Typography>{t('cc.entity.baseDescription.tool.subtitle')}</Typography>
 
         <ul>
-          <li>{t('cc.page.main.baseDescription.tool.firstDescription')}</li>
-          <li>{t('cc.page.main.baseDescription.tool.secondDescription')}</li>
-          <li>{t('cc.page.main.baseDescription.tool.thirdDescription')}</li>
-          <li>{t('cc.page.main.baseDescription.tool.fourthDescription')}</li>
+          <li>{t('cc.entity.baseDescription.tool.firstDescription')}</li>
+          <li>{t('cc.entity.baseDescription.tool.secondDescription')}</li>
+          <li>{t('cc.entity.baseDescription.tool.thirdDescription')}</li>
+          <li>{t('cc.entity.baseDescription.tool.fourthDescription')}</li>
         </ul>
       </Box>
     </Box>

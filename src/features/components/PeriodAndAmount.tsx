@@ -57,7 +57,7 @@ export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(
                   required
                   fullWidth
                   type="number"
-                  label={t('cc.page.periodAndAmount.monthlyInput.label')}
+                  label={t('cc.feature.periodAndAmount.monthlyInput.label')}
                   error={Boolean(errors.monthlyInvestment)}
                   helperText={errors.monthlyInvestment?.message}
                   InputLabelProps={{ shrink: true }}
@@ -83,7 +83,7 @@ export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(
                   required
                   type="date"
                   fullWidth
-                  label={t('cc.page.periodAndAmount.startDateInput.label')}
+                  label={t('cc.feature.periodAndAmount.startDateInput.label')}
                   error={Boolean(errors.startDate)}
                   helperText={errors?.startDate?.message}
                   InputLabelProps={{ shrink: true }}
@@ -106,7 +106,7 @@ export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(
                   required
                   type="date"
                   fullWidth
-                  label={t('cc.page.periodAndAmount.endDateInput.label')}
+                  label={t('cc.feature.periodAndAmount.endDateInput.label')}
                   error={Boolean(errors.endDate)}
                   helperText={errors?.endDate?.message}
                   InputLabelProps={{ shrink: true }}
@@ -129,7 +129,7 @@ export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(
             loadingPosition="end"
             endIcon={<ArrowForwardIcon />}
           >
-            <Typography noWrap>{t('cc.page.periodAndAmount.nextButton')}</Typography>
+            <Typography noWrap>{t('cc.feature.periodAndAmount.nextButton')}</Typography>
           </LoadingButton>
         </Box>
       </Box>

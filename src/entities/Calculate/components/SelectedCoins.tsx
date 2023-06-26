@@ -13,6 +13,7 @@ import { Control, Controller } from 'react-hook-form';
 import styles from '../styles/SelectedCoins.module.scss';
 import { ISelectedInvestCoin, ISelectedInvestCoinsForm } from '../types';
 import { MainCoinInfoContainer } from './MainCoinInfoContainer';
+import { useTranslation } from 'next-i18next';
 
 interface ISelectedCoinsProps {
   isLoading: boolean;
@@ -35,6 +36,7 @@ export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
   distributeEqually,
   onEnterSelectedCoins,
 }) => {
+  const { t } = useTranslation();
   const minPercentTitle = 100 / maxNumberOfCoinsToInvest;
 
   const onKeyPress = useCallback(
@@ -82,7 +84,7 @@ export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
               disabled={isLoading}
               onClick={() => removeAddedCoin(index)}
               className={['delete-added-coin', styles.deleteButton].join(' ')}
-              title="Remove coin"
+              title={t('cc.entity.selectedCoins.iconButtonTitle')}
             >
               <Delete fontSize="inherit" />
             </IconButton>
@@ -92,28 +94,24 @@ export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
         <Divider />
       </Box>
     ),
-    [control, isLoading, getIndexError, onKeyPress, removeAddedCoin]
+    [control, isLoading, t, getIndexError, onKeyPress, removeAddedCoin]
   );
 
   return (
     <>
       <Typography variant="h6" className={styles.title} style={{ marginBottom: 10 }}>
-        Your added coins for investment
+        {t('cc.entity.selectedCoins.title')}
       </Typography>
 
       <Typography className={styles.selectedMaxCoins}>
-        Сan select a maximum of {maxNumberOfCoinsToInvest} coins
+        {t('cc.entity.selectedCoins.maxCoins', { count: maxNumberOfCoinsToInvest })}
       </Typography>
 
       <Typography className={styles.selectedCoins} color="darkgoldenrod">
-        Selected coins: {addedCoins.length}
+        {t('cc.entity.selectedCoins.selectedCoins', { count: addedCoins.length })}
       </Typography>
 
-      <Typography>
-        Specify the investment percentage for each selected coin (at least
-        {` ${minPercentTitle} `}
-        percent per coin)
-      </Typography>
+      <Typography>{t('cc.entity.selectedCoins.percentage', { count: minPercentTitle })}</Typography>
 
       <Box className={styles.boxButton}>
         <Button
@@ -122,7 +120,7 @@ export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
           onClick={distributeEqually}
           disabled={addedCoins.length === 0 || isLoading}
         >
-          Distribute equally
+          {t('cc.entity.selectedCoins.distributeButton')}
         </Button>
       </Box>
 

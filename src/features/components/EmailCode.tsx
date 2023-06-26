@@ -98,7 +98,7 @@ export const EmailCode: React.FC<IEmailCodeProps> = React.memo(({ isLoading, onC
                 required
                 fullWidth
                 type="number"
-                label={t('cc.page.login.emailCode.inputLabel')}
+                label={t('cc.feature.emailCode.inputLabel')}
                 autoComplete="Code"
                 error={Boolean(errors.code)}
                 helperText={errors.code?.message}
@@ -120,7 +120,7 @@ export const EmailCode: React.FC<IEmailCodeProps> = React.memo(({ isLoading, onC
             loadingPosition="end"
             endIcon={<LoginIcon />}
           >
-            <Typography noWrap>{t('cc.page.login.emailCode.button.confirm')}</Typography>
+            <Typography noWrap>{t('cc.feature.emailCode.button.confirm')}</Typography>
           </LoadingButton>
         </Grid>
 
@@ -134,7 +134,7 @@ export const EmailCode: React.FC<IEmailCodeProps> = React.memo(({ isLoading, onC
             endIcon={<ForwardToInboxIcon />}
           >
             <Typography noWrap mr={0.5}>
-              {t('cc.page.login.emailCode.button.sendAgain')}
+              {t('cc.feature.emailCode.button.sendAgain')}
             </Typography>
 
             <Timer inputDate={emailCodeResendExpiresIn} />

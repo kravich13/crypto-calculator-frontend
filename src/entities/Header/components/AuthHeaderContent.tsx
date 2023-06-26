@@ -98,7 +98,7 @@ export const AuthHeaderContent: React.FC = () => {
     <Box className={styles.container}>
       {showCalculationButton && (
         <Button variant="text" color="inherit" onClick={onClickLastCalculation}>
-          <Typography noWrap>{t('cc.entities.header.button.lastCalculation')}</Typography>
+          <Typography noWrap>{t('cc.entity.header.button.lastCalculation')}</Typography>
         </Button>
       )}
 
@@ -113,7 +113,7 @@ export const AuthHeaderContent: React.FC = () => {
           <LogoutIcon style={{ color: 'red', marginRight: 4 }} />
 
           <Typography fontWeight="600" style={{ color: palette.error.dark }}>
-            {t('cc.entities.header.button.logout')}
+            {t('cc.entity.header.button.logout')}
           </Typography>
         </MenuItem>
       </Menu>

@@ -9,7 +9,7 @@ export const mounthlyValidation = (t: TranslationType) => ({
   required: true,
   validate: (value: string) => {
     const isValidNumber = validator.isInt(value) && Number(value) >= 20 && Number(value) <= 1000000;
-    return isValidNumber || t('cc.page.periodAndAmount.monthlyInput.errorMessage');
+    return isValidNumber || t('cc.feature.periodAndAmount.monthlyInput.errorMessage');
   },
 });
 
@@ -27,7 +27,7 @@ export const startDateValidation = (t: TranslationType) => ({
 
     return (
       isValidDate ||
-      `${t('cc.page.periodAndAmount.startDateInput.errorMessage')} (${yesterdayDate.toFormat(
+      `${t('cc.feature.periodAndAmount.startDateInput.errorMessage')} (${yesterdayDate.toFormat(
         'LL/dd/y'
       )}).`
     );
@@ -51,9 +51,9 @@ export const endDateValidation = (
     let validateText = '';
 
     if (!greaterStart) {
-      validateText = t('cc.page.periodAndAmount.endDateInput.firstErrorMessage');
+      validateText = t('cc.feature.periodAndAmount.endDateInput.firstErrorMessage');
     } else if (!equalOrLessToday) {
-      validateText = t('cc.page.periodAndAmount.endDateInput.secondErrorMessage');
+      validateText = t('cc.feature.periodAndAmount.endDateInput.secondErrorMessage');
     }
 
     return isValidDate || validateText;

@@ -50,8 +50,8 @@ export const LoginForm = () => {
 
   const stepText = useMemo(
     (): Record<number, string> => ({
-      0: t('cc.page.login.loginForm.step1.stepperLabel'),
-      1: `${t('cc.page.login.loginForm.step2.stepperLabel')} ${emailUser}`,
+      0: t('cc.widget.loginForm.step1.stepperLabel'),
+      1: `${t('cc.widget.loginForm.step2.stepperLabel')} ${emailUser}`,
     }),
     [emailUser, t]
   );
@@ -81,14 +81,14 @@ export const LoginForm = () => {
       {isError && <PopupAlert text={errorMessage} severity="error" variant="filled" />}
 
       <Typography component="h1" variant="h5" textAlign="left" width="100%" mb={3}>
-        {t('cc.page.login.loginForm.title')}
+        {t('cc.widget.loginForm.title')}
       </Typography>
 
       <Stepper activeStep={step} orientation="vertical">
         <Step>
           <StepLabel>
             <Typography component="p" variant="h6">
-              {t('cc.page.login.loginForm.step1.stepperLabel')}
+              {t('cc.widget.loginForm.step1.stepperLabel')}
             </Typography>
           </StepLabel>
         </Step>
@@ -96,7 +96,7 @@ export const LoginForm = () => {
         <Step>
           <StepLabel>
             <Typography component="p" variant="h6">
-              {t('cc.page.login.loginForm.step2.stepperLabel')}
+              {t('cc.widget.loginForm.step2.stepperLabel')}
             </Typography>
           </StepLabel>
         </Step>
