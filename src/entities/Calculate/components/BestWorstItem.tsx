@@ -5,6 +5,7 @@ import Image from 'next/image';
 import React, { useMemo } from 'react';
 import styles from '../styles/BestWorstItem.module.scss';
 import { InvestmentPercent } from './InvestmentPercent';
+import { useTranslation } from 'next-i18next';
 
 interface IBestWorstInvestmentProps {
   isMaxCoin: boolean;
@@ -22,6 +23,7 @@ export const BestWorstItem: React.FC<IBestWorstInvestmentProps> = ({
   isMaxCoin,
 }) => {
   const { palette } = useTheme();
+  const { t } = useTranslation();
 
   const profitNumber = profit >= 0 ? profit : Math.abs(profit);
   const profitTitle = `${profit >= 0 ? '+' : '-'} $${profitNumber}`;
@@ -49,8 +51,8 @@ export const BestWorstItem: React.FC<IBestWorstInvestmentProps> = ({
       />
 
       <Box className={styles.titlesContainer}>
-        <Typography fontWeight="500" width={50} style={{ color: palette.text.secondary }}>
-          {isMaxCoin ? 'Best' : 'Worst'}
+        <Typography fontWeight="500" width={80} style={{ color: palette.text.secondary }}>
+          {t(`cc.entity.bestWorstItem.title.${isMaxCoin ? 'best' : 'worst'}`)}
         </Typography>
 
         <Box className={styles.container}>

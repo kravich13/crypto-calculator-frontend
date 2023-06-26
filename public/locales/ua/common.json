@@ -84,5 +84,30 @@
   "cc.entity.selectedCoins.maxCoins": "Можна вибрати максимум {{count}} монет",
   "cc.entity.selectedCoins.selectedCoins": "Обрані монети: {{count}}",
   "cc.entity.selectedCoins.percentage": "Вкажіть відсоток інвестиції для кожної обраної монети (принаймні {{count}} відсотків на монету)",
-  "cc.entity.selectedCoins.distributeButton": "Розподілити рівномірно"
+  "cc.entity.selectedCoins.distributeButton": "Розподілити рівномірно",
+
+  "сс.feature.generalInvestmentStatictics.title": "Загальна статистика",
+  "сс.feature.generalInvestmentStatictics.description.investmentPeriod": "Період інвестування:",
+  "сс.feature.generalInvestmentStatictics.description.monthlyInvestment": "Щомісячне інвестування",
+  "сс.feature.generalInvestmentStatictics.description.invested": "Інвестовано",
+  "сс.feature.generalInvestmentStatictics.description.balance": "Баланс",
+  "сс.feature.generalInvestmentStatictics.month": "{{count}} місяць",
+  "сс.feature.generalInvestmentStatictics.months": "{{count}} місяці",
+  "сс.feature.generalInvestmentStatictics.months_plural": "{{count}} місяців",
+
+  "cc.entity.bestWorstItem.title.best": "Найкраще",
+  "cc.entity.bestWorstItem.title.worst": "Найгірше",
+
+  "cc.feature.chart.title": "Капіталізація для кожного інвестиції",
+  "cc.feature.chart.button.line": "Лінійна діаграма",
+  "cc.feature.chart.button.logarithmic": "Логарифмічна діаграма",
+
+  "cc.feature.detailedInvestmentStatictics.title": "Детальна статистика",
+  "cc.feature.detailedInvestmentStatictics.headerTitle.name": "Назва",
+  "cc.feature.detailedInvestmentStatictics.headerTitle.share": "Доля",
+  "cc.feature.detailedInvestmentStatictics.headerTitle.startPrice": "Початкова ціна",
+  "cc.feature.detailedInvestmentStatictics.headerTitle.AvgPrice": "Середня ціна",
+  "cc.feature.detailedInvestmentStatictics.headerTitle.lastPrice": "Остання ціна",
+  "cc.feature.detailedInvestmentStatictics.headerTitle.holdings": "Холдінги",
+  "cc.feature.detailedInvestmentStatictics.headerTitle.profitLoss": "Прибуток/Збиток"
 }

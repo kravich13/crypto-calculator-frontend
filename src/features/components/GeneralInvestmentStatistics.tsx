@@ -2,11 +2,16 @@ import { BestWorstInvestment, InvestmentPercent } from '@cc/entities/Calculate';
 import { useAppSelector } from '@cc/shared/lib';
 import variables from '@cc/shared/styles/Variables.module.scss';
 import { Box, Typography, useTheme } from '@mui/material';
+import { useTranslation } from 'next-i18next';
 import { useMemo } from 'react';
 import styles from '../styles/GeneralInvestmentStatistics.module.scss';
 
 export const GeneralInvestmentStatistics = () => {
   const { palette } = useTheme();
+  const {
+    t,
+    i18n: { language },
+  } = useTranslation();
   const { investmentPeriod, totalCapital, totalGrowth, totalInvested, coins } = useAppSelector(
     ({ profitReducer }) => profitReducer
   );
@@ -18,7 +23,22 @@ export const GeneralInvestmentStatistics = () => {
   const profit = Number((totalCapital - totalInvested).toFixed(2));
   const profitNumber = profit >= 0 ? profit : Math.abs(profit);
   const profitTitle = `${profit >= 0 ? '+' : '-'} $${profitNumber}`;
-  const investmentPeriodTitle = `${investmentPeriod} month${investmentPeriod > 1 ? 's' : ''}`;
+
+  const investmentPeriodTitle = useMemo(() => {
+    let key = 'сс.feature.generalInvestmentStatictics.month';
+
+    if (language === 'ua') {
+      if (investmentPeriod >= 2 && investmentPeriod <= 4) {
+        key += 's';
+      } else if (investmentPeriod >= 5) {
+        key += 's_plural';
+      }
+    } else if (language === 'en' && investmentPeriod > 1) {
+      key += 's';
+    }
+
+    return t(key, { count: investmentPeriod });
+  }, [investmentPeriod, language, t]);
 
   const percentStyles = useMemo(
     () => ({
@@ -43,12 +63,12 @@ export const GeneralInvestmentStatistics = () => {
   return (
     <Box>
       <Typography component="h1" variant="h5" textAlign="center" mb={3}>
-        General statistics
+        {t('сс.feature.generalInvestmentStatictics.title')}
       </Typography>
 
       <Box mb={2}>
         <Typography>
-          Investment period:
+          {t('сс.feature.generalInvestmentStatictics.description.investmentPeriod')}
           <Typography component="span" fontWeight="600" fontStyle="italic">
             {` ${startDate} - ${endDate} `}
           </Typography>
@@ -56,7 +76,7 @@ export const GeneralInvestmentStatistics = () => {
         </Typography>
 
         <Typography>
-          Monthly investment
+          {t('сс.feature.generalInvestmentStatictics.description.monthlyInvestment')}
           <Typography component="span" fontWeight="600" fontStyle="italic">
             {` $${monthlyInvestment}`}
           </Typography>
@@ -66,9 +86,15 @@ export const GeneralInvestmentStatistics = () => {
       <Box className={styles.profitContainer}>
         <Box>
           <Box className={styles.finalBalance}>
-            <Typography fontWeight="500" mr={1} style={{ color: palette.text.secondary }}>
-              Invested
-            </Typography>
+            <Box>
+              <Typography
+                fontWeight="500"
+                mr={1}
+                style={{ width: 100, color: palette.text.secondary }}
+              >
+                {t('сс.feature.generalInvestmentStatictics.description.invested')}
+              </Typography>
+            </Box>
 
             <Box className={styles.finalDataBox}>
               <Typography>${totalInvested}</Typography>
@@ -81,9 +107,9 @@ export const GeneralInvestmentStatistics = () => {
             <Typography
               fontWeight="500"
               mr={1}
-              width={{ width: 60, color: palette.text.secondary }}
+              style={{ width: 100, color: palette.text.secondary }}
             >
-              Balance
+              {t('сс.feature.generalInvestmentStatictics.description.balance')}
             </Typography>
 
             <Box className={styles.finalDataBox}>

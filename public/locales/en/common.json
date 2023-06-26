@@ -84,5 +84,29 @@
   "cc.entity.selectedCoins.maxCoins": "Сan select a maximum of {{count}} coins",
   "cc.entity.selectedCoins.selectedCoins": "Selected coins: {{count}}",
   "cc.entity.selectedCoins.percentage": "Specify the investment percentage for each selected coin (at least {{count}} percent per coin)",
-  "cc.entity.selectedCoins.distributeButton": "Distribute equally"
+  "cc.entity.selectedCoins.distributeButton": "Distribute equally",
+
+  "сс.feature.generalInvestmentStatictics.title": "General statistics",
+  "сс.feature.generalInvestmentStatictics.description.investmentPeriod": "Investment period:",
+  "сс.feature.generalInvestmentStatictics.description.monthlyInvestment": "Monthly investment",
+  "сс.feature.generalInvestmentStatictics.description.invested": "Invested",
+  "сс.feature.generalInvestmentStatictics.description.balance": "Balance",
+  "сс.feature.generalInvestmentStatictics.month": "{{count}} month",
+  "сс.feature.generalInvestmentStatictics.months": "{{count}} months",
+
+  "cc.entity.bestWorstItem.title.best": "Best",
+  "cc.entity.bestWorstItem.title.worst": "Worst",
+
+  "cc.feature.chart.title": "Capitalization for each investment",
+  "cc.feature.chart.button.line": "Line chart",
+  "cc.feature.chart.button.logarithmic": "Logarithmic chart",
+
+  "cc.feature.detailedInvestmentStatictics.title": "Detailed statistics",
+  "cc.feature.detailedInvestmentStatictics.headerTitle.name": "Name",
+  "cc.feature.detailedInvestmentStatictics.headerTitle.share": "Share",
+  "cc.feature.detailedInvestmentStatictics.headerTitle.startPrice": "Start price",
+  "cc.feature.detailedInvestmentStatictics.headerTitle.AvgPrice": "Avg. price",
+  "cc.feature.detailedInvestmentStatictics.headerTitle.lastPrice": "Last price",
+  "cc.feature.detailedInvestmentStatictics.headerTitle.holdings": "Holdings",
+  "cc.feature.detailedInvestmentStatictics.headerTitle.profitLoss": "Profit/Loss"
 }
