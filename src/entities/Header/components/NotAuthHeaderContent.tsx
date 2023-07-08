@@ -1,9 +1,10 @@
 import { RoutesTypes } from '@cc/shared/enums';
-import { Box, Button, Skeleton } from '@mui/material';
+import { Box, Button, Skeleton, Typography } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useCallback, useMemo } from 'react';
 import styles from '../styles/NoAuthHeaderContent.module.scss';
-import { ThemeButton } from './ThemeButton';
+import { GeneralContent } from './GeneralContent';
+import { useTranslation } from 'next-i18next';
 
 interface INotAuthHeaderContentProps {
   isLoadingContent: boolean;
@@ -14,6 +15,7 @@ export const NotAuthHeaderContent: React.FC<INotAuthHeaderContentProps> = ({
 }) => {
   const router = useRouter();
   const pathname = usePathname();
+  const { t } = useTranslation();
 
   const goToLogIn = useCallback(() => {
     router.push(RoutesTypes.LOGIN);
@@ -28,7 +30,7 @@ export const NotAuthHeaderContent: React.FC<INotAuthHeaderContentProps> = ({
 
   return (
     <Box component="div" className={styles.container}>
-      <Box style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      <Box style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
         {isNotAuthPage && !isConfirmEmailPage && (
           <>
             {isLoadingContent ? (
@@ -40,13 +42,13 @@ export const NotAuthHeaderContent: React.FC<INotAuthHeaderContentProps> = ({
                 variant="outlined"
                 onClick={goToLogIn}
               >
-                Log In
+                <Typography noWrap>{t('cc.entity.noAuthHeaderContent.button.login')}</Typography>
               </Button>
             )}
           </>
         )}
 
-        {!isLoadingContent && <ThemeButton />}
+        {!isLoadingContent && <GeneralContent />}
       </Box>
     </Box>
   );

@@ -2,11 +2,13 @@ import { useAuthContext, useThemeContext } from '@cc/shared/lib';
 import { Box, Modal, Typography, useTheme } from '@mui/material';
 import React from 'react';
 import styles from './styles/Modal.module.scss';
+import { useTranslation } from 'next-i18next';
 
 export const ModalLogout: React.FC = () => {
   const { themeMode } = useThemeContext();
   const { showModalLogout } = useAuthContext();
   const { palette } = useTheme();
+  const { t } = useTranslation();
 
   return (
     <Modal open={showModalLogout}>
@@ -20,11 +22,11 @@ export const ModalLogout: React.FC = () => {
           fontWeight="600"
           style={{ color: palette.error.dark }}
         >
-          Authorization timed out
+          {t('cc.widget.modalLogout.title')}
         </Typography>
 
         <Typography sx={{ mt: 2, color: palette.text.secondary }}>
-          Within 3 seconds you will be redirected to the main page.
+          {t('cc.widget.modalLogout.description')}
         </Typography>
       </Box>
     </Modal>

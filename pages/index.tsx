@@ -2,18 +2,20 @@ import { PageLayout } from '@cc/app/components';
 import { KEY_WORDS_SEO } from '@cc/shared/const';
 import { ScrollTopButton } from '@cc/shared/ui/components';
 import { MainContent } from '@cc/widgets';
+import type { GetStaticProps } from 'next';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 
 export default function Home() {
+  const { t } = useTranslation();
+
   return (
     <PageLayout>
       <Head>
-        <title>Main | Crypto Metrics</title>
+        <title>{t('cc.page.main.seo.title')}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta
-          name="description"
-          content="Calculate the value of your crypto holdings and keep track of your portfolio using Crypto Calculator. Get live prices for Bitcoin, Ethereum, and other popular cryptocurrencies."
-        />
+        <meta name="description" content={t('cc.page.main.seo.description')} />
         <meta name="keywords" content={`${KEY_WORDS_SEO}`} />
         <meta name="author" content="Crypto Metrics" />
       </Head>
@@ -24,3 +26,11 @@ export default function Home() {
     </PageLayout>
   );
 }
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale || 'en')),
+    },
+  };
+};

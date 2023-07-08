@@ -2,7 +2,8 @@ import { emailValidation } from '@cc/entities/Authorization';
 import { TextInput } from '@cc/shared/ui/components';
 import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
 import { LoadingButton } from '@mui/lab';
-import { Box, Grid } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
+import { useTranslation } from 'next-i18next';
 import React, { useCallback } from 'react';
 import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form';
 
@@ -18,6 +19,7 @@ interface ISendEmailForm {
 export const SendEmail: React.FC<ISendEmailProps> = ({ isLoading, onConfirm }) => {
   const { handleSubmit, control, resetField } = useForm<ISendEmailForm>({ mode: 'onBlur' });
   const { errors, isValid } = useFormState({ control });
+  const { t } = useTranslation();
 
   const onClearEmail = useCallback(() => {
     resetField('email');
@@ -38,7 +40,7 @@ export const SendEmail: React.FC<ISendEmailProps> = ({ isLoading, onConfirm }) =
                 required
                 fullWidth
                 type="email"
-                label="Email Address"
+                label={t('cc.feature.sendEmail.inputLabel')}
                 autoComplete="email"
                 error={Boolean(errors.email)}
                 helperText={errors.email?.message}
@@ -54,13 +56,12 @@ export const SendEmail: React.FC<ISendEmailProps> = ({ isLoading, onConfirm }) =
             fullWidth
             type="submit"
             variant="contained"
-            sx={{ textTransform: 'none' }}
             disabled={!isValid}
             loading={isLoading}
             loadingPosition="end"
             endIcon={<ForwardToInboxIcon />}
           >
-            Submit
+            <Typography noWrap>{t('cc.feature.sendEmail.submitButton')}</Typography>
           </LoadingButton>
         </Grid>
       </Grid>

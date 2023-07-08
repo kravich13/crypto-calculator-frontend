@@ -25,6 +25,8 @@ $bg-item-light: #bbdefb;
 
 .selectContainer {
   display: flex;
+  justify-content: flex-end;
   align-items: center;
+  width: 105px;
   gap: 5px;
 }

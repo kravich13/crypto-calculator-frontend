@@ -1,0 +1,136 @@
+{
+  "cc.page.404.title": "Page Not Found",
+  "cc.page.404.seo.title": "404 Not Found | Crypto Metrics",
+  "cc.page.404.seo.description": "Oops, it looks like the page you were looking for does not exist. Please check the URL and try again. Crypto Metrics is a powerful tool that allows you to calculate the value of cryptocurrencies in real-time.",
+
+  "cc.page.main.seo.title": "Main | Crypto Metrics",
+  "cc.page.main.seo.description": "Calculate the value of your crypto holdings and keep track of your portfolio using Crypto Calculator. Get live prices for Bitcoin, Ethereum, and other popular cryptocurrencies.",
+
+  "cc.page.calculateYield.seo.title": "Calculate monthly yield | Crypto Metrics",
+  "cc.page.calculateYield.seo.description": "Calculate your cryptocurrency investment returns with ease using our investment calculator. Enter your initial investment date, end date, and current date, as well as your monthly investment amount. Our smart search function allows you to easily add up to 5 coins to your portfolio, with a percentage distribution of your investment amount for each coin (e.g. 10% for BTC, 20% for ETH, etc., up to 100%).",
+
+  "cc.page.investmentCards.seo.title": "Investment cards | Crypto Metrics",
+
+  "cc.page.investmentStatistics.seo.title": "Investment statistics | Crypto Metrics",
+  "cc.page.investmentStatistics.seo.description": "Use our crypto investment calculator to determine your potential earnings based on your initial investment, investment duration, and cryptocurrency allocation. Our smart search feature allows you to easily add up to 5 coins to your portfolio.",
+
+  "cc.page.login.seo.title": "Log in | Crypto Metrics",
+  "cc.page.login.seo.description": "Log in to Crypto Metrics and start calculating your cryptocurrency holdings.",
+
+  "cc.entity.header.button.lastCalculation": "Last calculation",
+  "cc.entity.header.button.logout": "Logout",
+
+  "cc.entity.noAuthHeaderContent.button.login": "Log In",
+
+  "cc.entity.calculateDescription.stepTitle": "STEP {{count}}",
+
+  "cc.widget.mainContent.title": "Cryptocurrency historical data calculator",
+  "cc.widget.mainContent.step1Description": "Select the monthly investment amount, start date and end dater",
+  "cc.widget.mainContent.step2Description": "Enter the title the coin you are interested in and select it",
+  "cc.widget.mainContent.step3Description": "Allocate the monthly investment amount as a percentage for each coin",
+  "cc.widget.mainContent.button.calculate": "calculate now",
+  "cc.widget.mainContent.button.login": "login now",
+
+  "cc.entity.baseDescription.firstDescription": "Imagine that you started investing $100 monthly in DogeCoin in 2019. By May 2021 your capital would have grown to $500k.",
+  "cc.entity.baseDescription.secondDescription": "With our service, you can make your list of coins for investment and see how profitable this portfolio would be.",
+  "cc.entity.baseDescription.thirdDescription": "With this information, you can decide if you should invest in crypto in the future in the same way.",
+  "cc.entity.baseDescription.tool.subtitle": "Our tool will help you calculate:",
+  "cc.entity.baseDescription.tool.firstDescription": "Profitability in $ and % for individual coins.",
+  "cc.entity.baseDescription.tool.secondDescription": "Total profit in $ and %.",
+  "cc.entity.baseDescription.tool.thirdDescription": "Total capital.",
+  "cc.entity.baseDescription.tool.fourthDescription": "Starting, average and last price for each coin.",
+
+  "cc.entity.resultsDescription.generalTitle": "Get your general results",
+  "cc.entity.resultsDescription.detailedTitle": "Get your detailed results",
+  "cc.entity.resultsDescription.stepTitle": "STEP {{count}}",
+
+  "cc.widget.loginForm.title": "Log In",
+  "cc.widget.loginForm.step1.stepperLabel": "Specify email",
+  "cc.widget.loginForm.step1.description": "Enter email to login",
+  "cc.widget.loginForm.step2.stepperLabel": "Confirm login code",
+  "cc.widget.loginForm.step2.description": "Enter code sent to your email",
+
+  "cc.feature.sendEmail.inputLabel": "Email Address",
+  "cc.feature.sendEmail.submitButton": "Submit",
+
+  "cc.feature.emailCode.inputLabel": "Email Code",
+  "cc.feature.emailCode.button.confirm": "Confirm",
+  "cc.feature.emailCode.button.sendAgain": "Send again in",
+
+  "cc.page.code.title": "An error has occurred",
+  "cc.page.code.reasonDescription": "Reason:",
+  "cc.page.code.errorMessage": "Code lifetime expired.",
+  "cc.page.code.userText.error": "Login again",
+  "cc.page.code.userText.notError": "Please try again later",
+  "cc.page.code.seo.title": "Confirm email | Crypto Metrics",
+  "cc.page.code.seo.description": "Enter the code from the letter to enter Crypto Metrics.",
+
+  "cc.widget.footer.subtitle.ideaAndDev": "Idea and development",
+  "cc.widget.footer.person.vlad": "Vladyslav Onatskyi",
+  "cc.widget.footer.subtitle.consulting": "Consulting",
+  "cc.widget.footer.person.max": "Maksym Baranovskyi",
+
+  "cc.widget.calculateYieldForm.title": "Calculation of profitability monthly investments in cryptocurrency",
+  "cc.widget.calculateYieldForm.step1.stepperLabel": "Dates and monthly amount",
+  "cc.widget.calculateYieldForm.step1.description": "Specify the monthly amount for investment, start and end date",
+  "cc.widget.calculateYieldForm.step2.stepperLabel": "List of coins",
+
+  "cc.feature.periodAndAmount.nextButton": "Next",
+  "cc.feature.periodAndAmount.monthlyInput.label": "Monthly investment",
+  "cc.feature.periodAndAmount.monthlyInput.errorMessage": "Value must be an integer and be between 20 and 1000000.",
+  "cc.feature.periodAndAmount.startDateInput.label": "Start date (mm/dd/yyyy)",
+  "cc.feature.periodAndAmount.startDateInput.errorMessage": "Date must be between 01/01/2013 and yesterday.",
+  "cc.feature.periodAndAmount.endDateInput.label": "End date (mm/dd/yyyy)",
+  "cc.feature.periodAndAmount.endDateInput.firstErrorMessage": "End date must be greater than start date.",
+  "cc.feature.periodAndAmount.endDateInput.secondErrorMessage": "End date must be less than or equal to today date.",
+
+  "cc.feature.selectedInvestCoins.error.firstTitle": "Coins not selected",
+  "cc.feature.selectedInvestCoins.error.secondTitle": "The total percentage must be 100",
+  "cc.feature.selectedInvestCoins.title": "Coins until {{startDate}} are available for search.",
+  "cc.feature.selectedInvestCoins.searchInputLabel": "Search by name",
+  "cc.feature.selectedInvestCoins.button.back": "Back",
+  "cc.feature.selectedInvestCoins.button.calculate": "Calculate",
+
+  "cc.entity.searchNavigationButtons.navigate": "Navigate",
+  "cc.entity.searchNavigationButtons.cancel": "Cancel",
+  "cc.entity.searchNavigationButtons.enter": "Enter",
+
+  "cc.entity.searchRenderItem.select": "Select",
+
+  "cc.entity.selectedCoins.iconButtonTitle": "Remove coin",
+  "cc.entity.selectedCoins.title": "Your added coins for investment",
+  "cc.entity.selectedCoins.maxCoins": "Сan select a maximum of {{count}} coins",
+  "cc.entity.selectedCoins.selectedCoins": "Selected coins: {{count}}",
+  "cc.entity.selectedCoins.percentage": "Specify the investment percentage for each selected coin (at least {{count}} percent per coin)",
+  "cc.entity.selectedCoins.distributeButton": "Distribute equally",
+
+  "сс.feature.generalInvestmentStatictics.title": "General statistics",
+  "сс.feature.generalInvestmentStatictics.description.investmentPeriod": "Investment period:",
+  "сс.feature.generalInvestmentStatictics.description.monthlyInvestment": "Monthly investment",
+  "сс.feature.generalInvestmentStatictics.description.invested": "Invested",
+  "сс.feature.generalInvestmentStatictics.description.balance": "Balance",
+  "сс.feature.generalInvestmentStatictics.month": "{{count}} month",
+  "сс.feature.generalInvestmentStatictics.months": "{{count}} months",
+
+  "cc.entity.bestWorstItem.title.best": "Best",
+  "cc.entity.bestWorstItem.title.worst": "Worst",
+
+  "cc.feature.chart.title": "Capitalization for each investment",
+  "cc.feature.chart.button.line": "Line chart",
+  "cc.feature.chart.button.logarithmic": "Logarithmic chart",
+
+  "cc.feature.detailedInvestmentStatictics.title": "Detailed statistics",
+  "cc.feature.detailedInvestmentStatictics.headerTitle.name": "Name",
+  "cc.feature.detailedInvestmentStatictics.headerTitle.share": "Share",
+  "cc.feature.detailedInvestmentStatictics.headerTitle.startPrice": "Start price",
+  "cc.feature.detailedInvestmentStatictics.headerTitle.AvgPrice": "Avg. price",
+  "cc.feature.detailedInvestmentStatictics.headerTitle.lastPrice": "Last price",
+  "cc.feature.detailedInvestmentStatictics.headerTitle.holdings": "Holdings",
+  "cc.feature.detailedInvestmentStatictics.headerTitle.profitLoss": "Profit/Loss",
+
+  "cc.widget.modalLogin.title": "You have successfully logged in",
+  "cc.widget.modalLogin.description": "Within 3 seconds you will be redirected to the main page.",
+
+  "cc.widget.modalLogout.title": "Authorization timed out",
+  "cc.widget.modalLogout.description": "Within 3 seconds you will be redirected to the main page."
+}

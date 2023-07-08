@@ -4,6 +4,7 @@ import { createEmotionCache } from '@cc/app/utility';
 import { wrapper } from '@cc/shared/lib';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import { CssBaseline } from '@mui/material';
+import { appWithTranslation } from 'next-i18next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { Provider } from 'react-redux';
@@ -14,11 +15,7 @@ interface IAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
 
-export default function App({
-  Component,
-  emotionCache = clientSideEmotionCache,
-  ...rest
-}: IAppProps) {
+function App({ Component, emotionCache = clientSideEmotionCache, ...rest }: IAppProps) {
   const { store, props } = wrapper.useWrappedStore(rest);
 
   return (
@@ -47,3 +44,5 @@ export default function App({
     </Provider>
   );
 }
+
+export default appWithTranslation(App);

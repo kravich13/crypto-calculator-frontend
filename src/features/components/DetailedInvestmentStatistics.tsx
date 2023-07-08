@@ -22,11 +22,13 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
+import { useTranslation } from 'next-i18next';
 import { useCallback, useMemo, useRef, useState } from 'react';
 
 export const DetailedInvestmentStatistics = () => {
   const requestCoins = useAppSelector(({ profitReducer: { coins } }) => coins);
   const { palette } = useTheme();
+  const { t } = useTranslation();
 
   const lastColumnName = useRef<DetailedColumnType>();
 
@@ -35,15 +37,36 @@ export const DetailedInvestmentStatistics = () => {
 
   const columnTitle = useMemo(
     (): DetailedColumnTitles => ({
-      name: { title: 'Name', position: 'left' },
-      share: { title: 'Share', position: 'right' },
-      startingPrice: { title: 'Start price', position: 'right' },
-      averagePrice: { title: 'Avg. price', position: 'right' },
-      lastPrice: { title: 'Last price', position: 'right' },
-      capital: { title: 'Holdings', position: 'right' },
-      growth: { title: 'Profit/Loss', position: 'right' },
+      name: {
+        title: t('cc.feature.detailedInvestmentStatictics.headerTitle.name'),
+        position: 'left',
+      },
+      share: {
+        title: t('cc.feature.detailedInvestmentStatictics.headerTitle.share'),
+        position: 'right',
+      },
+      startingPrice: {
+        title: t('cc.feature.detailedInvestmentStatictics.headerTitle.startPrice'),
+        position: 'right',
+      },
+      averagePrice: {
+        title: t('cc.feature.detailedInvestmentStatictics.headerTitle.AvgPrice'),
+        position: 'right',
+      },
+      lastPrice: {
+        title: t('cc.feature.detailedInvestmentStatictics.headerTitle.lastPrice'),
+        position: 'right',
+      },
+      capital: {
+        title: t('cc.feature.detailedInvestmentStatictics.headerTitle.holdings'),
+        position: 'right',
+      },
+      growth: {
+        title: t('cc.feature.detailedInvestmentStatictics.headerTitle.profitLoss'),
+        position: 'right',
+      },
     }),
-    []
+    [t]
   );
 
   const coinsCopy = useMemo(
@@ -176,7 +199,7 @@ export const DetailedInvestmentStatistics = () => {
   return (
     <>
       <Typography component="h1" variant="h5" textAlign="center" mb={3}>
-        Detailed statistics
+        {t('cc.feature.detailedInvestmentStatictics.title')}
       </Typography>
 
       <TableContainer component={Paper}>

@@ -15,7 +15,8 @@ import {
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useCallback, useMemo, useState } from 'react';
 import styles from '../styles/AuthHeaderContent.module.scss';
-import { ThemeButton } from './ThemeButton';
+import { GeneralContent } from './GeneralContent';
+import { useTranslation } from 'next-i18next';
 
 export const AuthHeaderContent: React.FC = () => {
   const emailUser = useAppSelector((state) => state.authReducer.email);
@@ -23,6 +24,7 @@ export const AuthHeaderContent: React.FC = () => {
 
   const { logout } = useAuthContext();
   const { palette } = useTheme();
+  const { t } = useTranslation();
 
   const router = useRouter();
   const pathname = usePathname();
@@ -96,7 +98,7 @@ export const AuthHeaderContent: React.FC = () => {
     <Box className={styles.container}>
       {showCalculationButton && (
         <Button variant="text" color="inherit" onClick={onClickLastCalculation}>
-          Last calculation
+          <Typography noWrap>{t('cc.entity.header.button.lastCalculation')}</Typography>
         </Button>
       )}
 
@@ -104,14 +106,14 @@ export const AuthHeaderContent: React.FC = () => {
         <Avatar sx={{ width: 34, height: 34, backgroundColor: colorByUser }}>{avatarTitle}</Avatar>
       </IconButton>
 
-      <ThemeButton />
+      <GeneralContent />
 
       <Menu open={isOpen} anchorEl={anchorEl} TransitionComponent={Fade} onClose={handleClose}>
         <MenuItem onClick={onLogout}>
           <LogoutIcon style={{ color: 'red', marginRight: 4 }} />
 
           <Typography fontWeight="600" style={{ color: palette.error.dark }}>
-            Logout
+            {t('cc.entity.header.button.logout')}
           </Typography>
         </MenuItem>
       </Menu>

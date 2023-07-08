@@ -6,6 +6,7 @@ import React from 'react';
 import navigationButtonStyles from '../styles/SearchNavigationButtons.module.scss';
 import styles from '../styles/SearchRenderItem.module.scss';
 import { MainCoinInfoContainer } from './MainCoinInfoContainer';
+import { useTranslation } from 'next-i18next';
 
 interface ISearchRenderItemProps {
   item: IMainCoinInfo;
@@ -18,6 +19,7 @@ export const SearchRenderItem: React.FC<ISearchRenderItemProps> = React.memo(
     const isMin990Width = useMediaQuery('(min-width:990px)');
     const { themeMode } = useThemeContext();
     const { palette } = useTheme();
+    const { t } = useTranslation();
 
     const containerClasses = [
       styles.item,
@@ -40,8 +42,8 @@ export const SearchRenderItem: React.FC<ISearchRenderItemProps> = React.memo(
 
         {isSelected && isMin990Width && (
           <Box component="div" className={styles.selectContainer}>
-            <Typography fontSize="small" style={{ color: palette.text.secondary }}>
-              Select
+            <Typography fontSize="small" style={{ color: palette.text.secondary }} noWrap>
+              {t('cc.entity.searchRenderItem.select')}
             </Typography>
 
             <Box

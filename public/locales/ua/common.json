@@ -1,0 +1,137 @@
+{
+  "cc.page.404.title": "Сторінка Не Знайдена",
+  "cc.page.404.seo.title": "404 Сторінку не знайдено | Crypto Metrics",
+  "cc.page.404.seo.description": "Упс! Здається, сторінку, яку ви шукаєте, не існує. Будь ласка, перевірте URL та спробуйте знову. Криптовалютна метрика - потужний інструмент, що дозволяє обчислювати значення криптовалют в реальному часі.",
+
+  "cc.page.main.seo.title": "Головна | Crypto Metrics",
+  "cc.page.main.seo.description": "Обчислюйте вартість своїх криптовалютних активів та відстежуйте свій портфель за допомогою Crypto Metrics. Отримуйте живі ціни на Bitcoin, Ethereum та інші популярні криптовалюти.",
+
+  "cc.page.calculateYield.seo.title": "Обчислити щомісячний дохід | Crypto Metrics",
+  "cc.page.calculateYield.seo.description": "Легко обчислюйте дохід від своїх криптовалютних інвестицій за допомогою нашого калькулятора інвестицій. Введіть дату вашої початкової інвестиції, кінцеву дату, поточну дату та щомісячну суму інвестицій. Наша інтелектуальна функція пошуку дозволяє легко додавати до 5 монет у ваш портфель з відсотковим розподілом суми інвестицій для кожної монети (наприклад, 10% для BTC, 20% для ETH тощо, до 100%).",
+
+  "cc.page.investmentCards.seo.title": "Інвестиційні картки | Crypto Metrics",
+
+  "cc.page.investmentStatistics.seo.title": "Статистика інвестицій | Crypto Metrics",
+  "cc.page.investmentStatistics.seo.description": "Використовуйте наш криптовалютний калькулятор інвестицій, щоб визначити потенційний прибуток на основі вашої початкової інвестиції, тривалості інвестиції та розподілу криптовалют. Наша інтелектуальна функція пошуку дозволяє легко додавати до 5 монет у ваш портфель.",
+
+  "cc.page.login.seo.title": "Увійти | Crypto Metrics",
+  "cc.page.login.seo.description": "Увійти до Crypto Metrics та почніть обчислювати ваші криптовалютні активи.",
+
+  "cc.entity.header.button.lastCalculation": "Останній розрахунок",
+  "cc.entity.header.button.logout": "Вийти",
+
+  "cc.entity.noAuthHeaderContent.button.login": "Увійти",
+
+  "cc.entity.calculateDescription.stepTitle": "КРОК {{count}}",
+
+  "cc.widget.mainContent.title": "Калькулятор історичних даних криптовалют",
+  "cc.widget.mainContent.step1Description": "Виберіть щомісячну суму інвестицій, дату початку та дату закінчення",
+  "cc.widget.mainContent.step2Description": "Введіть назву монети яка вас цікавить, і виберіть її",
+  "cc.widget.mainContent.step3Description": "Розподіліть щомісячну суму інвестицій у відсотках для кожної монети",
+  "cc.widget.mainContent.button.calculate": "розрахуйте зараз",
+  "cc.widget.mainContent.button.login": "увійти зараз",
+
+  "cc.entity.baseDescription.firstDescription": "Уявіть, що ви почали інвестувати $100 щомісяця в DogeCoin у 2019 році. До травня 2021 року ваш капітал виріс би до $500к.",
+  "cc.entity.baseDescription.secondDescription": "За допомогою нашого сервісу ви можете скласти свій список монет для інвестування і подивитися, наскільки прибутковим буде цей портфель.",
+  "cc.entity.baseDescription.thirdDescription": "Маючи цю інформацію, ви можете вирішити, чи варто вам інвестувати в криптовалюту в майбутньому таким же чином.",
+  "cc.entity.baseDescription.tool.subtitle": "Наш інструмент допоможе вам розрахувати:",
+  "cc.entity.baseDescription.tool.firstDescription": "Прибутковість у $ та % для окремих монет.",
+  "cc.entity.baseDescription.tool.secondDescription": "Загальний прибуток у $ та %.",
+  "cc.entity.baseDescription.tool.thirdDescription": "Загальний капітал.",
+  "cc.entity.baseDescription.tool.fourthDescription": "Стартова, середня та остання ціна для кожної монети.",
+
+  "cc.entity.resultsDescription.generalTitle": "Отримайте загальні результати",
+  "cc.entity.resultsDescription.detailedTitle": "Отримайте детальні результати",
+  "cc.entity.resultsDescription.stepTitle": "КРОК {{count}}",
+
+  "cc.widget.loginForm.title": "Увійти",
+  "cc.widget.loginForm.step1.stepperLabel": "Вкажіть імейл",
+  "cc.widget.loginForm.step1.description": "Введі імейл для входу",
+  "cc.widget.loginForm.step2.stepperLabel": "Підтвердьте код входу",
+  "cc.widget.loginForm.step2.description": "Введіть код, надісланий на ваш імейл",
+
+  "cc.feature.sendEmail.inputLabel": "Адреса імейлу",
+  "cc.feature.sendEmail.submitButton": "Надіслати",
+
+  "cc.feature.emailCode.inputLabel": "Код імейлу",
+  "cc.feature.emailCode.button.confirm": "Підтвердити",
+  "cc.feature.emailCode.button.sendAgain": "Надіслати знову через",
+
+  "cc.page.code.title": "Виникла помилка",
+  "cc.page.code.reasonDescription": "Причина:",
+  "cc.page.code.errorMessage": "Закінчився термін дії коду.",
+  "cc.page.code.userText.error": "Увійти ще раз",
+  "cc.page.code.userText.notError": "Будь ласка, спробуйте пізніше",
+  "cc.page.code.seo.title": "Підтвердження електронної пошти | Crypto Metrics",
+  "cc.page.code.seo.description": "Введіть код з листа, щоб увійти до Crypto Metrics.",
+
+  "cc.widget.footer.subtitle.ideaAndDev": "Ідея та розробка",
+  "cc.widget.footer.person.vlad": "Владислав Онацький",
+  "cc.widget.footer.subtitle.consulting": "Консультування",
+  "cc.widget.footer.person.max": "Максим Барановський",
+
+  "cc.widget.calculateYieldForm.title": "Розрахунок прибутковості щомісячних інвестицій в криптовалюту",
+  "cc.widget.calculateYieldForm.step1.stepperLabel": "Дати та щомісячна сума",
+  "cc.widget.calculateYieldForm.step1.description": "Вкажіть щомісячну суму для інвестування, дату початку та закінчення",
+  "cc.widget.calculateYieldForm.step2.stepperLabel": "Список монет",
+
+  "cc.feature.periodAndAmount.nextButton": "Далі",
+  "cc.feature.periodAndAmount.monthlyInput.label": "Щомісячні інвестиції",
+  "cc.feature.periodAndAmount.monthlyInput.errorMessage": "Значення має бути цілим числом і знаходитись в діапазоні від 20 до 1000000.",
+  "cc.feature.periodAndAmount.startDateInput.label": "Дата початку (мм/дд/рррр)",
+  "cc.feature.periodAndAmount.startDateInput.errorMessage": "Дата повинна бути між 01/01/2013 та вчорашнім днем.",
+  "cc.feature.periodAndAmount.endDateInput.label": "Дата закінчення (мм/дд/рррр)",
+  "cc.feature.periodAndAmount.endDateInput.firstErrorMessage": "Дата закінчення повинна бути більшою за дату початку.",
+  "cc.feature.periodAndAmount.endDateInput.secondErrorMessage": "Кінцева дата повинна бути меншою або дорівнювати сьогоднішній даті.",
+
+  "cc.feature.selectedInvestCoins.error.firstTitle": "Не обрано монети",
+  "cc.feature.selectedInvestCoins.error.secondTitle": "Загальний відсоток повинен бути 100",
+  "cc.feature.selectedInvestCoins.title": "Монети до {{startDate}} доступні для пошуку.",
+  "cc.feature.selectedInvestCoins.searchInputLabel": "Пошук за назвою",
+  "cc.feature.selectedInvestCoins.button.back": "Назад",
+  "cc.feature.selectedInvestCoins.button.calculate": "Розрахувати",
+
+  "cc.entity.searchNavigationButtons.navigate": "Перейти",
+  "cc.entity.searchNavigationButtons.cancel": "Скасувати",
+  "cc.entity.searchNavigationButtons.enter": "Ввести",
+
+  "cc.entity.searchRenderItem.select": "Вибрати",
+
+  "cc.entity.selectedCoins.iconButtonTitle": "Видалити монету",
+  "cc.entity.selectedCoins.title": "Додані монети для інвестицій",
+  "cc.entity.selectedCoins.maxCoins": "Можна вибрати максимум {{count}} монет",
+  "cc.entity.selectedCoins.selectedCoins": "Обрані монети: {{count}}",
+  "cc.entity.selectedCoins.percentage": "Вкажіть відсоток інвестиції для кожної обраної монети (принаймні {{count}} відсотків на монету)",
+  "cc.entity.selectedCoins.distributeButton": "Розподілити рівномірно",
+
+  "сс.feature.generalInvestmentStatictics.title": "Загальна статистика",
+  "сс.feature.generalInvestmentStatictics.description.investmentPeriod": "Період інвестування:",
+  "сс.feature.generalInvestmentStatictics.description.monthlyInvestment": "Щомісячне інвестування",
+  "сс.feature.generalInvestmentStatictics.description.invested": "Інвестовано",
+  "сс.feature.generalInvestmentStatictics.description.balance": "Баланс",
+  "сс.feature.generalInvestmentStatictics.month": "{{count}} місяць",
+  "сс.feature.generalInvestmentStatictics.months": "{{count}} місяці",
+  "сс.feature.generalInvestmentStatictics.months_plural": "{{count}} місяців",
+
+  "cc.entity.bestWorstItem.title.best": "Найкраще",
+  "cc.entity.bestWorstItem.title.worst": "Найгірше",
+
+  "cc.feature.chart.title": "Капіталізація для кожного інвестиції",
+  "cc.feature.chart.button.line": "Лінійна діаграма",
+  "cc.feature.chart.button.logarithmic": "Логарифмічна діаграма",
+
+  "cc.feature.detailedInvestmentStatictics.title": "Детальна статистика",
+  "cc.feature.detailedInvestmentStatictics.headerTitle.name": "Назва",
+  "cc.feature.detailedInvestmentStatictics.headerTitle.share": "Доля",
+  "cc.feature.detailedInvestmentStatictics.headerTitle.startPrice": "Початкова ціна",
+  "cc.feature.detailedInvestmentStatictics.headerTitle.AvgPrice": "Середня ціна",
+  "cc.feature.detailedInvestmentStatictics.headerTitle.lastPrice": "Остання ціна",
+  "cc.feature.detailedInvestmentStatictics.headerTitle.holdings": "Холдінги",
+  "cc.feature.detailedInvestmentStatictics.headerTitle.profitLoss": "Прибуток/Збиток",
+
+  "cc.widget.modalLogin.title": "Ви успішно увійшли в систему",
+  "cc.widget.modalLogin.description": "Протягом 3 секунд ви будете перенаправлені на головну сторінку.",
+
+  "cc.widget.modalLogout.title": "Термін дії авторизації закінчився",
+  "cc.widget.modalLogout.description": "Протягом 3 секунд ви будете перенаправлені на головну сторінку."
+}

@@ -16,6 +16,7 @@ import {
 } from 'chart.js';
 import 'chartjs-adapter-luxon';
 import { DateTime } from 'luxon';
+import { useTranslation } from 'next-i18next';
 import { memo, useCallback, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import styles from '../styles/Chart.module.scss';
@@ -40,6 +41,7 @@ interface IChartProps {
 
 export const Chart: React.FC<IChartProps> = memo(({ labels, dollars }) => {
   const { palette } = useTheme();
+  const { t } = useTranslation();
 
   const [isLogChart, setLogShart] = useState(false);
 
@@ -64,12 +66,12 @@ export const Chart: React.FC<IChartProps> = memo(({ labels, dollars }) => {
     <>
       <Box className={styles.headContainer}>
         <Typography variant="h6" component="h2">
-          Capitalization for each investment
+          {t('cc.feature.chart.title')}
         </Typography>
 
-        <Button variant="text" onClick={onClickButton}>{`${
-          isLogChart ? 'Line' : 'logarithmic'
-        } chart`}</Button>
+        <Button variant="text" onClick={onClickButton}>
+          {t(`cc.feature.chart.button.${isLogChart ? 'line' : 'logarithmic'}`)}
+        </Button>
       </Box>
 
       <Box width="100%">

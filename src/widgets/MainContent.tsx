@@ -13,10 +13,12 @@ import { useCallback, useMemo } from 'react';
 import step1Image from '../../public/main-page-images/step-1.jpg';
 import step2Image from '../../public/main-page-images/step-2.jpg';
 import step3Image from '../../public/main-page-images/step-3.jpg';
+import { useTranslation } from 'next-i18next';
 
 export const MainContent = () => {
   const isAuth = useAppSelector(({ authReducer }) => authReducer.isAuth);
   const router = useRouter();
+  const { t } = useTranslation();
 
   const onRedirect = useCallback(() => {
     router.push(Boolean(isAuth) ? RoutesTypes.CALCULATE_YIELD : RoutesTypes.LOGIN);
@@ -26,21 +28,21 @@ export const MainContent = () => {
     (): ICalculateData[] => [
       {
         step: 1,
-        description: 'Select the monthly investment amount, start date and end date',
+        description: t('cc.widget.mainContent.step1Description'),
         src: step1Image,
       },
       {
         step: 2,
-        description: 'Enter the title the coin you are interested in and select it',
+        description: t('cc.widget.mainContent.step2Description'),
         src: step2Image,
       },
       {
         step: 3,
-        description: 'Allocate the monthly investment amount as a percentage for each coin',
+        description: t('cc.widget.mainContent.step3Description'),
         src: step3Image,
       },
     ],
-    []
+    [t]
   );
 
   const renderStepData = useCallback(
@@ -56,13 +58,17 @@ export const MainContent = () => {
       }}
     >
       <Typography component="h1" variant="h5" textAlign="center" sx={{ mb: 4 }}>
-        Cryptocurrency historical data calculator
+        {t('cc.widget.mainContent.title')}
       </Typography>
 
       <BaseDescription />
 
       <Button variant="contained" onClick={onRedirect} sx={{ mt: 2, mb: 3 }}>
-        {Boolean(isAuth) ? 'calculate now' : 'login now'}
+        <Typography noWrap>
+          {Boolean(isAuth)
+            ? t('cc.widget.mainContent.button.calculate')
+            : t('cc.widget.mainContent.button.login')}
+        </Typography>
       </Button>
 
       {calculateStepsData.map(renderStepData)}

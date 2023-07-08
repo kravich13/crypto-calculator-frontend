@@ -1,6 +1,7 @@
 import { ThemeContext } from '@cc/shared/lib';
 import { IChildrenProps, ThemeMode } from '@cc/shared/types';
 import { ThemeProvider as MuiThemeProvider, createTheme, useMediaQuery } from '@mui/material';
+import { ukUA } from '@mui/material/locale';
 import { useCallback, useEffect, useState } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
 
@@ -16,9 +17,24 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({ children }) => {
 
   const themeMode = themeModeValue.value;
 
-  const theme = createTheme({
-    palette: { mode: themeMode },
-  });
+  const theme = createTheme(
+    {
+      palette: { mode: themeMode },
+      components: {
+        MuiTypography: {
+          styleOverrides: {
+            root: { wordWrap: 'break-word' },
+          },
+        },
+        MuiFormHelperText: {
+          styleOverrides: {
+            root: { wordWrap: 'break-word' },
+          },
+        },
+      },
+    },
+    ukUA
+  );
 
   const toggleTheme = useCallback(() => {
     switch (themeMode) {
