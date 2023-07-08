@@ -6,10 +6,12 @@ import { useAppSelector } from '@cc/shared/lib';
 import { LayoutContent, ScrollTopButton } from '@cc/shared/ui';
 import { Box, Divider } from '@mui/material';
 import type { GetStaticProps } from 'next';
+import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 
 export default function InvestmentStatistics() {
+  const { t } = useTranslation();
   const hasProfitData = useAppSelector(({ profitReducer: { hasData } }) => hasData);
   const monthlyCapitals = useAppSelector(
     ({ profitReducer: { monthlyCapitals } }) => monthlyCapitals
@@ -23,13 +25,10 @@ export default function InvestmentStatistics() {
       <ProtectedPage redirectTo={RoutesTypes.CALCULATE_YIELD} condition={Boolean(!hasProfitData)}>
         <PageLayout>
           <Head>
-            <title>Investment statistics | Crypto Metrics</title>
+            <title>{t('cc.page.investmentStatistics.seo.title')}</title>
             <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-            <meta
-              name="description"
-              content="Use our crypto investment calculator to determine your potential earnings based on your initial investment, investment duration, and cryptocurrency allocation. Our smart search feature allows you to easily add up to 5 coins to your portfolio."
-            />
+            <meta name="description" content={t('cc.page.investmentStatistics.seo.description')} />
             <meta
               name="keywords"
               content={`${KEY_WORDS_SEO}, monthly earnings, initial investment, investment duration, cryptocurrency allocation, portfolio`}

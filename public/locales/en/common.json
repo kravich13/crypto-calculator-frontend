@@ -1,5 +1,21 @@
 {
   "cc.page.404.title": "Page Not Found",
+  "cc.page.404.seo.title": "404 Not Found | Crypto Metrics",
+  "cc.page.404.seo.description": "Oops, it looks like the page you were looking for does not exist. Please check the URL and try again. Crypto Metrics is a powerful tool that allows you to calculate the value of cryptocurrencies in real-time.",
+
+  "cc.page.main.seo.title": "Main | Crypto Metrics",
+  "cc.page.main.seo.description": "Calculate the value of your crypto holdings and keep track of your portfolio using Crypto Calculator. Get live prices for Bitcoin, Ethereum, and other popular cryptocurrencies.",
+
+  "cc.page.calculateYield.seo.title": "Calculate monthly yield | Crypto Metrics",
+  "cc.page.calculateYield.seo.description": "Calculate your cryptocurrency investment returns with ease using our investment calculator. Enter your initial investment date, end date, and current date, as well as your monthly investment amount. Our smart search function allows you to easily add up to 5 coins to your portfolio, with a percentage distribution of your investment amount for each coin (e.g. 10% for BTC, 20% for ETH, etc., up to 100%).",
+
+  "cc.page.investmentCards.seo.title": "Investment cards | Crypto Metrics",
+
+  "cc.page.investmentStatistics.seo.title": "Investment statistics | Crypto Metrics",
+  "cc.page.investmentStatistics.seo.description": "Use our crypto investment calculator to determine your potential earnings based on your initial investment, investment duration, and cryptocurrency allocation. Our smart search feature allows you to easily add up to 5 coins to your portfolio.",
+
+  "cc.page.login.seo.title": "Log in | Crypto Metrics",
+  "cc.page.login.seo.description": "Log in to Crypto Metrics and start calculating your cryptocurrency holdings.",
 
   "cc.entity.header.button.lastCalculation": "Last calculation",
   "cc.entity.header.button.logout": "Logout",
@@ -46,6 +62,8 @@
   "cc.page.code.errorMessage": "Code lifetime expired.",
   "cc.page.code.userText.error": "Login again",
   "cc.page.code.userText.notError": "Please try again later",
+  "cc.page.code.seo.title": "Confirm email | Crypto Metrics",
+  "cc.page.code.seo.description": "Enter the code from the letter to enter Crypto Metrics.",
 
   "cc.widget.footer.subtitle.ideaAndDev": "Idea and development",
   "cc.widget.footer.person.vlad": "Vladyslav Onatskyi",
@@ -108,5 +126,11 @@
   "cc.feature.detailedInvestmentStatictics.headerTitle.AvgPrice": "Avg. price",
   "cc.feature.detailedInvestmentStatictics.headerTitle.lastPrice": "Last price",
   "cc.feature.detailedInvestmentStatictics.headerTitle.holdings": "Holdings",
-  "cc.feature.detailedInvestmentStatictics.headerTitle.profitLoss": "Profit/Loss"
+  "cc.feature.detailedInvestmentStatictics.headerTitle.profitLoss": "Profit/Loss",
+
+  "cc.widget.modalLogin.title": "You have successfully logged in",
+  "cc.widget.modalLogin.description": "Within 3 seconds you will be redirected to the main page.",
+
+  "cc.widget.modalLogout.title": "Authorization timed out",
+  "cc.widget.modalLogout.description": "Within 3 seconds you will be redirected to the main page."
 }

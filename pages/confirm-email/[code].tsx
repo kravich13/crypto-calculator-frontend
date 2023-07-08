@@ -61,11 +61,8 @@ const ConfirmEmail: NextPage<AppProps<ICodeProps>> = ({ pageProps }) => {
     <NotAuthPage>
       <PageLayout centerContent>
         <Head>
-          <title>Confirm email | Crypto Metrics</title>
-          <meta
-            name="description"
-            content="Enter the code from the letter to enter Crypto Metrics."
-          />
+          <title>{t('cc.page.code.seo.title')}</title>
+          <meta name="description" content={t('cc.page.code.seo.description')} />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
 

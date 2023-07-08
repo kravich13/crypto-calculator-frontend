@@ -2,20 +2,20 @@ import { AuthPage, PageLayout } from '@cc/app/components';
 import { KEY_WORDS_SEO } from '@cc/shared/const';
 import { CalculateYieldForm } from '@cc/widgets';
 import type { GetStaticProps } from 'next';
+import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 
 export default function CalculateYield() {
+  const { t } = useTranslation();
+
   return (
     <AuthPage>
       <PageLayout centerContent>
         <Head>
-          <title>Calculate monthly yield | Crypto Metrics</title>
+          <title>{t('cc.page.calculateYield.title')}</title>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <meta
-            name="description"
-            content="Calculate your cryptocurrency investment returns with ease using our investment calculator. Enter your initial investment date, end date, and current date, as well as your monthly investment amount. Our smart search function allows you to easily add up to 5 coins to your portfolio, with a percentage distribution of your investment amount for each coin (e.g. 10% for BTC, 20% for ETH, etc., up to 100%)."
-          />
+          <meta name="description" content={t('cc.page.calculateYield.description')} />
           <meta
             name="keywords"
             content={`${KEY_WORDS_SEO}, potential yield, calculate yield, investment decisions`}
