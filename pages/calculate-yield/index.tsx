@@ -13,9 +13,9 @@ export default function CalculateYield() {
     <AuthPage>
       <PageLayout centerContent>
         <Head>
-          <title>{t('cc.page.calculateYield.title')}</title>
+          <title>{t('cc.page.calculateYield.seo.title')}</title>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <meta name="description" content={t('cc.page.calculateYield.description')} />
+          <meta name="description" content={t('cc.page.calculateYield.seo.description')} />
           <meta
             name="keywords"
             content={`${KEY_WORDS_SEO}, potential yield, calculate yield, investment decisions`}
