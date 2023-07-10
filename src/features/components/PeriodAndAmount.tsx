@@ -75,7 +75,7 @@ export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(
           <Grid item xs={12}>
             <DatePicker
             // value={datePickerValue}
-            // label={t('cc.feature.periodAndAmount.startDateInput.label')}
+            label={t('cc.feature.periodAndAmount.startDateInput.label')}
             // onChange={(newValue) => setDatePickerValue(newValue)}
             // renderInput={(params) => <TextField {...params} />}
             />
