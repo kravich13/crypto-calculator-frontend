@@ -13,6 +13,7 @@ import { DateTime } from 'luxon';
 import { useTranslation } from 'next-i18next';
 import React, { useMemo } from 'react';
 import { Controller, SubmitHandler, UseFormReturn, useFormState } from 'react-hook-form';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 interface IPeriodAndAmountProps {
   isLoading: boolean;
@@ -72,26 +73,35 @@ export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(
           </Grid>
 
           <Grid item xs={12}>
-            <Controller
-              defaultValue=""
-              name="startDate"
-              control={control}
-              rules={startDateValidation(t)}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  required
-                  type="date"
-                  fullWidth
-                  label={t('cc.feature.periodAndAmount.startDateInput.label')}
-                  error={Boolean(errors.startDate)}
-                  helperText={errors?.startDate?.message}
-                  InputLabelProps={{ shrink: true }}
-                  inputProps={{ min: MIN_INVEST_DATE, max: yesterdayString }}
-                  disabled={isLoading}
-                />
-              )}
-            />
+
+              <DatePicker
+                  // value={datePickerValue}
+                  // label={t('cc.feature.periodAndAmount.startDateInput.label')}
+                  // onChange={(newValue) => setDatePickerValue(newValue)}
+                  // renderInput={(params) => <TextField {...params} />}
+              />
+
+            {/*<Controller*/}
+            {/*  defaultValue=""*/}
+            {/*  name="startDate"*/}
+            {/*  control={control}*/}
+            {/*  rules={startDateValidation(t)}*/}
+            {/*  render={({ field }) => (*/}
+
+            {/*      // <TextField*/}
+            {/*      //   {...field}*/}
+            {/*      //   required*/}
+            {/*      //   type="date"*/}
+            {/*      //   fullWidth*/}
+            {/*      //   label={t('cc.feature.periodAndAmount.startDateInput.label')}*/}
+            {/*      //   error={Boolean(errors.startDate)}*/}
+            {/*      //   helperText={errors?.startDate?.message}*/}
+            {/*      //   InputLabelProps={{ shrink: true }}*/}
+            {/*      //   inputProps={{ min: MIN_INVEST_DATE, max: yesterdayString }}*/}
+            {/*      //   disabled={isLoading}*/}
+            {/*      // />*/}
+            {/*  )}*/}
+            {/*/>*/}
           </Grid>
 
           <Grid item xs={12}>
