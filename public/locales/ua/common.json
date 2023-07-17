@@ -81,8 +81,7 @@
   "cc.feature.periodAndAmount.startDateInput.label": "Дата початку (дд.мм.рррр)",
   "cc.feature.periodAndAmount.startDateInput.errorMessage": "Дата повинна бути між 01/01/2013 та вчорашнім днем.",
   "cc.feature.periodAndAmount.endDateInput.label": "Дата закінчення (дд.мм.рррр)",
-  "cc.feature.periodAndAmount.endDateInput.firstErrorMessage": "Дата закінчення повинна бути більшою за дату початку.",
-  "cc.feature.periodAndAmount.endDateInput.secondErrorMessage": "Кінцева дата повинна бути меншою або дорівнювати сьогоднішній даті.",
+  "cc.feature.periodAndAmount.endDateInput.errorMessage": "Кінцева дата повинна бути більшою за дату початку або бути не більше за сьогоднішню дату.",
 
   "cc.feature.selectedInvestCoins.error.firstTitle": "Не обрано монети",
   "cc.feature.selectedInvestCoins.error.secondTitle": "Загальний відсоток повинен бути 100",

@@ -81,8 +81,7 @@
   "cc.feature.periodAndAmount.startDateInput.label": "Start date (mm/dd/yyyy)",
   "cc.feature.periodAndAmount.startDateInput.errorMessage": "Date must be between 01/01/2013 and yesterday.",
   "cc.feature.periodAndAmount.endDateInput.label": "End date (mm/dd/yyyy)",
-  "cc.feature.periodAndAmount.endDateInput.firstErrorMessage": "End date must be greater than start date.",
-  "cc.feature.periodAndAmount.endDateInput.secondErrorMessage": "End date must be less than or equal to today date.",
+  "cc.feature.periodAndAmount.endDateInput.errorMessage": "The end date must be greater than the start date or no greater than today's date.",
 
   "cc.feature.selectedInvestCoins.error.firstTitle": "Coins not selected",
   "cc.feature.selectedInvestCoins.error.secondTitle": "The total percentage must be 100",
