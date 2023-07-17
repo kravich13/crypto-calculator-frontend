@@ -1,5 +1,5 @@
 import { NotAuthPage, PageLayout } from '@cc/app/components';
-import { KEY_WORDS_SEO } from '@cc/shared/const';
+import { KEY_WORDS_SEO } from 'src/shared/consts';
 import { LoginForm } from '@cc/widgets';
 import type { GetStaticProps } from 'next';
 import { useTranslation } from 'next-i18next';

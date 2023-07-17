@@ -1,9 +1,9 @@
-import { ICalculateProfitResponse } from '@cc/shared/types';
+import { ICalculateProfitResponse, IProfitSlice } from '@cc/shared/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import * as process from 'process';
+import { filledProfitState } from '@cc/shared/consts';
 
-type ProfitSlice = ICalculateProfitResponse & { hasData?: boolean };
-
-const initialState: ProfitSlice = {
+const defaultState = {
   hasData: false,
   totalInvested: 0,
   investmentPeriod: 0,
@@ -12,6 +12,8 @@ const initialState: ProfitSlice = {
   coins: [],
   monthlyCapitals: [],
 };
+
+const initialState: IProfitSlice = process.env.FILLED_SLICES ? filledProfitState : defaultState;
 
 export const profitSlice = createSlice({
   name: 'profit',

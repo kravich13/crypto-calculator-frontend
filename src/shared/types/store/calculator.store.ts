@@ -1,5 +1,9 @@
 export interface IPeriodAndAmountForm {
-  startDate: string;
-  endDate: string;
+  startDate: number;
+  endDate: number;
   monthlyInvestment: string;
+}
+
+export interface ICalculatorSlice extends IPeriodAndAmountForm {
+  maxNumberOfCoinsToInvest: number;
 }

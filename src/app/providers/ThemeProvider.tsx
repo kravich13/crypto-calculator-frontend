@@ -1,9 +1,17 @@
 import { ThemeContext } from '@cc/shared/lib';
 import { IChildrenProps, ThemeMode } from '@cc/shared/types';
-import { ThemeProvider as MuiThemeProvider, createTheme, useMediaQuery } from '@mui/material';
-import { ukUA } from '@mui/material/locale';
+import {
+  ThemeProvider as MuiThemeProvider,
+  createTheme,
+  useMediaQuery,
+  SelectChangeEvent,
+} from '@mui/material';
+import { LocalizationProvider, enUS, ukUA } from '@mui/x-date-pickers';
+import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
+import { useTranslation } from 'next-i18next';
 import { useCallback, useEffect, useState } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
+import { useRouter } from 'next/router';
 
 interface IThemeProviderProps extends IChildrenProps {}
 
@@ -11,6 +19,12 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({ children }) => {
   const isDarkOS = useMediaQuery('(prefers-color-scheme: dark)');
   const [isMounted, setIsMounted] = useState(false);
 
+  const {
+    i18n: { language },
+  } = useTranslation();
+
+  const locale = language === 'ua' ? ukUA : enUS;
+  const adapterLocale = language === 'ua' ? 'uk-ua' : 'en-us';
   const [themeModeValue, setThemeMode] = useLocalStorage<{ value: ThemeMode }>('themeMode', {
     value: isDarkOS ? 'light' : 'dark',
   });
@@ -33,8 +47,10 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({ children }) => {
         },
       },
     },
-    ukUA
+    locale
   );
+
+  const { pathname, asPath, push } = useRouter();
 
   const toggleTheme = useCallback(() => {
     switch (themeMode) {
@@ -47,13 +63,26 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({ children }) => {
     }
   }, [setThemeMode, themeMode]);
 
+  const toggleLanguage = useCallback(
+    (event: SelectChangeEvent) => {
+      push(pathname, asPath, { locale: event.target.value });
+    },
+    [asPath, pathname]
+  );
+
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
   return (
-    <ThemeContext.Provider value={{ themeMode, toggleTheme }}>
-      {isMounted && <MuiThemeProvider theme={theme}>{children}</MuiThemeProvider>}
+    <ThemeContext.Provider value={{ themeMode, toggleTheme, toggleLanguage }}>
+      <LocalizationProvider
+        dateAdapter={AdapterLuxon}
+        adapterLocale={adapterLocale}
+        localeText={ukUA.components.MuiLocalizationProvider.defaultProps.localeText}
+      >
+        {isMounted && <MuiThemeProvider theme={theme}>{children}</MuiThemeProvider>}
+      </LocalizationProvider>
     </ThemeContext.Provider>
   );
 };

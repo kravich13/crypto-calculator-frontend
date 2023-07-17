@@ -51,8 +51,8 @@ export const CalculateYieldForm = () => {
   const onConfirmStep0: SubmitHandler<IPeriodAndAmountForm> = useCallback(async (data) => {
     dispatch(calculatorActions.setPeriodAndAmount(data));
 
-    const startDate = DateTime.fromFormat(data.startDate, INPUT_FORMAT_DATE).toUTC().toMillis();
-    const endDate = DateTime.fromFormat(data.endDate, INPUT_FORMAT_DATE).toUTC().toMillis();
+    const startDate = DateTime.fromMillis(data.startDate).toUTC().toMillis();
+    const endDate = DateTime.fromMillis(data.endDate).toUTC().toMillis();
     const monthlyInvestment = Number(data.monthlyInvestment);
 
     await periodAndAmountRequest({ startDate, endDate, monthlyInvestment });

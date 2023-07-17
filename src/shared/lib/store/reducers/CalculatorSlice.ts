@@ -1,16 +1,18 @@
-import { IPeriodAndAmountForm } from '@cc/shared/types';
+import { ICalculatorSlice, IPeriodAndAmountForm } from '@cc/shared/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import * as process from 'process';
+import { filledCalculatorState } from '@cc/shared/consts';
 
-interface ICalculatorSlice extends IPeriodAndAmountForm {
-  maxNumberOfCoinsToInvest: number;
-}
-
-const initialState: ICalculatorSlice = {
+const defaultState: ICalculatorSlice = {
   maxNumberOfCoinsToInvest: 1,
   monthlyInvestment: '',
-  startDate: '',
-  endDate: '',
+  startDate: 0,
+  endDate: 0,
 };
+
+const initialState: ICalculatorSlice = process.env.FILLED_SLICES
+  ? filledCalculatorState
+  : defaultState;
 
 export const calculatorSlice = createSlice({
   name: 'calculator',

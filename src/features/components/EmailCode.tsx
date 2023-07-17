@@ -1,6 +1,6 @@
 import { emailCodeValidation } from '@cc/entities/Authorization';
 import { useSignInMutation } from '@cc/shared/api';
-import { EMAIL_CODE_MAX, EMAIL_CODE_MIN } from '@cc/shared/const';
+import { EMAIL_CODE_MAX, EMAIL_CODE_MIN } from 'src/shared/consts';
 import { authActions, useAppDispatch, useAppSelector, useErrorMessage } from '@cc/shared/lib';
 import { PopupAlert, TextInput, Timer } from '@cc/shared/ui/components';
 import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';

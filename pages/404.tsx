@@ -1,5 +1,5 @@
 import { PageLayout } from '@cc/app/components';
-import { KEY_WORDS_SEO } from '@cc/shared/const';
+import { KEY_WORDS_SEO } from 'src/shared/consts';
 import { LayoutContent } from '@cc/shared/ui';
 import { Typography } from '@mui/material';
 import type { GetStaticProps } from 'next';

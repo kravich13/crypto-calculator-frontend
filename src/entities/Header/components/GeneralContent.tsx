@@ -1,19 +1,14 @@
 import { ThemeButton } from '@cc/shared/ui';
-import { Box, FormControl, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
+import { Box, FormControl, MenuItem, Select, Typography } from '@mui/material';
 import Flags from 'country-flag-icons/react/3x2';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import styles from '../styles/GeneralContent.module.scss';
+import { useThemeContext } from '@cc/shared/lib';
 
 export const GeneralContent = () => {
-  const { locale, pathname, asPath, push, locales } = useRouter();
-
-  const handleChange = useCallback(
-    (event: SelectChangeEvent) => {
-      push(pathname, asPath, { locale: event.target.value });
-    },
-    [asPath, pathname]
-  );
+  const { locale, locales } = useRouter();
+  const { toggleLanguage } = useThemeContext();
 
   const menuItemRender = useCallback((l: string, index: number) => {
     const locale = l.toUpperCase();
@@ -37,7 +32,7 @@ export const GeneralContent = () => {
       <FormControl variant="standard">
         <Select
           value={locale}
-          onChange={handleChange}
+          onChange={toggleLanguage}
           style={{ color: 'whitesmoke' }}
           SelectDisplayProps={{ className: styles.select }}
         >

@@ -38,31 +38,31 @@ export const DetailedInvestmentStatistics = () => {
   const columnTitle = useMemo(
     (): DetailedColumnTitles => ({
       name: {
-        title: t('cc.feature.detailedInvestmentStatictics.headerTitle.name'),
+        title: t('cc.feature.detailedInvestmentStatistics.headerTitle.name'),
         position: 'left',
       },
       share: {
-        title: t('cc.feature.detailedInvestmentStatictics.headerTitle.share'),
+        title: t('cc.feature.detailedInvestmentStatistics.headerTitle.share'),
         position: 'right',
       },
       startingPrice: {
-        title: t('cc.feature.detailedInvestmentStatictics.headerTitle.startPrice'),
+        title: t('cc.feature.detailedInvestmentStatistics.headerTitle.startPrice'),
         position: 'right',
       },
       averagePrice: {
-        title: t('cc.feature.detailedInvestmentStatictics.headerTitle.AvgPrice'),
+        title: t('cc.feature.detailedInvestmentStatistics.headerTitle.AvgPrice'),
         position: 'right',
       },
       lastPrice: {
-        title: t('cc.feature.detailedInvestmentStatictics.headerTitle.lastPrice'),
+        title: t('cc.feature.detailedInvestmentStatistics.headerTitle.lastPrice'),
         position: 'right',
       },
       capital: {
-        title: t('cc.feature.detailedInvestmentStatictics.headerTitle.holdings'),
+        title: t('cc.feature.detailedInvestmentStatistics.headerTitle.holdings'),
         position: 'right',
       },
       growth: {
-        title: t('cc.feature.detailedInvestmentStatictics.headerTitle.profitLoss'),
+        title: t('cc.feature.detailedInvestmentStatistics.headerTitle.profitLoss'),
         position: 'right',
       },
     }),
@@ -199,7 +199,7 @@ export const DetailedInvestmentStatistics = () => {
   return (
     <>
       <Typography component="h1" variant="h5" textAlign="center" mb={3}>
-        {t('cc.feature.detailedInvestmentStatictics.title')}
+        {t('cc.feature.detailedInvestmentStatistics.title')}
       </Typography>
 
       <TableContainer component={Paper}>
