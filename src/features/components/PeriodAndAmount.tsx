@@ -1,4 +1,4 @@
-import { INPUT_FORMAT_DATE, MIN_INVEST_TS, mounthlyValidation } from '@cc/entities/Calculate';
+import { MIN_INVEST_TS, mounthlyValidation } from '@cc/entities/Calculate';
 import { IPeriodAndAmountForm } from '@cc/shared/types';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { LoadingButton } from '@mui/lab';
@@ -7,7 +7,7 @@ import { DateValidationError } from '@mui/x-date-pickers';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DateTime } from 'luxon';
 import { useTranslation } from 'next-i18next';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import {
   Controller,
   ControllerRenderProps,
@@ -73,7 +73,8 @@ export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(
           onChange={(data) => {
             const defaultTS = name === 'startDate' ? MIN_INVEST_TS : DateTime.now().toMillis();
 
-            // onChange(data?.toMillis() || defaultTS);
+            // @ts-ignore
+            onChange(data?.toMillis() || defaultTS);
           }}
           onError={(error) => onDateError(error, name)}
           slotProps={{
