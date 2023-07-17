@@ -1,4 +1,4 @@
-import { EMAIL_CODE_MAX, EMAIL_CODE_MIN } from '@cc/shared/const';
+import { EMAIL_CODE_MAX, EMAIL_CODE_MIN } from 'src/shared/consts';
 import validator from 'validator';
 
 export const emailValidation = {

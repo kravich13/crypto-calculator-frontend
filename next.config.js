@@ -13,6 +13,7 @@ const nextConfig = {
   },
   env: {
     CRYPTO_API_URL: process.env.CRYPTO_API_URL,
+    FILLED_SLICES: process.env.FILLED_SLICES,
   },
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],

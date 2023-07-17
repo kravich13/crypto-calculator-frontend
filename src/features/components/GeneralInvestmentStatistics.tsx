@@ -4,6 +4,8 @@ import variables from '@cc/shared/styles/Variables.module.scss';
 import { Box, Typography, useTheme } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import { useMemo } from 'react';
+
+const { DateTime } = require('luxon');
 import styles from '../styles/GeneralInvestmentStatistics.module.scss';
 
 export const GeneralInvestmentStatistics = () => {
@@ -20,12 +22,16 @@ export const GeneralInvestmentStatistics = () => {
     ({ baseCalculatorReducer: { maxNumberOfCoinsToInvest, ...rest } }) => rest
   );
 
+  const locale = language === 'en' ? 'en-US' : 'uk-UA';
+  const formattedStartDate = DateTime.fromMillis(startDate).setLocale(locale).toLocaleString();
+  const formattedEndDate = DateTime.fromMillis(endDate).setLocale(locale).toLocaleString();
+
   const profit = Number((totalCapital - totalInvested).toFixed(2));
   const profitNumber = profit >= 0 ? profit : Math.abs(profit);
   const profitTitle = `${profit >= 0 ? '+' : '-'} $${profitNumber}`;
 
   const investmentPeriodTitle = useMemo(() => {
-    let key = 'сс.feature.generalInvestmentStatictics.month';
+    let key = 'сс.feature.generalInvestmentStatistics.month';
 
     if (language === 'ua') {
       if (investmentPeriod >= 2 && investmentPeriod <= 4) {
@@ -63,20 +69,20 @@ export const GeneralInvestmentStatistics = () => {
   return (
     <Box>
       <Typography component="h1" variant="h5" textAlign="center" mb={3}>
-        {t('сс.feature.generalInvestmentStatictics.title')}
+        {t('сс.feature.generalInvestmentStatistics.title')}
       </Typography>
 
       <Box mb={2}>
         <Typography>
-          {t('сс.feature.generalInvestmentStatictics.description.investmentPeriod')}
+          {t('сс.feature.generalInvestmentStatistics.description.investmentPeriod')}
           <Typography component="span" fontWeight="600" fontStyle="italic">
-            {` ${startDate} - ${endDate} `}
+            {` ${formattedStartDate} - ${formattedEndDate} `}
           </Typography>
           ({investmentPeriodTitle})
         </Typography>
 
         <Typography>
-          {t('сс.feature.generalInvestmentStatictics.description.monthlyInvestment')}
+          {t('сс.feature.generalInvestmentStatistics.description.monthlyInvestment')}
           <Typography component="span" fontWeight="600" fontStyle="italic">
             {` $${monthlyInvestment}`}
           </Typography>
@@ -92,7 +98,7 @@ export const GeneralInvestmentStatistics = () => {
                 mr={1}
                 style={{ width: 100, color: palette.text.secondary }}
               >
-                {t('сс.feature.generalInvestmentStatictics.description.invested')}
+                {t('сс.feature.generalInvestmentStatistics.description.invested')}
               </Typography>
             </Box>
 
@@ -109,7 +115,7 @@ export const GeneralInvestmentStatistics = () => {
               mr={1}
               style={{ width: 100, color: palette.text.secondary }}
             >
-              {t('сс.feature.generalInvestmentStatictics.description.balance')}
+              {t('сс.feature.generalInvestmentStatistics.description.balance')}
             </Typography>
 
             <Box className={styles.finalDataBox}>

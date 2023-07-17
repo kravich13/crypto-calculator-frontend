@@ -73,7 +73,7 @@ export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(
           onChange={(data) => {
             const defaultTS = name === 'startDate' ? MIN_INVEST_TS : DateTime.now().toMillis();
 
-            onChange(data?.toMillis() || defaultTS);
+            // onChange(data?.toMillis() || defaultTS);
           }}
           onError={(error) => onDateError(error, name)}
           slotProps={{

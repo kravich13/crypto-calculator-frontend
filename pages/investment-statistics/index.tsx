@@ -1,6 +1,6 @@
 import { AuthPage, PageLayout, ProtectedPage } from '@cc/app/components';
 import { Chart, DetailedInvestmentStatistics, GeneralInvestmentStatistics } from '@cc/features';
-import { KEY_WORDS_SEO } from '@cc/shared/const';
+import { KEY_WORDS_SEO } from 'src/shared/consts';
 import { RoutesTypes } from '@cc/shared/enums';
 import { useAppSelector } from '@cc/shared/lib';
 import { LayoutContent, ScrollTopButton } from '@cc/shared/ui';
