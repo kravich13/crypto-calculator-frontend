@@ -4,8 +4,8 @@ describe('calculatorSlice', () => {
   const initialState = {
     maxNumberOfCoinsToInvest: 1,
     monthlyInvestment: '',
-    startDate: '',
-    endDate: '',
+    startDate: 0,
+    endDate: 0,
   };
 
   it('should return the initial state on first run', () => {
@@ -22,7 +22,7 @@ describe('calculatorSlice', () => {
   });
 
   it('should set period and amount correctly', () => {
-    const payload = { startDate: '2022-04-01', endDate: '2022-06-30', monthlyInvestment: '500' };
+    const payload = { startDate: 56565656, endDate: 56565656, monthlyInvestment: '500' };
     const action = calculatorActions.setPeriodAndAmount(payload);
     const nextState = calculatorReducer(initialState, action);
 

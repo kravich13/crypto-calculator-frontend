@@ -8,8 +8,8 @@ interface ICalculatorSlice extends IPeriodAndAmountForm {
 const initialState: ICalculatorSlice = {
   maxNumberOfCoinsToInvest: 1,
   monthlyInvestment: '',
-  startDate: '',
-  endDate: '',
+  startDate: 0,
+  endDate: 0,
 };
 
 export const calculatorSlice = createSlice({

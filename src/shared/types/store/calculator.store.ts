@@ -1,5 +1,7 @@
+import { DateTime } from 'luxon';
+
 export interface IPeriodAndAmountForm {
-  startDate: string;
-  endDate: string;
+  startDate: number;
+  endDate: number;
   monthlyInvestment: string;
 }

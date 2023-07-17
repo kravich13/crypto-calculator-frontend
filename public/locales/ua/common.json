@@ -78,9 +78,9 @@
   "cc.feature.periodAndAmount.nextButton": "Далі",
   "cc.feature.periodAndAmount.monthlyInput.label": "Щомісячні інвестиції",
   "cc.feature.periodAndAmount.monthlyInput.errorMessage": "Значення має бути цілим числом і знаходитись в діапазоні від 20 до 1000000.",
-  "cc.feature.periodAndAmount.startDateInput.label": "Дата початку (мм/дд/рррр)",
+  "cc.feature.periodAndAmount.startDateInput.label": "Дата початку (дд.мм.рррр)",
   "cc.feature.periodAndAmount.startDateInput.errorMessage": "Дата повинна бути між 01/01/2013 та вчорашнім днем.",
-  "cc.feature.periodAndAmount.endDateInput.label": "Дата закінчення (мм/дд/рррр)",
+  "cc.feature.periodAndAmount.endDateInput.label": "Дата закінчення (дд.мм.рррр)",
   "cc.feature.periodAndAmount.endDateInput.firstErrorMessage": "Дата закінчення повинна бути більшою за дату початку.",
   "cc.feature.periodAndAmount.endDateInput.secondErrorMessage": "Кінцева дата повинна бути меншою або дорівнювати сьогоднішній даті.",
 
