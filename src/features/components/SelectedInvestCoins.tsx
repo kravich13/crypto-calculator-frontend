@@ -6,14 +6,15 @@ import {
 } from '@cc/entities/Calculate';
 import { useLazyCoinSearchQuery } from '@cc/shared/api';
 import { useAppSelector, useRefreshRequest } from '@cc/shared/lib';
+import { getLocaleDate } from '@cc/shared/utils';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import WestIcon from '@mui/icons-material/West';
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, Typography, useTheme } from '@mui/material';
+import { useTranslation } from 'next-i18next';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { SubmitHandler, useFieldArray, useForm, useFormState } from 'react-hook-form';
 import styles from '../styles/SelectedInvestCoins.module.scss';
-import { useTranslation } from 'next-i18next';
 
 interface ISelectedInvestCoinsProps {
   isLoading: boolean;
@@ -25,9 +26,16 @@ const LIMIT_FOR_SEARCH_REQUEST = 6;
 
 export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.memo(
   ({ isLoading, onBack, onConfirm }) => {
-    const startDate = useAppSelector((state) => state.baseCalculatorReducer.startDate);
+    const startTS = useAppSelector((state) => state.baseCalculatorReducer.startDate);
+    const maxNumberOfCoinsToInvest = useAppSelector(
+      (state) => state.baseCalculatorReducer.maxNumberOfCoinsToInvest
+    );
+
     const { palette } = useTheme();
-    const { t } = useTranslation();
+    const {
+      t,
+      i18n: { language },
+    } = useTranslation();
 
     const [coinSearchRequest, { data: searchCoins, error, originalArgs }] =
       useLazyCoinSearchQuery();
@@ -36,11 +44,7 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
       coinSearchRequest(originalArgs!);
     });
 
-    const maxNumberOfCoinsToInvest = useAppSelector(
-      (state) => state.baseCalculatorReducer.maxNumberOfCoinsToInvest
-    );
-
-    const { control, handleSubmit, setValue, watch } = useForm<ISelectedInvestCoinsForm>({
+    const { control, handleSubmit, setValue } = useForm<ISelectedInvestCoinsForm>({
       mode: 'onBlur',
     });
 
@@ -51,6 +55,7 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
     } = useFieldArray({ control, name: 'addedCoins', rules: addedCoinsValidation });
 
     const { errors, isValid } = useFormState({ control, name: 'addedCoins' });
+    const startDate = getLocaleDate(startTS, language);
 
     const canAddCoin = addedCoins.length < maxNumberOfCoinsToInvest;
     const canCalculate = isValid && addedCoins.length <= maxNumberOfCoinsToInvest;
@@ -109,7 +114,7 @@ export const SelectedInvestCoins: React.FC<ISelectedInvestCoinsProps> = React.me
     return (
       <Box>
         <Typography className={styles.coinsUntilDate}>
-          {t('cc.feature.selectedInvestCoins.title', { startDate: 'dasda' })}
+          {t('cc.feature.selectedInvestCoins.title', { startDate })}
         </Typography>
 
         <SearchInput
