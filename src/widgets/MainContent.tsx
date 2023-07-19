@@ -6,13 +6,10 @@ import {
 } from '@cc/entities/MainPage';
 import { RoutesTypes } from '@cc/shared/enums';
 import { useAppSelector, useThemeContext } from '@cc/shared/lib';
-import { LayoutContent } from '@cc/shared/ui';
-import { Button, Typography } from '@mui/material';
+import {LayoutContent, Typography} from '@cc/shared/ui';
+import { Button } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
-import step1Image from '@public/main-page-images/step-1.jpg';
-import step2Image from '@public/main-page-images/step-2.jpg';
-import step3Image from '@public/main-page-images/step-3.jpg';
 import { useTranslation } from 'next-i18next';
 import { mainStepsImages } from '@cc/shared/consts';
 
@@ -34,17 +31,17 @@ export const MainContent = () => {
       {
         step: 1,
         description: t('cc.widget.mainContent.step1Description'),
-        src: mainStepsImages.step1[language][themeMode] || step1Image,
+        src: mainStepsImages.step1[language][themeMode],
       },
       {
         step: 2,
         description: t('cc.widget.mainContent.step2Description'),
-        src: mainStepsImages.step2[language][themeMode] || step2Image,
+        src: mainStepsImages.step2[language][themeMode],
       },
       {
         step: 3,
         description: t('cc.widget.mainContent.step3Description'),
-        src: mainStepsImages.step3[language][themeMode] || step3Image,
+        src: mainStepsImages.step3[language][themeMode],
       },
     ],
     [t, themeMode, language]
