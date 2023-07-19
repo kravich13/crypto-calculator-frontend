@@ -1,8 +1,9 @@
-import { Box, Chip, Divider, Typography } from '@mui/material';
+import { Box, Chip, Divider } from '@mui/material';
 import LegacyImage from 'next/legacy/image';
 import styles from '../styles/CalculateDescription.module.scss';
 import { ICalculateData } from '../types';
 import { useTranslation } from 'next-i18next';
+import { Typography } from '@cc/shared/ui';
 
 interface ICalculateDescriptionProps extends ICalculateData {}
 
@@ -27,7 +28,7 @@ export const CalculateDescription: React.FC<ICalculateDescriptionProps> = ({
 
       <Box className={styles.contentContainer}>
         <Box className={styles.boxContent}>
-          <Typography component="h2" variant="h6">
+          <Typography tint component="h2" variant="h6">
             {description}
           </Typography>
         </Box>

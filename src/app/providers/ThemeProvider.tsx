@@ -2,16 +2,16 @@ import { ThemeContext } from '@cc/shared/lib';
 import { IChildrenProps, ThemeMode } from '@cc/shared/types';
 import {
   ThemeProvider as MuiThemeProvider,
+  SelectChangeEvent,
   createTheme,
   useMediaQuery,
-  SelectChangeEvent,
 } from '@mui/material';
 import { LocalizationProvider, enUS, ukUA } from '@mui/x-date-pickers';
 import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
 import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
-import { useRouter } from 'next/router';
 
 interface IThemeProviderProps extends IChildrenProps {}
 

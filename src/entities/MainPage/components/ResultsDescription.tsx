@@ -1,8 +1,9 @@
-import { Box, Chip, Divider, Typography } from '@mui/material';
+import { Typography } from '@cc/shared/ui';
+import { Box, Chip, Divider } from '@mui/material';
+import { useTranslation } from 'next-i18next';
 import LegacyImage from 'next/legacy/image';
 import step4Image from '../../../../public/main-page-images/step-4.jpg';
 import step5Image from '../../../../public/main-page-images/step-5.jpg';
-import { useTranslation } from 'next-i18next';
 
 export const ResultsDescription = () => {
   const { t } = useTranslation();
@@ -19,7 +20,7 @@ export const ResultsDescription = () => {
         />
       </Divider>
 
-      <Typography component="h2" variant="h6" textAlign="center" sx={{ mb: 2 }}>
+      <Typography tint component="h2" variant="h6" textAlign="center" sx={{ mb: 2 }}>
         {t('cc.entity.resultsDescription.generalTitle')}
       </Typography>
 
@@ -42,7 +43,7 @@ export const ResultsDescription = () => {
         />
       </Divider>
 
-      <Typography component="h2" variant="h6" textAlign="center" sx={{ mb: 2 }}>
+      <Typography tint component="h2" variant="h6" textAlign="center" sx={{ mb: 2 }}>
         {t('cc.entity.resultsDescription.detailedTitle')}
       </Typography>
 

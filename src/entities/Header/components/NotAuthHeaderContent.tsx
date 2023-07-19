@@ -1,10 +1,11 @@
 import { RoutesTypes } from '@cc/shared/enums';
-import { Box, Button, Skeleton, Typography } from '@mui/material';
+import { Typography } from '@cc/shared/ui';
+import { Box, Button, Skeleton } from '@mui/material';
+import { useTranslation } from 'next-i18next';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useCallback, useMemo } from 'react';
 import styles from '../styles/NoAuthHeaderContent.module.scss';
 import { GeneralContent } from './GeneralContent';
-import { useTranslation } from 'next-i18next';
 
 interface INotAuthHeaderContentProps {
   isLoadingContent: boolean;

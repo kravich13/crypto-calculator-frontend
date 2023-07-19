@@ -9,6 +9,7 @@ import {
 import { useAppSelector } from '@cc/shared/lib';
 import variables from '@cc/shared/styles/Variables.module.scss';
 import { CalculateCoinProfitData } from '@cc/shared/types';
+import { Typography } from '@cc/shared/ui';
 import { SortByNumbers, SortByString } from '@cc/shared/utils';
 import {
   Box,
@@ -19,7 +20,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
   useTheme,
 } from '@mui/material';
 import { useTranslation } from 'next-i18next';
@@ -198,7 +198,7 @@ export const DetailedInvestmentStatistics = () => {
 
   return (
     <>
-      <Typography component="h1" variant="h5" textAlign="center" mb={3}>
+      <Typography tint component="h1" variant="h5" textAlign="center" mb={3}>
         {t('cc.feature.detailedInvestmentStatistics.title')}
       </Typography>
 

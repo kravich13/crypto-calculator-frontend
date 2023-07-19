@@ -1,12 +1,13 @@
 import { BestWorstInvestment, InvestmentPercent } from '@cc/entities/Calculate';
 import { useAppSelector } from '@cc/shared/lib';
 import variables from '@cc/shared/styles/Variables.module.scss';
-import { Box, Typography, useTheme } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import { useMemo } from 'react';
 
 const { DateTime } = require('luxon');
 import styles from '../styles/GeneralInvestmentStatistics.module.scss';
+import { Typography } from '@cc/shared/ui';
 
 export const GeneralInvestmentStatistics = () => {
   const { palette } = useTheme();
@@ -68,7 +69,7 @@ export const GeneralInvestmentStatistics = () => {
 
   return (
     <Box>
-      <Typography component="h1" variant="h5" textAlign="center" mb={3}>
+      <Typography tint component="h1" variant="h5" textAlign="center" mb={3}>
         {t('сс.feature.generalInvestmentStatistics.title')}
       </Typography>
 

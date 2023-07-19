@@ -1,11 +1,10 @@
 import { PageLayout } from '@cc/app/components';
-import { KEY_WORDS_SEO } from 'src/shared/consts';
-import { LayoutContent } from '@cc/shared/ui';
-import { Typography } from '@mui/material';
+import { LayoutContent, Typography } from '@cc/shared/ui';
 import type { GetStaticProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
+import { KEY_WORDS_SEO } from 'src/shared/consts';
 
 export default function Custom404() {
   const { t } = useTranslation();
@@ -20,7 +19,7 @@ export default function Custom404() {
       </Head>
 
       <LayoutContent isCenterPosition containerStyles={{ maxWidth: 'xs' }}>
-        <Typography variant="h5" component="h1" fontWeight="600" textAlign="center">
+        <Typography tint variant="h5" component="h1" fontWeight="600" textAlign="center">
           404 - {t('cc.page.404.title')}
         </Typography>
       </LayoutContent>

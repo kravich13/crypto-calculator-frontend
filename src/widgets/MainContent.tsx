@@ -6,14 +6,14 @@ import {
 } from '@cc/entities/MainPage';
 import { RoutesTypes } from '@cc/shared/enums';
 import { useAppSelector } from '@cc/shared/lib';
-import { LayoutContent } from '@cc/shared/ui';
-import { Button, Typography } from '@mui/material';
+import { LayoutContent, Typography } from '@cc/shared/ui';
+import { Button } from '@mui/material';
+import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
 import step1Image from '../../public/main-page-images/step-1.jpg';
 import step2Image from '../../public/main-page-images/step-2.jpg';
 import step3Image from '../../public/main-page-images/step-3.jpg';
-import { useTranslation } from 'next-i18next';
 
 export const MainContent = () => {
   const isAuth = useAppSelector(({ authReducer }) => authReducer.isAuth);
@@ -57,7 +57,7 @@ export const MainContent = () => {
         style: { display: 'flex', flexDirection: 'column', alignItems: 'center' },
       }}
     >
-      <Typography component="h1" variant="h5" textAlign="center" sx={{ mb: 4 }}>
+      <Typography tint component="h1" variant="h5" textAlign="center" sx={{ mb: 4 }}>
         {t('cc.widget.mainContent.title')}
       </Typography>
 

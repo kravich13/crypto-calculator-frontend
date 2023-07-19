@@ -1,19 +1,12 @@
 import { Delete } from '@mui/icons-material';
-import {
-  Box,
-  Button,
-  Divider,
-  IconButton,
-  InputAdornment,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Divider, IconButton, InputAdornment, TextField } from '@mui/material';
 import React, { useCallback } from 'react';
 import { Control, Controller } from 'react-hook-form';
 import styles from '../styles/SelectedCoins.module.scss';
 import { ISelectedInvestCoin, ISelectedInvestCoinsForm } from '../types';
 import { MainCoinInfoContainer } from './MainCoinInfoContainer';
 import { useTranslation } from 'next-i18next';
+import { Typography } from '@cc/shared/ui';
 
 interface ISelectedCoinsProps {
   isLoading: boolean;
@@ -99,7 +92,7 @@ export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
 
   return (
     <>
-      <Typography variant="h6" className={styles.title} style={{ marginBottom: 10 }}>
+      <Typography tint variant="h6" className={styles.title} style={{ marginBottom: 10 }}>
         {t('cc.entity.selectedCoins.title')}
       </Typography>
 

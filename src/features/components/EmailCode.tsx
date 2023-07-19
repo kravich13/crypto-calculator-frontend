@@ -1,12 +1,12 @@
 import { emailCodeValidation } from '@cc/entities/Authorization';
 import { useSignInMutation } from '@cc/shared/api';
-import { EMAIL_CODE_MAX, EMAIL_CODE_MIN } from 'src/shared/consts';
+import { EMAIL_CODE_MAX, EMAIL_CODE_MIN } from '@cc/shared/consts';
 import { authActions, useAppDispatch, useAppSelector, useErrorMessage } from '@cc/shared/lib';
-import { PopupAlert, TextInput, Timer } from '@cc/shared/ui/components';
+import { PopupAlert, TextInput, Timer, Typography } from '@cc/shared/ui';
 import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
 import LoginIcon from '@mui/icons-material/Login';
 import { LoadingButton } from '@mui/lab';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form';
