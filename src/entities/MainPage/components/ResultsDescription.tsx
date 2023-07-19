@@ -1,8 +1,8 @@
 import { Typography } from '@cc/shared/ui';
 import { Box, Chip, Divider } from '@mui/material';
 import LegacyImage from 'next/legacy/image';
-import step4Image from '../../../../public/main-page-images/step-4.jpg';
-import step5Image from '../../../../public/main-page-images/step-5.jpg';
+import step4Image from '@public/main-page-images/step-4.jpg';
+import step5Image from '@public/main-page-images/step-5.jpg';
 import { useTranslation } from 'next-i18next';
 import { useThemeContext } from '@cc/shared/lib';
 import { mainStepsImages } from '@cc/shared/consts';

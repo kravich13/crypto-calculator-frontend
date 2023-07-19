@@ -10,9 +10,9 @@ import { LayoutContent } from '@cc/shared/ui';
 import { Button, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
-import step1Image from '../../public/main-page-images/step-1.jpg';
-import step2Image from '../../public/main-page-images/step-2.jpg';
-import step3Image from '../../public/main-page-images/step-3.jpg';
+import step1Image from '@public/main-page-images/step-1.jpg';
+import step2Image from '@public/main-page-images/step-2.jpg';
+import step3Image from '@public/main-page-images/step-3.jpg';
 import { useTranslation } from 'next-i18next';
 import { mainStepsImages } from '@cc/shared/consts';
 
