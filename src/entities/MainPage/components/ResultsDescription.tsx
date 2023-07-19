@@ -1,12 +1,18 @@
 import { Typography } from '@cc/shared/ui';
 import { Box, Chip, Divider } from '@mui/material';
-import { useTranslation } from 'next-i18next';
 import LegacyImage from 'next/legacy/image';
 import step4Image from '../../../../public/main-page-images/step-4.jpg';
 import step5Image from '../../../../public/main-page-images/step-5.jpg';
+import { useTranslation } from 'next-i18next';
+import { useThemeContext } from '@cc/shared/lib';
+import { mainStepsImages } from '@cc/shared/consts';
 
 export const ResultsDescription = () => {
-  const { t } = useTranslation();
+  const {
+    t,
+    i18n: { language },
+  } = useTranslation();
+  const { themeMode } = useThemeContext();
 
   return (
     <Box>
@@ -25,7 +31,7 @@ export const ResultsDescription = () => {
       </Typography>
 
       <LegacyImage
-        src={step4Image}
+        src={mainStepsImages.step4[language][themeMode] || step4Image}
         alt="Step-4"
         objectFit="contain"
         placeholder="blur"
@@ -48,7 +54,7 @@ export const ResultsDescription = () => {
       </Typography>
 
       <LegacyImage
-        src={step5Image}
+        src={mainStepsImages.step5[language][themeMode] || step5Image}
         alt="Step-5"
         objectFit="contain"
         placeholder="blur"

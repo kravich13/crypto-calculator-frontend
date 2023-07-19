@@ -1,4 +1,14 @@
-export const mainStepsImages = {
+import { StaticImageData } from 'next/image';
+
+type mainStepsData = {
+  [key: string]: {
+    [key: string]: {
+      [key: string]: StaticImageData;
+    };
+  };
+};
+
+export const mainStepsImages: mainStepsData = {
   step1: {
     en: {
       dark: require('../../../public/main-page-images/step1/step1-dark-en.png'),
@@ -33,6 +43,10 @@ export const mainStepsImages = {
     en: {
       dark: require('../../../public/main-page-images/step4/step4-dark-en.png'),
       light: require('../../../public/main-page-images/step4/step4-light-en.png'),
+    },
+    ua: {
+      dark: require('../../../public/main-page-images/step4/step4-dark-ua.png'),
+      light: require('../../../public/main-page-images/step4/step4-light-ua.png'),
     },
   },
   step5: {

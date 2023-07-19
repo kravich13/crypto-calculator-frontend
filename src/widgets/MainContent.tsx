@@ -5,20 +5,25 @@ import {
   ResultsDescription,
 } from '@cc/entities/MainPage';
 import { RoutesTypes } from '@cc/shared/enums';
-import { useAppSelector } from '@cc/shared/lib';
-import { LayoutContent, Typography } from '@cc/shared/ui';
-import { Button } from '@mui/material';
-import { useTranslation } from 'next-i18next';
+import { useAppSelector, useThemeContext } from '@cc/shared/lib';
+import { LayoutContent } from '@cc/shared/ui';
+import { Button, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
 import step1Image from '../../public/main-page-images/step-1.jpg';
 import step2Image from '../../public/main-page-images/step-2.jpg';
 import step3Image from '../../public/main-page-images/step-3.jpg';
+import { useTranslation } from 'next-i18next';
+import { mainStepsImages } from '@cc/shared/consts';
 
 export const MainContent = () => {
   const isAuth = useAppSelector(({ authReducer }) => authReducer.isAuth);
   const router = useRouter();
-  const { t } = useTranslation();
+  const {
+    t,
+    i18n: { language },
+  } = useTranslation();
+  const { themeMode } = useThemeContext();
 
   const onRedirect = useCallback(() => {
     router.push(Boolean(isAuth) ? RoutesTypes.CALCULATE_YIELD : RoutesTypes.LOGIN);
@@ -29,20 +34,20 @@ export const MainContent = () => {
       {
         step: 1,
         description: t('cc.widget.mainContent.step1Description'),
-        src: step1Image,
+        src: mainStepsImages.step1[language][themeMode] || step1Image,
       },
       {
         step: 2,
         description: t('cc.widget.mainContent.step2Description'),
-        src: step2Image,
+        src: mainStepsImages.step2[language][themeMode] || step2Image,
       },
       {
         step: 3,
         description: t('cc.widget.mainContent.step3Description'),
-        src: step3Image,
+        src: mainStepsImages.step3[language][themeMode] || step3Image,
       },
     ],
-    [t]
+    [t, themeMode, language]
   );
 
   const renderStepData = useCallback(
