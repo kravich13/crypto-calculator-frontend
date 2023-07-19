@@ -11,7 +11,7 @@ type mainStepsData = {
 export const mainStepsImages: mainStepsData = {
   step1: {
     en: {
-      dark: require('../../../public/main-page-images/step1/step1-dark-en.png'),
+      dark: require('@public/main-page-images/step1/step1-dark-en.png'),
       light: require('../../../public/main-page-images/step1/step1-light-en.png'),
     },
     ua: {
