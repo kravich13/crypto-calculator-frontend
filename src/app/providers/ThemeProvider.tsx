@@ -19,15 +19,16 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({ children }) => {
   const isDarkOS = useMediaQuery('(prefers-color-scheme: dark)');
   const [isMounted, setIsMounted] = useState(false);
 
+  const [themeModeValue, setThemeMode] = useLocalStorage<{ value: ThemeMode }>('themeMode', {
+    value: isDarkOS ? 'light' : 'dark',
+  });
+
   const {
     i18n: { language },
   } = useTranslation();
 
   const locale = language === 'ua' ? ukUA : enUS;
   const adapterLocale = language === 'ua' ? 'uk-ua' : 'en-us';
-  const [themeModeValue, setThemeMode] = useLocalStorage<{ value: ThemeMode }>('themeMode', {
-    value: isDarkOS ? 'light' : 'dark',
-  });
 
   const themeMode = themeModeValue.value;
 

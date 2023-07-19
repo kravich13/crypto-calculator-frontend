@@ -1,13 +1,12 @@
 import { BestWorstInvestment, InvestmentPercent } from '@cc/entities/Calculate';
 import { useAppSelector } from '@cc/shared/lib';
 import variables from '@cc/shared/styles/Variables.module.scss';
+import { Typography } from '@cc/shared/ui';
+import { getLocaleDate } from '@cc/shared/utils';
 import { Box, useTheme } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import { useMemo } from 'react';
-
-const { DateTime } = require('luxon');
 import styles from '../styles/GeneralInvestmentStatistics.module.scss';
-import { Typography } from '@cc/shared/ui';
 
 export const GeneralInvestmentStatistics = () => {
   const { palette } = useTheme();
@@ -23,9 +22,8 @@ export const GeneralInvestmentStatistics = () => {
     ({ baseCalculatorReducer: { maxNumberOfCoinsToInvest, ...rest } }) => rest
   );
 
-  const locale = language === 'en' ? 'en-US' : 'uk-UA';
-  const formattedStartDate = DateTime.fromMillis(startDate).setLocale(locale).toLocaleString();
-  const formattedEndDate = DateTime.fromMillis(endDate).setLocale(locale).toLocaleString();
+  const formattedStartDate = getLocaleDate(startDate, language);
+  const formattedEndDate = getLocaleDate(endDate, language);
 
   const profit = Number((totalCapital - totalInvested).toFixed(2));
   const profitNumber = profit >= 0 ? profit : Math.abs(profit);

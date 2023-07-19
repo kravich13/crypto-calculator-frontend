@@ -1,12 +1,13 @@
+import { Typography } from '@cc/shared/ui';
 import { Delete } from '@mui/icons-material';
 import { Box, Button, Divider, IconButton, InputAdornment, TextField } from '@mui/material';
-import React, { useCallback } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useTranslation } from 'next-i18next';
+import React, { useCallback, useLayoutEffect, useState } from 'react';
 import { Control, Controller } from 'react-hook-form';
 import styles from '../styles/SelectedCoins.module.scss';
 import { ISelectedInvestCoin, ISelectedInvestCoinsForm } from '../types';
 import { MainCoinInfoContainer } from './MainCoinInfoContainer';
-import { useTranslation } from 'next-i18next';
-import { Typography } from '@cc/shared/ui';
 
 interface ISelectedCoinsProps {
   isLoading: boolean;
@@ -30,7 +31,32 @@ export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
   onEnterSelectedCoins,
 }) => {
   const { t } = useTranslation();
-  const minPercentTitle = 100 / maxNumberOfCoinsToInvest;
+  const minPercentTitle = Number((100 / maxNumberOfCoinsToInvest).toFixed(2));
+
+  const [activeAddedIndex, setActiveAddedIndex] = useState<number | undefined>(0);
+  const [activeDeletedIndex, setActiveDeletedIndex] = useState<number>();
+
+  const initialMotion = useCallback(
+    (index: number) => {
+      if (activeAddedIndex !== undefined) {
+        return { y: -20, opacity: index === activeAddedIndex ? 0 : 1 };
+      } else if (activeDeletedIndex !== undefined) {
+        return { y: 20, opacity: index === activeDeletedIndex ? 0 : 1 };
+      }
+
+      return {};
+    },
+    [activeAddedIndex, activeDeletedIndex]
+  );
+
+  useLayoutEffect(() => {
+    if (!addedCoins.length) {
+      return;
+    }
+
+    setActiveAddedIndex(0);
+    setActiveDeletedIndex(undefined);
+  }, [addedCoins.length]);
 
   const onKeyPress = useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -42,52 +68,70 @@ export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
   );
 
   const renderItem = useCallback(
-    ({ coinId, name, symbol, image, percent }: ISelectedInvestCoin, index: number) => (
-      <Box key={`${coinId}-${index}`}>
-        <Box className={styles.formContainer}>
-          <MainCoinInfoContainer image={image} name={name} symbol={symbol} />
+    (
+      { coinId, name, symbol, image, percent }: ISelectedInvestCoin,
+      index: number,
+      arr: ISelectedInvestCoin[]
+    ) => {
+      return (
+        <motion.div
+          key={`${coinId}-${index}`}
+          initial={initialMotion(index)}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.45 }}
+        >
+          <Box className={styles.formContainer}>
+            <MainCoinInfoContainer image={image} name={name} symbol={symbol} />
 
-          <Box className={styles.flexContainer}>
-            <Controller
-              name={`addedCoins.${index}.percent`}
-              defaultValue={percent}
-              rules={{ required: true, min: 10, max: 100 }}
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  autoComplete="off"
-                  type="number"
-                  error={getIndexError(index)}
-                  variant="standard"
-                  size="small"
-                  InputProps={{
-                    startAdornment: <InputAdornment position="start">%</InputAdornment>,
-                  }}
-                  inputProps={{ min: 10, max: 100 }}
-                  className={styles.input}
-                  sx={{ mr: 2 }}
-                  disabled={isLoading}
-                  onKeyDown={onKeyPress}
-                />
-              )}
-            />
+            <Box className={styles.flexContainer}>
+              <Controller
+                name={`addedCoins.${index}.percent`}
+                defaultValue={percent}
+                rules={{ required: true, min: 10, max: 100 }}
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    autoComplete="off"
+                    type="number"
+                    error={getIndexError(index)}
+                    variant="standard"
+                    size="small"
+                    InputProps={{
+                      startAdornment: <InputAdornment position="start">%</InputAdornment>,
+                    }}
+                    inputProps={{ min: 10, max: 100 }}
+                    className={styles.input}
+                    sx={{ mr: 2 }}
+                    disabled={isLoading}
+                    onKeyDown={onKeyPress}
+                  />
+                )}
+              />
 
-            <IconButton
-              disabled={isLoading}
-              onClick={() => removeAddedCoin(index)}
-              className={['delete-added-coin', styles.deleteButton].join(' ')}
-              title={t('cc.entity.selectedCoins.iconButtonTitle')}
-            >
-              <Delete fontSize="inherit" />
-            </IconButton>
+              <IconButton
+                disabled={isLoading}
+                onClick={() => {
+                  removeAddedCoin(index);
+
+                  if (arr.length > 1) {
+                    setActiveDeletedIndex(index);
+                    setActiveAddedIndex(undefined);
+                  }
+                }}
+                className={['delete-added-coin', styles.deleteButton].join(' ')}
+                title={t('cc.entity.selectedCoins.iconButtonTitle')}
+              >
+                <Delete fontSize="inherit" />
+              </IconButton>
+            </Box>
           </Box>
-        </Box>
 
-        <Divider />
-      </Box>
-    ),
-    [control, isLoading, t, getIndexError, onKeyPress, removeAddedCoin]
+          <Divider />
+        </motion.div>
+      );
+    },
+    [initialMotion, control, isLoading, t, getIndexError, onKeyPress]
   );
 
   return (
@@ -117,7 +161,7 @@ export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
         </Button>
       </Box>
 
-      {addedCoins.map(renderItem)}
+      <AnimatePresence initial={false}>{addedCoins.map(renderItem)}</AnimatePresence>
     </>
   );
 };
