@@ -5,3 +5,4 @@ export * from './ScrollTopButton';
 export * from './TextInput';
 export * from './ThemeButton';
 export * from './Timer';
+export * from './Typography';

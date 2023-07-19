@@ -1,5 +1,5 @@
 import variables from '@cc/shared/styles/Variables.module.scss';
-import { Box, Button, Typography, useTheme } from '@mui/material';
+import { Box, Button, useTheme } from '@mui/material';
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -20,6 +20,7 @@ import { useTranslation } from 'next-i18next';
 import { memo, useCallback, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import styles from '../styles/Chart.module.scss';
+import { Typography } from '@cc/shared/ui';
 
 ChartJS.register(
   LineElement,
@@ -65,7 +66,7 @@ export const Chart: React.FC<IChartProps> = memo(({ labels, dollars }) => {
   return (
     <>
       <Box className={styles.headContainer}>
-        <Typography variant="h6" component="h2">
+        <Typography tint variant="h6" component="h2">
           {t('cc.feature.chart.title')}
         </Typography>
 

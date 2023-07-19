@@ -1,10 +1,10 @@
-import { ThemeButton } from '@cc/shared/ui';
-import { Box, FormControl, MenuItem, Select, Typography } from '@mui/material';
+import { useThemeContext } from '@cc/shared/lib';
+import { ThemeButton, Typography } from '@cc/shared/ui';
+import { Box, FormControl, MenuItem, Select } from '@mui/material';
 import Flags from 'country-flag-icons/react/3x2';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import styles from '../styles/GeneralContent.module.scss';
-import { useThemeContext } from '@cc/shared/lib';
 
 export const GeneralContent = () => {
   const { locale, locales } = useRouter();

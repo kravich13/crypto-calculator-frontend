@@ -1,6 +1,6 @@
-import { Typography } from '@mui/material';
 import { DateTime, Duration } from 'luxon';
 import React, { memo, useCallback, useEffect, useState } from 'react';
+import { Typography } from './Typography';
 
 interface ITimerProps {
   inputDate: number;

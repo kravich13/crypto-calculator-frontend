@@ -10,11 +10,12 @@ import { getLocaleDate } from '@cc/shared/utils';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import WestIcon from '@mui/icons-material/West';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, Typography, useTheme } from '@mui/material';
+import { Box, Button, useTheme } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { SubmitHandler, useFieldArray, useForm, useFormState } from 'react-hook-form';
 import styles from '../styles/SelectedInvestCoins.module.scss';
+import { Typography } from '@cc/shared/ui';
 
 interface ISelectedInvestCoinsProps {
   isLoading: boolean;

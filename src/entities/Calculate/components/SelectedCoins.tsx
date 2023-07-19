@@ -1,13 +1,6 @@
+import { Typography } from '@cc/shared/ui';
 import { Delete } from '@mui/icons-material';
-import {
-  Box,
-  Button,
-  Divider,
-  IconButton,
-  InputAdornment,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Divider, IconButton, InputAdornment, TextField } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
 import React, { useCallback, useLayoutEffect, useState } from 'react';
@@ -143,7 +136,7 @@ export const SelectedCoins: React.FC<ISelectedCoinsProps> = ({
 
   return (
     <>
-      <Typography variant="h6" className={styles.title} style={{ marginBottom: 10 }}>
+      <Typography tint variant="h6" className={styles.title} style={{ marginBottom: 10 }}>
         {t('cc.entity.selectedCoins.title')}
       </Typography>
 

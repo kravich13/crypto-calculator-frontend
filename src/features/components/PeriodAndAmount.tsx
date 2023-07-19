@@ -1,8 +1,9 @@
 import { MIN_INVEST_TS, mounthlyValidation } from '@cc/entities/Calculate';
 import { IPeriodAndAmountForm } from '@cc/shared/types';
+import { Typography } from '@cc/shared/ui';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { LoadingButton } from '@mui/lab';
-import { Box, Grid, InputAdornment, TextField, Typography } from '@mui/material';
+import { Box, Grid, InputAdornment, TextField } from '@mui/material';
 import { DateValidationError } from '@mui/x-date-pickers';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DateTime } from 'luxon';

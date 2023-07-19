@@ -9,8 +9,8 @@ import {
   useErrorMessage,
 } from '@cc/shared/lib';
 import { ISetEmailInput } from '@cc/shared/types';
-import { LayoutContent, PopupAlert } from '@cc/shared/ui/components';
-import { Box, Step, StepLabel, Stepper, Typography } from '@mui/material';
+import { LayoutContent, PopupAlert, Typography } from '@cc/shared/ui';
+import { Box, Step, StepLabel, Stepper } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -80,7 +80,7 @@ export const LoginForm = () => {
     <LayoutContent isCenterPosition containerStyles={{ maxWidth: 'xs' }}>
       {isError && <PopupAlert text={errorMessage} severity="error" variant="filled" />}
 
-      <Typography component="h1" variant="h5" textAlign="left" width="100%" mb={3}>
+      <Typography tint component="h1" variant="h5" textAlign="left" width="100%" mb={3}>
         {t('cc.widget.loginForm.title')}
       </Typography>
 

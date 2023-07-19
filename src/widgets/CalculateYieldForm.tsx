@@ -9,8 +9,8 @@ import {
   useRefreshRequest,
 } from '@cc/shared/lib';
 import { CalculateProfitRequest, IPeriodAndAmountForm } from '@cc/shared/types';
-import { LayoutContent, PopupAlert } from '@cc/shared/ui';
-import { Container, Step, StepLabel, Stepper, Typography, useMediaQuery } from '@mui/material';
+import { LayoutContent, PopupAlert, Typography } from '@cc/shared/ui';
+import { Container, Step, StepLabel, Stepper, useMediaQuery } from '@mui/material';
 import { DateTime } from 'luxon';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/navigation';
@@ -107,7 +107,7 @@ export const CalculateYieldForm = () => {
     <LayoutContent isCenterPosition containerStyles={{ maxWidth: isMin520Width ? 'xs' : 'sm' }}>
       {isError && <PopupAlert text={errorMessage} severity="error" variant="filled" />}
 
-      <Typography component="h1" variant="h5" marginBottom={3} textAlign="center">
+      <Typography tint component="h1" variant="h5" marginBottom={3} textAlign="center">
         {t('cc.widget.calculateYieldForm.title')}
       </Typography>
 

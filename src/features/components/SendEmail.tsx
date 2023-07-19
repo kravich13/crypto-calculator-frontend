@@ -1,8 +1,8 @@
 import { emailValidation } from '@cc/entities/Authorization';
-import { TextInput } from '@cc/shared/ui/components';
+import { TextInput, Typography } from '@cc/shared/ui';
 import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
 import { LoadingButton } from '@mui/lab';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import React, { useCallback } from 'react';
 import { Controller, SubmitHandler, useForm, useFormState } from 'react-hook-form';
