@@ -5,24 +5,25 @@ import {
   ResultsDescription,
   baseYAnimation,
 } from '@cc/entities/MainPage';
+import { mainStepsImages } from '@cc/shared/consts';
 import { RoutesTypes } from '@cc/shared/enums';
-import { useAppSelector } from '@cc/shared/lib';
+import { useAppSelector, useThemeContext } from '@cc/shared/lib';
+import { LanguageType } from '@cc/shared/types';
 import { CircleIndicator, LayoutContent, Typography } from '@cc/shared/ui';
 import { Button } from '@mui/material';
-import { Variants, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
-import step1Image from '../../public/main-page-images/step-1.jpg';
-import step2Image from '../../public/main-page-images/step-2.jpg';
-import step3Image from '../../public/main-page-images/step-3.jpg';
-import step4Image from '../../public/main-page-images/step-4.jpg';
-import step5Image from '../../public/main-page-images/step-5.jpg';
 
 export const MainContent = () => {
   const isAuth = useAppSelector(({ authReducer }) => authReducer.isAuth);
   const router = useRouter();
-  const { t } = useTranslation();
+  const {
+    t,
+    i18n: { language },
+  } = useTranslation();
+  const { themeMode } = useThemeContext();
 
   const onRedirect = useCallback(() => {
     router.push(Boolean(isAuth) ? RoutesTypes.CALCULATE_YIELD : RoutesTypes.LOGIN);
@@ -33,20 +34,20 @@ export const MainContent = () => {
       {
         step: 1,
         description: t('cc.widget.mainContent.step1Description'),
-        src: step1Image,
+        src: mainStepsImages.step1[language as LanguageType][themeMode],
       },
       {
         step: 2,
         description: t('cc.widget.mainContent.step2Description'),
-        src: step2Image,
+        src: mainStepsImages.step2[language as LanguageType][themeMode],
       },
       {
         step: 3,
         description: t('cc.widget.mainContent.step3Description'),
-        src: step3Image,
+        src: mainStepsImages.step3[language][themeMode],
       },
     ],
-    [t]
+    [language, t, themeMode]
   );
 
   const resultsStepData = useMemo(
@@ -54,15 +55,15 @@ export const MainContent = () => {
       {
         step: 4,
         description: t('cc.entity.resultsDescription.generalTitle'),
-        src: step4Image,
+        src: mainStepsImages.step5[language][themeMode],
       },
       {
         step: 5,
         description: t('cc.entity.resultsDescription.detailedTitle'),
-        src: step5Image,
+        src: mainStepsImages.step5[language][themeMode],
       },
     ],
-    [t]
+    [language, t, themeMode]
   );
 
   const renderCalculateStepData = useCallback(

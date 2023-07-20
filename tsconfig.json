@@ -16,7 +16,8 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@cc/*": ["src/*"]
+      "@cc/*": ["src/*"],
+      "@public/*": ["public/*"]
     },
     "plugins": [
       {

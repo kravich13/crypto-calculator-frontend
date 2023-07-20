@@ -52,6 +52,7 @@ export const ResultsDescription: React.FC<IResultsDescriptionProps> = ({
         whileInView="visible"
         viewport={{ once: true, amount: 0.5 }}
         variants={baseYAnimation}
+        style={{ borderRadius: 8, boxShadow: '0px 0px 8px gray' }}
       >
         <LegacyImage
           src={src}
