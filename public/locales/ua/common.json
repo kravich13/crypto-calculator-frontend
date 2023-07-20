@@ -65,10 +65,12 @@
   "cc.page.code.seo.title": "Підтвердження електронної пошти | Crypto Metrics",
   "cc.page.code.seo.description": "Введіть код з листа, щоб увійти до Crypto Metrics.",
 
-  "cc.widget.footer.subtitle.ideaAndDev": "Ідея та розробка",
-  "cc.widget.footer.person.vlad": "Владислав Онацький",
+  "cc.widget.footer.subtitle.idea": "Ідея",
+  "cc.widget.footer.subtitle.dev": "Розробка",
   "cc.widget.footer.subtitle.consulting": "Консультування",
+  "cc.widget.footer.person.vlad": "Владислав Онацький",
   "cc.widget.footer.person.max": "Максим Барановський",
+  "cc.widget.footer.person.evhen": "Євген Стрьомін",
 
   "cc.widget.calculateYieldForm.title": "Розрахунок прибутковості щомісячних інвестицій в криптовалюту",
   "cc.widget.calculateYieldForm.step1.stepperLabel": "Дати та щомісячна сума",

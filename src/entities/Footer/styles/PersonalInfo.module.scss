@@ -1,0 +1,17 @@
+.rowContainer {
+  &:not(:last-child) {
+    margin-bottom: 2px;
+  }
+}
+
+.link {
+  all: unset;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.buttonLink {
+  height: 24px;
+  width: 24px;
+  border-radius: 4px;
+}

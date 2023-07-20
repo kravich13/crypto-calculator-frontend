@@ -65,10 +65,12 @@
   "cc.page.code.seo.title": "Confirm email | Crypto Metrics",
   "cc.page.code.seo.description": "Enter the code from the letter to enter Crypto Metrics.",
 
-  "cc.widget.footer.subtitle.ideaAndDev": "Idea and development",
-  "cc.widget.footer.person.vlad": "Vladyslav Onatskyi",
+  "cc.widget.footer.subtitle.idea": "Idea",
+  "cc.widget.footer.subtitle.dev": "Development",
   "cc.widget.footer.subtitle.consulting": "Consulting",
+  "cc.widget.footer.person.vlad": "Vladyslav Onatskyi",
   "cc.widget.footer.person.max": "Maksym Baranovskyi",
+  "cc.widget.footer.person.evhen": "Yevhen Stromin",
 
   "cc.widget.calculateYieldForm.title": "Calculation of profitability monthly investments in cryptocurrency",
   "cc.widget.calculateYieldForm.step1.stepperLabel": "Dates and monthly amount",
