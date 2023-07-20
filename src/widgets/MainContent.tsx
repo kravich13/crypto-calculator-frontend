@@ -57,7 +57,7 @@ export const MainContent = () => {
       {
         step: 4,
         description: t('cc.entity.resultsDescription.generalTitle'),
-        src: mainStepsImages.step5[languageCode][themeMode],
+        src: mainStepsImages.step4[languageCode][themeMode],
       },
       {
         step: 5,
