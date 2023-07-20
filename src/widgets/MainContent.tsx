@@ -21,7 +21,7 @@ export const MainContent = () => {
   const isAuth = useAppSelector(({ authReducer }) => authReducer.isAuth);
   const router = useRouter();
   const {
-    t,dsd
+    t,dsdsdsds
     i18n: { language },
   } = useTranslation();
   const { themeMode } = useThemeContext();
