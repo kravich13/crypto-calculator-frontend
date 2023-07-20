@@ -4,7 +4,6 @@ import {
   ICalculateData,
   ResultsDescription,
   baseYAnimation,
-  dasdas,
 } from '@cc/entities/MainPage';
 import { mainStepsImages } from '@cc/shared/consts';
 import { RoutesTypes } from '@cc/shared/enums';
@@ -21,7 +20,7 @@ export const MainContent = () => {
   const isAuth = useAppSelector(({ authReducer }) => authReducer.isAuth);
   const router = useRouter();
   const {
-    t,dsdsdsdsdsdsdsdsdsds
+    t,
     i18n: { language },
   } = useTranslation();
   const { themeMode } = useThemeContext();
@@ -90,7 +89,7 @@ export const MainContent = () => {
         <CircleIndicator />
 
         <motion.div custom={0} variants={baseYAnimation}>
-          <Typography tint component="h1" variant="h5" textAlign="center" sx={{ mb: 4 }}>
+          <Typography tint variant="h5" component="h1" textAlign="center" sx={{ mb: 4 }}>
             {t('cc.widget.mainContent.title')}
           </Typography>
         </motion.div>
