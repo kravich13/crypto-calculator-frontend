@@ -25,6 +25,8 @@ export const MainContent = () => {
   } = useTranslation();
   const { themeMode } = useThemeContext();
 
+  const languageCode = language as LanguageType;
+
   const onRedirect = useCallback(() => {
     router.push(Boolean(isAuth) ? RoutesTypes.CALCULATE_YIELD : RoutesTypes.LOGIN);
   }, [isAuth]);
@@ -34,20 +36,20 @@ export const MainContent = () => {
       {
         step: 1,
         description: t('cc.widget.mainContent.step1Description'),
-        src: mainStepsImages.step1[language as LanguageType][themeMode],
+        src: mainStepsImages.step1[languageCode][themeMode],
       },
       {
         step: 2,
         description: t('cc.widget.mainContent.step2Description'),
-        src: mainStepsImages.step2[language as LanguageType][themeMode],
+        src: mainStepsImages.step2[languageCode][themeMode],
       },
       {
         step: 3,
         description: t('cc.widget.mainContent.step3Description'),
-        src: mainStepsImages.step3[language as LanguageType][themeMode],
+        src: mainStepsImages.step3[languageCode][themeMode],
       },
     ],
-    [language, t, themeMode]
+    [languageCode, t, themeMode]
   );
 
   const resultsStepData = useMemo(
@@ -55,15 +57,15 @@ export const MainContent = () => {
       {
         step: 4,
         description: t('cc.entity.resultsDescription.generalTitle'),
-        src: mainStepsImages.step5[language as LanguageType][themeMode],
+        src: mainStepsImages.step5[languageCode][themeMode],
       },
       {
         step: 5,
         description: t('cc.entity.resultsDescription.detailedTitle'),
-        src: mainStepsImages.step5[language as LanguageType][themeMode],
+        src: mainStepsImages.step5[languageCode][themeMode],
       },
     ],
-    [language, t, themeMode]
+    [languageCode, t, themeMode]
   );
 
   const renderCalculateStepData = useCallback(
