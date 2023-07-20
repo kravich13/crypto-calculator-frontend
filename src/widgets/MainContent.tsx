@@ -96,7 +96,7 @@ export const MainContent = () => {
 
         <BaseDescription />
 
-        <motion.div custom={1} variants={baseYAnimation}>
+        <motion.div custom={0.6} variants={baseYAnimation}>
           <Button variant="contained" onClick={onRedirect} sx={{ mt: 2, mb: 3 }}>
             <Typography noWrap>
               {Boolean(isAuth)
