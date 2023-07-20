@@ -1,15 +1,15 @@
-import colors from '@cc/shared/styles/Variables.module.scss';
 import { useThemeContext } from '@cc/shared/lib';
-import { Typography as MuiTypography, TypographyProps } from '@mui/material';
+import colors from '@cc/shared/styles/Variables.module.scss';
+import { Typography as MuiTypography, TypographyProps, TypographyTypeMap } from '@mui/material';
 import { CSSProperties } from '@mui/material/styles/createTypography';
 import { useMemo } from 'react';
 
-interface ITypographyProps {
+interface ITypographyProps extends TypographyProps {
   tint?: boolean;
-  component?: React.ElementType;
+  component?: any;
 }
 
-export const Typography: React.FC<ITypographyProps & TypographyProps> = ({
+export const Typography: React.FC<ITypographyProps> = ({
   tint,
   style,
   children,

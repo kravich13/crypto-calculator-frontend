@@ -1,64 +1,68 @@
 import { Typography } from '@cc/shared/ui';
 import { Box, Chip, Divider } from '@mui/material';
-import LegacyImage from 'next/legacy/image';
+import { motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
-import { useThemeContext } from '@cc/shared/lib';
-import { mainStepsImages } from '@cc/shared/consts';
+import LegacyImage from 'next/legacy/image';
+import React from 'react';
+import { baseYAnimation, imageScale } from '../lib/const';
+import { ICalculateData } from '../types';
 
-export const ResultsDescription = () => {
-  const {
-    t,
-    i18n: { language },
-  } = useTranslation();
-  const { themeMode } = useThemeContext();
+interface IResultsDescriptionProps extends ICalculateData {}
+
+export const ResultsDescription: React.FC<IResultsDescriptionProps> = ({
+  step,
+  description,
+  src,
+}) => {
+  const { t } = useTranslation();
 
   return (
     <Box>
-      <Divider>
-        <Chip
-          label={t('cc.entity.resultsDescription.stepTitle', { count: 4 })}
-          variant="outlined"
-          size="medium"
-          color="primary"
-          component="h2"
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.5 }}
+        variants={baseYAnimation}
+      >
+        <Divider>
+          <Chip
+            label={t('cc.entity.resultsDescription.stepTitle', { count: step })}
+            variant="outlined"
+            size="medium"
+            color="primary"
+            component="h2"
+          />
+        </Divider>
+      </motion.div>
+
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.5 }}
+        variants={baseYAnimation}
+      >
+        <Typography tint component="h2" variant="h6" textAlign="center" sx={{ mb: 2 }}>
+          {description}
+        </Typography>
+      </motion.div>
+
+      <motion.div
+        {...imageScale}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.5 }}
+        variants={baseYAnimation}
+        style={{ borderRadius: 8, boxShadow: '0px 0px 8px gray' }}
+      >
+        <LegacyImage
+          src={src}
+          alt={`Step-${step}`}
+          objectFit="contain"
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg=="
+          style={{ borderRadius: 8 }}
         />
-      </Divider>
-
-      <Typography tint component="h2" variant="h6" textAlign="center" sx={{ mb: 2 }}>
-        {t('cc.entity.resultsDescription.generalTitle')}
-      </Typography>
-
-      <LegacyImage
-        src={mainStepsImages.step4[language][themeMode]}
-        alt="Step-4"
-        objectFit="contain"
-        placeholder="blur"
-        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg=="
-        style={{ borderRadius: 8 }}
-      />
-
-      <Divider>
-        <Chip
-          label={t('cc.entity.resultsDescription.stepTitle', { count: 5 })}
-          variant="outlined"
-          size="medium"
-          color="primary"
-          component="h2"
-        />
-      </Divider>
-
-      <Typography tint component="h2" variant="h6" textAlign="center" sx={{ mb: 2 }}>
-        {t('cc.entity.resultsDescription.detailedTitle')}
-      </Typography>
-
-      <LegacyImage
-        src={mainStepsImages.step5[language][themeMode]}
-        alt="Step-5"
-        objectFit="contain"
-        placeholder="blur"
-        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg=="
-        style={{ borderRadius: 8 }}
-      />
+      </motion.div>
     </Box>
   );
 };

@@ -1,25 +1,43 @@
 import { Box, Typography } from '@mui/material';
-import styles from '../styles/BaseDescription.module.scss';
+import { Variants, motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
+import { useCallback } from 'react';
+import { baseTansitionParams } from '../lib';
+import styles from '../styles/BaseDescription.module.scss';
 
 export const BaseDescription = () => {
   const { t } = useTranslation();
 
+  const blockAnimation = useCallback(
+    (blockPos: 'left' | 'right'): Variants => ({
+      hidden: { opacity: 0, x: blockPos === 'left' ? -200 : 200 },
+      visible: (custom?: number) => ({
+        opacity: 1,
+        x: 0,
+        transition: { ...baseTansitionParams, delay: custom || 1 * baseTansitionParams.delay },
+      }),
+    }),
+    []
+  );
+
   return (
     <Box className={styles.container}>
-      <Box className={[styles.boxContent, styles.description].join(' ')}>
+      <motion.div
+        custom={0.5}
+        variants={blockAnimation('left')}
+        className={[styles.boxContent, styles.description].join(' ')}
+      >
         <Typography>{t('cc.entity.baseDescription.firstDescription')}</Typography>
 
         <br />
 
         <Typography>{t('cc.entity.baseDescription.secondDescription')}</Typography>
-
         <br />
 
         <Typography>{t('cc.entity.baseDescription.thirdDescription')}</Typography>
-      </Box>
+      </motion.div>
 
-      <Box className={styles.boxContent}>
+      <motion.div custom={0.5} variants={blockAnimation('right')} className={styles.boxContent}>
         <Typography>{t('cc.entity.baseDescription.tool.subtitle')}</Typography>
 
         <ul>
@@ -28,7 +46,7 @@ export const BaseDescription = () => {
           <li>{t('cc.entity.baseDescription.tool.thirdDescription')}</li>
           <li>{t('cc.entity.baseDescription.tool.fourthDescription')}</li>
         </ul>
-      </Box>
+      </motion.div>
     </Box>
   );
 };
