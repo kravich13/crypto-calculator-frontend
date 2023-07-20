@@ -44,7 +44,7 @@ export const MainContent = () => {
       {
         step: 3,
         description: t('cc.widget.mainContent.step3Description'),
-        src: mainStepsImages.step3[language][themeMode],
+        src: mainStepsImages.step3[language as LanguageType][themeMode],
       },
     ],
     [language, t, themeMode]
@@ -55,12 +55,12 @@ export const MainContent = () => {
       {
         step: 4,
         description: t('cc.entity.resultsDescription.generalTitle'),
-        src: mainStepsImages.step5[language][themeMode],
+        src: mainStepsImages.step5[language as LanguageType][themeMode],
       },
       {
         step: 5,
         description: t('cc.entity.resultsDescription.detailedTitle'),
-        src: mainStepsImages.step5[language][themeMode],
+        src: mainStepsImages.step5[language as LanguageType][themeMode],
       },
     ],
     [language, t, themeMode]
