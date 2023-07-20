@@ -52,7 +52,6 @@
     "validator": "^13.9.0"
   },
   "devDependencies": {
-    "@arkweid/lefthook": "^0.7.7",
     "@babel/core": "^7.21.3",
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",

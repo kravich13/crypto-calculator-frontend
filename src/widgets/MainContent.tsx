@@ -4,6 +4,7 @@ import {
   ICalculateData,
   ResultsDescription,
   baseYAnimation,
+  dasdas,
 } from '@cc/entities/MainPage';
 import { mainStepsImages } from '@cc/shared/consts';
 import { RoutesTypes } from '@cc/shared/enums';
