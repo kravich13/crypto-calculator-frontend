@@ -1,3 +1,4 @@
+export * from './CircleIndicator';
 export * from './LayoutContent';
 export * from './PasswordInput';
 export * from './PopupAlert';

@@ -3,18 +3,21 @@ import {
   CalculateDescription,
   ICalculateData,
   ResultsDescription,
+  baseYAnimation,
 } from '@cc/entities/MainPage';
 import { RoutesTypes } from '@cc/shared/enums';
 import { useAppSelector } from '@cc/shared/lib';
-import { LayoutContent, Typography } from '@cc/shared/ui';
+import { CircleIndicator, LayoutContent, Typography } from '@cc/shared/ui';
 import { Button } from '@mui/material';
+import { Variants, motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
 import step1Image from '../../public/main-page-images/step-1.jpg';
 import step2Image from '../../public/main-page-images/step-2.jpg';
 import step3Image from '../../public/main-page-images/step-3.jpg';
-import { Variants, motion } from 'framer-motion';
+import step4Image from '../../public/main-page-images/step-4.jpg';
+import step5Image from '../../public/main-page-images/step-5.jpg';
 
 export const MainContent = () => {
   const isAuth = useAppSelector(({ authReducer }) => authReducer.isAuth);
@@ -46,20 +49,29 @@ export const MainContent = () => {
     [t]
   );
 
-  const titleAndButtonAnimation = useMemo(
-    (): Variants => ({
-      hidden: { opacity: 0, y: 80 },
-      visible: (custom) => ({
-        opacity: 1,
-        y: 0,
-        transition: { delay: custom * 0.2, duration: 1.13, type: 'spring' },
-      }),
-    }),
+  const resultsStepData = useMemo(
+    (): ICalculateData[] => [
+      {
+        step: 4,
+        description: t('cc.entity.resultsDescription.generalTitle'),
+        src: step4Image,
+      },
+      {
+        step: 5,
+        description: t('cc.entity.resultsDescription.detailedTitle'),
+        src: step5Image,
+      },
+    ],
+    [t]
+  );
+
+  const renderCalculateStepData = useCallback(
+    (data: ICalculateData) => <CalculateDescription key={data.step} {...data} />,
     []
   );
 
-  const renderStepData = useCallback(
-    (data: ICalculateData) => <CalculateDescription key={data.step} {...data} />,
+  const renderResultsStepData = useCallback(
+    (data: ICalculateData) => <ResultsDescription key={data.step} {...data} />,
     []
   );
 
@@ -71,7 +83,9 @@ export const MainContent = () => {
         viewport={{ once: true }}
         style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
       >
-        <motion.div custom={0} variants={titleAndButtonAnimation}>
+        <CircleIndicator />
+
+        <motion.div custom={0} variants={baseYAnimation}>
           <Typography tint component="h1" variant="h5" textAlign="center" sx={{ mb: 4 }}>
             {t('cc.widget.mainContent.title')}
           </Typography>
@@ -79,7 +93,7 @@ export const MainContent = () => {
 
         <BaseDescription />
 
-        <motion.div custom={4} variants={titleAndButtonAnimation}>
+        <motion.div custom={1} variants={baseYAnimation}>
           <Button variant="contained" onClick={onRedirect} sx={{ mt: 2, mb: 3 }}>
             <Typography noWrap>
               {Boolean(isAuth)
@@ -89,9 +103,8 @@ export const MainContent = () => {
           </Button>
         </motion.div>
 
-        {calculateStepsData.map(renderStepData)}
-
-        <ResultsDescription />
+        {calculateStepsData.map(renderCalculateStepData)}
+        {resultsStepData.map(renderResultsStepData)}
       </motion.div>
     </LayoutContent>
   );
