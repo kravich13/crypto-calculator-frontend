@@ -1,10 +1,10 @@
 import variables from '@cc/shared/styles/Variables.module.scss';
 import { Box, Typography, useTheme } from '@mui/material';
-import React from 'react';
-import styles from '../styles/SearchNavigationButtons.module.scss';
 import { useTranslation } from 'next-i18next';
+import React, { memo } from 'react';
+import styles from '../styles/SearchNavigationButtons.module.scss';
 
-export const SearchNavigationButtons: React.FC = React.memo(() => {
+export const SearchNavigationButtons: React.FC = memo(() => {
   const { palette } = useTheme();
   const { t } = useTranslation();
 

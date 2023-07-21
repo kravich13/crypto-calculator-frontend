@@ -8,7 +8,7 @@ import { DateValidationError } from '@mui/x-date-pickers';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DateTime } from 'luxon';
 import { useTranslation } from 'next-i18next';
-import React, { useCallback } from 'react';
+import React, { memo, useCallback } from 'react';
 import {
   Controller,
   ControllerRenderProps,
@@ -32,7 +32,7 @@ interface IPeriodAndAmountProps {
   onConfirm: SubmitHandler<IPeriodAndAmountForm>;
 }
 
-export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = React.memo(
+export const PeriodAndAmount: React.FC<IPeriodAndAmountProps> = memo(
   ({ isLoading, state, onConfirm }) => {
     const { control, formState, watch, handleSubmit, setError, clearErrors } = state;
     const { errors, isValid } = useFormState({ control });

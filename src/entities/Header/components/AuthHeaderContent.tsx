@@ -1,22 +1,13 @@
 import { RoutesTypes } from '@cc/shared/enums';
 import { useAppSelector, useAuthContext } from '@cc/shared/lib';
 import LogoutIcon from '@mui/icons-material/Logout';
-import {
-  Avatar,
-  Box,
-  Button,
-  Fade,
-  IconButton,
-  Menu,
-  MenuItem,
-  Typography,
-  useTheme,
-} from '@mui/material';
+import { Avatar, Box, Button, Fade, IconButton, Menu, MenuItem, useTheme } from '@mui/material';
+import { useTranslation } from 'next-i18next';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useCallback, useMemo, useState } from 'react';
 import styles from '../styles/AuthHeaderContent.module.scss';
 import { GeneralContent } from './GeneralContent';
-import { useTranslation } from 'next-i18next';
+import { Typography } from '@cc/shared/ui';
 
 export const AuthHeaderContent: React.FC = () => {
   const emailUser = useAppSelector((state) => state.authReducer.email);
@@ -29,13 +20,13 @@ export const AuthHeaderContent: React.FC = () => {
   const router = useRouter();
   const pathname = usePathname();
 
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
   const showCalculationButton = Boolean(
     hasProfitData && pathname !== RoutesTypes.INVESTMENT_STATISTICS
   );
 
   const avatarTitle = emailUser.at(0)?.toUpperCase();
-
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isOpen = Boolean(anchorEl);
 
   const onClickLastCalculation = useCallback(() => {
