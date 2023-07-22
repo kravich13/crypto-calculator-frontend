@@ -1,5 +1,5 @@
 import { Alert, AlertColor, Snackbar } from '@mui/material';
-import { FC, SyntheticEvent, useCallback, useState } from 'react';
+import { FC, useCallback, useState } from 'react';
 
 interface IPopupAlert {
   text: string;
@@ -11,7 +11,7 @@ interface IPopupAlert {
 export const PopupAlert: FC<IPopupAlert> = ({ severity, variant, text, autoHideDuration }) => {
   const [isOpen, setOpen] = useState(true);
 
-  const onClose = useCallback((event?: SyntheticEvent | Event, reason?: string) => {
+  const onClose = useCallback(() => {
     setOpen(false);
   }, []);
 

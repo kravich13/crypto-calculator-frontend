@@ -1,5 +1,4 @@
 import { StaticImageData } from 'next/image';
-import { LanguageType } from '../types';
 
 type mainStepsData = {
   [key: string]: {
