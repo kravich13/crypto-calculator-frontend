@@ -10,3 +10,5 @@ pre-commit:
     lint-fixer:
       glob: '*.{js,ts,tsx}'
       run: node_modules/.bin/eslint --ext .tsx --ext .ts {staged_files}
+
+echo "pre-commit hook ran"
