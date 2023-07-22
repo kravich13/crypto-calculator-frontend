@@ -16,8 +16,6 @@ import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
 
-dasdas;
-sd;
 export const MainContent = () => {
   const isAuth = useAppSelector(({ authReducer }) => authReducer.isAuth);
   const router = useRouter();
