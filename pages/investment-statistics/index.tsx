@@ -12,10 +12,8 @@ import Head from 'next/head';
 
 export default function InvestmentStatistics() {
   const { t } = useTranslation();
-  const hasProfitData = useAppSelector(({ profitReducer: { hasData } }) => hasData);
-  const monthlyCapitals = useAppSelector(
-    ({ profitReducer: { monthlyCapitals } }) => monthlyCapitals
-  );
+  const hasProfitData = useAppSelector(({ profitReducer }) => profitReducer.hasData);
+  const monthlyCapitals = useAppSelector(({ profitReducer }) => profitReducer.monthlyCapitals);
 
   const capitalsProfit = monthlyCapitals.map(({ capital }) => capital);
   const capitalsDate = monthlyCapitals.map(({ date }) => date);

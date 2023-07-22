@@ -14,12 +14,17 @@ export const GeneralInvestmentStatistics = () => {
     t,
     i18n: { language },
   } = useTranslation();
-  const { investmentPeriod, totalCapital, totalGrowth, totalInvested, coins } = useAppSelector(
-    ({ profitReducer }) => profitReducer
-  );
 
-  const { startDate, endDate, monthlyInvestment } = useAppSelector(
-    ({ baseCalculatorReducer: { maxNumberOfCoinsToInvest, ...rest } }) => rest
+  const investmentPeriod = useAppSelector(({ profitReducer }) => profitReducer.investmentPeriod);
+  const totalCapital = useAppSelector(({ profitReducer }) => profitReducer.totalCapital);
+  const totalGrowth = useAppSelector(({ profitReducer }) => profitReducer.totalGrowth);
+  const totalInvested = useAppSelector(({ profitReducer }) => profitReducer.totalInvested);
+  const coins = useAppSelector(({ profitReducer }) => profitReducer.coins);
+
+  const startDate = useAppSelector(({ baseCalculatorReducer }) => baseCalculatorReducer.startDate);
+  const endDate = useAppSelector(({ baseCalculatorReducer }) => baseCalculatorReducer.endDate);
+  const monthlyInvestment = useAppSelector(
+    ({ baseCalculatorReducer }) => baseCalculatorReducer.monthlyInvestment
   );
 
   const formattedStartDate = getLocaleDate(startDate, language);

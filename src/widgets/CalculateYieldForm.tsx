@@ -1,4 +1,4 @@
-import { INPUT_FORMAT_DATE, ISelectedInvestCoinsForm } from '@cc/entities/Calculate';
+import { ISelectedInvestCoinsForm } from '@cc/entities/Calculate';
 import { PeriodAndAmount, SelectedInvestCoins } from '@cc/features';
 import { useCalculateProfitMutation, usePeriodAndAmountMutation } from '@cc/shared/api';
 import { RoutesTypes } from '@cc/shared/enums';
@@ -21,8 +21,9 @@ export const CalculateYieldForm = () => {
   const isMin520Width = useMediaQuery('(max-width:520px)');
   const router = useRouter();
   const { t } = useTranslation();
-
   const dispatch = useAppDispatch();
+
+  const [step, setStep] = useState(0);
 
   const periodAndAmountState = useForm<IPeriodAndAmountForm>({ mode: 'onBlur' });
 
@@ -45,8 +46,6 @@ export const CalculateYieldForm = () => {
 
   const errorMessage = periodRefreshData.error.message || calculateRefreshData.error.message;
   const isError = periodRefreshData.error.showError || calculateRefreshData.error.showError;
-
-  const [step, setStep] = useState(0);
 
   const onConfirmStep0: SubmitHandler<IPeriodAndAmountForm> = useCallback(async (data) => {
     dispatch(calculatorActions.setPeriodAndAmount(data));

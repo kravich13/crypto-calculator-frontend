@@ -1,6 +1,6 @@
 import { useThemeContext } from '@cc/shared/lib';
 import colors from '@cc/shared/styles/Variables.module.scss';
-import { Typography as MuiTypography, TypographyProps, TypographyTypeMap } from '@mui/material';
+import { Typography as MuiTypography, TypographyProps } from '@mui/material';
 import { CSSProperties } from '@mui/material/styles/createTypography';
 import { useMemo } from 'react';
 

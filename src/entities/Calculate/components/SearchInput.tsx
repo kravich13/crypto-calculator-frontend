@@ -1,15 +1,16 @@
+import { useThemeContext } from '@cc/shared/lib';
 import { IMainCoinInfo } from '@cc/shared/types';
 import { TextInput } from '@cc/shared/ui/components';
 import { SearchOutlined } from '@mui/icons-material';
 import { Box, InputAdornment, useMediaQuery } from '@mui/material';
+import { AnimatePresence, motion } from 'framer-motion';
 import debounce from 'lodash.debounce';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { UseFieldArrayPrepend } from 'react-hook-form';
 import styles from '../styles/SearchInput.module.scss';
 import { ISelectedInvestCoinsForm } from '../types';
 import { SearchNavigationButtons } from './SearchNavigationButtons';
 import { SearchRenderItem } from './SearchRenderItem';
-import { useThemeContext } from '@cc/shared/lib';
 
 interface ISearchInputProps {
   isLoading: boolean;
@@ -20,7 +21,7 @@ interface ISearchInputProps {
   makeSearchRequest: (searchText: string) => void;
 }
 
-export const SearchInput: React.FC<ISearchInputProps> = React.memo(
+export const SearchInput: React.FC<ISearchInputProps> = memo(
   ({ isLoading, searchData, label, canAddCoin, prependSelectedCoin, makeSearchRequest }) => {
     const isMin990Width = useMediaQuery('(min-width:990px)');
     const { themeMode } = useThemeContext();
@@ -149,17 +150,22 @@ export const SearchInput: React.FC<ISearchInputProps> = React.memo(
             ),
           }}
         />
+        <AnimatePresence>
+          {showElements && Boolean(searchData.length) && (
+            <motion.div
+              className={searchContainerStyles.join(' ')}
+              style={{ width: $container.current!.clientWidth, overflow: 'hidden' }}
+              initial={{ height: 0 }}
+              animate={{ height: 'auto' }}
+              exit={{ height: 0 }}
+              transition={{ duration: 0.15 }}
+            >
+              {searchData.map(renderItem)}
 
-        {showElements && Boolean(searchData.length) && (
-          <Box
-            className={searchContainerStyles.join(' ')}
-            style={{ width: $container.current!.clientWidth }}
-          >
-            {searchData.map(renderItem)}
-
-            {isMin990Width && <SearchNavigationButtons />}
-          </Box>
-        )}
+              {isMin990Width && <SearchNavigationButtons />}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </Box>
     );
   }
