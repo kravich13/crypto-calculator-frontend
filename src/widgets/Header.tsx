@@ -5,7 +5,6 @@ import { AppBar, Container, Toolbar } from '@mui/material';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useCallback } from 'react';
-import CryptoMetricsFrame2 from '../../public/logo/crypto-metrics-frame-2.svg';
 import styles from './styles/Header.module.scss';
 
 export const Header: React.FC = () => {
@@ -26,7 +25,7 @@ export const Header: React.FC = () => {
         <Container component="div" maxWidth="lg" className={styles.container}>
           <Image
             alt="Crypto Metrics"
-            src={CryptoMetricsFrame2}
+            src={require('@public/logo/crypto-metrics-frame-2.svg')}
             style={{ cursor: 'pointer' }}
             onClick={goToMain}
           />
