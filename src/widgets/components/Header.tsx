@@ -5,7 +5,7 @@ import { AppBar, Container, Toolbar } from '@mui/material';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useCallback } from 'react';
-import styles from './styles/Header.module.scss';
+import styles from '../styles/Header.module.scss';
 
 export const Header: React.FC = () => {
   const router = useRouter();
