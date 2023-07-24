@@ -52,3 +52,4 @@
 
 - [Maksym Baranosvkyi](https://github.com/mkbaranovskyi/)
 - [Vladislav Onatskyi](https://github.com/kravich13/)
+- [Evhen Stromin](https://github.com/EvgenStr)
