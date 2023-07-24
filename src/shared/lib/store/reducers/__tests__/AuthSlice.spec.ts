@@ -1,4 +1,9 @@
-import { IAuthInitialState } from '@cc/shared/types';
+import {
+  IAuthInitialState,
+  IJwtTokensPayload,
+  ISetEmailCodeResendExpiresIn,
+  ISetEmailInput,
+} from '@cc/shared/types';
 import { authActions, authReducer } from '../AuthSlice';
 
 const localStorageMock = {
@@ -8,46 +13,96 @@ const localStorageMock = {
   removeItem: jest.fn(),
 };
 
-Object.defineProperty(window, 'localStorage', {
-  value: localStorageMock,
-});
-
-const initialTokens: IAuthInitialState = {
-  email: '',
-  accessToken: '',
-  refreshToken: '',
-  emailCodeResendExpiresIn: -1,
-  accessTokenExpiresIn: -1,
-  refreshTokenExpiresIn: -1,
-};
+Object.defineProperty(window, 'localStorage', { value: localStorageMock });
 
 describe('authSlice', () => {
+  const initialState: IAuthInitialState = {
+    email: '',
+    accessToken: '',
+    refreshToken: '',
+    emailCodeResendExpiresIn: -1,
+    accessTokenExpiresIn: -1,
+    refreshTokenExpiresIn: -1,
+  };
+
   beforeEach(() => {
     localStorageMock.clear();
   });
 
-  it('setNotAuth should remove tokens data from localStorage', () => {
-    localStorageMock.setItem('tokensData', JSON.stringify(initialTokens));
-
-    const expectedState = { ...initialTokens, isAuth: false };
-
-    expect(authReducer(initialTokens, authActions.setNotAuth())).toEqual(expectedState);
-    expect(localStorageMock.removeItem).toHaveBeenCalledWith('tokensData');
+  it('should return the initial state', () => {
+    expect(authReducer(undefined, { type: 'init' })).toEqual(initialState);
   });
 
-  it('setAuth should set tokens data in localStorage', () => {
-    const tokensData: IAuthInitialState = {
-      email: 'test@gmail.com',
-      accessToken: 'access_token',
-      refreshToken: 'refresh_token',
-      accessTokenExpiresIn: 3600,
-      refreshTokenExpiresIn: 36000,
-      emailCodeResendExpiresIn: 60,
+  it('should handle setNotAuth', () => {
+    const currentState: IAuthInitialState = {
+      ...initialState,
+      isAuth: true,
+      accessToken: 'someAccessToken',
+      refreshToken: 'someRefreshToken',
     };
 
-    const expectedState = { ...tokensData, isAuth: true };
+    const nextState = authReducer(currentState, authActions.setNotAuth());
 
-    expect(authReducer(initialTokens, authActions.setAuth(tokensData))).toEqual(expectedState);
-    expect(localStorageMock.setItem).toHaveBeenCalledWith('tokensData', JSON.stringify(tokensData));
+    expect(nextState).toEqual({ ...initialState, isAuth: false });
+    expect(localStorage.removeItem).toHaveBeenCalledWith('tokensData');
+    expect(localStorage.removeItem).toHaveBeenCalledWith('userData');
+  });
+
+  it('should handle setAuth', () => {
+    const payload: IJwtTokensPayload = {
+      accessToken: 'someAccessToken',
+      refreshToken: 'someRefreshToken',
+      accessTokenExpiresIn: 3600,
+      refreshTokenExpiresIn: 7200,
+    };
+
+    const nextState = authReducer(initialState, authActions.setAuth(payload));
+
+    expect(nextState).toEqual({
+      ...initialState,
+      isAuth: true,
+      accessToken: payload.accessToken,
+      refreshToken: payload.refreshToken,
+      accessTokenExpiresIn: payload.accessTokenExpiresIn,
+      refreshTokenExpiresIn: payload.refreshTokenExpiresIn,
+    });
+
+    expect(localStorage.setItem).toHaveBeenCalledWith('tokensData', JSON.stringify(payload));
+  });
+
+  it('should handle setEmail', () => {
+    const payload: ISetEmailInput = {
+      email: 'test@example.com',
+    };
+
+    const nextState = authReducer(initialState, authActions.setEmail(payload));
+
+    expect(nextState).toEqual({ ...initialState, email: payload.email });
+    expect(localStorage.setItem).toHaveBeenCalledWith(
+      'userData',
+      JSON.stringify({ email: payload.email })
+    );
+  });
+
+  it('should handle setEmailCodeResendExpiresIn', () => {
+    const payload: ISetEmailCodeResendExpiresIn = {
+      emailCodeResendExpiresIn: 300,
+    };
+
+    const currentState: IAuthInitialState = {
+      ...initialState,
+      email: 'test@example.com',
+    };
+
+    const nextState = authReducer(currentState, authActions.setEmailCodeResendExpiresIn(payload));
+
+    expect(nextState).toEqual({
+      ...currentState,
+      emailCodeResendExpiresIn: payload.emailCodeResendExpiresIn,
+    });
+    expect(localStorage.setItem).toHaveBeenCalledWith(
+      'userData',
+      JSON.stringify({ email: currentState.email })
+    );
   });
 });

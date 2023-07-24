@@ -1,7 +1,7 @@
-import { ICalculatorSlice, IPeriodAndAmountForm } from '@cc/shared/types';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import * as process from 'process';
 import { filledCalculatorState } from '@cc/shared/consts';
+import { ICalculatorSlice, IPeriodAndAmountForm } from '@cc/shared/types';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import * as process from 'process';
 
 const defaultState: ICalculatorSlice = {
   maxNumberOfCoinsToInvest: 1,

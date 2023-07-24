@@ -4,10 +4,10 @@ interface ISortByProps<T extends number | string> {
   isDescending: boolean;
 }
 
-export const SortByNumbers = ({ a, b, isDescending }: ISortByProps<number>) =>
+export const sortByNumbers = ({ a, b, isDescending }: ISortByProps<number>) =>
   isDescending ? b - a : a - b;
 
-export const SortByString = (a: string, b: string) => {
+export const sortByString = (a: string, b: string) => {
   const nameA = a.toLowerCase();
   const nameB = b.toLowerCase();
 

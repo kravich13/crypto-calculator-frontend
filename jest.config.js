@@ -24,22 +24,25 @@ module.exports = {
   },
   moduleNameMapper: {
     '^@cc/(.*)$': '<rootDir>/src/$1',
+    '^@public/(.*)$': '<rootDir>/public/$1',
   },
-
+  resolver: undefined,
   testPathIgnorePatterns: ['/node_modules/', '^.*index\\.ts$'],
   coveragePathIgnorePatterns: [
     '/node_modules/',
     '^.*index\\.ts$',
+    '/src/shared/api',
     '/src/shared/types',
-    '/src/shared/const',
+    '/src/shared/consts',
     '/src/shared/enums',
   ],
   modulePathIgnorePatterns: [
     '/node_modules/',
     '^.*index\\.ts$',
+    '/src/shared/api',
     '/src/shared/types',
-    '/src/shared/const',
+    '/src/shared/consts',
     '/src/shared/enums',
   ],
-  transformIgnorePatterns: ['/node_modules/', '^.+\\.module\\.(css|sass|scss)$'],
+  transformIgnorePatterns: ['/node_modules/', '^.+\\.module\\.(css|sass|scss|png|jpg)$'],
 };

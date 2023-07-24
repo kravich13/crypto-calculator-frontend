@@ -5,12 +5,12 @@ import {
   ResultsDescription,
   baseYAnimation,
 } from '@cc/entities/MainPage';
-import { mainStepsImages } from '@cc/shared/consts';
 import { RoutesTypes } from '@cc/shared/enums';
 import { useAppSelector, useThemeContext } from '@cc/shared/lib';
 import { LanguageType } from '@cc/shared/types';
 import { CircleIndicator, LayoutContent, Typography } from '@cc/shared/ui';
 import { Button } from '@mui/material';
+import { mainStepsImages } from '@public/main-page-images';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/navigation';
