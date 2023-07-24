@@ -80,7 +80,7 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({ children }) => {
       <LocalizationProvider
         dateAdapter={AdapterLuxon}
         adapterLocale={adapterLocale}
-        localeText={ukUA.components.MuiLocalizationProvider.defaultProps.localeText}
+        localeText={locale.components.MuiLocalizationProvider.defaultProps.localeText}
       >
         {isMounted && <MuiThemeProvider theme={theme}>{children}</MuiThemeProvider>}
       </LocalizationProvider>

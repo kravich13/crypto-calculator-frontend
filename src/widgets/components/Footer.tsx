@@ -6,7 +6,7 @@ import { Box, Container, Typography, useTheme } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import React, { useMemo } from 'react';
 import { v4 as uuid } from 'uuid';
-import styles from './styles/Footer.module.scss';
+import styles from '../styles/Footer.module.scss';
 
 interface IPersonsInfo {
   vlad: IPersonalInfo;
