@@ -1,5 +1,5 @@
-export type ThemeMode = 'light' | 'dark';
+export type ThemeModeType = 'light' | 'dark';
 
 export interface IUserDataInitialState {
-  theme: ThemeMode;
+  theme: ThemeModeType;
 }

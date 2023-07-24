@@ -1,4 +1,6 @@
+import { useThemeContext } from '@cc/shared/lib';
 import sharedStyles from '@cc/shared/styles/Index.module.scss';
+import { getBlurDataUrl } from '@cc/shared/utils';
 import { Box, Typography, useTheme } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
@@ -20,14 +22,17 @@ export const MainCoinInfoContainer: React.FC<IMainCoinInfoContainerProps> = ({
   imageWidth = 20,
 }) => {
   const { palette } = useTheme();
+  const { themeMode } = useThemeContext();
+
   const symbolTitle = symbol.toUpperCase();
 
   return (
     <Box className={styles.container}>
       <Image
-        loader={({}) => image}
+        placeholder="blur"
+        blurDataURL={getBlurDataUrl(themeMode)}
         src={image}
-        alt="Image"
+        alt={`${name}-image`}
         width={imageWidth}
         height={imageHeight}
         unoptimized

@@ -2,10 +2,11 @@ import { Typography } from '@cc/shared/ui';
 import { Box, Chip, Divider } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
-import LegacyImage from 'next/legacy/image';
+import Image from 'next/image';
 import { useCallback } from 'react';
 import { baseTansitionParams, baseYAnimation, imageScale } from '../lib/const';
 import styles from '../styles/CalculateDescription.module.scss';
+import sharedStyles from '../styles/Shared.module.scss';
 import { ICalculateData } from '../types';
 
 interface ICalculateDescriptionProps extends ICalculateData {}
@@ -54,7 +55,7 @@ export const CalculateDescription: React.FC<ICalculateDescriptionProps> = ({
           whileInView="visible"
           viewport={{ once: true, amount: 0.5 }}
           variants={otherAnimation(step % 2 === 0 ? 'left' : 'right')}
-          className={styles.boxContent}
+          className={styles.textContainer}
         >
           <Typography tint component="h2" variant="h6">
             {description}
@@ -67,15 +68,14 @@ export const CalculateDescription: React.FC<ICalculateDescriptionProps> = ({
           whileInView="visible"
           viewport={{ once: true, amount: 0.5 }}
           variants={otherAnimation(step % 2 === 0 ? 'right' : 'left')}
-          className={styles.boxContent}
+          className={styles.imageContainer}
         >
-          <LegacyImage
+          <Image
+            alt={`Step-${step}-image`}
             src={src}
-            alt={`Step-${step}`}
-            objectFit="contain"
             placeholder="blur"
-            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg=="
-            style={{ borderRadius: 8 }}
+            sizes="100vw"
+            className={sharedStyles.image}
           />
         </motion.div>
       </Box>

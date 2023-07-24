@@ -1,5 +1,5 @@
 import { ThemeContext } from '@cc/shared/lib';
-import { IChildrenProps, ThemeMode } from '@cc/shared/types';
+import { IChildrenProps, ThemeModeType } from '@cc/shared/types';
 import {
   ThemeProvider as MuiThemeProvider,
   SelectChangeEvent,
@@ -19,7 +19,7 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({ children }) => {
   const isDarkOS = useMediaQuery('(prefers-color-scheme: dark)');
   const [isMounted, setIsMounted] = useState(false);
 
-  const [themeModeValue, setThemeMode] = useLocalStorage<{ value: ThemeMode }>('themeMode', {
+  const [themeModeValue, setThemeMode] = useLocalStorage<{ value: ThemeModeType }>('themeMode', {
     value: isDarkOS ? 'light' : 'dark',
   });
 

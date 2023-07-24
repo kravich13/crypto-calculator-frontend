@@ -1,5 +1,5 @@
 import { RoutesTypes } from '@cc/shared/enums';
-import { IJwtTokensPayload, LocalStorageUserData, ThemeMode } from '../store';
+import { IJwtTokensPayload, LocalStorageUserData, ThemeModeType } from '../store';
 import { SelectChangeEvent } from '@mui/material';
 
 export interface IAuthContext {
@@ -20,7 +20,7 @@ export interface IAuthContentLoginData extends IAuthContextLogoutData {
 }
 
 export interface IThemeContext {
-  themeMode: ThemeMode;
+  themeMode: ThemeModeType;
   toggleTheme: () => void;
   toggleLanguage: (event: SelectChangeEvent) => void;
 }
