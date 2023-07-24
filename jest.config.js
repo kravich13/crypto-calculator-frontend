@@ -35,6 +35,7 @@ module.exports = {
     '/src/shared/types',
     '/src/shared/consts',
     '/src/shared/enums',
+    '/src/shared/lib/store/store.ts',
   ],
   modulePathIgnorePatterns: [
     '/node_modules/',
@@ -43,6 +44,7 @@ module.exports = {
     '/src/shared/types',
     '/src/shared/consts',
     '/src/shared/enums',
+    '/src/shared/lib/store/store.ts',
   ],
   transformIgnorePatterns: ['/node_modules/', '^.+\\.module\\.(css|sass|scss|png|jpg)$'],
 };
