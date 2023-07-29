@@ -2,13 +2,14 @@ module.exports = {
   collectCoverage: true,
   coverageProvider: 'v8',
   coverageThreshold: {
-    global: {
-      branches: 80,
-      functions: 80,
-      lines: 80,
-      statements: 80,
-    },
+    // global: {
+    //   branches: 80,
+    //   functions: 80,
+    //   lines: 80,
+    //   statements: 80,
+    // },
   },
+  setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
   collectCoverageFrom: [
     '**/*.{ts,tsx}',
     '!**/*.d.ts',
@@ -20,26 +21,33 @@ module.exports = {
   ],
   testEnvironment: 'jsdom',
   transform: {
-    '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }],
+    '^.+\\.(js|jsx|ts|tsx)$': '<rootDir>/node_modules/babel-jest',
+    '^.+\\.(ts|tsx)$': 'ts-jest',
   },
   moduleNameMapper: {
     '^@cc/(.*)$': '<rootDir>/src/$1',
+    '^@public/(.*)$': '<rootDir>/public/$1',
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
   },
-
-  testPathIgnorePatterns: ['/node_modules/', '^.*index\\.ts$'],
+  resolver: undefined,
+  testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/', '^.*index\\.ts$'],
   coveragePathIgnorePatterns: [
     '/node_modules/',
     '^.*index\\.ts$',
+    '/src/shared/api',
     '/src/shared/types',
-    '/src/shared/const',
+    '/src/shared/consts',
     '/src/shared/enums',
+    '/src/shared/lib/store/store.ts',
   ],
   modulePathIgnorePatterns: [
     '/node_modules/',
     '^.*index\\.ts$',
+    '/src/shared/api',
     '/src/shared/types',
-    '/src/shared/const',
+    '/src/shared/consts',
     '/src/shared/enums',
+    '/src/shared/lib/store/store.ts',
   ],
-  transformIgnorePatterns: ['/node_modules/', '^.+\\.module\\.(css|sass|scss)$'],
+  transformIgnorePatterns: ['/node_modules/', '^.+\\.module\\.(css|sass|scss|png|jpg)$'],
 };

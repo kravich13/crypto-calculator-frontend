@@ -2,9 +2,10 @@ import { Typography } from '@cc/shared/ui';
 import { Box, Chip, Divider } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
-import LegacyImage from 'next/legacy/image';
+import Image from 'next/image';
 import React from 'react';
 import { baseYAnimation, imageScale } from '../lib/const';
+import sharedStyles from '../styles/Shared.module.scss';
 import { ICalculateData } from '../types';
 
 interface IResultsDescriptionProps extends ICalculateData {}
@@ -17,7 +18,7 @@ export const ResultsDescription: React.FC<IResultsDescriptionProps> = ({
   const { t } = useTranslation();
 
   return (
-    <Box>
+    <Box style={{ width: '100%' }}>
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -52,15 +53,13 @@ export const ResultsDescription: React.FC<IResultsDescriptionProps> = ({
         whileInView="visible"
         viewport={{ once: true, amount: 0.5 }}
         variants={baseYAnimation}
-        style={{ borderRadius: 8, boxShadow: '0px 0px 8px gray' }}
       >
-        <LegacyImage
+        <Image
+          alt={`Step-${step}-image`}
           src={src}
-          alt={`Step-${step}`}
-          objectFit="contain"
           placeholder="blur"
-          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg=="
-          style={{ borderRadius: 8 }}
+          sizes="100vw"
+          className={sharedStyles.image}
         />
       </motion.div>
     </Box>

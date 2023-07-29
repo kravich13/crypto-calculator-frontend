@@ -20,14 +20,15 @@ export const MainCoinInfoContainer: React.FC<IMainCoinInfoContainerProps> = ({
   imageWidth = 20,
 }) => {
   const { palette } = useTheme();
+
   const symbolTitle = symbol.toUpperCase();
 
   return (
     <Box className={styles.container}>
       <Image
-        loader={({}) => image}
+        loading="lazy"
         src={image}
-        alt="Image"
+        alt=""
         width={imageWidth}
         height={imageHeight}
         unoptimized

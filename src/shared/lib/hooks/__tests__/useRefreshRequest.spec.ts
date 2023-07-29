@@ -1,3 +1,5 @@
+import 'whatwg-fetch';
+
 import { useRefreshTokensMutation } from '@cc/shared/api';
 import { IJwtTokensPayload, IRefreshTokensResponse } from '@cc/shared/types';
 import { renderHook } from '@testing-library/react';

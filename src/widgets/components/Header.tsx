@@ -1,7 +1,9 @@
 import { AuthHeaderContent, NotAuthHeaderContent } from '@cc/entities/Header/components';
 import { RoutesTypes } from '@cc/shared/enums';
-import { useAppSelector } from '@cc/shared/lib';
+import { useAppSelector, useThemeContext } from '@cc/shared/lib';
+import { getBlurDataUrl } from '@cc/shared/utils';
 import { AppBar, Container, Toolbar } from '@mui/material';
+import LogoImage from '@public/logo/crypto-metrics-frame-2.svg';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useCallback } from 'react';
@@ -10,6 +12,7 @@ import styles from '../styles/Header.module.scss';
 export const Header: React.FC = () => {
   const router = useRouter();
   const pathname = usePathname();
+  const { themeMode } = useThemeContext();
 
   const isAuth = useAppSelector((state) => state.authReducer.isAuth);
 
@@ -25,7 +28,9 @@ export const Header: React.FC = () => {
         <Container component="div" maxWidth="lg" className={styles.container}>
           <Image
             alt="Crypto Metrics"
-            src={require('@public/logo/crypto-metrics-frame-2.svg')}
+            src={LogoImage}
+            placeholder="blur"
+            blurDataURL={getBlurDataUrl(themeMode)}
             style={{ cursor: 'pointer' }}
             onClick={goToMain}
           />

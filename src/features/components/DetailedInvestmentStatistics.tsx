@@ -10,7 +10,7 @@ import { useAppSelector } from '@cc/shared/lib';
 import variables from '@cc/shared/styles/Variables.module.scss';
 import { CalculateCoinProfitData } from '@cc/shared/types';
 import { Typography } from '@cc/shared/ui';
-import { SortByNumbers, SortByString } from '@cc/shared/utils';
+import { sortByNumbers, sortByString } from '@cc/shared/utils';
 import {
   Box,
   Paper,
@@ -85,12 +85,12 @@ export const DetailedInvestmentStatistics = () => {
       const isDescending = isSameColumn ? isRepeatedDescending : firstSortInDescending;
 
       if (column === 'name') {
-        const sortedCoins = coinsCopy.sort((a, b) => SortByString(a[column], b[column]));
+        const sortedCoins = coinsCopy.sort((a, b) => sortByString(a[column], b[column]));
 
         setCoins(isDescending ? sortedCoins.reverse() : sortedCoins);
       } else {
         setCoins(
-          coinsCopy.sort((a, b) => SortByNumbers({ a: a[column], b: b[column], isDescending }))
+          coinsCopy.sort((a, b) => sortByNumbers({ a: a[column], b: b[column], isDescending }))
         );
       }
 
