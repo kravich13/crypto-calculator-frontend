@@ -9,6 +9,7 @@ module.exports = {
     //   statements: 80,
     // },
   },
+  setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
   collectCoverageFrom: [
     '**/*.{ts,tsx}',
     '!**/*.d.ts',
@@ -20,14 +21,16 @@ module.exports = {
   ],
   testEnvironment: 'jsdom',
   transform: {
-    '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }],
+    '^.+\\.(js|jsx|ts|tsx)$': '<rootDir>/node_modules/babel-jest',
+    '^.+\\.(ts|tsx)$': 'ts-jest',
   },
   moduleNameMapper: {
     '^@cc/(.*)$': '<rootDir>/src/$1',
     '^@public/(.*)$': '<rootDir>/public/$1',
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
   },
   resolver: undefined,
-  testPathIgnorePatterns: ['/node_modules/', '^.*index\\.ts$'],
+  testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/', '^.*index\\.ts$'],
   coveragePathIgnorePatterns: [
     '/node_modules/',
     '^.*index\\.ts$',

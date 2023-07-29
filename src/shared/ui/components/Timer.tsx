@@ -46,5 +46,9 @@ export const Timer: React.FC<ITimerProps> = memo(({ inputDate, stylesProps }) =>
     return result;
   }, []);
 
-  return <Typography {...stylesProps}>{text}</Typography>;
+  return (
+    <Typography role="textbox" {...stylesProps}>
+      {text}
+    </Typography>
+  );
 });
