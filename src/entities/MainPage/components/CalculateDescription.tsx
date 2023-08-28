@@ -1,5 +1,5 @@
 import { Typography } from '@cc/shared/ui';
-import { Box, Chip, Divider } from '@mui/material';
+import { Box, Chip, Divider, useMediaQuery } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
@@ -16,9 +16,10 @@ export const CalculateDescription: React.FC<ICalculateDescriptionProps> = ({
   description,
   src,
 }) => {
+  const isMax1070Width = useMediaQuery('(max-width:1070px)');
   const { t } = useTranslation();
 
-  const otherAnimation = useCallback(
+  const animationX = useCallback(
     (position: 'left' | 'right') => ({
       hidden: { opacity: 0, x: position === 'left' ? -200 : 200 },
       visible: {
@@ -54,7 +55,7 @@ export const CalculateDescription: React.FC<ICalculateDescriptionProps> = ({
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.5 }}
-          variants={otherAnimation(step % 2 === 0 ? 'left' : 'right')}
+          variants={isMax1070Width ? baseYAnimation : animationX(step % 2 === 0 ? 'left' : 'right')}
           className={styles.textContainer}
         >
           <Typography tint component="h2" variant="h6">
@@ -67,7 +68,7 @@ export const CalculateDescription: React.FC<ICalculateDescriptionProps> = ({
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.5 }}
-          variants={otherAnimation(step % 2 === 0 ? 'right' : 'left')}
+          variants={isMax1070Width ? baseYAnimation : animationX(step % 2 === 0 ? 'right' : 'left')}
           className={styles.imageContainer}
         >
           <Image
