@@ -3,7 +3,6 @@ import { Box, Chip, Divider } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
-import React from 'react';
 import { baseYAnimation, imageScale } from '../lib/const';
 import sharedStyles from '../styles/Shared.module.scss';
 import { ICalculateData } from '../types';

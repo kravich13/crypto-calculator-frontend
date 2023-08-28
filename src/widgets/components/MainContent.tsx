@@ -107,6 +107,7 @@ export const MainContent = () => {
         </motion.div>
 
         {calculateStepsData.map(renderCalculateStepData)}
+
         {resultsStepData.map(renderResultsStepData)}
       </motion.div>
     </LayoutContent>
